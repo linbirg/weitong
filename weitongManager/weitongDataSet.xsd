@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="weitongDataSet" targetNamespace="http://tempuri.org/weitongDataSet.xsd" xmlns:mstns="http://tempuri.org/weitongDataSet.xsd" xmlns="http://tempuri.org/weitongDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="weitongConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="weitongConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.weitongManager.Properties.Settings.GlobalReference.Default.weitongConnectionString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="storageTableAdapter" GeneratorDataComponentClassName="storageTableAdapter" Name="storage" UserDataComponentName="storageTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="weitongConnectionString (Settings)" DbObjectName="weitong.storage" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `code`, `price`, `caseprice`, `retailprice`, `units` FROM `storage`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="code" DataSetColumn="code" />
+              <Mapping SourceColumn="price" DataSetColumn="price" />
+              <Mapping SourceColumn="caseprice" DataSetColumn="caseprice" />
+              <Mapping SourceColumn="retailprice" DataSetColumn="retailprice" />
+              <Mapping SourceColumn="units" DataSetColumn="units" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="weitongDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="weitongDataSet" msprop:Generator_UserDSName="weitongDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="storage" msprop:Generator_TableClassName="storageDataTable" msprop:Generator_TableVarName="tablestorage" msprop:Generator_TablePropName="storage" msprop:Generator_RowDeletingName="storageRowDeleting" msprop:Generator_UserTableName="storage" msprop:Generator_RowChangingName="storageRowChanging" msprop:Generator_RowEvHandlerName="storageRowChangeEventHandler" msprop:Generator_RowDeletedName="storageRowDeleted" msprop:Generator_RowEvArgName="storageRowChangeEvent" msprop:Generator_RowChangedName="storageRowChanged" msprop:Generator_RowClassName="storageRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="code" msprop:Generator_ColumnVarNameInTable="columncode" msprop:Generator_ColumnPropNameInRow="code" msprop:Generator_ColumnPropNameInTable="codeColumn" msprop:Generator_UserColumnName="code">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="price" msprop:Generator_ColumnVarNameInTable="columnprice" msprop:Generator_ColumnPropNameInRow="price" msprop:Generator_ColumnPropNameInTable="priceColumn" msprop:Generator_UserColumnName="price" type="xs:decimal" minOccurs="0" />
+              <xs:element name="caseprice" msprop:Generator_ColumnVarNameInTable="columncaseprice" msprop:Generator_ColumnPropNameInRow="caseprice" msprop:Generator_ColumnPropNameInTable="casepriceColumn" msprop:Generator_UserColumnName="caseprice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="retailprice" msprop:Generator_ColumnVarNameInTable="columnretailprice" msprop:Generator_ColumnPropNameInRow="retailprice" msprop:Generator_ColumnPropNameInTable="retailpriceColumn" msprop:Generator_UserColumnName="retailprice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="units" msprop:Generator_ColumnVarNameInTable="columnunits" msprop:Generator_ColumnPropNameInRow="units" msprop:Generator_ColumnPropNameInTable="unitsColumn" msprop:Generator_UserColumnName="units" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:storage" />
+      <xs:field xpath="mstns:code" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
