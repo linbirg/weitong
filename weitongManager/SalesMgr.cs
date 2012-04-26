@@ -250,7 +250,7 @@ namespace weitongManager
             weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
             m_storageAdapter.Adapter.Fill(table);
             m_storageAdapter.Adapter.SelectCommand = temp;
-
+            
             if (table != null && table.Rows.Count != 0)
             {
                 // 如果查询结果不为空，应该只有一条记录
