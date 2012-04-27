@@ -36,6 +36,11 @@ namespace weitongManager
             updateMemberLevel2DB(this);
         }
 
+        public void deleteFromDB()
+        {
+            deleteMemberLevelFromDB(this);
+        }
+
 
         // 从数据库中加载级别信息。
         public static List<MemberLevel> loadData()
@@ -69,7 +74,7 @@ namespace weitongManager
         }
 
 
-        private void updateMemberLevel2DB(MemberLevel memLevInfo)
+        private static void updateMemberLevel2DB(MemberLevel memLevInfo)
         {
             string updateStr = @"UPDATE memberlevel SET discount=@discount, levelname=@name 
                                  WHERE memlevel=@level";
@@ -79,6 +84,28 @@ namespace weitongManager
 
             updateCmd.Parameters.Add("@discount",MySqlDbType.Int32).Value = memLevInfo.Discount;
             updateCmd.Parameters.Add("@name",MySqlDbType.VarChar).Value = memLevInfo.Name;
+            updateCmd.Parameters.Add("@level", MySqlDbType.Int32).Value = memLevInfo.Level;
+
+            try
+            {
+                updateCmd.Connection.Open();
+                updateCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                updateCmd.Connection.Close();
+            }
+        }
+
+        private static void deleteMemberLevelFromDB(MemberLevel memLevInfo)
+        {
+            string deleteStr = @"DELETE FROM memberlevel 
+                                 WHERE memlevel=@level";
+            MySqlCommand updateCmd = new MySqlCommand();
+            updateCmd.CommandText = deleteStr;
+            updateCmd.Connection = ConnSingleton.Connection;
+
+            
             updateCmd.Parameters.Add("@level", MySqlDbType.Int32).Value = memLevInfo.Level;
 
             try

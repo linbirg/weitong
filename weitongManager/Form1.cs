@@ -423,6 +423,36 @@ namespace weitongManager
             }
         }
 
+        private void tsmi_AddLevel_Click(object sender, EventArgs e)
+        {
+            try
+            { 
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void tsmi_DeleteLevel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataGridViewRow curRow = dgv_memberLevel.CurrentRow;
+                MemberLevel data = curRow.DataBoundItem as MemberLevel;
+                if(DialogResult.OK == 
+                    MessageBox.Show("您确定将此行数据从数据库中删除么？","警告",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2))
+                {
+                    m_membLevelMgr.remove(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         
     }
 }

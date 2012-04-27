@@ -23,6 +23,13 @@ namespace weitongManager
             levelInfo.update2DB();
         }
 
+        // 从数据库中删除，并从列表中移除。
+        public void remove(MemberLevel levelInfo)
+        {
+            levelInfo.deleteFromDB();
+            m_level_list.Remove(levelInfo);
+        }
+
         public DataGridView MemberLevelGrid
         {
             get { return m_DGV_member_level; }
