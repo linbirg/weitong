@@ -14,6 +14,7 @@ namespace weitongManager
         private SupplierMgr m_supplierMgr = null;
         private WineStorageMgr m_wineStorageMgr = null;
         private SalesMgr m_salesMgr = null;
+        private MembLevelMgr m_membLevelMgr = null;
 
 
         public FrmMain()
@@ -49,6 +50,12 @@ namespace weitongManager
             m_salesMgr.OrderAdapter = new weitongDataSet1TableAdapters.orderTableAdapter();
 
             m_salesMgr.init();
+
+            // memberlevel
+            m_membLevelMgr = new MembLevelMgr();
+            m_membLevelMgr.MemberLevelGrid = dgv_memberLevel;
+
+            m_membLevelMgr.init();
             
         }
 
@@ -399,5 +406,23 @@ namespace weitongManager
            
             m_salesMgr.plusCartWineUnits(curRow.Code);
         }
+
+        
+
+        private void dgv_memberLevel_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridViewRow curRow = dgv_memberLevel.Rows[e.RowIndex];
+                MemberLevel data = curRow.DataBoundItem as MemberLevel;
+                m_membLevelMgr.update2DB(data);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        
     }
 }

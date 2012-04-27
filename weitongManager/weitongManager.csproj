@@ -65,6 +65,8 @@
     <Compile Include="FrmPrint.Designer.cs">
       <DependentUpon>FrmPrint.cs</DependentUpon>
     </Compile>
+    <Compile Include="MemberLevel.cs" />
+    <Compile Include="MembLevelMgr.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetailRowData.cs" />
     <Compile Include="OrderRowData.cs" />

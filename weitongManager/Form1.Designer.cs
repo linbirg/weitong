@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -206,6 +206,8 @@
             this.tp_supplier = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.dgv_memberLevel = new System.Windows.Forms.DataGridView();
+            this.memberlevelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.weitongDataSet1 = new weitongManager.weitongDataSet1();
             this.dgv_supplier = new System.Windows.Forms.DataGridView();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -215,7 +217,6 @@
             this.ctms_supplier = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_deleteSupplier = new System.Windows.Forms.ToolStripMenuItem();
             this.supplierBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.weitongDataSet1 = new weitongManager.weitongDataSet1();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.btn_searchSupplier = new System.Windows.Forms.Button();
             this.btn_addSupplier = new System.Windows.Forms.Button();
@@ -223,11 +224,11 @@
             this.label32 = new System.Windows.Forms.Label();
             this.supplierTableAdapter = new weitongManager.weitongDataSet1TableAdapters.supplierTableAdapter();
             this.weitongDataSet1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.memberlevelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.memberlevelTableAdapter = new weitongManager.weitongDataSet1TableAdapters.memberlevelTableAdapter();
+            this.memberlevelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.memlevelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.levelnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -256,13 +257,14 @@
             this.tp_supplier.SuspendLayout();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_supplier)).BeginInit();
             this.ctms_supplier.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).BeginInit();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -543,8 +545,8 @@
             this.dgv_cartDetail.Name = "dgv_cartDetail";
             this.dgv_cartDetail.ReadOnly = true;
             this.dgv_cartDetail.RowHeadersVisible = false;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgv_cartDetail.RowTemplate.Height = 23;
             this.dgv_cartDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_cartDetail.Size = new System.Drawing.Size(797, 305);
@@ -976,72 +978,64 @@
             this.lbl_custAddress.AutoSize = true;
             this.lbl_custAddress.Location = new System.Drawing.Point(77, 249);
             this.lbl_custAddress.Name = "lbl_custAddress";
-            this.lbl_custAddress.Size = new System.Drawing.Size(47, 12);
+            this.lbl_custAddress.Size = new System.Drawing.Size(0, 12);
             this.lbl_custAddress.TabIndex = 23;
-            this.lbl_custAddress.Text = "label51";
             // 
             // lbl_custEmail
             // 
             this.lbl_custEmail.AutoSize = true;
             this.lbl_custEmail.Location = new System.Drawing.Point(77, 218);
             this.lbl_custEmail.Name = "lbl_custEmail";
-            this.lbl_custEmail.Size = new System.Drawing.Size(47, 12);
+            this.lbl_custEmail.Size = new System.Drawing.Size(0, 12);
             this.lbl_custEmail.TabIndex = 22;
-            this.lbl_custEmail.Text = "label50";
             // 
             // lbl_custRegisterDay
             // 
             this.lbl_custRegisterDay.AutoSize = true;
             this.lbl_custRegisterDay.Location = new System.Drawing.Point(77, 188);
             this.lbl_custRegisterDay.Name = "lbl_custRegisterDay";
-            this.lbl_custRegisterDay.Size = new System.Drawing.Size(47, 12);
+            this.lbl_custRegisterDay.Size = new System.Drawing.Size(0, 12);
             this.lbl_custRegisterDay.TabIndex = 21;
-            this.lbl_custRegisterDay.Text = "label49";
             // 
             // lbl_custPhone
             // 
             this.lbl_custPhone.AutoSize = true;
             this.lbl_custPhone.Location = new System.Drawing.Point(77, 156);
             this.lbl_custPhone.Name = "lbl_custPhone";
-            this.lbl_custPhone.Size = new System.Drawing.Size(47, 12);
+            this.lbl_custPhone.Size = new System.Drawing.Size(0, 12);
             this.lbl_custPhone.TabIndex = 20;
-            this.lbl_custPhone.Text = "label48";
             // 
             // lbl_customerBirthday
             // 
             this.lbl_customerBirthday.AutoSize = true;
             this.lbl_customerBirthday.Location = new System.Drawing.Point(77, 123);
             this.lbl_customerBirthday.Name = "lbl_customerBirthday";
-            this.lbl_customerBirthday.Size = new System.Drawing.Size(47, 12);
+            this.lbl_customerBirthday.Size = new System.Drawing.Size(0, 12);
             this.lbl_customerBirthday.TabIndex = 19;
-            this.lbl_customerBirthday.Text = "label47";
             // 
             // lbl_customerJob
             // 
             this.lbl_customerJob.AutoSize = true;
             this.lbl_customerJob.Location = new System.Drawing.Point(77, 93);
             this.lbl_customerJob.Name = "lbl_customerJob";
-            this.lbl_customerJob.Size = new System.Drawing.Size(47, 12);
+            this.lbl_customerJob.Size = new System.Drawing.Size(0, 12);
             this.lbl_customerJob.TabIndex = 18;
-            this.lbl_customerJob.Text = "label46";
             // 
             // lbl_membLevel
             // 
             this.lbl_membLevel.AutoSize = true;
             this.lbl_membLevel.Location = new System.Drawing.Point(77, 61);
             this.lbl_membLevel.Name = "lbl_membLevel";
-            this.lbl_membLevel.Size = new System.Drawing.Size(47, 12);
+            this.lbl_membLevel.Size = new System.Drawing.Size(0, 12);
             this.lbl_membLevel.TabIndex = 17;
-            this.lbl_membLevel.Text = "label45";
             // 
             // lbl_customerName
             // 
             this.lbl_customerName.AutoSize = true;
             this.lbl_customerName.Location = new System.Drawing.Point(77, 33);
             this.lbl_customerName.Name = "lbl_customerName";
-            this.lbl_customerName.Size = new System.Drawing.Size(47, 12);
+            this.lbl_customerName.Size = new System.Drawing.Size(0, 12);
             this.lbl_customerName.TabIndex = 16;
-            this.lbl_customerName.Text = "label45";
             // 
             // label30
             // 
@@ -1134,8 +1128,8 @@
             this.dgv_currentOrder.Name = "dgv_currentOrder";
             this.dgv_currentOrder.ReadOnly = true;
             this.dgv_currentOrder.RowHeadersVisible = false;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_currentOrder.RowTemplate.Height = 23;
             this.dgv_currentOrder.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_currentOrder.Size = new System.Drawing.Size(561, 165);
@@ -1201,8 +1195,8 @@
             this.dgv_orderList.Name = "dgv_orderList";
             this.dgv_orderList.ReadOnly = true;
             this.dgv_orderList.RowHeadersVisible = false;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle13;
             this.dgv_orderList.RowTemplate.Height = 23;
             this.dgv_orderList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_orderList.Size = new System.Drawing.Size(633, 311);
@@ -1280,8 +1274,8 @@
             this.dgv_storageInfo.ReadOnly = true;
             this.dgv_storageInfo.RowHeadersVisible = false;
             this.dgv_storageInfo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgv_storageInfo.RowTemplate.Height = 23;
             this.dgv_storageInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storageInfo.Size = new System.Drawing.Size(1205, 128);
@@ -1418,22 +1412,22 @@
             this.retailpriceDataGridViewTextBoxColumn,
             this.countryDataGridViewTextBoxColumn});
             this.dgv_storage.ContextMenuStrip = this.ctms_storage;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgv_storage.Location = new System.Drawing.Point(7, 13);
             this.dgv_storage.MultiSelect = false;
             this.dgv_storage.Name = "dgv_storage";
             this.dgv_storage.ReadOnly = true;
             this.dgv_storage.RowHeadersVisible = false;
             this.dgv_storage.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dgv_storage.RowTemplate.Height = 23;
             this.dgv_storage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storage.Size = new System.Drawing.Size(1206, 367);
@@ -1841,16 +1835,28 @@
             this.dgv_memberLevel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_memberLevel.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.memlevelDataGridViewTextBoxColumn,
-            this.discountDataGridViewTextBoxColumn,
-            this.levelnameDataGridViewTextBoxColumn});
-            this.dgv_memberLevel.DataSource = this.memberlevelBindingSource;
-            this.dgv_memberLevel.Location = new System.Drawing.Point(7, 9);
+            this.levelnameDataGridViewTextBoxColumn,
+            this.discountDataGridViewTextBoxColumn});
+            this.dgv_memberLevel.DataSource = this.memberlevelBindingSource1;
+            this.dgv_memberLevel.Location = new System.Drawing.Point(4, 9);
             this.dgv_memberLevel.MultiSelect = false;
             this.dgv_memberLevel.Name = "dgv_memberLevel";
             this.dgv_memberLevel.RowHeadersVisible = false;
             this.dgv_memberLevel.RowTemplate.Height = 23;
+            this.dgv_memberLevel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_memberLevel.Size = new System.Drawing.Size(363, 210);
             this.dgv_memberLevel.TabIndex = 0;
+            this.dgv_memberLevel.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_memberLevel_CellEndEdit);
+            // 
+            // memberlevelBindingSource
+            // 
+            this.memberlevelBindingSource.DataMember = "memberlevel";
+            this.memberlevelBindingSource.DataSource = this.weitongDataSet1;
+            // 
+            // weitongDataSet1
+            // 
+            this.weitongDataSet1.DataSetName = "weitongDataSet1";
+            this.weitongDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // dgv_supplier
             // 
@@ -1869,14 +1875,14 @@
             this.nameDataGridViewTextBoxColumn1});
             this.dgv_supplier.ContextMenuStrip = this.ctms_supplier;
             this.dgv_supplier.DataSource = this.supplierBindingSource;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgv_supplier.Location = new System.Drawing.Point(4, 66);
             this.dgv_supplier.MultiSelect = false;
             this.dgv_supplier.Name = "dgv_supplier";
@@ -1940,11 +1946,6 @@
             this.supplierBindingSource.DataMember = "supplier";
             this.supplierBindingSource.DataSource = this.weitongDataSet1;
             // 
-            // weitongDataSet1
-            // 
-            this.weitongDataSet1.DataSetName = "weitongDataSet1";
-            this.weitongDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // groupBox11
             // 
             this.groupBox11.Controls.Add(this.btn_searchSupplier);
@@ -2001,32 +2002,32 @@
             this.weitongDataSet1BindingSource.DataSource = this.weitongDataSet1;
             this.weitongDataSet1BindingSource.Position = 0;
             // 
-            // memberlevelBindingSource
-            // 
-            this.memberlevelBindingSource.DataMember = "memberlevel";
-            this.memberlevelBindingSource.DataSource = this.weitongDataSet1;
-            // 
             // memberlevelTableAdapter
             // 
             this.memberlevelTableAdapter.ClearBeforeFill = true;
             // 
+            // memberlevelBindingSource1
+            // 
+            this.memberlevelBindingSource1.DataMember = "memberlevel";
+            this.memberlevelBindingSource1.DataSource = this.weitongDataSet1BindingSource;
+            // 
             // memlevelDataGridViewTextBoxColumn
             // 
-            this.memlevelDataGridViewTextBoxColumn.DataPropertyName = "memlevel";
             this.memlevelDataGridViewTextBoxColumn.HeaderText = "会员级别";
             this.memlevelDataGridViewTextBoxColumn.Name = "memlevelDataGridViewTextBoxColumn";
-            // 
-            // discountDataGridViewTextBoxColumn
-            // 
-            this.discountDataGridViewTextBoxColumn.DataPropertyName = "discount";
-            this.discountDataGridViewTextBoxColumn.HeaderText = "享受折扣";
-            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
+            this.memlevelDataGridViewTextBoxColumn.ReadOnly = true;
+            this.memlevelDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // levelnameDataGridViewTextBoxColumn
             // 
-            this.levelnameDataGridViewTextBoxColumn.DataPropertyName = "levelname";
             this.levelnameDataGridViewTextBoxColumn.HeaderText = "级别名称";
             this.levelnameDataGridViewTextBoxColumn.Name = "levelnameDataGridViewTextBoxColumn";
+            this.levelnameDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // discountDataGridViewTextBoxColumn
+            // 
+            this.discountDataGridViewTextBoxColumn.HeaderText = "折扣";
+            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
             // 
             // FrmMain
             // 
@@ -2072,14 +2073,15 @@
             this.tp_supplier.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_supplier)).EndInit();
             this.ctms_supplier.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2275,9 +2277,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
         private System.Windows.Forms.BindingSource memberlevelBindingSource;
         private weitongDataSet1TableAdapters.memberlevelTableAdapter memberlevelTableAdapter;
+        private System.Windows.Forms.BindingSource memberlevelBindingSource1;
         private System.Windows.Forms.DataGridViewTextBoxColumn memlevelDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn levelnameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
     }
 }
 
