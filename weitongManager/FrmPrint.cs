@@ -10,7 +10,7 @@ using System.Drawing.Printing;
 
 namespace weitongManager
 {
-    public partial class FrmPrint : Form
+    partial class FrmPrint : Form
     {
         public FrmPrint()
         {
@@ -424,6 +424,10 @@ namespace weitongManager
 
         private BindingList<CartDetailRowData> m_cartDetailList = null;
         private DataGridView m_CartDetaiGrid = null;
+        private Customer m_customer = null;
+        private Order m_order = null;
+
+        private DateTime m_orderTime;
 
         public DataGridView CartDetaiGrid
         {
@@ -435,6 +439,47 @@ namespace weitongManager
                     addCart(row.DataBoundItem as CartDetailRowData);
                 }
                 binding();
+            }
+        }
+
+        //public Customer CartCustomer
+        //{
+        //    //get { return m_customer; }
+        //    set { m_customer = value; }
+        //}
+
+        public void SetCustomer(Customer aCustomer)
+        {
+            m_customer = aCustomer;
+            showCustomer();
+        }
+
+        public DateTime OrderTime
+        {
+            get { return m_orderTime; }
+            set 
+            { 
+                m_orderTime = value; 
+                
+            }
+        }
+
+        public Order Order
+        {
+            get { return m_order; }
+            set 
+            {
+                m_order = value;
+            }
+        }
+
+        private void showCustomer()
+        {
+            if (m_customer != null)
+            {
+                lbl_custNameContent.Text = m_customer.Name;
+                lbl_custNumberContent.Text = m_customer.PhoneNumber;
+                lbl_custEffectDateContent.Text = m_orderTime.ToShortDateString();
             }
         }
     }

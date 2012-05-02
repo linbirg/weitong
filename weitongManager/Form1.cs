@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace weitongManager
 {
-    public partial class FrmMain : Form
+    partial class FrmMain : Form
     {
         private SupplierMgr m_supplierMgr = null;
         private WineStorageMgr m_wineStorageMgr = null;
@@ -392,19 +392,39 @@ namespace weitongManager
 
         private void btn_PreViewCart_Click(object sender, EventArgs e)
         {
-            FrmPrint frmPrint = new FrmPrint();
-            frmPrint.CartDetaiGrid = dgv_cartDetail;
-            
-            frmPrint.ShowDialog();
+            try
+            {
+                if (m_salesMgr.CartCustomer == null)
+                {
+                    WARNING("订单不能没有客户信息，请输入客户信息。");
+                    return;
+                }
+                FrmPrint frmPrint = new FrmPrint();
+                frmPrint.CartDetaiGrid = dgv_cartDetail;
+                frmPrint.SetCustomer(m_salesMgr.CartCustomer);
+                frmPrint.OrderTime = DateTime.Now;
+                frmPrint.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         private void tsmi_cartAddUnits_Click(object sender, EventArgs e)
         {
-            if (dgv_cartDetail.CurrentRow == null) return;
-            
-            CartDetailRowData curRow = dgv_cartDetail.CurrentRow.DataBoundItem as CartDetailRowData;
-           
-            m_salesMgr.plusCartWineUnits(curRow.Code);
+            try
+            {
+                if (dgv_cartDetail.CurrentRow == null) return;
+
+                CartDetailRowData curRow = dgv_cartDetail.CurrentRow.DataBoundItem as CartDetailRowData;
+
+                m_salesMgr.plusCartWineUnits(curRow.Code);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         
@@ -433,7 +453,8 @@ namespace weitongManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                WARNING(ex.Message);
             }
         }
 
@@ -454,10 +475,15 @@ namespace weitongManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                WARNING("出现异常："+ ex.Message);
             }
         }
 
+        private void WARNING(string msg)
+        {
+            MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
         
     }
 }
