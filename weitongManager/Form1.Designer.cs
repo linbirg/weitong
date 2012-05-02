@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -206,32 +206,28 @@
             this.tp_supplier = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.dgv_memberLevel = new System.Windows.Forms.DataGridView();
-            this.memberlevelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.weitongDataSet1 = new weitongManager.weitongDataSet1();
-            this.dgv_supplier = new System.Windows.Forms.DataGridView();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctms_supplier = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmi_deleteSupplier = new System.Windows.Forms.ToolStripMenuItem();
-            this.supplierBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.btn_searchSupplier = new System.Windows.Forms.Button();
-            this.btn_addSupplier = new System.Windows.Forms.Button();
-            this.tbox_supplierName = new System.Windows.Forms.TextBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.supplierTableAdapter = new weitongManager.weitongDataSet1TableAdapters.supplierTableAdapter();
-            this.weitongDataSet1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.memberlevelTableAdapter = new weitongManager.weitongDataSet1TableAdapters.memberlevelTableAdapter();
-            this.memberlevelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.memlevelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.levelnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_MembLevel = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_AddLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_DeleteLevel = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgv_supplier = new System.Windows.Forms.DataGridView();
+            this.ctms_supplier = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_deleteSupplier = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.btn_searchSupplier = new System.Windows.Forms.Button();
+            this.btn_addSupplier = new System.Windows.Forms.Button();
+            this.tbox_supplierName = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.weitongDataSet1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.weitongDataSet1 = new weitongManager.weitongDataSet1();
+            this.supplierTableAdapter = new weitongManager.weitongDataSet1TableAdapters.supplierTableAdapter();
+            this.memberlevelTableAdapter = new weitongManager.weitongDataSet1TableAdapters.memberlevelTableAdapter();
+            this.supplierBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -260,15 +256,13 @@
             this.tp_supplier.SuspendLayout();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).BeginInit();
+            this.ctms_MembLevel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_supplier)).BeginInit();
             this.ctms_supplier.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).BeginInit();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource1)).BeginInit();
-            this.ctms_MembLevel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -317,14 +311,14 @@
             this.groupBox7.Controls.Add(this.label29);
             this.groupBox7.Location = new System.Drawing.Point(3, 6);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(483, 180);
+            this.groupBox7.Size = new System.Drawing.Size(1205, 94);
             this.groupBox7.TabIndex = 4;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "酒信息";
             // 
             // btn_ListStorageInfo
             // 
-            this.btn_ListStorageInfo.Location = new System.Drawing.Point(283, 145);
+            this.btn_ListStorageInfo.Location = new System.Drawing.Point(919, 58);
             this.btn_ListStorageInfo.Name = "btn_ListStorageInfo";
             this.btn_ListStorageInfo.Size = new System.Drawing.Size(75, 23);
             this.btn_ListStorageInfo.TabIndex = 18;
@@ -334,7 +328,7 @@
             // 
             // btn_SearchStorageInfo
             // 
-            this.btn_SearchStorageInfo.Location = new System.Drawing.Point(393, 145);
+            this.btn_SearchStorageInfo.Location = new System.Drawing.Point(1029, 58);
             this.btn_SearchStorageInfo.Name = "btn_SearchStorageInfo";
             this.btn_SearchStorageInfo.Size = new System.Drawing.Size(75, 23);
             this.btn_SearchStorageInfo.TabIndex = 17;
@@ -352,7 +346,7 @@
             // 
             // textBox23
             // 
-            this.textBox23.Location = new System.Drawing.Point(283, 90);
+            this.textBox23.Location = new System.Drawing.Point(785, 30);
             this.textBox23.Name = "textBox23";
             this.textBox23.Size = new System.Drawing.Size(100, 21);
             this.textBox23.TabIndex = 14;
@@ -373,28 +367,28 @@
             // 
             // textBox26
             // 
-            this.textBox26.Location = new System.Drawing.Point(77, 90);
+            this.textBox26.Location = new System.Drawing.Point(579, 30);
             this.textBox26.Name = "textBox26";
             this.textBox26.Size = new System.Drawing.Size(100, 21);
             this.textBox26.TabIndex = 11;
             // 
             // textBox27
             // 
-            this.textBox27.Location = new System.Drawing.Point(77, 120);
+            this.textBox27.Location = new System.Drawing.Point(579, 60);
             this.textBox27.Name = "textBox27";
             this.textBox27.Size = new System.Drawing.Size(100, 21);
             this.textBox27.TabIndex = 10;
             // 
             // textBox28
             // 
-            this.textBox28.Location = new System.Drawing.Point(77, 153);
+            this.textBox28.Location = new System.Drawing.Point(983, 30);
             this.textBox28.Name = "textBox28";
             this.textBox28.Size = new System.Drawing.Size(100, 21);
             this.textBox28.TabIndex = 9;
             // 
             // textBox29
             // 
-            this.textBox29.Location = new System.Drawing.Point(283, 120);
+            this.textBox29.Location = new System.Drawing.Point(785, 60);
             this.textBox29.Name = "textBox29";
             this.textBox29.Size = new System.Drawing.Size(100, 21);
             this.textBox29.TabIndex = 8;
@@ -411,7 +405,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 156);
+            this.label23.Location = new System.Drawing.Point(919, 33);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(41, 12);
             this.label23.TabIndex = 6;
@@ -420,7 +414,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(212, 123);
+            this.label24.Location = new System.Drawing.Point(714, 63);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(41, 12);
             this.label24.TabIndex = 5;
@@ -429,7 +423,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 123);
+            this.label25.Location = new System.Drawing.Point(508, 63);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(41, 12);
             this.label25.TabIndex = 4;
@@ -438,7 +432,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(212, 93);
+            this.label26.Location = new System.Drawing.Point(714, 33);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(41, 12);
             this.label26.TabIndex = 3;
@@ -447,7 +441,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(6, 93);
+            this.label27.Location = new System.Drawing.Point(508, 33);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(41, 12);
             this.label27.TabIndex = 2;
@@ -549,8 +543,8 @@
             this.dgv_cartDetail.Name = "dgv_cartDetail";
             this.dgv_cartDetail.ReadOnly = true;
             this.dgv_cartDetail.RowHeadersVisible = false;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_cartDetail.RowTemplate.Height = 23;
             this.dgv_cartDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_cartDetail.Size = new System.Drawing.Size(797, 305);
@@ -1132,8 +1126,8 @@
             this.dgv_currentOrder.Name = "dgv_currentOrder";
             this.dgv_currentOrder.ReadOnly = true;
             this.dgv_currentOrder.RowHeadersVisible = false;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_currentOrder.RowTemplate.Height = 23;
             this.dgv_currentOrder.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_currentOrder.Size = new System.Drawing.Size(561, 165);
@@ -1199,8 +1193,8 @@
             this.dgv_orderList.Name = "dgv_orderList";
             this.dgv_orderList.ReadOnly = true;
             this.dgv_orderList.RowHeadersVisible = false;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_orderList.RowTemplate.Height = 23;
             this.dgv_orderList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_orderList.Size = new System.Drawing.Size(633, 311);
@@ -1272,17 +1266,17 @@
             this.bottleDGVStorageInfoTextBoxColumn,
             this.countryDGVStorageInfoTextBoxColumn});
             this.dgv_storageInfo.ContextMenuStrip = this.ctms_storageInfo;
-            this.dgv_storageInfo.Location = new System.Drawing.Point(3, 192);
+            this.dgv_storageInfo.Location = new System.Drawing.Point(3, 106);
             this.dgv_storageInfo.MultiSelect = false;
             this.dgv_storageInfo.Name = "dgv_storageInfo";
             this.dgv_storageInfo.ReadOnly = true;
             this.dgv_storageInfo.RowHeadersVisible = false;
             this.dgv_storageInfo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_storageInfo.RowTemplate.Height = 23;
             this.dgv_storageInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_storageInfo.Size = new System.Drawing.Size(1205, 128);
+            this.dgv_storageInfo.Size = new System.Drawing.Size(1205, 214);
             this.dgv_storageInfo.TabIndex = 2;
             // 
             // codeDGVStorageInfoTextBoxColumn
@@ -1416,22 +1410,22 @@
             this.retailpriceDataGridViewTextBoxColumn,
             this.countryDataGridViewTextBoxColumn});
             this.dgv_storage.ContextMenuStrip = this.ctms_storage;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgv_storage.Location = new System.Drawing.Point(7, 13);
             this.dgv_storage.MultiSelect = false;
             this.dgv_storage.Name = "dgv_storage";
             this.dgv_storage.ReadOnly = true;
             this.dgv_storage.RowHeadersVisible = false;
             this.dgv_storage.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgv_storage.RowTemplate.Height = 23;
             this.dgv_storage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storage.Size = new System.Drawing.Size(1206, 367);
@@ -1834,7 +1828,6 @@
             this.dgv_memberLevel.AllowUserToDeleteRows = false;
             this.dgv_memberLevel.AllowUserToResizeColumns = false;
             this.dgv_memberLevel.AllowUserToResizeRows = false;
-            this.dgv_memberLevel.AutoGenerateColumns = false;
             this.dgv_memberLevel.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgv_memberLevel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_memberLevel.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1842,7 +1835,6 @@
             this.levelnameDataGridViewTextBoxColumn,
             this.discountDataGridViewTextBoxColumn});
             this.dgv_memberLevel.ContextMenuStrip = this.ctms_MembLevel;
-            this.dgv_memberLevel.DataSource = this.memberlevelBindingSource1;
             this.dgv_memberLevel.Location = new System.Drawing.Point(4, 9);
             this.dgv_memberLevel.MultiSelect = false;
             this.dgv_memberLevel.Name = "dgv_memberLevel";
@@ -1853,15 +1845,45 @@
             this.dgv_memberLevel.TabIndex = 0;
             this.dgv_memberLevel.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_memberLevel_CellEndEdit);
             // 
-            // memberlevelBindingSource
+            // memlevelDataGridViewTextBoxColumn
             // 
-            this.memberlevelBindingSource.DataMember = "memberlevel";
-            this.memberlevelBindingSource.DataSource = this.weitongDataSet1;
+            this.memlevelDataGridViewTextBoxColumn.HeaderText = "会员级别";
+            this.memlevelDataGridViewTextBoxColumn.Name = "memlevelDataGridViewTextBoxColumn";
+            this.memlevelDataGridViewTextBoxColumn.ReadOnly = true;
+            this.memlevelDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // weitongDataSet1
+            // levelnameDataGridViewTextBoxColumn
             // 
-            this.weitongDataSet1.DataSetName = "weitongDataSet1";
-            this.weitongDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.levelnameDataGridViewTextBoxColumn.HeaderText = "级别名称";
+            this.levelnameDataGridViewTextBoxColumn.Name = "levelnameDataGridViewTextBoxColumn";
+            this.levelnameDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // discountDataGridViewTextBoxColumn
+            // 
+            this.discountDataGridViewTextBoxColumn.HeaderText = "折扣";
+            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
+            // 
+            // ctms_MembLevel
+            // 
+            this.ctms_MembLevel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_AddLevel,
+            this.tsmi_DeleteLevel});
+            this.ctms_MembLevel.Name = "ctms_MembLevel";
+            this.ctms_MembLevel.Size = new System.Drawing.Size(110, 48);
+            // 
+            // tsmi_AddLevel
+            // 
+            this.tsmi_AddLevel.Name = "tsmi_AddLevel";
+            this.tsmi_AddLevel.Size = new System.Drawing.Size(109, 22);
+            this.tsmi_AddLevel.Text = "&A添加";
+            this.tsmi_AddLevel.Click += new System.EventHandler(this.tsmi_AddLevel_Click);
+            // 
+            // tsmi_DeleteLevel
+            // 
+            this.tsmi_DeleteLevel.Name = "tsmi_DeleteLevel";
+            this.tsmi_DeleteLevel.Size = new System.Drawing.Size(109, 22);
+            this.tsmi_DeleteLevel.Text = "&D删除";
+            this.tsmi_DeleteLevel.Click += new System.EventHandler(this.tsmi_DeleteLevel_Click);
             // 
             // dgv_supplier
             // 
@@ -1873,21 +1895,19 @@
             this.dgv_supplier.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgv_supplier.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_supplier.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn,
+            this.nameDataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn7,
-            this.dataGridViewTextBoxColumn8,
-            this.idDataGridViewTextBoxColumn,
-            this.nameDataGridViewTextBoxColumn1});
+            this.dataGridViewTextBoxColumn8});
             this.dgv_supplier.ContextMenuStrip = this.ctms_supplier;
             this.dgv_supplier.DataSource = this.supplierBindingSource;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgv_supplier.Location = new System.Drawing.Point(4, 66);
             this.dgv_supplier.MultiSelect = false;
             this.dgv_supplier.Name = "dgv_supplier";
@@ -1898,39 +1918,6 @@
             this.dgv_supplier.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_supplier.Size = new System.Drawing.Size(392, 163);
             this.dgv_supplier.TabIndex = 1;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "名称";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "等级";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "规模";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nameDataGridViewTextBoxColumn1
-            // 
-            this.nameDataGridViewTextBoxColumn1.DataPropertyName = "name";
-            this.nameDataGridViewTextBoxColumn1.HeaderText = "name";
-            this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
-            this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // ctms_supplier
             // 
@@ -1945,11 +1932,6 @@
             this.tsmi_deleteSupplier.Size = new System.Drawing.Size(109, 22);
             this.tsmi_deleteSupplier.Text = "&D删除";
             this.tsmi_deleteSupplier.Click += new System.EventHandler(this.tsmi_deleteSupplier_Click);
-            // 
-            // supplierBindingSource
-            // 
-            this.supplierBindingSource.DataMember = "supplier";
-            this.supplierBindingSource.DataSource = this.weitongDataSet1;
             // 
             // groupBox11
             // 
@@ -1998,63 +1980,47 @@
             this.label32.TabIndex = 2;
             this.label32.Text = "名称：";
             // 
-            // supplierTableAdapter
-            // 
-            this.supplierTableAdapter.ClearBeforeFill = true;
-            // 
             // weitongDataSet1BindingSource
             // 
             this.weitongDataSet1BindingSource.DataSource = this.weitongDataSet1;
             this.weitongDataSet1BindingSource.Position = 0;
             // 
+            // weitongDataSet1
+            // 
+            this.weitongDataSet1.DataSetName = "weitongDataSet1";
+            this.weitongDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // supplierTableAdapter
+            // 
+            this.supplierTableAdapter.ClearBeforeFill = true;
+            // 
             // memberlevelTableAdapter
             // 
             this.memberlevelTableAdapter.ClearBeforeFill = true;
             // 
-            // memberlevelBindingSource1
+            // supplierBindingSource
             // 
-            this.memberlevelBindingSource1.DataMember = "memberlevel";
-            this.memberlevelBindingSource1.DataSource = this.weitongDataSet1BindingSource;
+            this.supplierBindingSource.DataMember = "supplier";
+            this.supplierBindingSource.DataSource = this.weitongDataSet1;
             // 
-            // memlevelDataGridViewTextBoxColumn
+            // nameDataGridViewTextBoxColumn1
             // 
-            this.memlevelDataGridViewTextBoxColumn.HeaderText = "会员级别";
-            this.memlevelDataGridViewTextBoxColumn.Name = "memlevelDataGridViewTextBoxColumn";
-            this.memlevelDataGridViewTextBoxColumn.ReadOnly = true;
-            this.memlevelDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.nameDataGridViewTextBoxColumn1.DataPropertyName = "name";
+            this.nameDataGridViewTextBoxColumn1.HeaderText = "名称";
+            this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
+            this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // levelnameDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn7
             // 
-            this.levelnameDataGridViewTextBoxColumn.HeaderText = "级别名称";
-            this.levelnameDataGridViewTextBoxColumn.Name = "levelnameDataGridViewTextBoxColumn";
-            this.levelnameDataGridViewTextBoxColumn.Width = 150;
+            this.dataGridViewTextBoxColumn7.HeaderText = "等级";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
             // 
-            // discountDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn8
             // 
-            this.discountDataGridViewTextBoxColumn.HeaderText = "折扣";
-            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
-            // 
-            // ctms_MembLevel
-            // 
-            this.ctms_MembLevel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_AddLevel,
-            this.tsmi_DeleteLevel});
-            this.ctms_MembLevel.Name = "ctms_MembLevel";
-            this.ctms_MembLevel.Size = new System.Drawing.Size(153, 70);
-            // 
-            // tsmi_AddLevel
-            // 
-            this.tsmi_AddLevel.Name = "tsmi_AddLevel";
-            this.tsmi_AddLevel.Size = new System.Drawing.Size(152, 22);
-            this.tsmi_AddLevel.Text = "&A添加";
-            this.tsmi_AddLevel.Click += new System.EventHandler(this.tsmi_AddLevel_Click);
-            // 
-            // tsmi_DeleteLevel
-            // 
-            this.tsmi_DeleteLevel.Name = "tsmi_DeleteLevel";
-            this.tsmi_DeleteLevel.Size = new System.Drawing.Size(152, 22);
-            this.tsmi_DeleteLevel.Text = "&D删除";
-            this.tsmi_DeleteLevel.Click += new System.EventHandler(this.tsmi_DeleteLevel_Click);
+            this.dataGridViewTextBoxColumn8.HeaderText = "规模";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
             // FrmMain
             // 
@@ -2100,16 +2066,14 @@
             this.tp_supplier.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).EndInit();
+            this.ctms_MembLevel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_supplier)).EndInit();
             this.ctms_supplier.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memberlevelBindingSource1)).EndInit();
-            this.ctms_MembLevel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2161,7 +2125,6 @@
         private System.Windows.Forms.Button btn_searchSupplier;
         private System.Windows.Forms.DataGridView dgv_supplier;
         private weitongDataSet1 weitongDataSet1;
-        private System.Windows.Forms.BindingSource supplierBindingSource;
         private weitongDataSet1TableAdapters.supplierTableAdapter supplierTableAdapter;
         private System.Windows.Forms.ContextMenuStrip ctms_supplier;
         private System.Windows.Forms.ToolStripMenuItem tsmi_deleteSupplier;
@@ -2288,9 +2251,6 @@
         private System.Windows.Forms.ContextMenuStrip ctms_cartDetail;
         private System.Windows.Forms.ToolStripMenuItem tsmi_cartAddUnits;
         private System.Windows.Forms.ToolStripMenuItem tsmi_cartNecUnits;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.Label lbl_customerName;
         private System.Windows.Forms.Label lbl_membLevel;
         private System.Windows.Forms.Label lbl_custAddress;
@@ -2301,17 +2261,17 @@
         private System.Windows.Forms.Label lbl_customerJob;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.DataGridView dgv_memberLevel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.BindingSource memberlevelBindingSource;
         private weitongDataSet1TableAdapters.memberlevelTableAdapter memberlevelTableAdapter;
-        private System.Windows.Forms.BindingSource memberlevelBindingSource1;
         private System.Windows.Forms.DataGridViewTextBoxColumn memlevelDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn levelnameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
         private System.Windows.Forms.ContextMenuStrip ctms_MembLevel;
         private System.Windows.Forms.ToolStripMenuItem tsmi_AddLevel;
         private System.Windows.Forms.ToolStripMenuItem tsmi_DeleteLevel;
+        private System.Windows.Forms.BindingSource supplierBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
     }
 }
 

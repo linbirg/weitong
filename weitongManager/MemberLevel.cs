@@ -73,6 +73,75 @@ namespace weitongManager
             return list;
         }
 
+        public static MemberLevel NewMemberLevel()
+        {
+            MemberLevel lvl = new MemberLevel();
+            lvl.Level = 1;
+            lvl.Discount = 100;
+            lvl.Name = "普通会员";
+            return lvl;
+        }
+
+        public static int getTopLevel()
+        {
+            int level = -1;
+
+            string qryStr = @"SELECT MAX(memlevel) FROM memberlevel";
+
+            MySqlCommand qryCmd = new MySqlCommand();
+            qryCmd.CommandText = qryStr;
+            qryCmd.Connection = ConnSingleton.Connection;
+
+            try
+            {
+                qryCmd.Connection.Open();
+                MySqlDataReader reader = qryCmd.ExecuteReader();
+                reader.Read();
+                if (reader.HasRows && !reader.IsDBNull(0))
+                {
+                    level = reader.GetInt32(0);
+                }
+            }
+            finally
+            {
+                qryCmd.Connection.Close();
+            }
+
+            return level;
+        }
+
+        // 
+        public static void insertLevelInfo(MemberLevel level)
+        {
+            insertMemberLevel(level.Level, level.Name, level.Discount);
+        }
+        
+
+        // ==========================私有===============================
+        // 插入数据库
+        private static void insertMemberLevel(int level, string name, int discount)
+        {
+            string insertStr = @"INSERT INTO memberlevel(memlevel,levelname,discount) 
+                                 VALUES(@level,@name,@discount)";
+            MySqlCommand insertCmd = new MySqlCommand();
+            insertCmd.CommandText = insertStr;
+            insertCmd.Connection = ConnSingleton.Connection;
+
+            insertCmd.Parameters.Add("@discount", MySqlDbType.Int32).Value = discount;
+            insertCmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
+            insertCmd.Parameters.Add("@level", MySqlDbType.Int32).Value = level;
+
+            try
+            {
+                insertCmd.Connection.Open();
+                insertCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                insertCmd.Connection.Close();
+            }
+        }
+
 
         private static void updateMemberLevel2DB(MemberLevel memLevInfo)
         {

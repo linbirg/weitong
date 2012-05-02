@@ -38,6 +38,45 @@ namespace weitongManager
             }
         }
 
+        public MemberLevel getMaxLevel()
+        {
+            return getMaxLevelFromList();
+        }
+
+        // 添加级别从大到小。
+        public void addDefaultTopLevelInfo()
+        {
+            MemberLevel lvl = MemberLevel.NewMemberLevel();
+            int topLv = MemberLevel.getTopLevel();
+            if (topLv == -1)
+            {
+                lvl.Level = 1;
+            }
+            else
+            {
+                lvl.Level = topLv + 1;
+            }
+            MemberLevel.insertLevelInfo(lvl);
+            m_level_list.Add(lvl);
+        }
+
+        //=========================私有方法===========================
+        private MemberLevel getMaxLevelFromList()
+        {
+            MemberLevel max_level = null;
+            if (m_level_list != null)
+            {
+                max_level = m_level_list[0];
+
+                foreach (MemberLevel lv in m_level_list)
+                {
+                    if (lv.Level > max_level.Level)
+                        max_level = lv;
+                }
+            }
+            return max_level;
+        }
+
         private void bindingData()
         {
             if (m_DGV_member_level == null) return;

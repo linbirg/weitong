@@ -423,11 +423,13 @@ namespace weitongManager
             }
         }
 
+        // 添加的顺序是从低到高，与之对应的删除的顺序是从高到低。
         private void tsmi_AddLevel_Click(object sender, EventArgs e)
         {
             try
-            { 
-                
+            {
+                m_membLevelMgr.addDefaultTopLevelInfo();
+                dgv_memberLevel.Refresh();
             }
             catch (Exception ex)
             {
@@ -435,14 +437,17 @@ namespace weitongManager
             }
         }
 
+        // 删除最高的级别，删除顺序从高到底，与之对应的，添加的顺序是从低到高。
         private void tsmi_DeleteLevel_Click(object sender, EventArgs e)
         {
             try
             {
                 DataGridViewRow curRow = dgv_memberLevel.CurrentRow;
-                MemberLevel data = curRow.DataBoundItem as MemberLevel;
+
+                MemberLevel data = m_membLevelMgr.getMaxLevel(); //curRow.DataBoundItem as MemberLevel;
+                if (data == null) return;
                 if(DialogResult.OK == 
-                    MessageBox.Show("您确定将此行数据从数据库中删除么？","警告",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2))
+                    MessageBox.Show("您确定删除级别" + data.Level.ToString() + "的信息么？","警告",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2))
                 {
                     m_membLevelMgr.remove(data);
                 }
