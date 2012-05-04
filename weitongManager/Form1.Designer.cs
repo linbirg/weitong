@@ -2024,6 +2024,7 @@
             this.btn_searchSupplier.TabIndex = 7;
             this.btn_searchSupplier.Text = "查找";
             this.btn_searchSupplier.UseVisualStyleBackColor = true;
+            this.btn_searchSupplier.Click += new System.EventHandler(this.btn_searchSupplier_Click);
             // 
             // btn_addSupplier
             // 

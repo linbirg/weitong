@@ -14,6 +14,34 @@ namespace weitongManager
             m_supplierTableAdapter.Fill(m_dataSet.supplier);
         }
 
+        public void searchSupplier(string name)
+        {
+            if (name == null || name == "")
+            {
+                // 如果输入的名称为空，则显示所有的供应商
+                m_supplierTableAdapter.Fill(m_dataSet.supplier);
+                //m_gridView.Refresh();
+                return;
+            }
+
+            Supplier splier = Supplier.findByName(name);
+            if (splier == null)
+            {
+                // 如果未找到，则清空
+                m_dataSet.supplier.Clear();
+                return;
+            }
+
+            m_supplierTableAdapter.Fill(m_dataSet.supplier);
+            weitongDataSet1.supplierRow aRow = m_dataSet.supplier.FindByid(splier.ID);
+            weitongDataSet1.supplierDataTable table = new weitongDataSet1.supplierDataTable();
+            table.ImportRow(aRow);
+            m_dataSet.supplier.Clear();
+            aRow = table[0];
+            m_dataSet.supplier.ImportRow(aRow);
+
+        }
+
         public int insertSupplier(string name)
         {
             try
@@ -43,8 +71,9 @@ namespace weitongManager
             }
             catch (Exception e)
             {
-                return -1;
+                
             }
+            return -1;
         }
 
 

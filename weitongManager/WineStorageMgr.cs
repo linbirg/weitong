@@ -30,25 +30,25 @@ namespace weitongManager
         // 
         public void addStorage(string code, string chateau = null, string country = null, string appellation = null, 
             string quality = null, string vintage = null, string description = null, string bottle = null, string score = null,
-            string supplier = null, decimal price = 0, decimal caseprice = 0, decimal retailprice = 0, int units = 0)
+            int supplierID = -1, decimal price = 0, decimal caseprice = 0, decimal retailprice = 0, int units = 0)
         {
             // 如果已经存在酒的库存记录，则更新wines的相关信息，包括wines和storage库存信息。
             if (existsWineInStorage(code))
             {
                 updateWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                updateStorage(code, 1, price, retailprice, units);
+                updateStorage(code, supplierID, price, retailprice, units);
             }
             // 如果没有库存记录，但是已经有酒的信息了，则更新酒的信息，再插入库存记录
             else if (existsWineInWines(code))
             {
                 updateWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                insertStorage(code, 1, price, retailprice, units);
+                insertStorage(code, supplierID, price, retailprice, units);
             }
             // 否则先插入酒记录，再插入库存记录
             else
             {
                 insertWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                insertStorage(code, 1, price, retailprice, units);
+                insertStorage(code, supplierID, price, retailprice, units);
             }
             
             m_dataset.storage.AcceptChanges();

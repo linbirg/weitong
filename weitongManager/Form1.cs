@@ -87,15 +87,22 @@ namespace weitongManager
 
         private void btn_addSupplier_Click(object sender, EventArgs e)
         {
-            if (tbox_supplierName.Text.Length > 0)
+            try
             {
-                m_supplierMgr.insertSupplier(tbox_supplierName.Text);
+                if (tbox_supplierName.Text.Length > 0)
+                {
+                    m_supplierMgr.insertSupplier(tbox_supplierName.Text);
+                }
+                else
+                {
+                    MessageBox.Show("请输入合法的供应商信息！");
+                }
+                //dgv_supplier.Refresh();
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("请输入合法的供应商信息！");
+                WARNING(ex.Message);
             }
-            //dgv_supplier.Refresh();
         }
 
         private void tsmi_deleteSupplier_Click(object sender, EventArgs e)
@@ -107,9 +114,20 @@ namespace weitongManager
         {
             try
             {
-                string supplier = tBox_supplier.Text;
+                string supplierName = tBox_supplier.Text;
+                Supplier aSpler = Supplier.findByName(supplierName);
+                // 如果供应商信息不存在，则提示是否添加供应商，如果客户选择不添加供应商，则供应商信息为空。
+                if (aSpler == null)
+                {
+                    if (DialogResult.Yes == SelectionDlgShow("供应商" + supplierName + "信息不在库中，你要保存供应商信息么？"))
+                    {
+                        aSpler = Supplier.NewSupplier();
+                        aSpler.Name = supplierName;
+                        aSpler.save();
+                    }
+                }
 
-
+                int supplier_id = aSpler == null ? -1 : aSpler.ID;
 
                 string code = tBox_code.Text;
                 string chateau = tBox_chateau.Text;
@@ -127,7 +145,7 @@ namespace weitongManager
                 decimal retailprice = decimal.Parse(tBox_retailprice.Text);
                 int units = Int32.Parse(tBox_units.Text);
                 m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score,
-                    supplier, price, caseprice, retailprice, units);
+                    supplier_id, price, caseprice, retailprice, units);
             }
             catch (Exception ex)
             {
@@ -536,6 +554,11 @@ namespace weitongManager
             MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
+        private DialogResult SelectionDlgShow(string msg)
+        {
+            return MessageBox.Show(msg, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        }
+
         private void dgv_roles_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -563,6 +586,18 @@ namespace weitongManager
             {
                 //tsl_sysTime.Text = DateTime.Now.ToLongTimeString();
                 showCurrentUser();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void btn_searchSupplier_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                m_supplierMgr.searchSupplier(tbox_supplierName.Text);
             }
             catch (Exception ex)
             {
