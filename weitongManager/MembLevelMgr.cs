@@ -30,6 +30,7 @@ namespace weitongManager
             m_level_list.Remove(levelInfo);
         }
 
+        // ===============属性=================
         public DataGridView MemberLevelGrid
         {
             get { return m_DGV_member_level; }

@@ -15,47 +15,73 @@ namespace weitongManager
         private WineStorageMgr m_wineStorageMgr = null;
         private SalesMgr m_salesMgr = null;
         private MembLevelMgr m_membLevelMgr = null;
+        private User m_currentUser = null;
+        private RolesMgr m_rolesMgr = null;
 
 
         public FrmMain()
         {
             InitializeComponent();
+            CenterToScreen();
+        }
+
+        public User CurrentUser
+        {
+            get { return m_currentUser; }
+            set { 
+                m_currentUser = value;
+                if (m_currentUser != null) showCurrentUser();
+            }
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'weitongDataSet1.memberlevel' table. You can move, or remove it, as needed.
-            this.memberlevelTableAdapter.Fill(this.weitongDataSet1.memberlevel);
-            m_supplierMgr = new SupplierMgr();
-            m_supplierMgr.DataSet = weitongDataSet1;
-            m_supplierMgr.SupplierTableAdapter = supplierTableAdapter;
-            m_supplierMgr.GridViewControl = dgv_supplier;
-            m_supplierMgr.init();
+            try
+            {
+                // TODO: This line of code loads data into the 'weitongDataSet1.memberlevel' table. You can move, or remove it, as needed.
+                this.memberlevelTableAdapter.Fill(this.weitongDataSet1.memberlevel);
+                m_supplierMgr = new SupplierMgr();
+                m_supplierMgr.DataSet = weitongDataSet1;
+                m_supplierMgr.SupplierTableAdapter = supplierTableAdapter;
+                m_supplierMgr.GridViewControl = dgv_supplier;
+                m_supplierMgr.init();
 
-            m_wineStorageMgr = new WineStorageMgr();
-            m_wineStorageMgr.WineStorageGridView = dgv_storage;
-            m_wineStorageMgr.DataSet = weitongDataSet1;
-            m_wineStorageMgr.Adapter = new weitongDataSet1TableAdapters.storageTableAdapter();
-            m_wineStorageMgr.init();
+                m_wineStorageMgr = new WineStorageMgr();
+                m_wineStorageMgr.WineStorageGridView = dgv_storage;
+                m_wineStorageMgr.DataSet = weitongDataSet1;
+                m_wineStorageMgr.Adapter = new weitongDataSet1TableAdapters.storageTableAdapter();
+                m_wineStorageMgr.init();
 
-            // 
-            m_salesMgr = new SalesMgr();
-            m_salesMgr.StorgeInfoView = dgv_storageInfo;
-            m_salesMgr.DataSet = new weitongDataSet1();
-            m_salesMgr.StorageAdapter = new weitongDataSet1TableAdapters.storageTableAdapter();
+                // 
+                m_salesMgr = new SalesMgr();
+                m_salesMgr.StorgeInfoView = dgv_storageInfo;
+                m_salesMgr.DataSet = new weitongDataSet1();
+                m_salesMgr.StorageAdapter = new weitongDataSet1TableAdapters.storageTableAdapter();
 
-            m_salesMgr.CartDetailView = dgv_cartDetail;
-            m_salesMgr.CurrentOrderView = dgv_currentOrder;
-            m_salesMgr.OrderListView = dgv_orderList;
-            m_salesMgr.OrderAdapter = new weitongDataSet1TableAdapters.orderTableAdapter();
+                m_salesMgr.CartDetailView = dgv_cartDetail;
+                m_salesMgr.CurrentOrderView = dgv_currentOrder;
+                m_salesMgr.OrderListView = dgv_orderList;
+                m_salesMgr.OrderAdapter = new weitongDataSet1TableAdapters.orderTableAdapter();
 
-            m_salesMgr.init();
+                m_salesMgr.init();
 
-            // memberlevel
-            m_membLevelMgr = new MembLevelMgr();
-            m_membLevelMgr.MemberLevelGrid = dgv_memberLevel;
+                // memberlevel
+                m_membLevelMgr = new MembLevelMgr();
+                m_membLevelMgr.MemberLevelGrid = dgv_memberLevel;
 
-            m_membLevelMgr.init();
+                m_membLevelMgr.init();
+
+                // role
+                m_rolesMgr = new RolesMgr();
+                m_rolesMgr.RolesGrid = dgv_roles;
+                m_rolesMgr.init();
+
+                //statusStrip.Items.Insert(statusStrip.Items.Count, new ToolStripSeparator());
+            }
+            catch (Exception ex)
+            {
+                WARNING("启动出现异常：" + ex.Message);
+            }
             
         }
 
@@ -79,23 +105,34 @@ namespace weitongManager
 
         private void btn_addStorage_Click(object sender, EventArgs e)
         {
-            string code = tBox_code.Text;
-            string chateau = tBox_chateau.Text;
-            string country = tBox_country.Text; 
-            string appellation = tBox_appellation.Text; 
-            string quality = tBox_quality.Text;
-            string vintage = tBox_Vintage.Text;
-            if (vintage == "") vintage = null;
-            string description = tBox_description.Text;
-            string bottle = tBox_bottle.Text;
-            string score = tBox_score.Text;
-            string supplier = tBox_supplier.Text;
-            decimal price = decimal.Parse(tBox_price.Text);
-            decimal caseprice = decimal.Parse(tBox_price.Text);
-            decimal retailprice = decimal.Parse(tBox_retailprice.Text);
-            int units = Int32.Parse(tBox_units.Text);
-            m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score, 
-                supplier, price, caseprice, retailprice, units);
+            try
+            {
+                string supplier = tBox_supplier.Text;
+
+
+
+                string code = tBox_code.Text;
+                string chateau = tBox_chateau.Text;
+                string country = tBox_country.Text;
+                string appellation = tBox_appellation.Text;
+                string quality = tBox_quality.Text;
+                string vintage = tBox_Vintage.Text;
+                if (vintage == "") vintage = null;
+                string description = tBox_description.Text;
+                string bottle = tBox_bottle.Text;
+                string score = tBox_score.Text;
+                
+                decimal price = decimal.Parse(tBox_price.Text);
+                decimal caseprice = decimal.Parse(tBox_price.Text);
+                decimal retailprice = decimal.Parse(tBox_retailprice.Text);
+                int units = Int32.Parse(tBox_units.Text);
+                m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score,
+                    supplier, price, caseprice, retailprice, units);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         private void tsmi_deleteStorage_Click(object sender, EventArgs e)
@@ -167,22 +204,36 @@ namespace weitongManager
 
         private void btn_SearchStorageInfo_Click(object sender, EventArgs e)
         {
-            weitongDataSet1.storageRow aStorageInfoRow = this.m_salesMgr.findStorageByCode(tBox_salesWineCode.Text);
-            if (aStorageInfoRow != null)
+            try
             {
-                weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-                table.ImportRow(aStorageInfoRow);
-                m_salesMgr.updateTable(table);
+                weitongDataSet1.storageRow aStorageInfoRow = this.m_salesMgr.findStorageByCode(tBox_salesWineCode.Text);
+                if (aStorageInfoRow != null)
+                {
+                    weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+                    table.ImportRow(aStorageInfoRow);
+                    m_salesMgr.bindStorageTable(table);
+                }
+                else
+                {
+                    MessageBox.Show("未找到指定酒的相关信息，请确定编码是否正确！");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("未找到指定酒的相关信息，请确定编码是否正确！");
+                WARNING(ex.Message);
             }
         }
 
         private void btn_ListStorageInfo_Click(object sender, EventArgs e)
         {
-            m_salesMgr.updateTable(this.m_salesMgr.DataSet.storage);
+            try
+            {
+                m_salesMgr.updateTable(this.m_salesMgr.DataSet.storage);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         private void tsmi_addToCart_Click(object sender, EventArgs e)
@@ -483,6 +534,40 @@ namespace weitongManager
         private void WARNING(string msg)
         {
             MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void dgv_roles_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridViewRow curRow = this.dgv_roles.Rows[e.RowIndex];
+                Role data = curRow.DataBoundItem as Role;
+                this.m_rolesMgr.updateDB(data);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void showCurrentUser()
+        {
+            tsl_curUser.Text = "user:" + CurrentUser.Name;
+            tsl_sysDate.Text = DateTime.Now.ToShortDateString();
+            tsl_sysTime.Text = DateTime.Now.ToLongTimeString();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                //tsl_sysTime.Text = DateTime.Now.ToLongTimeString();
+                showCurrentUser();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
         
     }

@@ -335,8 +335,8 @@ namespace weitongManager
                 }
                 reader.Close();
             }
-            catch (Exception ex)
-            { }
+            //catch (Exception ex)
+            //{ }
             finally
             {
                 qryCmd.Connection.Close();
@@ -359,8 +359,8 @@ namespace weitongManager
                 updateCmd.Connection.Open();
                 updateCmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            { }
+            //catch (Exception ex)
+            //{ }
             finally
             {
                 updateCmd.Connection.Close();

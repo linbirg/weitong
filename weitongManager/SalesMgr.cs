@@ -34,6 +34,12 @@ namespace weitongManager
 
         public void updateTable(weitongDataSet1.storageDataTable table)
         {
+            m_storageAdapter.Fill(table);
+            bindStorageTable(table);
+        }
+
+        public void bindStorageTable(weitongDataSet1.storageDataTable table)
+        {
             m_storageInfoGrid.DataSource = table;
             setOffColumn();
         }

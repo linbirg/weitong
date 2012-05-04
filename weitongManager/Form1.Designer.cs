@@ -36,6 +36,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -204,7 +207,9 @@
             this.tBox_code = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tp_supplier = new System.Windows.Forms.TabPage();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.dgv_roles = new System.Windows.Forms.DataGridView();
+            this.roleNameTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.roleDiscountTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_memberLevel = new System.Windows.Forms.DataGridView();
             this.memlevelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.levelnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -213,21 +218,28 @@
             this.tsmi_AddLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_DeleteLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.dgv_supplier = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_supplier = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_deleteSupplier = new System.Windows.Forms.ToolStripMenuItem();
+            this.supplierBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.weitongDataSet1 = new weitongManager.weitongDataSet1();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.btn_searchSupplier = new System.Windows.Forms.Button();
             this.btn_addSupplier = new System.Windows.Forms.Button();
             this.tbox_supplierName = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.weitongDataSet1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.weitongDataSet1 = new weitongManager.weitongDataSet1();
             this.supplierTableAdapter = new weitongManager.weitongDataSet1TableAdapters.supplierTableAdapter();
             this.memberlevelTableAdapter = new weitongManager.weitongDataSet1TableAdapters.memberlevelTableAdapter();
-            this.supplierBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsl_sysTime = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsl_sysDate = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -254,15 +266,16 @@
             this.groupBox8.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tp_supplier.SuspendLayout();
-            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).BeginInit();
             this.ctms_MembLevel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_supplier)).BeginInit();
             this.ctms_supplier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).BeginInit();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -273,7 +286,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1240, 733);
+            this.tabControl1.Size = new System.Drawing.Size(1240, 723);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -284,7 +297,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1232, 707);
+            this.tabPage1.Size = new System.Drawing.Size(1232, 697);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "销售";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -471,7 +484,7 @@
             this.tabCtrl_Order.Controls.Add(this.tabPg_Cart);
             this.tabCtrl_Order.Controls.Add(this.tabPg_CurrentOrder);
             this.tabCtrl_Order.Controls.Add(this.tabPg_OrderList);
-            this.tabCtrl_Order.Location = new System.Drawing.Point(3, 326);
+            this.tabCtrl_Order.Location = new System.Drawing.Point(3, 323);
             this.tabCtrl_Order.Name = "tabCtrl_Order";
             this.tabCtrl_Order.SelectedIndex = 0;
             this.tabCtrl_Order.Size = new System.Drawing.Size(1209, 343);
@@ -1373,7 +1386,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1232, 707);
+            this.tabPage2.Size = new System.Drawing.Size(1232, 697);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "库存";
             // 
@@ -1803,24 +1816,49 @@
             // 
             // tp_supplier
             // 
-            this.tp_supplier.Controls.Add(this.groupBox10);
+            this.tp_supplier.Controls.Add(this.dgv_roles);
+            this.tp_supplier.Controls.Add(this.dgv_memberLevel);
             this.tp_supplier.Controls.Add(this.dgv_supplier);
             this.tp_supplier.Controls.Add(this.groupBox11);
             this.tp_supplier.Location = new System.Drawing.Point(4, 22);
             this.tp_supplier.Name = "tp_supplier";
-            this.tp_supplier.Size = new System.Drawing.Size(1232, 707);
+            this.tp_supplier.Size = new System.Drawing.Size(1232, 697);
             this.tp_supplier.TabIndex = 2;
             this.tp_supplier.Text = "供货商管理";
             this.tp_supplier.UseVisualStyleBackColor = true;
             // 
-            // groupBox10
+            // dgv_roles
             // 
-            this.groupBox10.Controls.Add(this.dgv_memberLevel);
-            this.groupBox10.Location = new System.Drawing.Point(416, 4);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(376, 225);
-            this.groupBox10.TabIndex = 2;
-            this.groupBox10.TabStop = false;
+            this.dgv_roles.AllowUserToAddRows = false;
+            this.dgv_roles.AllowUserToDeleteRows = false;
+            this.dgv_roles.AllowUserToResizeRows = false;
+            this.dgv_roles.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgv_roles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_roles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.roleNameTextBoxColumn,
+            this.roleDiscountTextBoxColumn});
+            this.dgv_roles.Location = new System.Drawing.Point(800, 14);
+            this.dgv_roles.MultiSelect = false;
+            this.dgv_roles.Name = "dgv_roles";
+            this.dgv_roles.RowHeadersVisible = false;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_roles.RowsDefaultCellStyle = dataGridViewCellStyle7;
+            this.dgv_roles.RowTemplate.Height = 23;
+            this.dgv_roles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_roles.Size = new System.Drawing.Size(328, 215);
+            this.dgv_roles.TabIndex = 4;
+            this.dgv_roles.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_roles_CellEndEdit);
+            // 
+            // roleNameTextBoxColumn
+            // 
+            this.roleNameTextBoxColumn.HeaderText = "角色名称";
+            this.roleNameTextBoxColumn.Name = "roleNameTextBoxColumn";
+            this.roleNameTextBoxColumn.ReadOnly = true;
+            // 
+            // roleDiscountTextBoxColumn
+            // 
+            this.roleDiscountTextBoxColumn.HeaderText = "权限折扣";
+            this.roleDiscountTextBoxColumn.Name = "roleDiscountTextBoxColumn";
             // 
             // dgv_memberLevel
             // 
@@ -1835,14 +1873,16 @@
             this.levelnameDataGridViewTextBoxColumn,
             this.discountDataGridViewTextBoxColumn});
             this.dgv_memberLevel.ContextMenuStrip = this.ctms_MembLevel;
-            this.dgv_memberLevel.Location = new System.Drawing.Point(4, 9);
+            this.dgv_memberLevel.Location = new System.Drawing.Point(402, 14);
             this.dgv_memberLevel.MultiSelect = false;
             this.dgv_memberLevel.Name = "dgv_memberLevel";
             this.dgv_memberLevel.RowHeadersVisible = false;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_memberLevel.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgv_memberLevel.RowTemplate.Height = 23;
             this.dgv_memberLevel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_memberLevel.Size = new System.Drawing.Size(363, 210);
-            this.dgv_memberLevel.TabIndex = 0;
+            this.dgv_memberLevel.Size = new System.Drawing.Size(392, 215);
+            this.dgv_memberLevel.TabIndex = 3;
             this.dgv_memberLevel.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_memberLevel_CellEndEdit);
             // 
             // memlevelDataGridViewTextBoxColumn
@@ -1900,24 +1940,45 @@
             this.dataGridViewTextBoxColumn8});
             this.dgv_supplier.ContextMenuStrip = this.ctms_supplier;
             this.dgv_supplier.DataSource = this.supplierBindingSource;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle9;
             this.dgv_supplier.Location = new System.Drawing.Point(4, 66);
             this.dgv_supplier.MultiSelect = false;
             this.dgv_supplier.Name = "dgv_supplier";
             this.dgv_supplier.ReadOnly = true;
             this.dgv_supplier.RowHeadersVisible = false;
             this.dgv_supplier.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_supplier.RowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgv_supplier.RowTemplate.Height = 23;
             this.dgv_supplier.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_supplier.Size = new System.Drawing.Size(392, 163);
             this.dgv_supplier.TabIndex = 1;
+            // 
+            // nameDataGridViewTextBoxColumn1
+            // 
+            this.nameDataGridViewTextBoxColumn1.DataPropertyName = "name";
+            this.nameDataGridViewTextBoxColumn1.HeaderText = "名称";
+            this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
+            this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "等级";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "规模";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
             // ctms_supplier
             // 
@@ -1932,6 +1993,16 @@
             this.tsmi_deleteSupplier.Size = new System.Drawing.Size(109, 22);
             this.tsmi_deleteSupplier.Text = "&D删除";
             this.tsmi_deleteSupplier.Click += new System.EventHandler(this.tsmi_deleteSupplier_Click);
+            // 
+            // supplierBindingSource
+            // 
+            this.supplierBindingSource.DataMember = "supplier";
+            this.supplierBindingSource.DataSource = this.weitongDataSet1;
+            // 
+            // weitongDataSet1
+            // 
+            this.weitongDataSet1.DataSetName = "weitongDataSet1";
+            this.weitongDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // groupBox11
             // 
@@ -1985,11 +2056,6 @@
             this.weitongDataSet1BindingSource.DataSource = this.weitongDataSet1;
             this.weitongDataSet1BindingSource.Position = 0;
             // 
-            // weitongDataSet1
-            // 
-            this.weitongDataSet1.DataSetName = "weitongDataSet1";
-            this.weitongDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // supplierTableAdapter
             // 
             this.supplierTableAdapter.ClearBeforeFill = true;
@@ -1998,29 +2064,59 @@
             // 
             this.memberlevelTableAdapter.ClearBeforeFill = true;
             // 
-            // supplierBindingSource
+            // toolStrip1
             // 
-            this.supplierBindingSource.DataMember = "supplier";
-            this.supplierBindingSource.DataSource = this.weitongDataSet1;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsl_sysTime,
+            this.toolStripSeparator1,
+            this.tsl_sysDate,
+            this.toolStripSeparator2,
+            this.tsl_curUser});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 722);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1261, 25);
+            this.toolStrip1.TabIndex = 6;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // nameDataGridViewTextBoxColumn1
+            // tsl_sysTime
             // 
-            this.nameDataGridViewTextBoxColumn1.DataPropertyName = "name";
-            this.nameDataGridViewTextBoxColumn1.HeaderText = "名称";
-            this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
-            this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.tsl_sysTime.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsl_sysTime.Name = "tsl_sysTime";
+            this.tsl_sysTime.Size = new System.Drawing.Size(39, 22);
+            this.tsl_sysTime.Text = "20:50";
             // 
-            // dataGridViewTextBoxColumn7
+            // toolStripSeparator1
             // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "等级";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // dataGridViewTextBoxColumn8
+            // tsl_sysDate
             // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "规模";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.tsl_sysDate.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsl_sysDate.Name = "tsl_sysDate";
+            this.tsl_sysDate.Size = new System.Drawing.Size(70, 22);
+            this.tsl_sysDate.Text = "2012.05.04";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsl_curUser
+            // 
+            this.tsl_curUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsl_curUser.Name = "tsl_curUser";
+            this.tsl_curUser.Size = new System.Drawing.Size(72, 22);
+            this.tsl_curUser.Text = "user:admin";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // FrmMain
             // 
@@ -2028,6 +2124,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1261, 747);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
             this.Name = "FrmMain";
             this.Text = "微通红酒销售管理1.0";
@@ -2064,17 +2161,20 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tp_supplier.ResumeLayout(false);
-            this.groupBox10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).EndInit();
             this.ctms_MembLevel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_supplier)).EndInit();
             this.ctms_supplier.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weitongDataSet1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.supplierBindingSource)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -2259,12 +2359,7 @@
         private System.Windows.Forms.Label lbl_custPhone;
         private System.Windows.Forms.Label lbl_customerBirthday;
         private System.Windows.Forms.Label lbl_customerJob;
-        private System.Windows.Forms.GroupBox groupBox10;
-        private System.Windows.Forms.DataGridView dgv_memberLevel;
         private weitongDataSet1TableAdapters.memberlevelTableAdapter memberlevelTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn memlevelDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn levelnameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
         private System.Windows.Forms.ContextMenuStrip ctms_MembLevel;
         private System.Windows.Forms.ToolStripMenuItem tsmi_AddLevel;
         private System.Windows.Forms.ToolStripMenuItem tsmi_DeleteLevel;
@@ -2272,6 +2367,20 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridView dgv_memberLevel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn memlevelDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn levelnameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridView dgv_roles;
+        private System.Windows.Forms.DataGridViewTextBoxColumn roleNameTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn roleDiscountTextBoxColumn;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel tsl_curUser;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel tsl_sysDate;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripLabel tsl_sysTime;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

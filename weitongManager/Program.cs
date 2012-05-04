@@ -15,7 +15,14 @@ namespace weitongManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+            FrmLogin frmLogin = new FrmLogin();
+            if (DialogResult.OK == frmLogin.ShowDialog())
+            {
+                User aUser = frmLogin.getLoginUser();
+                FrmMain frmMain = new FrmMain();
+                frmMain.CurrentUser = aUser;
+                Application.Run(frmMain);
+            }
         }
     }
 }

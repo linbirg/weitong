@@ -36,19 +36,19 @@ namespace weitongManager
             if (existsWineInStorage(code))
             {
                 updateWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                updateStorage(code, 1, price, caseprice, retailprice, units);
+                updateStorage(code, 1, price, retailprice, units);
             }
             // 如果没有库存记录，但是已经有酒的信息了，则更新酒的信息，再插入库存记录
             else if (existsWineInWines(code))
             {
                 updateWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                insertStorage(code, 1, price, caseprice, retailprice, units);
+                insertStorage(code, 1, price, retailprice, units);
             }
             // 否则先插入酒记录，再插入库存记录
             else
             {
                 insertWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                insertStorage(code, 1, price, caseprice, retailprice, units);
+                insertStorage(code, 1, price, retailprice, units);
             }
             
             m_dataset.storage.AcceptChanges();
@@ -212,7 +212,7 @@ namespace weitongManager
         // 添加库存信息
         // supplierid若为-1这表示没有设置对应的供应商
         private void insertStorage(string code, int supplierid = -1, decimal price = 0, 
-            decimal caseprice = 0, decimal retailprice = 0, int units = 0)
+            decimal retailprice = 0, int units = 0)
         {
             string insStr = @"INSERT INTO storage(code, supplierid, price, retailprice, units) 
                                 VALUES(@code, @supplierid, @price, @retailprice, @units)";
@@ -280,9 +280,9 @@ namespace weitongManager
 
         // 更新库存信息
         // supplierid若为-1这表示没有设置对应的供应商
-        private void updateStorage(string code, int supplierid = -1, decimal price = 0, decimal caseprice = 0, decimal retailprice = 0, int units = 0)
+        private void updateStorage(string code, int supplierid = -1, decimal price = 0, decimal retailprice = 0, int units = 0)
         {
-            string updateStr = @"UPDATE storage SET supplierid = @supplierid, price = @price, caseprice = @caseprice, 
+            string updateStr = @"UPDATE storage SET supplierid = @supplierid, price = @price, 
                                                  retailprice = @retailprice, units = @units
                                  WHERE code = @code";
             MySql.Data.MySqlClient.MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
@@ -298,7 +298,7 @@ namespace weitongManager
                 updateCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
             }
             updateCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
-            updateCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
+            //updateCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
             updateCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
             updateCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
 
