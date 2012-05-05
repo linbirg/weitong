@@ -264,12 +264,14 @@ namespace weitongManager
             if (customer == null) return;
             customer.Name = tBox_custermorName.Text;
             customer.Address = tBox_customerAddress.Text;
-            customer.Birthday = DateTime.Now.Date;
+            customer.Birthday = DateTime.Parse(tBox_customerBirthday.Text);
             customer.Email = tBox_customerEmail.Text;
             customer.Job = tBox_customerJob.Text;
             customer.PhoneNumber = tBox_customerPhNumber.Text;
             customer.RegisterDate = DateTime.Now;
             customer.Sex = 1;
+            
+            // memberinfo
         }
 
         private void jump2CurrentOrder()
@@ -283,19 +285,26 @@ namespace weitongManager
         // 再生成订单信息，订单状态为未付款(当完成付款后，修改状态为完成)。
         private void btn_CalcOrder_Click(object sender, EventArgs e)
         {
-            if (checkCustomerValidtion())
+            try
             {
-                Customer aCustomer = m_salesMgr.findCustomerByName(tBox_custermorName.Text);
-                if (aCustomer == null)
+                if (checkCustomerValidtion())
                 {
-                    aCustomer = new Customer();
-                    assignCustomerInfo(aCustomer);
-                    m_salesMgr.addCustomer2DB(aCustomer);
+                    Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
+                    if (aCustomer == null)
+                    {
+                        aCustomer = new Customer();
+                        assignCustomerInfo(aCustomer);
+                        m_salesMgr.addCustomer2DB(aCustomer);
+                    }
+                    m_salesMgr.CartCustomer = aCustomer;
+                    m_salesMgr.calcCart();
+                    jump2CurrentOrder();
+                    showCurrentOrder();
                 }
-                m_salesMgr.CartCustomer = aCustomer;
-                m_salesMgr.calcCart();
-                jump2CurrentOrder();
-                showCurrentOrder();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
             }
         }
 
@@ -318,7 +327,7 @@ namespace weitongManager
         {
             if (checkCustomerValidtion())
             {
-                Customer aCustomer = m_salesMgr.findCustomerByName(tBox_custermorName.Text);
+                Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
                 if (aCustomer != null)
                 {
                     showCustomerInfo(aCustomer);
@@ -336,11 +345,11 @@ namespace weitongManager
             if (aCustomer == null) return;
             tBox_custermorName.Text = aCustomer.Name;
             tBox_customerAddress.Text = aCustomer.Address;
-            tBox_customerBirthday.Text = aCustomer.Birthday.ToString();
+            tBox_customerBirthday.Text = aCustomer.Birthday.ToShortDateString();
             tBox_customerEmail.Text = aCustomer.Email;
             tBox_customerJob.Text = aCustomer.Job;
             tBox_customerPhNumber.Text = aCustomer.PhoneNumber;
-            tBox_customerRegisterDay.Text = aCustomer.RegisterDate.ToString();
+            tBox_customerRegisterDay.Text = aCustomer.RegisterDate.ToShortDateString();
             tBox_cartMemLevel.Text = aCustomer.MemberLevel.ToString();
         }
 
@@ -598,6 +607,29 @@ namespace weitongManager
             try
             {
                 m_supplierMgr.searchSupplier(tbox_supplierName.Text);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void btn_saveCustomer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (checkCustomerValidtion())
+                {
+                    Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
+                    if (aCustomer == null)
+                    {
+                        aCustomer = Customer.NewCustomer();
+                    }
+                    assignCustomerInfo(aCustomer);
+                    m_salesMgr.addCustomer2DB(aCustomer);
+                    
+                    m_salesMgr.CartCustomer = aCustomer;
+                }
             }
             catch (Exception ex)
             {

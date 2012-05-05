@@ -109,7 +109,9 @@ namespace weitongManager
         // 将客户信息存入数据库
         public void addCustomer2DB(Customer customer)
         {
-            customer.ID = insertCustomerAndGetID(customer);
+            //customer.ID = insertCustomerAndGetID(customer);
+            if (customer == null) return;
+            customer.save();
             assignMember2Customer(customer);
         }
 
@@ -187,7 +189,7 @@ namespace weitongManager
             m_orderID = curOrder.ID;
             m_currentOrder = curOrder;
 
-            Customer curCustomer = findCustomerByID(curOrder.CustomerID);
+            Customer curCustomer = Customer.findByID(curOrder.CustomerID);
             if (curCustomer == null) return -2;
             m_currentCustomer = curCustomer;
 
@@ -269,37 +271,37 @@ namespace weitongManager
             }
         }
 
-        // 根据客户名称查找客户信息(暂时不考虑多个客户同名的问题)。
-        public Customer findCustomerByName(string name)
-        {
-            Customer aCustomer = null;
+//        // 根据客户名称查找客户信息(暂时不考虑多个客户同名的问题)。
+//        public Customer findCustomerByName(string name)
+//        {
+//            Customer aCustomer = null;
 
-            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
-                customers.birthday, customers.address, customers.email, 
-                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
-                FROM customers INNER JOIN
-                     member ON customers.id = member.customerid
-                WHERE customers.name like @name";
-            MySqlCommand queryCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            queryCmd.CommandText = queryStr;
-            queryCmd.Parameters.Add("@name", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = name;
-            queryCmd.Connection = ConnSingleton.Connection;//this.m_storageAdapter.Connection;
+//            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
+//                customers.birthday, customers.address, customers.email, 
+//                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
+//                FROM customers INNER JOIN
+//                     member ON customers.id = member.customerid
+//                WHERE customers.name like @name";
+//            MySqlCommand queryCmd = new MySql.Data.MySqlClient.MySqlCommand();
+//            queryCmd.CommandText = queryStr;
+//            queryCmd.Parameters.Add("@name", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = name;
+//            queryCmd.Connection = ConnSingleton.Connection;//this.m_storageAdapter.Connection;
 
-            try
-            {
-                queryCmd.Connection.Open();
-                MySqlDataReader reader = queryCmd.ExecuteReader();
-                reader.Read();
-                aCustomer = getCustomerFromReader(reader); 
+//            try
+//            {
+//                queryCmd.Connection.Open();
+//                MySqlDataReader reader = queryCmd.ExecuteReader();
+//                reader.Read();
+//                aCustomer = getCustomerFromReader(reader); 
                 
-            }
-            finally
-            {
-                queryCmd.Connection.Close();
-            }
+//            }
+//            finally
+//            {
+//                queryCmd.Connection.Close();
+//            }
 
-            return aCustomer;
-        }
+//            return aCustomer;
+//        }
 
 
 
@@ -540,40 +542,40 @@ namespace weitongManager
             }
         }
         
-        // customer
-        private int insertCustomerAndGetID(Customer aCustomer)
-        {
-            int id = -1;
+//        // customer
+//        private int insertCustomerAndGetID(Customer aCustomer)
+//        {
+//            int id = -1;
 
-            string insertStr = @"INSERT INTO customers(name,phonenumber,registedate,sex,job,birthday,address,email) 
-                                VALUES(@name,@phonenumber,@registedate,@sex,@job,@birthday,@address,@email)";
-            MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            insertCmd.CommandText = insertStr;
-            insertCmd.Connection = m_storageAdapter.Connection;
-            insertCmd.Parameters.Add("@name",MySqlDbType.VarChar).Value = aCustomer.Name;
-            insertCmd.Parameters.Add("@phonenumber", MySqlDbType.VarChar).Value = aCustomer.PhoneNumber;
-            insertCmd.Parameters.Add("@registedate", MySqlDbType.DateTime).Value = aCustomer.RegisterDate;
-            insertCmd.Parameters.Add("@sex", MySqlDbType.Int32).Value = aCustomer.Sex;
-            insertCmd.Parameters.Add("@job", MySqlDbType.VarChar).Value = aCustomer.Job;
-            insertCmd.Parameters.Add("@birthday", MySqlDbType.Date).Value = aCustomer.Birthday;
-            insertCmd.Parameters.Add("@address", MySqlDbType.VarChar).Value = aCustomer.Address;
-            insertCmd.Parameters.Add("@email", MySqlDbType.VarChar).Value = aCustomer.Email;
+//            string insertStr = @"INSERT INTO customers(name,phonenumber,registedate,sex,job,birthday,address,email) 
+//                                VALUES(@name,@phonenumber,@registedate,@sex,@job,@birthday,@address,@email)";
+//            MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
+//            insertCmd.CommandText = insertStr;
+//            insertCmd.Connection = m_storageAdapter.Connection;
+//            insertCmd.Parameters.Add("@name",MySqlDbType.VarChar).Value = aCustomer.Name;
+//            insertCmd.Parameters.Add("@phonenumber", MySqlDbType.VarChar).Value = aCustomer.PhoneNumber;
+//            insertCmd.Parameters.Add("@registedate", MySqlDbType.DateTime).Value = aCustomer.RegisterDate;
+//            insertCmd.Parameters.Add("@sex", MySqlDbType.Int32).Value = aCustomer.Sex;
+//            insertCmd.Parameters.Add("@job", MySqlDbType.VarChar).Value = aCustomer.Job;
+//            insertCmd.Parameters.Add("@birthday", MySqlDbType.Date).Value = aCustomer.Birthday;
+//            insertCmd.Parameters.Add("@address", MySqlDbType.VarChar).Value = aCustomer.Address;
+//            insertCmd.Parameters.Add("@email", MySqlDbType.VarChar).Value = aCustomer.Email;
 
-            insertCmd.Connection.Open();
-            insertCmd.ExecuteNonQuery();
-            string queryIdStr = "SELECT LAST_INSERT_ID()";
-            insertCmd.CommandText = queryIdStr;
-            MySqlDataReader reader = insertCmd.ExecuteReader();
-            reader.Read();
-            if (reader.HasRows)
-            {
-                id = reader.GetInt32(0);
-            }
+//            insertCmd.Connection.Open();
+//            insertCmd.ExecuteNonQuery();
+//            string queryIdStr = "SELECT LAST_INSERT_ID()";
+//            insertCmd.CommandText = queryIdStr;
+//            MySqlDataReader reader = insertCmd.ExecuteReader();
+//            reader.Read();
+//            if (reader.HasRows)
+//            {
+//                id = reader.GetInt32(0);
+//            }
 
-            insertCmd.Connection.Close();
+//            insertCmd.Connection.Close();
 
-            return id;
-        }
+//            return id;
+//        }
 
         private void assignMember2Customer(Customer aCustomer)
         {
@@ -603,60 +605,60 @@ namespace weitongManager
             }
         }
 
-        private Customer findCustomerByID(int id)
-        {
-            Customer aCustomer = null;
+//        private Customer findCustomerByID(int id)
+//        {
+//            Customer aCustomer = null;
 
-            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
-                customers.birthday, customers.address, customers.email, 
-                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
-                FROM customers INNER JOIN
-                     member ON customers.id = member.customerid
-                WHERE customers.id=@id";
-            MySqlCommand queryCmd = new MySqlCommand();
-            queryCmd.CommandText = queryStr;
-            queryCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
-            queryCmd.Connection = this.m_storageAdapter.Connection;
+//            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
+//                customers.birthday, customers.address, customers.email, 
+//                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
+//                FROM customers INNER JOIN
+//                     member ON customers.id = member.customerid
+//                WHERE customers.id=@id";
+//            MySqlCommand queryCmd = new MySqlCommand();
+//            queryCmd.CommandText = queryStr;
+//            queryCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+//            queryCmd.Connection = this.m_storageAdapter.Connection;
 
-            try
-            {
-                queryCmd.Connection.Open();
-                MySqlDataReader reader = queryCmd.ExecuteReader();
-                reader.Read();
-                aCustomer = getCustomerFromReader(reader);
+//            try
+//            {
+//                queryCmd.Connection.Open();
+//                MySqlDataReader reader = queryCmd.ExecuteReader();
+//                reader.Read();
+//                aCustomer = getCustomerFromReader(reader);
                 
-            }
-            finally
-            {
-                queryCmd.Connection.Close();
-            }
+//            }
+//            finally
+//            {
+//                queryCmd.Connection.Close();
+//            }
 
-            return aCustomer;
-        }
+//            return aCustomer;
+//        }
 
-        private Customer getCustomerFromReader(MySqlDataReader reader)
-        {
-            Customer aCustomer = null;
-            if (reader == null || reader.IsClosed || !reader.HasRows) return null;
+//        private Customer getCustomerFromReader(MySqlDataReader reader)
+//        {
+//            Customer aCustomer = null;
+//            if (reader == null || reader.IsClosed || !reader.HasRows) return null;
 
-            aCustomer = new Customer();
+//            aCustomer = new Customer();
 
-            aCustomer.ID = reader.GetInt32("id");
-            aCustomer.Name = reader.GetString("name");
-            aCustomer.PhoneNumber = reader.GetString("phonenumber");
-            aCustomer.Email = reader.GetString("email");
-            aCustomer.Address = reader.GetString("address");
-            aCustomer.Birthday = reader.GetDateTime("birthday");
-            aCustomer.Job = reader.GetString("job");
-            aCustomer.RegisterDate = reader.GetDateTime("registedate");
-            aCustomer.Sex = reader.GetInt32("sex");
+//            aCustomer.ID = reader.GetInt32("id");
+//            aCustomer.Name = reader.GetString("name");
+//            aCustomer.PhoneNumber = reader.GetString("phonenumber");
+//            aCustomer.Email = reader.GetString("email");
+//            aCustomer.Address = reader.GetString("address");
+//            aCustomer.Birthday = reader.GetDateTime("birthday");
+//            aCustomer.Job = reader.GetString("job");
+//            aCustomer.RegisterDate = reader.GetDateTime("registedate");
+//            aCustomer.Sex = reader.GetInt32("sex");
 
-            aCustomer.MemberID = reader.GetString("memberid");
-            aCustomer.MemberLevel = reader.GetInt32("memlevel");
-            aCustomer.MemberDate = reader.GetDateTime("memberdate");
+//            aCustomer.MemberID = reader.GetString("memberid");
+//            aCustomer.MemberLevel = reader.GetInt32("memlevel");
+//            aCustomer.MemberDate = reader.GetDateTime("memberdate");
 
-            return aCustomer;
-        }
+//            return aCustomer;
+//        }
 
         // 根据客户的折扣信息更新购物车中的折扣信息。
         private void updateCartMemberDiscout(Customer aCustomer)
