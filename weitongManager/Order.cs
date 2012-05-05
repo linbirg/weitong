@@ -42,20 +42,21 @@ namespace weitongManager
         public string StateName
         {
             get {
-                string stateStr = "未知状态";
-                if (m_orderState == OrderState.FOR_PAY)
-                {
-                    stateStr = "等待付款";
-                }
-                else if(m_orderState == OrderState.COMPLETED)
-                {
-                    stateStr = "已完成";
-                }
-                else if (m_orderState == OrderState.CANCEL)
-                {
-                    stateStr = "已取消";
-                }
-                return stateStr;
+                //string stateStr = "未知状态";
+                //if (m_orderState == OrderState.FOR_PAY)
+                //{
+                //    stateStr = "等待付款";
+                //}
+                //else if(m_orderState == OrderState.COMPLETED)
+                //{
+                //    stateStr = "已完成";
+                //}
+                //else if (m_orderState == OrderState.CANCEL)
+                //{
+                //    stateStr = "已取消";
+                //}
+                //return stateStr;
+                return getStateName(m_orderState);
             }
         }
 
@@ -153,6 +154,24 @@ namespace weitongManager
             Order anOrder = new Order();
             anOrder.ID = -1;
             return anOrder;
+        }
+
+        public static string getStateName(OrderState state)
+        {
+            string stateStr = "未知状态";
+            if (state == OrderState.FOR_PAY)
+            {
+                stateStr = "等待付款";
+            }
+            else if (state == OrderState.COMPLETED)
+            {
+                stateStr = "已完成";
+            }
+            else if (state == OrderState.CANCEL)
+            {
+                stateStr = "已取消";
+            }
+            return stateStr;
         }
 
 

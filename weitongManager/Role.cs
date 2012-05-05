@@ -76,6 +76,34 @@ namespace weitongManager
             return list;
         }
 
+        public static Role findByID(int id)
+        {
+            Role aRole = null;
+            string qryStr = @"SELECT id,name,discount FROM roles WHERE id=@id";
+            MySqlCommand qryCmd = new MySqlCommand();
+            qryCmd.CommandText = qryStr;
+            qryCmd.Connection = ConnSingleton.Connection;
+            qryCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+
+            try
+            {
+                qryCmd.Connection.Open();
+                MySqlDataReader reader = qryCmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    aRole = NewRole();
+                    aRole.Discount = reader.GetInt32("discount");
+                    aRole.Name = reader.GetString("name");
+                    aRole.m_id = reader.GetInt32("id");
+                }
+            }
+            finally
+            {
+                qryCmd.Connection.Close();
+            }
+            return aRole;
+        }
+
 
         // ====================私有静态方法======================
         // 将role的插入到数据库，函数返回新插入的role的id。

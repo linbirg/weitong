@@ -44,6 +44,16 @@ namespace weitongManager
             get { return m_roleid; }
         }
 
+        public int MinDiscount
+        {
+            get 
+            {
+                Role rl = Role.findByID(m_roleid);
+                if (rl != null) return rl.Discount;
+                return 100;
+            }
+        }
+
         //====================================公有静态方法=============================
         public static bool authenticate(string name,string passwd)
         {

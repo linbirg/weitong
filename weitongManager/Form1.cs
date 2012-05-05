@@ -23,6 +23,7 @@ namespace weitongManager
         {
             InitializeComponent();
             CenterToScreen();
+            tBox_CellEditer.LostFocus += new EventHandler(tBox_CellEditer_LostFocus);
         }
 
         public User CurrentUser
@@ -296,7 +297,10 @@ namespace weitongManager
                         assignCustomerInfo(aCustomer);
                         m_salesMgr.addCustomer2DB(aCustomer);
                     }
-                    m_salesMgr.CartCustomer = aCustomer;
+                    if (m_salesMgr.CartCustomer == null || m_salesMgr.CartCustomer.Name != aCustomer.Name)
+                    {
+                        m_salesMgr.CartCustomer = aCustomer;
+                    }
                     m_salesMgr.calcCart();
                     jump2CurrentOrder();
                     showCurrentOrder();
@@ -629,6 +633,90 @@ namespace weitongManager
                     m_salesMgr.addCustomer2DB(aCustomer);
                     
                     m_salesMgr.CartCustomer = aCustomer;
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void dgv_cartDetail_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridViewCell cell = dgv_cartDetail.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (dgv_cartDetail.Columns[e.ColumnIndex].Name == "discountDGVOrderDetailTextBoxColumn")
+                {
+                    tBox_CellEditer.Size = cell.Size;
+                    tBox_CellEditer.Text = cell.Value.ToString();
+                    tBox_CellEditer.Visible = true;
+                    tBox_CellEditer.Location = calcCartDetailCellLocation(e.RowIndex,e.ColumnIndex);
+                    tBox_CellEditer.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        void tBox_CellEditer_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                tBox_CellEditer.Visible = false;
+                string value = tBox_CellEditer.Text;
+                DataGridViewCell cell = dgv_cartDetail.CurrentCell;
+                CartDetailRowData data = dgv_cartDetail.Rows[cell.RowIndex].DataBoundItem as CartDetailRowData;
+                if (dgv_cartDetail.Columns[cell.ColumnIndex].Name == "discountDGVOrderDetailTextBoxColumn")
+                {
+                    int discount = int.Parse(value);
+                    if (discount < CurrentUser.MinDiscount)
+                    {
+                        WARNING("您的折扣权限不够，请于店长联系！");
+                    }
+                    else
+                    {
+                        data.Discount = discount;
+                    }
+                }        
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private Point calcCartDetailCellLocation(int rowIndex, int columnIndex)
+        {
+            int x = dgv_cartDetail.Location.X;
+            int y = dgv_cartDetail.Location.Y;
+            int width = 0;
+            int height = dgv_cartDetail.ColumnHeadersHeight;
+
+            for (int row = 0; row < rowIndex; row++)
+            {
+                height += dgv_cartDetail.Rows[row].Height;
+            }
+
+            for (int col = 0; col < columnIndex; col++)
+            {
+                width += dgv_cartDetail.Columns[col].Width;
+            }
+
+            return new Point(x + width, y + height);
+        }
+
+        private void dgv_orderList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+                if (e.ColumnIndex == 4)
+                {
+                    OrderState state = (OrderState)e.Value;
+                    e.Value = Order.getStateName(state);
                 }
             }
             catch (Exception ex)
