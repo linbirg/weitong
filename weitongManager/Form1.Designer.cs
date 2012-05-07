@@ -79,12 +79,12 @@
             this.tsmi_cartAddUnits = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_cartNecUnits = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.cbox_membLevel = new System.Windows.Forms.ComboBox();
             this.btn_saveCustomer = new System.Windows.Forms.Button();
             this.btn_SearchCustomer = new System.Windows.Forms.Button();
             this.tBox_customerAddress = new System.Windows.Forms.TextBox();
             this.tBox_customerEmail = new System.Windows.Forms.TextBox();
             this.tBox_custermorName = new System.Windows.Forms.TextBox();
-            this.tBox_cartMemLevel = new System.Windows.Forms.TextBox();
             this.tBox_customerJob = new System.Windows.Forms.TextBox();
             this.tBox_customerBirthday = new System.Windows.Forms.TextBox();
             this.tBox_customerPhNumber = new System.Windows.Forms.TextBox();
@@ -647,12 +647,12 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.cbox_membLevel);
             this.groupBox6.Controls.Add(this.btn_saveCustomer);
             this.groupBox6.Controls.Add(this.btn_SearchCustomer);
             this.groupBox6.Controls.Add(this.tBox_customerAddress);
             this.groupBox6.Controls.Add(this.tBox_customerEmail);
             this.groupBox6.Controls.Add(this.tBox_custermorName);
-            this.groupBox6.Controls.Add(this.tBox_cartMemLevel);
             this.groupBox6.Controls.Add(this.tBox_customerJob);
             this.groupBox6.Controls.Add(this.tBox_customerBirthday);
             this.groupBox6.Controls.Add(this.tBox_customerPhNumber);
@@ -671,6 +671,16 @@
             this.groupBox6.TabIndex = 3;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "客户信息";
+            // 
+            // cbox_membLevel
+            // 
+            this.cbox_membLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox_membLevel.FormattingEnabled = true;
+            this.cbox_membLevel.Location = new System.Drawing.Point(78, 61);
+            this.cbox_membLevel.Name = "cbox_membLevel";
+            this.cbox_membLevel.Size = new System.Drawing.Size(99, 20);
+            this.cbox_membLevel.TabIndex = 18;
+           
             // 
             // btn_saveCustomer
             // 
@@ -713,13 +723,6 @@
             this.tBox_custermorName.Name = "tBox_custermorName";
             this.tBox_custermorName.Size = new System.Drawing.Size(100, 21);
             this.tBox_custermorName.TabIndex = 13;
-            // 
-            // tBox_cartMemLevel
-            // 
-            this.tBox_cartMemLevel.Location = new System.Drawing.Point(77, 58);
-            this.tBox_cartMemLevel.Name = "tBox_cartMemLevel";
-            this.tBox_cartMemLevel.Size = new System.Drawing.Size(100, 21);
-            this.tBox_cartMemLevel.TabIndex = 12;
             // 
             // tBox_customerJob
             // 
@@ -2275,7 +2278,6 @@
         private System.Windows.Forms.TextBox tBox_customerAddress;
         private System.Windows.Forms.TextBox tBox_customerEmail;
         private System.Windows.Forms.TextBox tBox_custermorName;
-        private System.Windows.Forms.TextBox tBox_cartMemLevel;
         private System.Windows.Forms.TextBox tBox_customerJob;
         private System.Windows.Forms.TextBox tBox_customerBirthday;
         private System.Windows.Forms.TextBox tBox_customerPhNumber;
@@ -2409,6 +2411,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btn_saveCustomer;
         private System.Windows.Forms.TextBox tBox_CellEditer;
+        private System.Windows.Forms.ComboBox cbox_membLevel;
     }
 }
 

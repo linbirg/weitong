@@ -34,10 +34,10 @@ namespace weitongManager
             set { m_regDate = value; }
         }
 
-        public string Salt
-        {
-            get { return m_salt; }
-        }
+        //public string Salt
+        //{
+        //    get { return m_salt; }
+        //}
 
         public int RoleID
         {
@@ -52,6 +52,12 @@ namespace weitongManager
                 if (rl != null) return rl.Discount;
                 return 100;
             }
+        }
+
+        public bool isAdministrator()
+        {
+            Role role = Role.findByID(this.m_roleid);
+            return role.Name == "administrator";
         }
 
         //====================================公有静态方法=============================

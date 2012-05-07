@@ -11,6 +11,7 @@ namespace weitongManager
         private int m_level;
         private int m_discount;
         private string m_name;
+        private int m_minconsuption;
 
         public int Level
         {
@@ -30,6 +31,11 @@ namespace weitongManager
             set { m_name = value; }
         }
 
+        public int MinConsuption
+        {
+            get { return m_minconsuption; }
+            set { m_minconsuption = value; }
+        }
 
         public void update2DB()
         {
@@ -39,6 +45,11 @@ namespace weitongManager
         public void deleteFromDB()
         {
             deleteMemberLevelFromDB(this);
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
         }
 
 
@@ -79,6 +90,7 @@ namespace weitongManager
             lvl.Level = 1;
             lvl.Discount = 100;
             lvl.Name = "普通会员";
+            lvl.MinConsuption = 99999999;
             return lvl;
         }
 

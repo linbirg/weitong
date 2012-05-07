@@ -66,12 +66,14 @@ CREATE TABLE storage(
 	FOREIGN KEY(supplierid) REFERENCES supplier(id)
 )TYPE=INNODB;
 
+## 增加会员最低消费字段，当一个会员达到这个级别时，自动升级为下一级会员
 DROP TABLE IF EXISTS memberlevel;
 CREATE TABLE memberlevel(
 	id INT UNIQUE NOT NULL AUTO_INCREMENT,
 	memlevel INT UNIQUE NOT NULL,
 	discount INT DEFAULT 100,
-	levelname TEXT
+	levelname TEXT,
+	mincunsuption INT DEFAULT 99999999 
 )TYPE=INNODB;
 
 # 0级别的为特殊会员（促销等特殊用途）。
@@ -187,6 +189,7 @@ CREATE TABLE users(
 )TYPE=INNODB;
 
 INSERT INTO users(user_name,passwd,salt,reg_date,role_id) VALUES('admin',SHA('adminxxbucunzai'),'xxbucunzai',NOW(),1);
+INSERT INTO users(user_name,passwd,salt,reg_date,role_id) VALUES('wentong',SHA('wentongxxbucunzai'),'xxbucunzai',NOW(),3);
 
 
 

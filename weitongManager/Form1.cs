@@ -77,7 +77,7 @@ namespace weitongManager
                 m_rolesMgr.RolesGrid = dgv_roles;
                 m_rolesMgr.init();
 
-                //statusStrip.Items.Insert(statusStrip.Items.Count, new ToolStripSeparator());
+                cbox_memblevel_load();
             }
             catch (Exception ex)
             {
@@ -290,17 +290,18 @@ namespace weitongManager
             {
                 if (checkCustomerValidtion())
                 {
-                    Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
-                    if (aCustomer == null)
-                    {
-                        aCustomer = new Customer();
-                        assignCustomerInfo(aCustomer);
-                        m_salesMgr.addCustomer2DB(aCustomer);
-                    }
-                    if (m_salesMgr.CartCustomer == null || m_salesMgr.CartCustomer.Name != aCustomer.Name)
-                    {
-                        m_salesMgr.CartCustomer = aCustomer;
-                    }
+                    //Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
+                    //if (aCustomer == null)
+                    //{
+                    //    aCustomer = new Customer();
+                    //    assignCustomerInfo(aCustomer);
+                    //    m_salesMgr.addCustomer2DB(aCustomer);
+                    //}
+                    //if (m_salesMgr.CartCustomer == null || m_salesMgr.CartCustomer.Name != aCustomer.Name)
+                    //{
+                    //    m_salesMgr.CartCustomer = aCustomer;
+                    //}
+                    doSaveCustomer();
                     m_salesMgr.calcCart();
                     jump2CurrentOrder();
                     showCurrentOrder();
@@ -354,7 +355,8 @@ namespace weitongManager
             tBox_customerJob.Text = aCustomer.Job;
             tBox_customerPhNumber.Text = aCustomer.PhoneNumber;
             tBox_customerRegisterDay.Text = aCustomer.RegisterDate.ToShortDateString();
-            tBox_cartMemLevel.Text = aCustomer.MemberLevel.ToString();
+            //tBox_cartMemLevel.Text = aCustomer.MemberLevel.ToString();
+            cbox_membLevel_Show(aCustomer.MemberLevel);
         }
 
         private void showCurrentOrder()
@@ -618,22 +620,61 @@ namespace weitongManager
             }
         }
 
+        private void doSaveCustomer()
+        {
+            if (checkCustomerValidtion())
+            {
+                Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
+                if (aCustomer == null)
+                {
+                    aCustomer = Customer.NewCustomer();
+                }
+                MemberLevel level = cbox_membLevel.SelectedItem as MemberLevel;
+                if (aCustomer.MemberLevel != level.Level)
+                {
+                    if (!CurrentUser.isAdministrator())
+                    {
+                        WARNING("您无权修改会员级别，请与店长联系！");
+                        return;
+                    }
+                }
+                assignCustomerInfo(aCustomer);
+                m_salesMgr.addCustomer2DB(aCustomer);
+
+                m_salesMgr.CartCustomer = aCustomer;
+            }
+            else
+            {
+                WARNING("请输入正确的客户信息！");
+            }
+        }
+
         private void btn_saveCustomer_Click(object sender, EventArgs e)
         {
             try
             {
-                if (checkCustomerValidtion())
-                {
-                    Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
-                    if (aCustomer == null)
-                    {
-                        aCustomer = Customer.NewCustomer();
-                    }
-                    assignCustomerInfo(aCustomer);
-                    m_salesMgr.addCustomer2DB(aCustomer);
+                //if (checkCustomerValidtion())
+                //{
+                //    Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
+                //    if (aCustomer == null)
+                //    {
+                //        aCustomer = Customer.NewCustomer();
+                //    }
+                //    MemberLevel level = cbox_membLevel.SelectedItem as MemberLevel;
+                //    if (aCustomer.MemberLevel != level.Level)
+                //    {
+                //        if (!CurrentUser.isAdministrator())
+                //        {
+                //            WARNING("您无权修改会员级别，请与店长联系！");
+                //            return;
+                //        }
+                //    }
+                //    assignCustomerInfo(aCustomer);
+                //    m_salesMgr.addCustomer2DB(aCustomer);
                     
-                    m_salesMgr.CartCustomer = aCustomer;
-                }
+                //    m_salesMgr.CartCustomer = aCustomer;
+                //}
+                doSaveCustomer();
             }
             catch (Exception ex)
             {
@@ -724,6 +765,53 @@ namespace weitongManager
                 WARNING(ex.Message);
             }
         }
+
+        private void cbox_memblevel_load()
+        {
+            List<MemberLevel> list = MemberLevel.loadData();
+            cbox_membLevel.Items.Clear();
+            foreach (MemberLevel lv in list)
+            {
+                cbox_membLevel.Items.Add(lv);
+            }
+        }
+
+        private void cbox_membLevel_Show(int level)
+        {
+            foreach (MemberLevel lv in cbox_membLevel.Items)
+            {
+                if (lv.Level == level) cbox_membLevel.SelectedItem = lv;
+            }
+        }
+
+        //private int m_combobox_selectedIndex = 0;
+        //private void cbox_membLevel_DropDown(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        m_combobox_selectedIndex = cbox_membLevel.SelectedIndex;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        WARNING(ex.Message);
+        //    }
+        //}
+
+        //private void cbox_membLevel_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (!CurrentUser.isAdministrator())
+        //        {
+        //            WARNING("您没有权限修改会员级别，请与店长联系！");
+        //            cbox_membLevel.SelectedIndex = m_combobox_selectedIndex;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        WARNING(ex.Message);
+        //    }
+        //}
         
     }
 }
