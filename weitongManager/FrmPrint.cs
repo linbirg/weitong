@@ -15,7 +15,7 @@ namespace weitongManager
         public FrmPrint()
         {
             InitializeComponent();
-            m_cartDetailList = new BindingList<CartDetailRowData>();
+            m_DetailList = new BindingList<CartDetailRowData>();
         }
 
         //PrintDocument类是实现打印功能的核心，它封装了打印有关的属性、事件、和方法
@@ -406,7 +406,7 @@ namespace weitongManager
         private void binding()
         {
             this.dgv_dingjindan.AutoGenerateColumns = false;
-            dgv_dingjindan.DataSource = m_cartDetailList;
+            dgv_dingjindan.DataSource = m_DetailList;
 
             dgv_dingjindan.Columns["dingJinDanCode"].DataPropertyName = "Code";
             dgv_dingjindan.Columns["dingJinDanDescription"].DataPropertyName = "description";
@@ -417,17 +417,12 @@ namespace weitongManager
             dgv_dingjindan.Columns["dingJinDanAmount"].DataPropertyName = "Amount";
         }
 
-        private void addCart(CartDetailRowData data)
+        private void addDetail(CartDetailRowData data)
         {
-            m_cartDetailList.Add(data);
+            m_DetailList.Add(data);
         }
 
-        private BindingList<CartDetailRowData> m_cartDetailList = null;
-        private DataGridView m_CartDetaiGrid = null;
-        private Customer m_customer = null;
-        private Order m_order = null;
-
-        private DateTime m_orderTime;
+        
 
         public DataGridView CartDetaiGrid
         {
@@ -436,7 +431,7 @@ namespace weitongManager
                 m_CartDetaiGrid = value;
                 foreach (DataGridViewRow row in m_CartDetaiGrid.Rows)
                 {
-                    addCart(row.DataBoundItem as CartDetailRowData);
+                    addDetail(row.DataBoundItem as CartDetailRowData);
                 }
                 binding();
             }
@@ -470,6 +465,37 @@ namespace weitongManager
             set 
             {
                 m_order = value;
+                showOrder();
+                SetCustomer(Customer.findByID(Order.CustomerID));
+                // generateOrderDetail
+                List<OrderDetail> details = m_order.getDetails();
+                m_DetailList.Clear();
+                foreach (OrderDetail detail in details)
+                {
+                    CartDetailRowData data = new CartDetailRowData();
+                    
+                    data.Code = detail.Code;
+                    data.Discount = detail.Discount;
+                    data.Price = detail.KnockDownPrice * 100 / detail.Discount;
+                    data.Units = detail.Units;
+                    Wine aWine = Wine.findByCode(detail.Code);
+                    if (aWine != null)
+                    {
+                        data.Bottle = aWine.Bottle;
+                        data.Description = aWine.Description;
+                    }
+                    addDetail(data);
+                }
+            }
+        }
+
+        public User User
+        {
+            get { return m_user; }
+            set 
+            { 
+                m_user = value;
+                showUser();
             }
         }
 
@@ -479,8 +505,35 @@ namespace weitongManager
             {
                 lbl_custNameContent.Text = m_customer.Name;
                 lbl_custNumberContent.Text = m_customer.PhoneNumber;
-                lbl_custEffectDateContent.Text = m_orderTime.ToShortDateString();
+                lbl_custEffectDateContent.Text = this.m_order.EffectDate.ToShortDateString();
             }
         }
+
+        private void showOrder()
+        {
+            if (m_order != null)
+            {
+                lbl_orderDateContent.Text = m_order.EffectDate.ToShortDateString();
+                lbl_orderTimeContent.Text = m_order.EffectDate.ToShortTimeString();
+                lbl_orderIDContent.Text = m_order.ID.ToString("D8");
+            }
+        }
+
+        private void showUser()
+        {
+            if (m_user != null)
+                lbl_salerContent.Text = m_user.Name;
+        }
+
+
+        private BindingList<CartDetailRowData> m_DetailList = null;
+        private DataGridView m_CartDetaiGrid = null;
+        private Customer m_customer = null;
+        private Order m_order = null;
+        private User m_user = null;
+
+        private DateTime m_orderTime;
+
+        
     }
 }

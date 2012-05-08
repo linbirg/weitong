@@ -86,6 +86,7 @@ namespace weitongManager
             m_DGV_member_level.Columns["memlevelDataGridViewTextBoxColumn"].DataPropertyName = "Level";
             m_DGV_member_level.Columns["levelnameDataGridViewTextBoxColumn"].DataPropertyName = "Name";
             m_DGV_member_level.Columns["discountDataGridViewTextBoxColumn"].DataPropertyName = "Discount";
+            m_DGV_member_level.Columns["minConsumptionTextBoxColumn"].DataPropertyName = "MinConsuption";
         }
     }
 }

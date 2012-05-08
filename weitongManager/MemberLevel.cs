@@ -57,7 +57,7 @@ namespace weitongManager
         public static List<MemberLevel> loadData()
         {
             List<MemberLevel> list = null;
-            string qryStr = @"SELECT memlevel,discount,levelname FROM memberlevel";
+            string qryStr = @"SELECT memlevel,discount,levelname,minconsuption FROM memberlevel";
             MySqlCommand qryCmd = new MySqlCommand();
             qryCmd.CommandText = qryStr;
             qryCmd.Connection = ConnSingleton.Connection;
@@ -73,6 +73,7 @@ namespace weitongManager
                     aRow.Level = reader.GetInt32("memlevel");
                     aRow.Discount = reader.GetInt32("discount");
                     aRow.Name = reader.GetString("levelname");
+                    aRow.MinConsuption = reader.GetInt32("minconsuption");
 
                     list.Add(aRow);
                 }
@@ -125,16 +126,16 @@ namespace weitongManager
         // 
         public static void insertLevelInfo(MemberLevel level)
         {
-            insertMemberLevel(level.Level, level.Name, level.Discount);
+            insertMemberLevel(level.Level, level.Name, level.Discount,level.MinConsuption);
         }
         
 
         // ==========================私有===============================
         // 插入数据库
-        private static void insertMemberLevel(int level, string name, int discount)
+        private static void insertMemberLevel(int level, string name, int discount, int minConsuption)
         {
-            string insertStr = @"INSERT INTO memberlevel(memlevel,levelname,discount) 
-                                 VALUES(@level,@name,@discount)";
+            string insertStr = @"INSERT INTO memberlevel(memlevel,levelname,discount,minconsuption) 
+                                 VALUES(@level,@name,@discount,@minconsuption)";
             MySqlCommand insertCmd = new MySqlCommand();
             insertCmd.CommandText = insertStr;
             insertCmd.Connection = ConnSingleton.Connection;
@@ -142,6 +143,7 @@ namespace weitongManager
             insertCmd.Parameters.Add("@discount", MySqlDbType.Int32).Value = discount;
             insertCmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
             insertCmd.Parameters.Add("@level", MySqlDbType.Int32).Value = level;
+            insertCmd.Parameters.Add("@minconsuption", MySqlDbType.Int32).Value = minConsuption;
 
             try
             {
@@ -157,7 +159,7 @@ namespace weitongManager
 
         private static void updateMemberLevel2DB(MemberLevel memLevInfo)
         {
-            string updateStr = @"UPDATE memberlevel SET discount=@discount, levelname=@name 
+            string updateStr = @"UPDATE memberlevel SET discount=@discount, levelname=@name, minconsuption=@minconsuption 
                                  WHERE memlevel=@level";
             MySqlCommand updateCmd = new MySqlCommand();
             updateCmd.CommandText = updateStr;
@@ -166,6 +168,7 @@ namespace weitongManager
             updateCmd.Parameters.Add("@discount",MySqlDbType.Int32).Value = memLevInfo.Discount;
             updateCmd.Parameters.Add("@name",MySqlDbType.VarChar).Value = memLevInfo.Name;
             updateCmd.Parameters.Add("@level", MySqlDbType.Int32).Value = memLevInfo.Level;
+            updateCmd.Parameters.Add("@minconsuption", MySqlDbType.Int32).Value = memLevInfo.MinConsuption;
 
             try
             {

@@ -30,6 +30,8 @@ namespace weitongManager
             bindCartDetailData();
             bindCurrentOrder();
             bindOrderList();
+
+            //m_currentCart = new Cart();
         }
 
         public void updateTable(weitongDataSet1.storageDataTable table)
@@ -133,7 +135,7 @@ namespace weitongManager
                 amount += item.Amount;
             }
             anOrder.Amount = amount;
-            anOrder.save2DB();
+            anOrder.save();
 
             if (anOrder.ID == -1) return;
             
@@ -143,13 +145,7 @@ namespace weitongManager
                 CurrentOrder.saveDetail2DB(item.Code, item.Units, item.Memberprice);
             }
 
-            //int orderID = insertOrderAndGetID();
-            //insertOrderDetail(orderID);
-            //// 更新库存信息
-            //foreach(CartDetailRowData data in m_cartDetailList)
-            //{
-            //    necStorageUnits(data.Code, data.Units);
-            //}
+            
             reloadStorageInfo();
             CurrentOrderID = CurrentOrder.ID;
             bindCurrentOrder();
@@ -162,8 +158,8 @@ namespace weitongManager
             CurrentOrder.State = OrderState.COMPLETED;
             CurrentOrder.Amount = CurrentOrderAmount;
             CurrentOrder.Received = recved;
-            CurrentOrder.save2DB();
-            //updateOrder(CurrentOrderID, CartCustomer.ID, DateTime.Now.Date, OrderState.COMPLETED, CurrentOrderAmount, recved);
+            CurrentOrder.save();
+            
         }
 
         // 更新除ID之外的所有列
@@ -171,7 +167,7 @@ namespace weitongManager
         {
             anOrder.cancelOrder();
             reloadStorageInfo();
-            //updateOrder(anOrder.ID,anOrder.CustomerID,anOrder.EffectDate,anOrder.State,anOrder.Amount,anOrder.Received);
+            
         }
 
         public void updateOrderList()
@@ -184,7 +180,7 @@ namespace weitongManager
         // 返回值：-1表示未找到订单 -2表示未找到指定的客户信息 0表示正常完成。
         public int setCurrentOrder(int orderID)
         {
-            Order curOrder = Order.findOrderByID(orderID);
+            Order curOrder = Order.findByID(orderID);
             if (curOrder == null) return -1;
             m_orderID = curOrder.ID;
             m_currentOrder = curOrder;
@@ -848,5 +844,8 @@ namespace weitongManager
 
         private DataGridView m_orderListGrid = null;
         private weitongDataSet1TableAdapters.orderTableAdapter m_orderAdapter = null;
+
+        // 当前购物车
+        private Cart m_currentCart = null;
     }
 }

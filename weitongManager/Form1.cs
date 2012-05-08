@@ -273,6 +273,11 @@ namespace weitongManager
             customer.Sex = 1;
             
             // memberinfo
+            if(cbox_membLevel.SelectedItem!= null)
+            {
+                MemberLevel level = (MemberLevel)cbox_membLevel.SelectedItem;
+                customer.MemberLevel = level.Level;
+            }
         }
 
         private void jump2CurrentOrder()

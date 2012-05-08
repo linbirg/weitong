@@ -73,7 +73,7 @@ CREATE TABLE memberlevel(
 	memlevel INT UNIQUE NOT NULL,
 	discount INT DEFAULT 100,
 	levelname TEXT,
-	mincunsuption INT DEFAULT 99999999 
+	minconsuption INT DEFAULT 99999999 
 )TYPE=INNODB;
 
 # 0级别的为特殊会员（促销等特殊用途）。
@@ -154,6 +154,7 @@ CREATE TABLE order_wines(
 	code CHAR(100) NOT NULL,
 	units INT NOT NULL DEFAULT 1,
 	knockdownprice DECIMAL DEFAULT 0,
+	discount INT DEFAULT 100
 	PRIMARY KEY(id),
 	FOREIGN KEY(orderid) REFERENCES orders(id)
 	ON DELETE CASCADE,

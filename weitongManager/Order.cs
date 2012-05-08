@@ -17,7 +17,7 @@ namespace weitongManager
         public int ID
         {
             get { return m_id; }
-            set { m_id = value; }
+            //set { m_id = value; }
         }
 
         public int CustomerID
@@ -42,20 +42,6 @@ namespace weitongManager
         public string StateName
         {
             get {
-                //string stateStr = "未知状态";
-                //if (m_orderState == OrderState.FOR_PAY)
-                //{
-                //    stateStr = "等待付款";
-                //}
-                //else if(m_orderState == OrderState.COMPLETED)
-                //{
-                //    stateStr = "已完成";
-                //}
-                //else if (m_orderState == OrderState.CANCEL)
-                //{
-                //    stateStr = "已取消";
-                //}
-                //return stateStr;
                 return getStateName(m_orderState);
             }
         }
@@ -79,15 +65,15 @@ namespace weitongManager
 
 
         // 公用接口
-        public void save2DB()
+        public void save()
         {
             if (ID == -1)
             {
-                ID = insertOrderAndGetID(CustomerID, EffectDate, (int)State, Amount);
+                this.m_id = insertOrderAndGetID(CustomerID, EffectDate, (int)State, Amount);
             }
             else
             {
-                updateOrder(ID,CustomerID,EffectDate,State,Amount,Received);
+                updateOrder(m_id, CustomerID, EffectDate, State, Amount, Received);
             }
         }
 
@@ -105,17 +91,29 @@ namespace weitongManager
             State = OrderState.CANCEL;
         }
 
-
         // 
+        public List<OrderDetail> getDetails()
+        {
+            return getOrderDetail(this.ID);
+        }
+
+
+
+
+        //
+        // 
+        //
         private bool isCompletedState()
         {
             return (m_id != -1 && State == OrderState.COMPLETED);
         }
 
 
+
+
         // ==================================== 公用静态方法区 ===================================
 
-        public static Order findOrderByID(int orderID)
+        public static Order findByID(int orderID)
         {
             Order newOrder = null;
             string qryStr = @"SELECT customerid,effectdate,orderstate,amount,received
@@ -133,7 +131,7 @@ namespace weitongManager
                 if (reader.Read())
                 {
                     newOrder = new Order();
-                    newOrder.ID = orderID;
+                    newOrder.m_id = orderID;
                     newOrder.Amount = reader.GetDecimal("amount");
                     newOrder.CustomerID = reader.GetInt32("customerid");
                     newOrder.EffectDate = reader.GetDateTime("effectdate");
@@ -152,7 +150,7 @@ namespace weitongManager
         public static Order NewOrder()
         {
             Order anOrder = new Order();
-            anOrder.ID = -1;
+            anOrder.m_id = -1;
             return anOrder;
         }
 
@@ -271,6 +269,42 @@ namespace weitongManager
             {
                 insertCmd.Connection.Close();
             }
+        }
+
+
+        private static List<OrderDetail> getOrderDetail(int orderID)
+        {
+            List<OrderDetail> list = null;
+            string qryStr = @"SELECT id, orderid, code, units,knockdownprice,discount 
+                              FROM order_wines WHERE orderid=@orderid";
+            MySqlCommand qryCmd = new MySqlCommand();
+            qryCmd.CommandText = qryStr;
+            qryCmd.Connection = ConnSingleton.Connection;
+            qryCmd.Parameters.Add("@orderid", MySqlDbType.Int32).Value = orderID;
+
+            try
+            {
+                qryCmd.Connection.Open();
+                MySqlDataReader reader = qryCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (list == null) list = new List<OrderDetail>();
+                    OrderDetail detail = new OrderDetail();
+                    detail.ID = reader.GetInt32("id");
+                    detail.OrderID = reader.GetInt32("orderid");
+                    detail.Code = reader.GetString("code");
+                    detail.KnockDownPrice = reader.GetDecimal("knockdownprice");
+                    detail.Units = reader.GetInt32("units");
+                    detail.Discount = reader.GetInt32("discount");
+                    list.Add(detail);
+                }
+            }
+            finally
+            {
+                qryCmd.Connection.Close();
+            }
+
+            return list;
         }
         
         // 取消订单。
