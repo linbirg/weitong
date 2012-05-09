@@ -642,6 +642,7 @@ namespace weitongManager
             }
         }
 
+        // 保存客户信息（存入数据库中）
         private void doSaveCustomer()
         {
             if (checkCustomerValidtion())
@@ -663,7 +664,7 @@ namespace weitongManager
                 assignCustomerInfo(aCustomer);
                 m_salesMgr.addCustomer2DB(aCustomer);
 
-                m_salesMgr.CartCustomer = aCustomer;
+                //m_salesMgr.CartCustomer = aCustomer;
             }
             else
             {
@@ -697,6 +698,8 @@ namespace weitongManager
                 //    m_salesMgr.CartCustomer = aCustomer;
                 //}
                 doSaveCustomer();
+                Customer aCustomer = Customer.findByName(tBox_custermorName.Text);
+                m_salesMgr.CartCustomer = aCustomer;
             }
             catch (Exception ex)
             {
