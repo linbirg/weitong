@@ -213,6 +213,10 @@
             this.roleNameTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.roleDiscountTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_memberLevel = new System.Windows.Forms.DataGridView();
+            this.memlevelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.levelnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.minConsumptionTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_MembLevel = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_AddLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_DeleteLevel = new System.Windows.Forms.ToolStripMenuItem();
@@ -239,10 +243,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.memlevelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.levelnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.minConsumptionTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tsmi_PrintPrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -1273,14 +1274,15 @@
             // ctms_orderList
             // 
             this.ctms_orderList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_viewOrderDetail});
+            this.tsmi_viewOrderDetail,
+            this.tsmi_PrintPrder});
             this.ctms_orderList.Name = "ctms_orderList";
-            this.ctms_orderList.Size = new System.Drawing.Size(109, 26);
+            this.ctms_orderList.Size = new System.Drawing.Size(153, 70);
             // 
             // tsmi_viewOrderDetail
             // 
             this.tsmi_viewOrderDetail.Name = "tsmi_viewOrderDetail";
-            this.tsmi_viewOrderDetail.Size = new System.Drawing.Size(108, 22);
+            this.tsmi_viewOrderDetail.Size = new System.Drawing.Size(152, 22);
             this.tsmi_viewOrderDetail.Text = "&C查看";
             this.tsmi_viewOrderDetail.Click += new System.EventHandler(this.tsmi_viewOrderDetail_Click);
             // 
@@ -1913,6 +1915,32 @@
             this.dgv_memberLevel.TabIndex = 3;
             this.dgv_memberLevel.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_memberLevel_CellEndEdit);
             // 
+            // memlevelDataGridViewTextBoxColumn
+            // 
+            this.memlevelDataGridViewTextBoxColumn.HeaderText = "会员级别";
+            this.memlevelDataGridViewTextBoxColumn.Name = "memlevelDataGridViewTextBoxColumn";
+            this.memlevelDataGridViewTextBoxColumn.ReadOnly = true;
+            this.memlevelDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.memlevelDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // levelnameDataGridViewTextBoxColumn
+            // 
+            this.levelnameDataGridViewTextBoxColumn.HeaderText = "级别名称";
+            this.levelnameDataGridViewTextBoxColumn.Name = "levelnameDataGridViewTextBoxColumn";
+            this.levelnameDataGridViewTextBoxColumn.Width = 130;
+            // 
+            // discountDataGridViewTextBoxColumn
+            // 
+            this.discountDataGridViewTextBoxColumn.HeaderText = "折扣";
+            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
+            this.discountDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // minConsumptionTextBoxColumn
+            // 
+            this.minConsumptionTextBoxColumn.HeaderText = "最低消费";
+            this.minConsumptionTextBoxColumn.Name = "minConsumptionTextBoxColumn";
+            this.minConsumptionTextBoxColumn.Width = 90;
+            // 
             // ctms_MembLevel
             // 
             this.ctms_MembLevel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -2129,31 +2157,12 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // memlevelDataGridViewTextBoxColumn
+            // tsmi_PrintPrder
             // 
-            this.memlevelDataGridViewTextBoxColumn.HeaderText = "会员级别";
-            this.memlevelDataGridViewTextBoxColumn.Name = "memlevelDataGridViewTextBoxColumn";
-            this.memlevelDataGridViewTextBoxColumn.ReadOnly = true;
-            this.memlevelDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.memlevelDataGridViewTextBoxColumn.Width = 80;
-            // 
-            // levelnameDataGridViewTextBoxColumn
-            // 
-            this.levelnameDataGridViewTextBoxColumn.HeaderText = "级别名称";
-            this.levelnameDataGridViewTextBoxColumn.Name = "levelnameDataGridViewTextBoxColumn";
-            this.levelnameDataGridViewTextBoxColumn.Width = 130;
-            // 
-            // discountDataGridViewTextBoxColumn
-            // 
-            this.discountDataGridViewTextBoxColumn.HeaderText = "折扣";
-            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
-            this.discountDataGridViewTextBoxColumn.Width = 80;
-            // 
-            // minConsumptionTextBoxColumn
-            // 
-            this.minConsumptionTextBoxColumn.HeaderText = "最低消费";
-            this.minConsumptionTextBoxColumn.Name = "minConsumptionTextBoxColumn";
-            this.minConsumptionTextBoxColumn.Width = 90;
+            this.tsmi_PrintPrder.Name = "tsmi_PrintPrder";
+            this.tsmi_PrintPrder.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_PrintPrder.Text = "&P打印订单";
+            this.tsmi_PrintPrder.Click += new System.EventHandler(this.tsmi_PrintPrder_Click);
             // 
             // FrmMain
             // 
@@ -2422,6 +2431,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn levelnameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn minConsumptionTextBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_PrintPrder;
     }
 }
 

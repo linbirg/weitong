@@ -26,6 +26,12 @@ namespace weitongManager
             set { m_customerID = value; }
         }
 
+        public int UserID
+        {
+            get { return m_userID; }
+            set { m_userID = value; }
+        }
+
         public DateTime EffectDate
         {
             get { return m_effectDate; }
@@ -69,17 +75,17 @@ namespace weitongManager
         {
             if (ID == -1)
             {
-                this.m_id = insertOrderAndGetID(CustomerID, EffectDate, (int)State, Amount);
+                this.m_id = insertOrderAndGetID(CustomerID, UserID, EffectDate, (int)State, Amount);
             }
             else
             {
-                updateOrder(m_id, CustomerID, EffectDate, State, Amount, Received);
+                updateOrder(m_id, CustomerID, UserID, EffectDate, State, Amount, Received);
             }
         }
 
-        public void saveDetail2DB(string Code, int Units, decimal memberPrice)
+        public void saveDetail2DB(string Code, int Units, decimal memberPrice, int discount)
         {
-            insertOrderDetail(ID, Code, Units, memberPrice);
+            insertOrderDetail(ID, Code, Units, memberPrice, discount);
             necStorageUnits(Code, Units);
         }
 
@@ -176,14 +182,15 @@ namespace weitongManager
         // ==================================== 私有静态方法区 ===================================
 
         //order 
-        private static int insertOrderAndGetID(int customerID, DateTime effectDate, int orderState, decimal amount)
+        private static int insertOrderAndGetID(int customerID, int userID, DateTime effectDate, int orderState, decimal amount)
         {
             int orderID = -1;
-            string insertStr = @"INSERT INTO orders(customerid,effectdate,orderstate,amount) 
-                                        VALUES(@customerid,@effectdate,@orderstate,@amount)";
+            string insertStr = @"INSERT INTO orders(customerid,userid,effectdate,orderstate,amount) 
+                                        VALUES(@customerid,@userid,@effectdate,@orderstate,@amount)";
             MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
             insertCmd.CommandText = insertStr;
             insertCmd.Connection = ConnSingleton.Connection;
+            insertCmd.Parameters.Add("@userid", MySqlDbType.Int32).Value = userID;
             insertCmd.Parameters.Add("@customerid", MySqlDbType.Int32).Value = customerID;
             insertCmd.Parameters.Add("@effectdate", MySqlDbType.DateTime).Value = effectDate;
             insertCmd.Parameters.Add("@orderstate", MySqlDbType.Int32).Value = orderState;
@@ -211,9 +218,9 @@ namespace weitongManager
         }
 
         // state 1 等待付款，2 完成付款，3 取消订单
-        private static void updateOrder(int orderID, int customerID, DateTime effectDate, OrderState state, decimal amount, decimal recved)
+        private static void updateOrder(int orderID, int customerID, int userID, DateTime effectDate, OrderState state, decimal amount, decimal recved)
         {
-            string updateStr = @"UPDATE orders SET customerid = @customerid, effectdate = @effectdate, 
+            string updateStr = @"UPDATE orders SET customerid = @customerid, userid=@userid, effectdate = @effectdate, 
                                                    orderstate = @orderstate, amount = @amount, received = @recved
                                  WHERE id=@id";
             MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
@@ -222,6 +229,7 @@ namespace weitongManager
 
             updateCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = orderID;
             updateCmd.Parameters.Add("@customerid", MySqlDbType.Int32).Value = customerID;
+            updateCmd.Parameters.Add("@userid", MySqlDbType.Int32).Value = userID;
             updateCmd.Parameters.Add("@effectdate", MySqlDbType.DateTime).Value = effectDate;
             updateCmd.Parameters.Add("@orderstate", MySqlDbType.Int32).Value = (int)state;
             updateCmd.Parameters.Add("@amount", MySqlDbType.Decimal).Value = amount;
@@ -237,10 +245,10 @@ namespace weitongManager
             }
         }
 
-        private static void insertOrderDetail(int orderID, string code, int units, decimal memberPrice)
+        private static void insertOrderDetail(int orderID, string code, int units, decimal memberPrice,int discount)
         {
-            string insertStr = @"INSERT INTO order_wines(orderid,code,units,knockdownprice) 
-                                VALUES(@orderid,@code,@units,@knockdownprice)";
+            string insertStr = @"INSERT INTO order_wines(orderid,code,units,knockdownprice,discount) 
+                                VALUES(@orderid,@code,@units,@knockdownprice,@discount)";
             MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
             insertCmd.CommandText = insertStr;
             insertCmd.Connection = ConnSingleton.Connection;
@@ -249,11 +257,13 @@ namespace weitongManager
             MySqlParameter para_code = new MySqlParameter("@code", MySqlDbType.VarChar);
             MySqlParameter para_units = new MySqlParameter("@units", MySqlDbType.Int32);
             MySqlParameter para_price = new MySqlParameter("@knockdownprice", MySqlDbType.Decimal);
+            MySqlParameter para_discount = new MySqlParameter("@discount", MySqlDbType.Int32);
 
             insertCmd.Parameters.Add(para_orderID);
             insertCmd.Parameters.Add(para_code);
             insertCmd.Parameters.Add(para_units);
             insertCmd.Parameters.Add(para_price);
+            insertCmd.Parameters.Add(para_discount);
 
             try
             {
@@ -263,6 +273,7 @@ namespace weitongManager
                 para_code.Value = code;
                 para_units.Value = units;
                 para_price.Value = memberPrice;
+                para_discount.Value = discount;
                 insertCmd.ExecuteNonQuery();
             }
             finally
@@ -452,6 +463,7 @@ namespace weitongManager
 
         private int m_id = -1;
         private int m_customerID = -1;
+        private int m_userID = -1;
         private DateTime m_effectDate;
         private OrderState m_orderState;
         private decimal m_amount;

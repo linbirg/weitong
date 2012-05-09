@@ -125,6 +125,7 @@ namespace weitongManager
             Order anOrder = Order.NewOrder();
 
             anOrder.CustomerID = CartCustomer.ID;
+            anOrder.UserID = m_currentUser.ID;
             anOrder.EffectDate = DateTime.Now;
             anOrder.State = OrderState.FOR_PAY;
         
@@ -142,7 +143,7 @@ namespace weitongManager
             CurrentOrder = anOrder;
             foreach (CartDetailRowData item in m_cartDetailList)
             {
-                CurrentOrder.saveDetail2DB(item.Code, item.Units, item.Memberprice);
+                CurrentOrder.saveDetail2DB(item.Code, item.Units, item.Memberprice,item.Discount);
             }
 
             
@@ -366,6 +367,12 @@ namespace weitongManager
             }
         }
 
+        public User CurrentUser
+        {
+            get { return m_currentUser; }
+            set { m_currentUser = value; }
+        }
+
         public int CurrentOrderID
         {
             get { return m_orderID; }
@@ -538,40 +545,6 @@ namespace weitongManager
             }
         }
         
-//        // customer
-//        private int insertCustomerAndGetID(Customer aCustomer)
-//        {
-//            int id = -1;
-
-//            string insertStr = @"INSERT INTO customers(name,phonenumber,registedate,sex,job,birthday,address,email) 
-//                                VALUES(@name,@phonenumber,@registedate,@sex,@job,@birthday,@address,@email)";
-//            MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-//            insertCmd.CommandText = insertStr;
-//            insertCmd.Connection = m_storageAdapter.Connection;
-//            insertCmd.Parameters.Add("@name",MySqlDbType.VarChar).Value = aCustomer.Name;
-//            insertCmd.Parameters.Add("@phonenumber", MySqlDbType.VarChar).Value = aCustomer.PhoneNumber;
-//            insertCmd.Parameters.Add("@registedate", MySqlDbType.DateTime).Value = aCustomer.RegisterDate;
-//            insertCmd.Parameters.Add("@sex", MySqlDbType.Int32).Value = aCustomer.Sex;
-//            insertCmd.Parameters.Add("@job", MySqlDbType.VarChar).Value = aCustomer.Job;
-//            insertCmd.Parameters.Add("@birthday", MySqlDbType.Date).Value = aCustomer.Birthday;
-//            insertCmd.Parameters.Add("@address", MySqlDbType.VarChar).Value = aCustomer.Address;
-//            insertCmd.Parameters.Add("@email", MySqlDbType.VarChar).Value = aCustomer.Email;
-
-//            insertCmd.Connection.Open();
-//            insertCmd.ExecuteNonQuery();
-//            string queryIdStr = "SELECT LAST_INSERT_ID()";
-//            insertCmd.CommandText = queryIdStr;
-//            MySqlDataReader reader = insertCmd.ExecuteReader();
-//            reader.Read();
-//            if (reader.HasRows)
-//            {
-//                id = reader.GetInt32(0);
-//            }
-
-//            insertCmd.Connection.Close();
-
-//            return id;
-//        }
 
         private void assignMember2Customer(Customer aCustomer)
         {
@@ -601,61 +574,6 @@ namespace weitongManager
             }
         }
 
-//        private Customer findCustomerByID(int id)
-//        {
-//            Customer aCustomer = null;
-
-//            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
-//                customers.birthday, customers.address, customers.email, 
-//                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
-//                FROM customers INNER JOIN
-//                     member ON customers.id = member.customerid
-//                WHERE customers.id=@id";
-//            MySqlCommand queryCmd = new MySqlCommand();
-//            queryCmd.CommandText = queryStr;
-//            queryCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
-//            queryCmd.Connection = this.m_storageAdapter.Connection;
-
-//            try
-//            {
-//                queryCmd.Connection.Open();
-//                MySqlDataReader reader = queryCmd.ExecuteReader();
-//                reader.Read();
-//                aCustomer = getCustomerFromReader(reader);
-                
-//            }
-//            finally
-//            {
-//                queryCmd.Connection.Close();
-//            }
-
-//            return aCustomer;
-//        }
-
-//        private Customer getCustomerFromReader(MySqlDataReader reader)
-//        {
-//            Customer aCustomer = null;
-//            if (reader == null || reader.IsClosed || !reader.HasRows) return null;
-
-//            aCustomer = new Customer();
-
-//            aCustomer.ID = reader.GetInt32("id");
-//            aCustomer.Name = reader.GetString("name");
-//            aCustomer.PhoneNumber = reader.GetString("phonenumber");
-//            aCustomer.Email = reader.GetString("email");
-//            aCustomer.Address = reader.GetString("address");
-//            aCustomer.Birthday = reader.GetDateTime("birthday");
-//            aCustomer.Job = reader.GetString("job");
-//            aCustomer.RegisterDate = reader.GetDateTime("registedate");
-//            aCustomer.Sex = reader.GetInt32("sex");
-
-//            aCustomer.MemberID = reader.GetString("memberid");
-//            aCustomer.MemberLevel = reader.GetInt32("memlevel");
-//            aCustomer.MemberDate = reader.GetDateTime("memberdate");
-
-//            return aCustomer;
-//        }
-
         // 根据客户的折扣信息更新购物车中的折扣信息。
         private void updateCartMemberDiscout(Customer aCustomer)
         {
@@ -668,116 +586,6 @@ namespace weitongManager
             }
             m_cartDetailGrid.Refresh();
         }
-
-
-        // order
-//        private int insertOrderAndGetID()
-//        {
-//            int orderID = -1;
-//            int customerID = CartCustomer.ID;
-//            DateTime effectDay = DateTime.Now.Date;
-            
-//            int orderState = 1;          // 1为未完成，2为已付款，3为取消
-//            decimal amount = 0;
-
-//            foreach (CartDetailRowData item in m_cartDetailList)
-//            {
-//                amount += item.Amount;
-//            }
-
-//            string insertStr = @"INSERT INTO orders(customerid,effectdate,orderstate,amount) 
-//                                VALUES(@customerid,@effectdate,@orderstate,@amount)";
-//            MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-//            insertCmd.CommandText = insertStr;
-//            insertCmd.Connection = m_storageAdapter.Connection;
-//            insertCmd.Parameters.Add("@customerid", MySqlDbType.Int32).Value = customerID;
-//            insertCmd.Parameters.Add("@effectdate", MySqlDbType.DateTime).Value = effectDay;
-//            insertCmd.Parameters.Add("@orderstate", MySqlDbType.Int32).Value = orderState;
-//            insertCmd.Parameters.Add("@amount", MySqlDbType.Decimal).Value = amount;
-
-//            try
-//            {
-//                insertCmd.Connection.Open();
-//                insertCmd.ExecuteNonQuery();
-//                string queryIdStr = "SELECT LAST_INSERT_ID()";
-//                insertCmd.CommandText = queryIdStr;
-//                MySqlDataReader reader = insertCmd.ExecuteReader();
-//                reader.Read();
-//                if (reader.HasRows)
-//                {
-//                    orderID = reader.GetInt32(0);
-//                }
-//            }
-//            finally
-//            {
-//                insertCmd.Connection.Close();
-//            }
-
-//            return orderID;
-//        }
-
-        // state 1 等待付款，2 完成付款，3 取消订单
-//        private void updateOrder(int orderID, int customerID, DateTime effectDate, OrderState state, decimal amount, decimal recved)
-//        {
-//            string updateStr = @"UPDATE orders SET customerid = @customerid, effectdate = @effectdate, 
-//                                                   orderstate = @orderstate, amount = @amount, received = @recved
-//                                 WHERE id=@id";
-//            MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
-//            updateCmd.CommandText = updateStr;
-//            updateCmd.Connection = m_storageAdapter.Connection;
-
-//            updateCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = orderID;
-//            updateCmd.Parameters.Add("@customerid", MySqlDbType.Int32).Value = customerID;
-//            updateCmd.Parameters.Add("@effectdate", MySqlDbType.DateTime).Value = effectDate;
-//            updateCmd.Parameters.Add("@orderstate", MySqlDbType.Int32).Value = state;
-//            updateCmd.Parameters.Add("@amount", MySqlDbType.Decimal).Value = amount;
-//            updateCmd.Parameters.Add("@recved", MySqlDbType.Decimal).Value = recved;
-//            try
-//            {
-//                updateCmd.Connection.Open();
-//                updateCmd.ExecuteNonQuery();
-//            }
-//            finally
-//            {
-//                updateCmd.Connection.Close();
-//            }
-//        }
-
-//        private void insertOrderDetail(int orderID)
-//        {
-//            string insertStr = @"INSERT INTO order_wines(orderid,code,units,knockdownprice) 
-//                                VALUES(@orderid,@code,@units,@knockdownprice)";
-//            MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-//            insertCmd.CommandText = insertStr;
-//            insertCmd.Connection = m_storageAdapter.Connection;
-
-//            MySqlParameter para_orderID = new MySqlParameter("@orderid",MySqlDbType.Int32);
-//            MySqlParameter para_code = new MySqlParameter("@code", MySqlDbType.VarChar);
-//            MySqlParameter para_units = new MySqlParameter("@units", MySqlDbType.Int32);
-//            MySqlParameter para_price = new MySqlParameter("@knockdownprice", MySqlDbType.Decimal);
-            
-//            insertCmd.Parameters.Add(para_orderID);
-//            insertCmd.Parameters.Add(para_code);
-//            insertCmd.Parameters.Add(para_units);
-//            insertCmd.Parameters.Add(para_price);
-
-//            try
-//            {
-//                insertCmd.Connection.Open();
-//                foreach (CartDetailRowData item in m_cartDetailList)
-//                {
-//                    para_orderID.Value = orderID;
-//                    para_code.Value = item.Code;
-//                    para_units.Value = item.Units;
-//                    para_price.Value = item.Memberprice;
-//                    insertCmd.ExecuteNonQuery();
-//                }
-//            }
-//            finally
-//            {
-//                insertCmd.Connection.Close();
-//            }
-//        }
 
         private List<OrderRowData> getOrderDetailByOrderID(int orderID)
         {
@@ -847,5 +655,6 @@ namespace weitongManager
 
         // 当前购物车
         private Cart m_currentCart = null;
+        private User m_currentUser = null;
     }
 }

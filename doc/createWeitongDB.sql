@@ -137,6 +137,7 @@ DROP TABLE IF EXISTS orders;
 CREATE TABLE orders(
 	id INT UNIQUE NOT NULL AUTO_INCREMENT,
 	customerid INT NOT NULL,
+	userid INT NOT NULL,
 	effectdate DATETIME NOT NULL,
 	orderstate INT,
 	amount DECIMAL DEFAULT 0,
@@ -154,7 +155,7 @@ CREATE TABLE order_wines(
 	code CHAR(100) NOT NULL,
 	units INT NOT NULL DEFAULT 1,
 	knockdownprice DECIMAL DEFAULT 0,
-	discount INT DEFAULT 100
+	discount INT DEFAULT 100,
 	PRIMARY KEY(id),
 	FOREIGN KEY(orderid) REFERENCES orders(id)
 	ON DELETE CASCADE,
@@ -182,6 +183,7 @@ CREATE TABLE users(
 	user_name CHAR(255) NOT NULL UNIQUE,
 	passwd TEXT NOT NULL,
 	salt TEXT,
+	alias_name TEXT,
 	email TEXT,
 	reg_date DATETIME,
 	role_id INT NOT NULL,
@@ -189,8 +191,8 @@ CREATE TABLE users(
 	FOREIGN KEY(role_id) REFERENCES roles(id)
 )TYPE=INNODB;
 
-INSERT INTO users(user_name,passwd,salt,reg_date,role_id) VALUES('admin',SHA('adminxxbucunzai'),'xxbucunzai',NOW(),1);
-INSERT INTO users(user_name,passwd,salt,reg_date,role_id) VALUES('wentong',SHA('wentongxxbucunzai'),'xxbucunzai',NOW(),3);
+INSERT INTO users(user_name,passwd,salt,alias_name,reg_date,role_id) VALUES('admin',SHA('adminxxbucunzai'),'xxbucunzai','ÕıºŒ¡∫',NOW(),1);
+INSERT INTO users(user_name,passwd,salt,alias_name,reg_date,role_id) VALUES('wentong',SHA('wentongxxbucunzai'),'xxbucunzai','Œ‚ŒƒÕ®',NOW(),3);
 
 
 

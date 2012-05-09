@@ -63,6 +63,7 @@ namespace weitongManager
                 m_salesMgr.CurrentOrderView = dgv_currentOrder;
                 m_salesMgr.OrderListView = dgv_orderList;
                 m_salesMgr.OrderAdapter = new weitongDataSet1TableAdapters.orderTableAdapter();
+                m_salesMgr.CurrentUser = m_currentUser;
 
                 m_salesMgr.init();
 
@@ -416,25 +417,32 @@ namespace weitongManager
 
         private void tsmi_viewOrderDetail_Click(object sender, EventArgs e)
         {
-            if (dgv_orderList.CurrentRow == null) return;
-            DataRowView curRow = dgv_orderList.CurrentRow.DataBoundItem as DataRowView;
-            weitongDataSet1.orderRow data = curRow.Row as weitongDataSet1.orderRow;
-            // 设置订单为当前的订单
-            int ret = m_salesMgr.setCurrentOrder(data.id);
-            if (ret == 0)
+            try
             {
-                if ((OrderState)data.orderstate == OrderState.CANCEL)
+                if (dgv_orderList.CurrentRow == null) return;
+                DataRowView curRow = dgv_orderList.CurrentRow.DataBoundItem as DataRowView;
+                weitongDataSet1.orderRow data = curRow.Row as weitongDataSet1.orderRow;
+                // 设置订单为当前的订单
+                int ret = m_salesMgr.setCurrentOrder(data.id);
+                if (ret == 0)
                 {
-                    btn_CompleteOrder.Enabled = false;
-                    btn_continueOrder.Enabled = false;
-                    btn_cancelOrder.Enabled = false;
+                    if ((OrderState)data.orderstate == OrderState.CANCEL)
+                    {
+                        btn_CompleteOrder.Enabled = false;
+                        btn_continueOrder.Enabled = false;
+                        btn_cancelOrder.Enabled = false;
+                    }
+                    showCurrentOrder();
+                    jump2CurrentOrder();
                 }
-                showCurrentOrder();
-                jump2CurrentOrder();
+                else
+                {
+                    MessageBox.Show("指定的订单不存在，请于管理员联系！");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("指定的订单不存在，请于管理员联系！");
+                WARNING(ex.Message);
             }
         }
 
@@ -595,7 +603,16 @@ namespace weitongManager
 
         private void showCurrentUser()
         {
-            tsl_curUser.Text = "user:" + CurrentUser.Name;
+            string name = "";
+            if (CurrentUser.Alias != null && CurrentUser.Alias != "")
+            {
+                name = CurrentUser.Alias;
+            }
+            else
+            {
+                name = CurrentUser.Name;
+            }
+            tsl_curUser.Text = "user:" + name;
             tsl_sysDate.Text = DateTime.Now.ToShortDateString();
             tsl_sysTime.Text = DateTime.Now.ToLongTimeString();
         }
@@ -789,34 +806,25 @@ namespace weitongManager
             }
         }
 
-        //private int m_combobox_selectedIndex = 0;
-        //private void cbox_membLevel_DropDown(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        m_combobox_selectedIndex = cbox_membLevel.SelectedIndex;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        WARNING(ex.Message);
-        //    }
-        //}
-
-        //private void cbox_membLevel_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (!CurrentUser.isAdministrator())
-        //        {
-        //            WARNING("您没有权限修改会员级别，请与店长联系！");
-        //            cbox_membLevel.SelectedIndex = m_combobox_selectedIndex;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        WARNING(ex.Message);
-        //    }
-        //}
+        private void tsmi_PrintPrder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgv_orderList.CurrentRow == null) return;
+                DataRowView curRow = dgv_orderList.CurrentRow.DataBoundItem as DataRowView;
+                weitongDataSet1.orderRow data = curRow.Row as weitongDataSet1.orderRow;
+                Order curOrder = Order.findByID(data.id);
+                if (curOrder == null) return;
+                FrmPrint frmPrint = new FrmPrint();
+                frmPrint.User = CurrentUser;
+                frmPrint.Order = curOrder;
+                frmPrint.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
         
     }
 }

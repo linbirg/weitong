@@ -12,15 +12,29 @@ namespace weitongManager
 {
     partial class FrmPrint : Form
     {
+       
+        //PrintDocument类是实现打印功能的核心，它封装了打印有关的属性、事件、和方法
+        private PrintDocument printDocument = new PrintDocument();
+
+        private BindingList<CartDetailRowData> m_DetailList = null;
+        private DataGridView m_CartDetaiGrid = null;
+        private Customer m_customer = null;
+        private Order m_order = null;
+        private User m_user = null;
+
+        private DateTime m_orderTime;
+
+        private int m_currentPageIndex = 0;
+        private int m_maxRowPerPage = MAX_ROW_PER_PAGE;
+        private int m_totalPageCount = 0;
+        private readonly static int MAX_ROW_PER_PAGE = 8; 
+
         public FrmPrint()
         {
             InitializeComponent();
             m_DetailList = new BindingList<CartDetailRowData>();
         }
-
-        //PrintDocument类是实现打印功能的核心，它封装了打印有关的属性、事件、和方法
-        PrintDocument printDocument = new PrintDocument();
-
+        
         private void btnPrint_Click(object sender, EventArgs e)
         {
             //printDocument.PrinterSettings可以获取或设置计算机默认打印相关属性或参数，如：printDocument.PrinterSettings.PrinterName获得默认打印机打印机名称
@@ -28,7 +42,7 @@ namespace weitongManager
             
             //设置文档名
             printDocument.DocumentName = lbl_custNameContent.Text + " 订金单";//设置完后可在打印对话框及队列中显示（默认显示document）
-
+            
             //设置纸张大小（可以不设置取，取默认设置）
             PaperSize ps = new PaperSize("Your Paper Name", 210, 297);
             ps.RawKind = 9; //如果是自定义纸张，就要大于118，（A4值为9，详细纸张类型与值的对照请看http://msdn.microsoft.com/zh-tw/library/system.drawing.printing.papersize.rawkind(v=vs.85).aspx）
@@ -109,6 +123,7 @@ namespace weitongManager
         void printDocument_BeginPrint(object sender, PrintEventArgs e)
         {
             //也可以把一些打印的参数放在此处设置
+            m_totalPageCount = (m_DetailList.Count-1) / m_maxRowPerPage + 1;
         }
 
         void printDocument_PrintPage(object sender, PrintPageEventArgs e)
@@ -152,6 +167,7 @@ namespace weitongManager
 
             //e.Cancel//获取或设置是否取消打印
             //e.HasMorePages    //为true时，该函数执行完毕后还会重新执行一遍（可用于动态分页）
+            
         }
 
         void printDocument_EndPrint(object sender, PrintEventArgs e)
@@ -331,11 +347,24 @@ namespace weitongManager
             
             format.Alignment = StringAlignment.Near;
             format.LineAlignment = StringAlignment.Center;
-           
 
-            for (int i = 0; i < dgv_dingjindan.RowCount; i++)
+            int row_index = m_currentPageIndex * m_maxRowPerPage;
+            int count = 0;
+            if ((row_index + m_maxRowPerPage) < dgv_dingjindan.RowCount)
             {
-                DataGridViewRow row = dgv_dingjindan.Rows[i];
+                count = row_index + m_maxRowPerPage;
+                e.HasMorePages = true;
+                m_currentPageIndex++;
+            }
+            else
+            {
+                count = dgv_dingjindan.RowCount;
+                e.HasMorePages = false;
+                m_currentPageIndex = 0;
+            }
+            for (; row_index < count; row_index++)
+            {
+                DataGridViewRow row = dgv_dingjindan.Rows[row_index];
                 rHeight = (int)(row.Height*scaleY);
                 iLeftMargin = e.MarginBounds.Left;
 
@@ -358,6 +387,8 @@ namespace weitongManager
 
                 iTopMargin += rHeight;
             }
+
+            
 
 
         }
@@ -399,8 +430,9 @@ namespace weitongManager
 
         private void FrmPrint_Load(object sender, EventArgs e)
         {
-            Bitmap bmp = BarCode.BuildBarCode("2012000004");
+            Bitmap bmp = BarCode.BuildBarCode(lbl_orderIDContent.Text);
             lbl_code.Image = bmp;
+            CenterToScreen();
         }
 
         private void binding()
@@ -465,8 +497,15 @@ namespace weitongManager
             set 
             {
                 m_order = value;
+                
                 showOrder();
+                // Customer
                 SetCustomer(Customer.findByID(Order.CustomerID));
+                // User
+                User aUser = User.find_by_id(Order.UserID);
+                User = aUser;
+
+                // order_detail
                 // generateOrderDetail
                 List<OrderDetail> details = m_order.getDetails();
                 m_DetailList.Clear();
@@ -486,6 +525,7 @@ namespace weitongManager
                     }
                     addDetail(data);
                 }
+                binding();
             }
         }
 
@@ -522,18 +562,19 @@ namespace weitongManager
         private void showUser()
         {
             if (m_user != null)
-                lbl_salerContent.Text = m_user.Name;
+            {
+                string user = "";
+                if (m_user.Alias != null && m_user.Alias != "")
+                {
+                    user = m_user.Alias;
+                }
+                else
+                {
+                    user = m_user.Name;
+                }
+                lbl_salerContent.Text = user;
+            }
         }
-
-
-        private BindingList<CartDetailRowData> m_DetailList = null;
-        private DataGridView m_CartDetaiGrid = null;
-        private Customer m_customer = null;
-        private Order m_order = null;
-        private User m_user = null;
-
-        private DateTime m_orderTime;
-
         
     }
 }
