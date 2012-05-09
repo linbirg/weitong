@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrint));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lbl_Logo = new System.Windows.Forms.Label();
             this.lbl_orderDate = new System.Windows.Forms.Label();
             this.lbl_orderTime = new System.Windows.Forms.Label();
@@ -48,6 +48,13 @@
             this.lbl_custNumber = new System.Windows.Forms.Label();
             this.lbl_custEffectDate = new System.Windows.Forms.Label();
             this.dgv_dingjindan = new System.Windows.Forms.DataGridView();
+            this.dingJinDanCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dingJinDanDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dingJinDanUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dingJinDanBottle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dingJinDanMemberprice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dingJinDanDiscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dingJinDanAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lbl_custNameContent = new System.Windows.Forms.Label();
             this.lbl_custNumberContent = new System.Windows.Forms.Label();
             this.lbl_custEffectDateContent = new System.Windows.Forms.Label();
@@ -62,13 +69,9 @@
             this.lbl_LogoPhone = new System.Windows.Forms.Label();
             this.btn_Print = new System.Windows.Forms.Button();
             this.btn_Preview = new System.Windows.Forms.Button();
-            this.dingJinDanCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dingJinDanDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dingJinDanUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dingJinDanBottle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dingJinDanMemberprice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dingJinDanDiscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dingJinDanAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lbl_Amount = new System.Windows.Forms.Label();
+            this.lbl_AmountContent = new System.Windows.Forms.Label();
+            this.lbl_AmountSigleLine = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_dingjindan)).BeginInit();
             this.SuspendLayout();
             // 
@@ -246,16 +249,16 @@
             this.dingJinDanMemberprice,
             this.dingJinDanDiscount,
             this.dingJinDanAmount});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_dingjindan.GridColor = System.Drawing.SystemColors.Control;
-            this.dgv_dingjindan.Location = new System.Drawing.Point(12, 255);
+            this.dgv_dingjindan.Location = new System.Drawing.Point(12, 243);
             this.dgv_dingjindan.MultiSelect = false;
             this.dgv_dingjindan.Name = "dgv_dingjindan";
             this.dgv_dingjindan.ReadOnly = true;
@@ -264,6 +267,54 @@
             this.dgv_dingjindan.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_dingjindan.Size = new System.Drawing.Size(763, 186);
             this.dgv_dingjindan.TabIndex = 19;
+            // 
+            // dingJinDanCode
+            // 
+            this.dingJinDanCode.HeaderText = "项目";
+            this.dingJinDanCode.Name = "dingJinDanCode";
+            this.dingJinDanCode.ReadOnly = true;
+            // 
+            // dingJinDanDescription
+            // 
+            this.dingJinDanDescription.HeaderText = "说明";
+            this.dingJinDanDescription.Name = "dingJinDanDescription";
+            this.dingJinDanDescription.ReadOnly = true;
+            this.dingJinDanDescription.Width = 295;
+            // 
+            // dingJinDanUnits
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dingJinDanUnits.HeaderText = "数量";
+            this.dingJinDanUnits.Name = "dingJinDanUnits";
+            this.dingJinDanUnits.ReadOnly = true;
+            this.dingJinDanUnits.Width = 55;
+            // 
+            // dingJinDanBottle
+            // 
+            this.dingJinDanBottle.HeaderText = "单位";
+            this.dingJinDanBottle.Name = "dingJinDanBottle";
+            this.dingJinDanBottle.ReadOnly = true;
+            this.dingJinDanBottle.Width = 55;
+            // 
+            // dingJinDanMemberprice
+            // 
+            this.dingJinDanMemberprice.HeaderText = "单价(￥)";
+            this.dingJinDanMemberprice.Name = "dingJinDanMemberprice";
+            this.dingJinDanMemberprice.ReadOnly = true;
+            // 
+            // dingJinDanDiscount
+            // 
+            this.dingJinDanDiscount.HeaderText = "折扣";
+            this.dingJinDanDiscount.Name = "dingJinDanDiscount";
+            this.dingJinDanDiscount.ReadOnly = true;
+            this.dingJinDanDiscount.Width = 55;
+            // 
+            // dingJinDanAmount
+            // 
+            this.dingJinDanAmount.HeaderText = "金额(￥)";
+            this.dingJinDanAmount.Name = "dingJinDanAmount";
+            this.dingJinDanAmount.ReadOnly = true;
             // 
             // lbl_custNameContent
             // 
@@ -400,59 +451,42 @@
             this.btn_Preview.UseVisualStyleBackColor = true;
             this.btn_Preview.Click += new System.EventHandler(this.btn_Preview_Click);
             // 
-            // dingJinDanCode
+            // lbl_Amount
             // 
-            this.dingJinDanCode.HeaderText = "项目";
-            this.dingJinDanCode.Name = "dingJinDanCode";
-            this.dingJinDanCode.ReadOnly = true;
+            this.lbl_Amount.AutoSize = true;
+            this.lbl_Amount.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_Amount.Location = new System.Drawing.Point(678, 445);
+            this.lbl_Amount.Name = "lbl_Amount";
+            this.lbl_Amount.Size = new System.Drawing.Size(44, 12);
+            this.lbl_Amount.TabIndex = 34;
+            this.lbl_Amount.Text = "合计：";
             // 
-            // dingJinDanDescription
+            // lbl_AmountContent
             // 
-            this.dingJinDanDescription.HeaderText = "说明";
-            this.dingJinDanDescription.Name = "dingJinDanDescription";
-            this.dingJinDanDescription.ReadOnly = true;
-            this.dingJinDanDescription.Width = 295;
+            this.lbl_AmountContent.Location = new System.Drawing.Point(720, 445);
+            this.lbl_AmountContent.Name = "lbl_AmountContent";
+            this.lbl_AmountContent.Size = new System.Drawing.Size(55, 12);
+            this.lbl_AmountContent.TabIndex = 35;
+            this.lbl_AmountContent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // dingJinDanUnits
+            // lbl_AmountSigleLine
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dingJinDanUnits.HeaderText = "数量";
-            this.dingJinDanUnits.Name = "dingJinDanUnits";
-            this.dingJinDanUnits.ReadOnly = true;
-            this.dingJinDanUnits.Width = 55;
-            // 
-            // dingJinDanBottle
-            // 
-            this.dingJinDanBottle.HeaderText = "单位";
-            this.dingJinDanBottle.Name = "dingJinDanBottle";
-            this.dingJinDanBottle.ReadOnly = true;
-            this.dingJinDanBottle.Width = 55;
-            // 
-            // dingJinDanMemberprice
-            // 
-            this.dingJinDanMemberprice.HeaderText = "单价";
-            this.dingJinDanMemberprice.Name = "dingJinDanMemberprice";
-            this.dingJinDanMemberprice.ReadOnly = true;
-            // 
-            // dingJinDanDiscount
-            // 
-            this.dingJinDanDiscount.HeaderText = "折扣";
-            this.dingJinDanDiscount.Name = "dingJinDanDiscount";
-            this.dingJinDanDiscount.ReadOnly = true;
-            this.dingJinDanDiscount.Width = 55;
-            // 
-            // dingJinDanAmount
-            // 
-            this.dingJinDanAmount.HeaderText = "金额";
-            this.dingJinDanAmount.Name = "dingJinDanAmount";
-            this.dingJinDanAmount.ReadOnly = true;
+            this.lbl_AmountSigleLine.AutoSize = true;
+            this.lbl_AmountSigleLine.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_AmountSigleLine.Location = new System.Drawing.Point(678, 429);
+            this.lbl_AmountSigleLine.Name = "lbl_AmountSigleLine";
+            this.lbl_AmountSigleLine.Size = new System.Drawing.Size(89, 12);
+            this.lbl_AmountSigleLine.TabIndex = 36;
+            this.lbl_AmountSigleLine.Text = "______________";
             // 
             // FrmPrint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 629);
+            this.Controls.Add(this.lbl_AmountSigleLine);
+            this.Controls.Add(this.lbl_AmountContent);
+            this.Controls.Add(this.lbl_Amount);
             this.Controls.Add(this.btn_Preview);
             this.Controls.Add(this.btn_Print);
             this.Controls.Add(this.lbl_LogoPhone);
@@ -527,6 +561,8 @@
         private System.Windows.Forms.Label lbl_LogoPhone;
         private System.Windows.Forms.Button btn_Print;
         private System.Windows.Forms.Button btn_Preview;
+        private System.Windows.Forms.Label lbl_Amount;
+        private System.Windows.Forms.Label lbl_AmountContent;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanUnits;
@@ -534,5 +570,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanMemberprice;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanDiscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanAmount;
+        private System.Windows.Forms.Label lbl_AmountSigleLine;
     }
 }

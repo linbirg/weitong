@@ -14,7 +14,7 @@ namespace weitongManager
     {
        
         //PrintDocument类是实现打印功能的核心，它封装了打印有关的属性、事件、和方法
-        private PrintDocument printDocument = new PrintDocument();
+        private PrintDocument m_printDocument = null;//new PrintDocument();
 
         private BindingList<CartDetailRowData> m_DetailList = null;
         private DataGridView m_CartDetaiGrid = null;
@@ -32,106 +32,129 @@ namespace weitongManager
         public FrmPrint()
         {
             InitializeComponent();
+            m_printDocument = new PrintDocument();
+            //打印开始前
+            m_printDocument.BeginPrint += new PrintEventHandler(printDocument_BeginPrint);
+            //打印输出（过程）
+            m_printDocument.PrintPage += new PrintPageEventHandler(printDocument_PrintPage);
+            //打印结束
+            m_printDocument.EndPrint += new PrintEventHandler(printDocument_EndPrint);
             m_DetailList = new BindingList<CartDetailRowData>();
         }
         
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            //printDocument.PrinterSettings可以获取或设置计算机默认打印相关属性或参数，如：printDocument.PrinterSettings.PrinterName获得默认打印机打印机名称
-            //printDocument.DefaultPageSettings   //可以获取或设置打印页面参数信息、如是纸张大小，是否横向打印等
-            
-            //设置文档名
-            printDocument.DocumentName = lbl_custNameContent.Text + " 订金单";//设置完后可在打印对话框及队列中显示（默认显示document）
-            
-            //设置纸张大小（可以不设置取，取默认设置）
-            PaperSize ps = new PaperSize("Your Paper Name", 210, 297);
-            ps.RawKind = 9; //如果是自定义纸张，就要大于118，（A4值为9，详细纸张类型与值的对照请看http://msdn.microsoft.com/zh-tw/library/system.drawing.printing.papersize.rawkind(v=vs.85).aspx）
-            printDocument.DefaultPageSettings.PaperSize = ps;
-
-            //打印开始前
-            printDocument.BeginPrint += new PrintEventHandler(printDocument_BeginPrint);
-            //打印输出（过程）
-            printDocument.PrintPage += new PrintPageEventHandler(printDocument_PrintPage);
-            //打印结束
-            printDocument.EndPrint += new PrintEventHandler(printDocument_EndPrint);
-
-            //跳出打印对话框，提供打印参数可视化设置，如选择哪个打印机打印此文档等
-            PrintDialog pd = new PrintDialog();
-            pd.Document = printDocument;
-            if (DialogResult.OK == pd.ShowDialog()) //如果确认，将会覆盖所有的打印参数设置
+            try
             {
-                //页面设置对话框（可以不使用，其实PrintDialog对话框已提供页面设置）
-                PageSetupDialog psd = new PageSetupDialog();
-                psd.Document = printDocument;
-                if (DialogResult.OK == psd.ShowDialog())
+                resetGlobalSettings();
+                //printDocument.PrinterSettings可以获取或设置计算机默认打印相关属性或参数，如：printDocument.PrinterSettings.PrinterName获得默认打印机打印机名称
+                //printDocument.DefaultPageSettings   //可以获取或设置打印页面参数信息、如是纸张大小，是否横向打印等
+
+                //设置文档名
+                m_printDocument.DocumentName = lbl_custNameContent.Text + " 订金单";//设置完后可在打印对话框及队列中显示（默认显示document）
+
+                //设置纸张大小（可以不设置取，取默认设置）
+                PaperSize ps = new PaperSize("Your Paper Name", 210, 297);
+                ps.RawKind = 9; //如果是自定义纸张，就要大于118，（A4值为9，详细纸张类型与值的对照请看http://msdn.microsoft.com/zh-tw/library/system.drawing.printing.papersize.rawkind(v=vs.85).aspx）
+                m_printDocument.DefaultPageSettings.PaperSize = ps;
+
+                ////打印开始前
+                //printDocument.BeginPrint += new PrintEventHandler(printDocument_BeginPrint);
+                ////打印输出（过程）
+                //printDocument.PrintPage += new PrintPageEventHandler(printDocument_PrintPage);
+                ////打印结束
+                //printDocument.EndPrint += new PrintEventHandler(printDocument_EndPrint);
+
+                //跳出打印对话框，提供打印参数可视化设置，如选择哪个打印机打印此文档等
+                PrintDialog pd = new PrintDialog();
+                pd.Document = m_printDocument;
+                if (DialogResult.OK == pd.ShowDialog()) //如果确认，将会覆盖所有的打印参数设置
                 {
-                    ////打印预览
-                    //PrintPreviewDialog ppd = new PrintPreviewDialog();
-                    //ppd.Document = printDocument;
-                    //if (DialogResult.OK == ppd.ShowDialog())
-                        printDocument.Print();          //打印
+                    //页面设置对话框（可以不使用，其实PrintDialog对话框已提供页面设置）
+                    PageSetupDialog psd = new PageSetupDialog();
+                    psd.Document = m_printDocument;
+                    if (DialogResult.OK == psd.ShowDialog())
+                    {
+                        ////打印预览
+                        //PrintPreviewDialog ppd = new PrintPreviewDialog();
+                        //ppd.Document = printDocument;
+                        //if (DialogResult.OK == ppd.ShowDialog())
+                        m_printDocument.Print();          //打印
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                //打印异常信息
             }
         }
 
         private void btn_Preview_Click(object sender, EventArgs e)
         {
-            //printDocument.PrinterSettings可以获取或设置计算机默认打印相关属性或参数，如：printDocument.PrinterSettings.PrinterName获得默认打印机打印机名称
-            //printDocument.DefaultPageSettings   //可以获取或设置打印页面参数信息、如是纸张大小，是否横向打印等
-            //Bitmap bmp = BarCode.BuildBarCode("20120004");
-            //bmp.Save(@"D:\\tiaoxingma.bmp");
-            //设置文档名
-            printDocument.DocumentName = lbl_custNameContent.Text + " 订金单";//设置完后可在打印对话框及队列中显示（默认显示document）
+            try
+            {
+                resetGlobalSettings();
+                //printDocument.PrinterSettings可以获取或设置计算机默认打印相关属性或参数，如：printDocument.PrinterSettings.PrinterName获得默认打印机打印机名称
+                //printDocument.DefaultPageSettings   //可以获取或设置打印页面参数信息、如是纸张大小，是否横向打印等
+                //Bitmap bmp = BarCode.BuildBarCode("20120004");
+                //bmp.Save(@"D:\\tiaoxingma.bmp");
+                //设置文档名
+                m_printDocument.DocumentName = lbl_custNameContent.Text + " 订金单";//设置完后可在打印对话框及队列中显示（默认显示document）
 
-            //设置纸张大小（可以不设置取，取默认设置）
-            PaperSize ps = new PaperSize("Your Paper Name", 210, 297);
-            ps.RawKind = 9; //如果是自定义纸张，就要大于118，（A4值为9，详细纸张类型与值的对照请看http://msdn.microsoft.com/zh-tw/library/system.drawing.printing.papersize.rawkind(v=vs.85).aspx）
-            printDocument.DefaultPageSettings.PaperSize = ps;
+                //设置纸张大小（可以不设置取，取默认设置）
+                PaperSize ps = new PaperSize("Your Paper Name", 210, 297);
+                ps.RawKind = 9; //如果是自定义纸张，就要大于118，（A4值为9，详细纸张类型与值的对照请看http://msdn.microsoft.com/zh-tw/library/system.drawing.printing.papersize.rawkind(v=vs.85).aspx）
+                m_printDocument.DefaultPageSettings.PaperSize = ps;
 
-            //打印开始前
-            printDocument.BeginPrint += new PrintEventHandler(printDocument_BeginPrint);
-            //打印输出（过程）
-            printDocument.PrintPage += new PrintPageEventHandler(printDocument_PrintPage);
-            //打印结束
-            printDocument.EndPrint += new PrintEventHandler(printDocument_EndPrint);
+                ////打印开始前
+                //printDocument.BeginPrint += new PrintEventHandler(printDocument_BeginPrint);
+                ////打印输出（过程）
+                //printDocument.PrintPage += new PrintPageEventHandler(printDocument_PrintPage);
+                ////打印结束
+                //printDocument.EndPrint += new PrintEventHandler(printDocument_EndPrint);
 
-            //跳出打印对话框，提供打印参数可视化设置，如选择哪个打印机打印此文档等
-            //PrintDialog pd = new PrintDialog();
-            //pd.Document = printDocument;
-            //if (DialogResult.OK == pd.ShowDialog()) //如果确认，将会覆盖所有的打印参数设置
-            //{
+                //跳出打印对话框，提供打印参数可视化设置，如选择哪个打印机打印此文档等
+                //PrintDialog pd = new PrintDialog();
+                //pd.Document = printDocument;
+                //if (DialogResult.OK == pd.ShowDialog()) //如果确认，将会覆盖所有的打印参数设置
+                //{
                 PaperSize p = null;
-                foreach (PaperSize ps2 in printDocument.PrinterSettings.PaperSizes)
+                foreach (PaperSize ps2 in m_printDocument.PrinterSettings.PaperSizes)
                 {
                     if (ps.PaperName.Equals("A4"))//这里设置纸张大小,但必须是定义好的  
                         p = ps2;
                 }
 
-                printDocument.DefaultPageSettings.PaperSize = p;
-                
+                m_printDocument.DefaultPageSettings.PaperSize = p;
+
                 //打印预览
                 PrintPreviewDialog ppd = new PrintPreviewDialog();
-                ppd.Document = printDocument;
+                ppd.Document = m_printDocument;
                 Form f = (Form)ppd;
                 f.WindowState = FormWindowState.Maximized;
                 if (DialogResult.OK == ppd.ShowDialog())
-                    printDocument.Print();          //打印
-                
-            //}
+                    m_printDocument.Print();          //打印
+
+                //}
+            }
+            catch (Exception ex)
+            {
+                //打印异常信息
+            }
         }
 
         void printDocument_BeginPrint(object sender, PrintEventArgs e)
         {
             //也可以把一些打印的参数放在此处设置
-            m_totalPageCount = (m_DetailList.Count-1) / m_maxRowPerPage + 1;
+            //m_totalPageCount = (m_DetailList.Count-1) / m_maxRowPerPage + 1;
         }
 
         void printDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            int x = lbl_Logo.Location.X;
-            int y = this.Height - this.Bottom;
-            int width = lbl_Logo.Width;
-            int height = lbl_anuncment2.Bottom + 20;
+            //int x = lbl_Logo.Location.X;
+            //int y = this.Height - this.Bottom;
+            //int width = lbl_Logo.Width;
+            //int height = lbl_anuncment2.Bottom + 20;
             float scaleX = (e.PageBounds.Width - e.MarginBounds.Left * 2) / (float)this.DisplayRectangle.Width;
             
             // 页面对应到一半的纸张上面，只打印在上半部分。
@@ -140,34 +163,59 @@ namespace weitongManager
             Graphics g = e.Graphics;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias; 
 
-            Bitmap   formBitmap   =   new Bitmap(this.Width, this.Height);
-            this.DrawToBitmap(formBitmap, new Rectangle(0, 0, this.Width, this.Height));
+            //Bitmap   formBitmap   =   new Bitmap(this.Width, this.Height);
+            //this.DrawToBitmap(formBitmap, new Rectangle(0, 0, this.Width, this.Height));
             //g.DrawImage(formBitmap, 0, 0);
             
             
             
-            Brush b = new SolidBrush(Color.Black);
-            Font titleFont = new Font("宋体", 16);
-            string title = "五凤街道梅峰社区卫生服务站 处方笺";
-            g.DrawString(title, titleFont, b, new PointF((e.PageBounds.Width - g.MeasureString(title, titleFont).Width) / 2, this.Height/2 + 300));
+            //Brush b = new SolidBrush(Color.Black);
+            //Font titleFont = new Font("宋体", 16);
+            //string title = "五凤街道梅峰社区卫生服务站 处方笺";
+            //g.DrawString(title, titleFont, b, new PointF((e.PageBounds.Width - g.MeasureString(title, titleFont).Width) / 2, this.Height/2 + 300));
             
             //g.DrawImage(lbl_Logo.Image,e.MarginBounds.Left,0,e.PageBounds.Width-e.MarginBounds.Left*2,100);
 
+            // 上半页
+            drawHalfPage(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
             drowMiddleLine(e);
-            drowLogo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drowCode(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drowTitle(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drowOrderInfo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drawCustomerInfo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drawSignAndBeizhu(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drawAnancement(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-
-            drawColumnHeader(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drawRows(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-
-            //e.Cancel//获取或设置是否取消打印
-            //e.HasMorePages    //为true时，该函数执行完毕后还会重新执行一遍（可用于动态分页）
+            drawHalfPage(0, this.DisplayRectangle.Height - lbl_Logo.Location.Y*2, scaleX, scaleY, e);
+            if (hasNextPage()) printNextPage(e);
             
+            //drowLogo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+            //drowCode(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+            //drowTitle(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+            //showCurrentPage();
+            //drowOrderInfo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+            //drawCustomerInfo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+            //drawSignAndBeizhu(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+            //drawAnancement(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+
+            //if (m_currentPageIndex == m_totalPageCount - 1)
+            //    drawTotalAmount(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+
+            //drawColumnHeader(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
+            //// drawRows会改变当前页面的索引等一些全局的设置，因此必须在此页面最后打印。
+            //drawRows(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);  
+        }
+
+        private void drawHalfPage(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
+        {
+            drowLogo(posX, posY, scaleX, scaleY, e);
+            drowCode(posX, posY, scaleX, scaleY, e);
+            drowTitle(posX, posY, scaleX, scaleY, e);
+            showCurrentPage();
+            drowOrderInfo(posX, posY, scaleX, scaleY, e);
+            drawCustomerInfo(posX, posY, scaleX, scaleY, e);
+            drawSignAndBeizhu(posX, posY, scaleX, scaleY, e);
+            drawAnancement(posX, posY, scaleX, scaleY, e);
+
+            if (m_currentPageIndex == m_totalPageCount - 1)
+                drawTotalAmount(posX, posY, scaleX, scaleY, e);
+
+            drawColumnHeader(posX, posY, scaleX, scaleY, e);
+            // drawRows会改变当前页面的索引等一些全局的设置，因此必须在此页面最后打印。
+            drawRows(posX, posY, scaleX, scaleY, e);
         }
 
         void printDocument_EndPrint(object sender, PrintEventArgs e)
@@ -280,6 +328,13 @@ namespace weitongManager
             drowLabel(posX, posY, scaleX, scaleY, lbl_anuncment2, e);
         }
 
+        private void drawTotalAmount(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
+        {
+            drowLabel(posX, posY, scaleX, scaleY, lbl_AmountSigleLine, e);
+            drowLabel(posX, posY, scaleX, scaleY, lbl_Amount, e);
+            drowLabel(posX, posY, scaleX, scaleY, lbl_AmountContent, e);
+        }
+
         private void drawColumnHeader(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
             int orginX = (int)((dgv_dingjindan.Location.X + posX)*scaleX);
@@ -287,9 +342,9 @@ namespace weitongManager
             Point grid_origin = new Point(orginX, orginY);
             int iLeftMargin = e.MarginBounds.Left;
 
-            //Point hd_origin = dgv_dingjindan.Location;
+            
             string text = this.dgv_dingjindan.Columns[0].HeaderText;
-            //Rectangle rec = dgv_dingjindan.Columns[0].HeaderCell.ContentBounds;
+            
             int hdwidth = (int)(dgv_dingjindan.Columns[0].Width * scaleX);
             int hdheight = (int)(dgv_dingjindan.ColumnHeadersHeight*scaleY);
             DataGridViewCellStyle cellStyle = dgv_dingjindan.ColumnHeadersDefaultCellStyle;
@@ -298,16 +353,10 @@ namespace weitongManager
             Font headerFont = cellStyle.Font;
             Graphics gh = e.Graphics;
 
-            //SizeF sz = gh.MeasureString(text, headerFont);
-            //float width = (sz.Width > hdwidth) ? sz.Width : hdwidth;
-            //float height = (sz.Height > hdheight) ? sz.Height : hdheight;
-
+            
             //gh.DrawString(text, headerFont, b, new RectangleF(e.MarginBounds.Left + hd_origin.X, hd_origin.Y, hdwidth, hdheight));
             Pen aPen = new Pen(b);
             aPen.Width = 2;
-            //Point p1 = new Point(e.MarginBounds.Left + hd_origin.X, hd_origin.Y + hdheight);
-            //Point p2 = new Point(e.MarginBounds.Left + hd_origin.X + hdwidth, hd_origin.Y + hdheight);
-            //gh.DrawLine(aPen,p1,p2);
 
             for (int i = 0; i < dgv_dingjindan.ColumnCount; i++)
             {
@@ -350,17 +399,13 @@ namespace weitongManager
 
             int row_index = m_currentPageIndex * m_maxRowPerPage;
             int count = 0;
-            if ((row_index + m_maxRowPerPage) < dgv_dingjindan.RowCount)
+            if (hasNextPage())
             {
                 count = row_index + m_maxRowPerPage;
-                e.HasMorePages = true;
-                m_currentPageIndex++;
             }
             else
             {
                 count = dgv_dingjindan.RowCount;
-                e.HasMorePages = false;
-                m_currentPageIndex = 0;
             }
             for (; row_index < count; row_index++)
             {
@@ -387,10 +432,6 @@ namespace weitongManager
 
                 iTopMargin += rHeight;
             }
-
-            
-
-
         }
 
         // 该函数按照一定的比例，将控件的大小转换成纸张上的大小。
@@ -410,16 +451,6 @@ namespace weitongManager
 
 
             gh.DrawString(text, txtFont, b, new RectangleF(e.MarginBounds.Left + ( posX+ lbl.Location.X)*scaleX, (posY + lbl.Location.Y)*scaleY, width, height), format);
-
-            //Pen aPen = new Pen(b);
-            //Point p10 = lbl.Location;
-            //Point p11 = new Point(p10.X+ lbl.Width,p10.Y);
-            //Point p20 = new Point(p10.X, p10.Y + lbl.Height);
-            //Point p21 = new Point(p20.X + lbl.Width, p20.Y);
-            //gh.DrawLine(aPen, p10, p11);
-            //gh.DrawLine(aPen, p10, p20);
-            //gh.DrawLine(aPen, p11, p21);
-            //gh.DrawLine(aPen, p20, p21);
         }
 
         // 该函数按照控件的实际大小打印在纸张上
@@ -520,12 +551,14 @@ namespace weitongManager
                     Wine aWine = Wine.findByCode(detail.Code);
                     if (aWine != null)
                     {
-                        data.Bottle = aWine.Bottle;
+                        data.Bottle = "BT";//aWine.Bottle;
                         data.Description = aWine.Description;
                     }
                     addDetail(data);
                 }
                 binding();
+                showOrderAmount();
+                resetGlobalSettings();
             }
         }
 
@@ -573,6 +606,51 @@ namespace weitongManager
                     user = m_user.Name;
                 }
                 lbl_salerContent.Text = user;
+            }
+        }
+
+        private void showOrderAmount()
+        {
+            lbl_Amount.Visible = true;
+            lbl_AmountContent.Visible = true;
+            lbl_AmountContent.Text = Order.Amount.ToString() + "￥";
+        }
+
+        private void showCurrentPage()
+        {
+            // 
+            string pageStr = (m_currentPageIndex+1).ToString() + "/" + m_totalPageCount.ToString() + "页";
+            lbl_pageContent.Text = pageStr;
+        }
+
+        private void calcPages()
+        {
+            m_totalPageCount = (m_DetailList.Count - 1) / m_maxRowPerPage + 1;
+        }
+
+        private void resetGlobalSettings()
+        {
+            calcPages();
+            m_currentPageIndex = 0;
+            showCurrentPage();
+        }
+
+        private bool hasNextPage()
+        {
+            return (m_currentPageIndex + 1) * this.m_maxRowPerPage < dgv_dingjindan.RowCount;
+        }
+
+        private void printNextPage(PrintPageEventArgs e)
+        {
+            if (hasNextPage())
+            {
+                e.HasMorePages = true;
+                m_currentPageIndex++;
+            }
+            else
+            {
+                e.HasMorePages = false;
+                resetGlobalSettings();
             }
         }
         
