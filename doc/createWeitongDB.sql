@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS customers;
 CREATE TABLE customers(
 	id INT UNIQUE NOT NULL AUTO_INCREMENT,
 	name TEXT NOT NULL,
-	phonenumber CHAR(30),
+	phonenumber CHAR(30) UNIQUE,
 	registedate DATETIME,
 	sex int,
 	job TEXT,

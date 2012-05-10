@@ -141,6 +141,11 @@
             this.lbl_statisticsCurMonthTotal = new System.Windows.Forms.Label();
             this.lbl_statisticsCurDateTotal = new System.Windows.Forms.Label();
             this.dgv_orderList = new System.Windows.Forms.DataGridView();
+            this.orderListOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_orderList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_viewOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_PrintPrder = new System.Windows.Forms.ToolStripMenuItem();
@@ -242,11 +247,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.orderListOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListOrderAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListOrderDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListOrderState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -727,10 +727,11 @@
             this.tBox_custermorName.Name = "tBox_custermorName";
             this.tBox_custermorName.Size = new System.Drawing.Size(100, 21);
             this.tBox_custermorName.TabIndex = 13;
+            this.tBox_custermorName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_custermorName_KeyPress);
             // 
             // tBox_customerJob
             // 
-            this.tBox_customerJob.Location = new System.Drawing.Point(77, 90);
+            this.tBox_customerJob.Location = new System.Drawing.Point(77, 153);
             this.tBox_customerJob.Name = "tBox_customerJob";
             this.tBox_customerJob.Size = new System.Drawing.Size(100, 21);
             this.tBox_customerJob.TabIndex = 11;
@@ -744,10 +745,11 @@
             // 
             // tBox_customerPhNumber
             // 
-            this.tBox_customerPhNumber.Location = new System.Drawing.Point(77, 153);
+            this.tBox_customerPhNumber.Location = new System.Drawing.Point(78, 89);
             this.tBox_customerPhNumber.Name = "tBox_customerPhNumber";
             this.tBox_customerPhNumber.Size = new System.Drawing.Size(100, 21);
             this.tBox_customerPhNumber.TabIndex = 9;
+            this.tBox_customerPhNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_customerPhNumber_KeyPress);
             // 
             // tBox_customerRegisterDay
             // 
@@ -768,7 +770,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 156);
+            this.label20.Location = new System.Drawing.Point(7, 92);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(41, 12);
             this.label20.TabIndex = 6;
@@ -804,7 +806,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 93);
+            this.label16.Location = new System.Drawing.Point(6, 156);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(41, 12);
             this.label16.TabIndex = 2;
@@ -1273,6 +1275,37 @@
             this.dgv_orderList.Size = new System.Drawing.Size(633, 311);
             this.dgv_orderList.TabIndex = 1;
             this.dgv_orderList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_orderList_CellFormatting);
+            // 
+            // orderListOrderID
+            // 
+            this.orderListOrderID.HeaderText = "订单编号";
+            this.orderListOrderID.Name = "orderListOrderID";
+            this.orderListOrderID.ReadOnly = true;
+            // 
+            // orderListCustomerName
+            // 
+            this.orderListCustomerName.HeaderText = "客户";
+            this.orderListCustomerName.Name = "orderListCustomerName";
+            this.orderListCustomerName.ReadOnly = true;
+            // 
+            // orderListOrderAmount
+            // 
+            this.orderListOrderAmount.HeaderText = "订单金额";
+            this.orderListOrderAmount.Name = "orderListOrderAmount";
+            this.orderListOrderAmount.ReadOnly = true;
+            // 
+            // orderListOrderDate
+            // 
+            this.orderListOrderDate.HeaderText = "订单时间";
+            this.orderListOrderDate.Name = "orderListOrderDate";
+            this.orderListOrderDate.ReadOnly = true;
+            this.orderListOrderDate.Width = 150;
+            // 
+            // orderListOrderState
+            // 
+            this.orderListOrderState.HeaderText = "订单状态";
+            this.orderListOrderState.Name = "orderListOrderState";
+            this.orderListOrderState.ReadOnly = true;
             // 
             // ctms_orderList
             // 
@@ -2166,37 +2199,6 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // orderListOrderID
-            // 
-            this.orderListOrderID.HeaderText = "订单编号";
-            this.orderListOrderID.Name = "orderListOrderID";
-            this.orderListOrderID.ReadOnly = true;
-            // 
-            // orderListCustomerName
-            // 
-            this.orderListCustomerName.HeaderText = "客户";
-            this.orderListCustomerName.Name = "orderListCustomerName";
-            this.orderListCustomerName.ReadOnly = true;
-            // 
-            // orderListOrderAmount
-            // 
-            this.orderListOrderAmount.HeaderText = "订单金额";
-            this.orderListOrderAmount.Name = "orderListOrderAmount";
-            this.orderListOrderAmount.ReadOnly = true;
-            // 
-            // orderListOrderDate
-            // 
-            this.orderListOrderDate.HeaderText = "订单时间";
-            this.orderListOrderDate.Name = "orderListOrderDate";
-            this.orderListOrderDate.ReadOnly = true;
-            this.orderListOrderDate.Width = 150;
-            // 
-            // orderListOrderState
-            // 
-            this.orderListOrderState.HeaderText = "订单状态";
-            this.orderListOrderState.Name = "orderListOrderState";
-            this.orderListOrderState.ReadOnly = true;
             // 
             // FrmMain
             // 

@@ -152,6 +152,7 @@ namespace weitongManager
         public static Customer findByName(string name)
         {
             Customer aCustomer = null;
+            if (name == null || name == "") return aCustomer;
 
             string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
                 customers.birthday, customers.address, customers.email, 
@@ -162,6 +163,40 @@ namespace weitongManager
             MySqlCommand queryCmd = new MySqlCommand();
             queryCmd.CommandText = queryStr;
             queryCmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
+            queryCmd.Connection = ConnSingleton.Connection;//this.m_storageAdapter.Connection;
+
+            try
+            {
+                queryCmd.Connection.Open();
+                MySqlDataReader reader = queryCmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    aCustomer = getCustomerFromReader(reader);
+                }
+
+            }
+            finally
+            {
+                queryCmd.Connection.Close();
+            }
+
+            return aCustomer;
+        }
+
+        public static Customer findByPhNumber(string phoneNumber)
+        {
+            Customer aCustomer = null;
+            if (phoneNumber == null || phoneNumber == "") return aCustomer;
+
+            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
+                customers.birthday, customers.address, customers.email, 
+                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
+                FROM customers INNER JOIN
+                     member ON customers.id = member.customerid
+                WHERE customers.phonenumber = @phonenumber";
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.CommandText = queryStr;
+            queryCmd.Parameters.Add("@phonenumber", MySqlDbType.VarChar).Value = phoneNumber;
             queryCmd.Connection = ConnSingleton.Connection;//this.m_storageAdapter.Connection;
 
             try

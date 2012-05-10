@@ -339,18 +339,37 @@ namespace weitongManager
 
         private void btn_SearchCustomer_Click(object sender, EventArgs e)
         {
-            if (checkCustomerValidtion())
+            try
             {
-                Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
-                if (aCustomer != null)
+                if (checkCustomerValidtion())
                 {
-                    showCustomerInfo(aCustomer);
-                    m_salesMgr.CartCustomer = aCustomer;
+                    if (tBox_custermorName.Text != "")
+                    {
+                        doSearchCustomerByName();
+                    }
+                    else if (tBox_customerPhNumber.Text != "")
+                    {
+                        doSearchCustomerByPhoneNumber();
+                    }
+                    else
+                    {
+                        WARNING("请输入正确的客户信息！");
+                    }
+                    //Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
+                    //if (aCustomer != null)
+                    //{
+                    //    showCustomerInfo(aCustomer);
+                    //    m_salesMgr.CartCustomer = aCustomer;
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("未找到您要的客户信息！你确定输入信息是否正确。");
+                    //}
                 }
-                else
-                {
-                    MessageBox.Show("未找到您要的客户信息！你确定输入信息是否正确。");
-                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
             }
         }
 
@@ -835,12 +854,91 @@ namespace weitongManager
         private void showStatistics()
         {
             lbl_curDate.Text = "今天是" + DateTime.Today.ToShortDateString();
-            lbl_statisticsCurDateTotal.Text = "您今天共售出" + StatisticsMgr.countUserDayOrders(CurrentUser.ID, DateTime.Today) 
-                + "单，总金额" + 
+            lbl_statisticsCurDateTotal.Text = "您今天共完成" + StatisticsMgr.countUserDayOrders(CurrentUser.ID, DateTime.Today) 
+                + "笔订单，总金额" + 
                 StatisticsMgr.sumUserDayOrders(CurrentUser.ID,DateTime.Today) + "元";
             lbl_statisticsCurMonthTotal.Text = "您本月共完成" + StatisticsMgr.countUserMonthOrders(CurrentUser.ID,DateTime.Today.Month)
                 + "笔订单，总金额" + 
-                StatisticsMgr.sumUserMonthOrders(CurrentUser.ID, DateTime.Today.Month) + "万";
+                StatisticsMgr.sumUserMonthOrders(CurrentUser.ID, DateTime.Today.Month) + "元";
+        }
+
+        /// <summary>
+        /// 客户姓名输入框的按键响应函数
+        /// 当用户输入名称后，按回车后，即按照输入的名称信息查找客户，
+        /// 如果名称为空，则按照号码查找客户。
+        /// </summary>
+        private void tBox_custermorName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    if (tBox_custermorName.Text != "")
+                    {
+                        doSearchCustomerByName();
+                    }
+                    else
+                    {
+                        doSearchCustomerByPhoneNumber();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void doSearchCustomerByName()
+        {
+            if (tBox_custermorName.Text == "")
+            {
+                WARNING("请输入客户姓名！");
+                tBox_custermorName.Focus();
+                return;
+            }
+            Customer aCustomer = Customer.findByName(tBox_custermorName.Text.Trim());
+            if (aCustomer == null)
+            {
+                WARNING("未找到客户 " + tBox_custermorName.Text + " 的信息！");
+                return;
+            }
+            m_salesMgr.CartCustomer = aCustomer;
+            showCustomerInfo(aCustomer);
+        }
+
+        private void doSearchCustomerByPhoneNumber()
+        {
+            if (tBox_customerPhNumber.Text == "")
+            {
+                WARNING("请输入电话号码！");
+                tBox_customerPhNumber.Focus();
+                return;
+            }
+            string phoneNun = tBox_customerPhNumber.Text.Trim();
+            Customer aCustomer = Customer.findByPhNumber(phoneNun);
+            if (aCustomer == null)
+            {
+                WARNING("未找到指定号码 " + phoneNun + " 的客户信息！");
+                return;
+            }
+            m_salesMgr.CartCustomer = aCustomer;
+            showCustomerInfo(aCustomer);
+        }
+
+        private void tBox_customerPhNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    doSearchCustomerByPhoneNumber();
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
         
     }
