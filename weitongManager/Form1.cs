@@ -79,6 +79,9 @@ namespace weitongManager
                 m_rolesMgr.init();
 
                 cbox_memblevel_load();
+
+                // 加载统计信息
+                showStatistics();
             }
             catch (Exception ex)
             {
@@ -827,6 +830,17 @@ namespace weitongManager
             {
                 WARNING(ex.Message);
             }
+        }
+
+        private void showStatistics()
+        {
+            lbl_curDate.Text = "今天是" + DateTime.Today.ToShortDateString();
+            lbl_statisticsCurDateTotal.Text = "您今天共售出" + StatisticsMgr.countUserDayOrders(CurrentUser.ID, DateTime.Today) 
+                + "单，总金额" + 
+                StatisticsMgr.sumUserDayOrders(CurrentUser.ID,DateTime.Today) + "元";
+            lbl_statisticsCurMonthTotal.Text = "您本月共完成" + StatisticsMgr.countUserMonthOrders(CurrentUser.ID,DateTime.Today.Month)
+                + "笔订单，总金额" + 
+                StatisticsMgr.sumUserMonthOrders(CurrentUser.ID, DateTime.Today.Month) + "万";
         }
         
     }

@@ -137,14 +137,13 @@
             this.currentOrderFavorablePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.currentOrderUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPg_OrderList = new System.Windows.Forms.TabPage();
+            this.lbl_curDate = new System.Windows.Forms.Label();
+            this.lbl_statisticsCurMonthTotal = new System.Windows.Forms.Label();
+            this.lbl_statisticsCurDateTotal = new System.Windows.Forms.Label();
             this.dgv_orderList = new System.Windows.Forms.DataGridView();
-            this.orderListOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListOrderAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListOrderDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderListOrderState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_orderList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_viewOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_PrintPrder = new System.Windows.Forms.ToolStripMenuItem();
             this.dgv_storageInfo = new System.Windows.Forms.DataGridView();
             this.codeDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chateauDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -243,7 +242,11 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tsmi_PrintPrder = new System.Windows.Forms.ToolStripMenuItem();
+            this.orderListOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -1205,6 +1208,9 @@
             // 
             // tabPg_OrderList
             // 
+            this.tabPg_OrderList.Controls.Add(this.lbl_curDate);
+            this.tabPg_OrderList.Controls.Add(this.lbl_statisticsCurMonthTotal);
+            this.tabPg_OrderList.Controls.Add(this.lbl_statisticsCurDateTotal);
             this.tabPg_OrderList.Controls.Add(this.dgv_orderList);
             this.tabPg_OrderList.Location = new System.Drawing.Point(4, 22);
             this.tabPg_OrderList.Name = "tabPg_OrderList";
@@ -1212,6 +1218,33 @@
             this.tabPg_OrderList.TabIndex = 2;
             this.tabPg_OrderList.Text = "完成订单";
             this.tabPg_OrderList.UseVisualStyleBackColor = true;
+            // 
+            // lbl_curDate
+            // 
+            this.lbl_curDate.AutoSize = true;
+            this.lbl_curDate.Location = new System.Drawing.Point(704, 70);
+            this.lbl_curDate.Name = "lbl_curDate";
+            this.lbl_curDate.Size = new System.Drawing.Size(125, 12);
+            this.lbl_curDate.TabIndex = 4;
+            this.lbl_curDate.Text = "当前日期：2012-05-10";
+            // 
+            // lbl_statisticsCurMonthTotal
+            // 
+            this.lbl_statisticsCurMonthTotal.AutoSize = true;
+            this.lbl_statisticsCurMonthTotal.Location = new System.Drawing.Point(704, 148);
+            this.lbl_statisticsCurMonthTotal.Name = "lbl_statisticsCurMonthTotal";
+            this.lbl_statisticsCurMonthTotal.Size = new System.Drawing.Size(215, 12);
+            this.lbl_statisticsCurMonthTotal.TabIndex = 3;
+            this.lbl_statisticsCurMonthTotal.Text = "您本月共完成1000笔订单，总金额100万";
+            // 
+            // lbl_statisticsCurDateTotal
+            // 
+            this.lbl_statisticsCurDateTotal.AutoSize = true;
+            this.lbl_statisticsCurDateTotal.Location = new System.Drawing.Point(704, 112);
+            this.lbl_statisticsCurDateTotal.Name = "lbl_statisticsCurDateTotal";
+            this.lbl_statisticsCurDateTotal.Size = new System.Drawing.Size(191, 12);
+            this.lbl_statisticsCurDateTotal.TabIndex = 2;
+            this.lbl_statisticsCurDateTotal.Text = "您今天共完成20笔订单，总金额5万";
             // 
             // dgv_orderList
             // 
@@ -1241,50 +1274,27 @@
             this.dgv_orderList.TabIndex = 1;
             this.dgv_orderList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_orderList_CellFormatting);
             // 
-            // orderListOrderID
-            // 
-            this.orderListOrderID.HeaderText = "订单编号";
-            this.orderListOrderID.Name = "orderListOrderID";
-            this.orderListOrderID.ReadOnly = true;
-            // 
-            // orderListCustomerName
-            // 
-            this.orderListCustomerName.HeaderText = "客户";
-            this.orderListCustomerName.Name = "orderListCustomerName";
-            this.orderListCustomerName.ReadOnly = true;
-            // 
-            // orderListOrderAmount
-            // 
-            this.orderListOrderAmount.HeaderText = "订单金额";
-            this.orderListOrderAmount.Name = "orderListOrderAmount";
-            this.orderListOrderAmount.ReadOnly = true;
-            // 
-            // orderListOrderDate
-            // 
-            this.orderListOrderDate.HeaderText = "订单时间";
-            this.orderListOrderDate.Name = "orderListOrderDate";
-            this.orderListOrderDate.ReadOnly = true;
-            // 
-            // orderListOrderState
-            // 
-            this.orderListOrderState.HeaderText = "订单状态";
-            this.orderListOrderState.Name = "orderListOrderState";
-            this.orderListOrderState.ReadOnly = true;
-            // 
             // ctms_orderList
             // 
             this.ctms_orderList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_viewOrderDetail,
             this.tsmi_PrintPrder});
             this.ctms_orderList.Name = "ctms_orderList";
-            this.ctms_orderList.Size = new System.Drawing.Size(153, 70);
+            this.ctms_orderList.Size = new System.Drawing.Size(132, 48);
             // 
             // tsmi_viewOrderDetail
             // 
             this.tsmi_viewOrderDetail.Name = "tsmi_viewOrderDetail";
-            this.tsmi_viewOrderDetail.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_viewOrderDetail.Size = new System.Drawing.Size(131, 22);
             this.tsmi_viewOrderDetail.Text = "&C查看";
             this.tsmi_viewOrderDetail.Click += new System.EventHandler(this.tsmi_viewOrderDetail_Click);
+            // 
+            // tsmi_PrintPrder
+            // 
+            this.tsmi_PrintPrder.Name = "tsmi_PrintPrder";
+            this.tsmi_PrintPrder.Size = new System.Drawing.Size(131, 22);
+            this.tsmi_PrintPrder.Text = "&P打印订单";
+            this.tsmi_PrintPrder.Click += new System.EventHandler(this.tsmi_PrintPrder_Click);
             // 
             // dgv_storageInfo
             // 
@@ -2157,12 +2167,36 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tsmi_PrintPrder
+            // orderListOrderID
             // 
-            this.tsmi_PrintPrder.Name = "tsmi_PrintPrder";
-            this.tsmi_PrintPrder.Size = new System.Drawing.Size(152, 22);
-            this.tsmi_PrintPrder.Text = "&P打印订单";
-            this.tsmi_PrintPrder.Click += new System.EventHandler(this.tsmi_PrintPrder_Click);
+            this.orderListOrderID.HeaderText = "订单编号";
+            this.orderListOrderID.Name = "orderListOrderID";
+            this.orderListOrderID.ReadOnly = true;
+            // 
+            // orderListCustomerName
+            // 
+            this.orderListCustomerName.HeaderText = "客户";
+            this.orderListCustomerName.Name = "orderListCustomerName";
+            this.orderListCustomerName.ReadOnly = true;
+            // 
+            // orderListOrderAmount
+            // 
+            this.orderListOrderAmount.HeaderText = "订单金额";
+            this.orderListOrderAmount.Name = "orderListOrderAmount";
+            this.orderListOrderAmount.ReadOnly = true;
+            // 
+            // orderListOrderDate
+            // 
+            this.orderListOrderDate.HeaderText = "订单时间";
+            this.orderListOrderDate.Name = "orderListOrderDate";
+            this.orderListOrderDate.ReadOnly = true;
+            this.orderListOrderDate.Width = 150;
+            // 
+            // orderListOrderState
+            // 
+            this.orderListOrderState.HeaderText = "订单状态";
+            this.orderListOrderState.Name = "orderListOrderState";
+            this.orderListOrderState.ReadOnly = true;
             // 
             // FrmMain
             // 
@@ -2195,6 +2229,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_currentOrder)).EndInit();
             this.tabPg_OrderList.ResumeLayout(false);
+            this.tabPg_OrderList.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_orderList)).EndInit();
             this.ctms_orderList.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).EndInit();
@@ -2384,11 +2419,6 @@
         private System.Windows.Forms.TextBox tBox_change;
         private System.Windows.Forms.DataGridView dgv_orderList;
         private System.Windows.Forms.BindingSource weitongDataSet1BindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListCustomerName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderAmount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderState;
         private System.Windows.Forms.Label lbl_curOrderTotal;
         private System.Windows.Forms.ContextMenuStrip ctms_orderList;
         private System.Windows.Forms.ToolStripMenuItem tsmi_viewOrderDetail;
@@ -2432,6 +2462,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn minConsumptionTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem tsmi_PrintPrder;
+        private System.Windows.Forms.Label lbl_statisticsCurDateTotal;
+        private System.Windows.Forms.Label lbl_statisticsCurMonthTotal;
+        private System.Windows.Forms.Label lbl_curDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListCustomerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderState;
     }
 }
 
