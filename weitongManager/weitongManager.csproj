@@ -84,6 +84,7 @@
     <Compile Include="RolesMgr.cs" />
     <Compile Include="SalesMgr.cs" />
     <Compile Include="StatisticsMgr.cs" />
+    <Compile Include="Storage.cs" />
     <Compile Include="Supplier.cs" />
     <Compile Include="supplierMgr.cs" />
     <Compile Include="User.cs" />

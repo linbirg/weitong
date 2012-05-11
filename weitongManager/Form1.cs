@@ -160,15 +160,29 @@ namespace weitongManager
 
         private void tsmi_deleteStorage_Click(object sender, EventArgs e)
         {
-            m_wineStorageMgr.deleteCurrentStorage();
+            try
+            {
+                m_wineStorageMgr.deleteCurrentStorage();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         private void dgv_storage_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgv_storage.CurrentRow == null) return;
-            DataRowView dataRowView = dgv_storage.CurrentRow.DataBoundItem as DataRowView;
-            weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
-            showStorageInfo(dataRow);
+            try
+            {
+                if (dgv_storage.CurrentRow == null) return;
+                DataRowView dataRowView = dgv_storage.CurrentRow.DataBoundItem as DataRowView;
+                weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
+                showStorageInfo(dataRow);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         private void showStorageInfo(weitongDataSet1.storageRow row)
@@ -199,47 +213,66 @@ namespace weitongManager
 
         private void btn_seachStorage_Click(object sender, EventArgs e)
         {
-            weitongDataSet1.storageRow aStorageRow = m_wineStorageMgr.findStorageByCode(tBox_code.Text);
-            // 如果没有对应酒的库存，则在wines里面查找酒的信息。
-            if (aStorageRow == null)
+            try
             {
-                weitongDataSet1.winesRow aWineRow = m_wineStorageMgr.findWineByCode(tBox_code.Text);
-                if (aWineRow == null)
-                {
-                    MessageBox.Show("未找到指定酒的相关信息，请确定编码是否正确！");
-                    return;
-                }
-                               
-                showWineInfo(aWineRow.code, 
-                    aWineRow.IschateauNull() ? null : aWineRow.chateau, 
-                    aWineRow.IsvintageNull() ? 0 : aWineRow.vintage, 
-                    aWineRow.IsappellationNull() ? null : aWineRow.appellation,
-                    aWineRow.IsqualityNull() ? null : aWineRow.quality, 
-                    aWineRow.IsscoreNull() ? null: aWineRow.score, 
-                    aWineRow.IsdescriptionNull() ? null : aWineRow.description, 
-                    aWineRow.IscountryNull() ? null : aWineRow.country);
+                // 模拟tbox_KeyPress事件,调用其相应函数
+                tBox_code_KeyPress(sender,new KeyPressEventArgs('\r'));
+                //weitongDataSet1.storageRow aStorageRow = Storage.findByCode(tBox_code.Text.Trim());
+                //// 如果没有对应酒的库存，则在wines里面查找酒的信息。
+                //if (aStorageRow == null)
+                //{
+                //    weitongDataSet1.winesRow aWineRow = m_wineStorageMgr.findWineByCode(tBox_code.Text);
+                //    if (aWineRow == null)
+                //    {
+                //        WARNING("未找到指定酒的相关信息，请确定编码是否正确！");
+                //        return;
+                //    }
+
+                //    showWineInfo(aWineRow.code,
+                //        aWineRow.IschateauNull() ? null : aWineRow.chateau,
+                //        aWineRow.IsvintageNull() ? 0 : aWineRow.vintage,
+                //        aWineRow.IsappellationNull() ? null : aWineRow.appellation,
+                //        aWineRow.IsqualityNull() ? null : aWineRow.quality,
+                //        aWineRow.IsscoreNull() ? null : aWineRow.score,
+                //        aWineRow.IsdescriptionNull() ? null : aWineRow.description,
+                //        aWineRow.IscountryNull() ? null : aWineRow.country);
+                //}
+                //else
+                //{
+                //    showStorageInfo(aStorageRow);
+                //}
             }
-            else
+            catch (Exception ex)
             {
-                showStorageInfo(aStorageRow);
+                WARNING(ex.Message);
             }
         }
 
+
+        /// <summary>
+        /// 查找酒的库存信息。如果输入了code，则按照code查找；
+        /// 如果输入了描述信息，则按照描述信息进行模糊查找。
+        /// 否则提示输入的信息不完整
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_SearchStorageInfo_Click(object sender, EventArgs e)
         {
             try
             {
-                weitongDataSet1.storageRow aStorageInfoRow = this.m_salesMgr.findStorageByCode(tBox_salesWineCode.Text);
-                if (aStorageInfoRow != null)
-                {
-                    weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-                    table.ImportRow(aStorageInfoRow);
-                    m_salesMgr.bindStorageTable(table);
-                }
-                else
-                {
-                    MessageBox.Show("未找到指定酒的相关信息，请确定编码是否正确！");
-                }
+                tBox_salesWineCode_KeyPress(sender, new KeyPressEventArgs('\r'));
+                //if (tBox_salesWineCode.Text.Trim() != "")
+                //{
+                //    doSearchStorgeByCode();
+                //}
+                //else if (tBox_salesWineDescription.Text.Trim() != "")
+                //{
+                //    doSearchStorgeByDescription();
+                //}
+                //else
+                //{
+                //    WARNING("请输入正确的酒信息以便于查找！");
+                //}
             }
             catch (Exception ex)
             {
@@ -509,26 +542,26 @@ namespace weitongManager
             tabCtrl_Order.SelectTab("tabPg_Cart");
         }
 
-        private void btn_PreViewCart_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (m_salesMgr.CartCustomer == null)
-                {
-                    WARNING("订单不能没有客户信息，请输入客户信息。");
-                    return;
-                }
-                FrmPrint frmPrint = new FrmPrint();
-                frmPrint.CartDetaiGrid = dgv_cartDetail;
-                frmPrint.SetCustomer(m_salesMgr.CartCustomer);
-                frmPrint.OrderTime = DateTime.Now;
-                frmPrint.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                WARNING(ex.Message);
-            }
-        }
+        //private void btn_PreViewCart_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (m_salesMgr.CartCustomer == null)
+        //        {
+        //            WARNING("订单不能没有客户信息，请输入客户信息。");
+        //            return;
+        //        }
+        //        FrmPrint frmPrint = new FrmPrint();
+        //        frmPrint.CartDetaiGrid = dgv_cartDetail;
+        //        frmPrint.SetCustomer(m_salesMgr.CartCustomer);
+        //        frmPrint.OrderTime = DateTime.Now;
+        //        frmPrint.ShowDialog();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        WARNING(ex.Message);
+        //    }
+        //}
 
         private void tsmi_cartAddUnits_Click(object sender, EventArgs e)
         {
@@ -694,31 +727,16 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 保存客户信息按钮的相应函数
+        /// 函数先保存客户信息到数据库，再设置客户为当前客户(设置当前客户时，会更新相应的折扣信息)。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_saveCustomer_Click(object sender, EventArgs e)
         {
             try
             {
-                //if (checkCustomerValidtion())
-                //{
-                //    Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
-                //    if (aCustomer == null)
-                //    {
-                //        aCustomer = Customer.NewCustomer();
-                //    }
-                //    MemberLevel level = cbox_membLevel.SelectedItem as MemberLevel;
-                //    if (aCustomer.MemberLevel != level.Level)
-                //    {
-                //        if (!CurrentUser.isAdministrator())
-                //        {
-                //            WARNING("您无权修改会员级别，请与店长联系！");
-                //            return;
-                //        }
-                //    }
-                //    assignCustomerInfo(aCustomer);
-                //    m_salesMgr.addCustomer2DB(aCustomer);
-                    
-                //    m_salesMgr.CartCustomer = aCustomer;
-                //}
                 doSaveCustomer();
                 Customer aCustomer = Customer.findByName(tBox_custermorName.Text);
                 m_salesMgr.CartCustomer = aCustomer;
@@ -940,6 +958,156 @@ namespace weitongManager
                 WARNING(ex.Message);
             }
         }
+
+        private void doSearchStorgeByCode()
+        {
+            weitongDataSet1.storageRow aStorageInfoRow = Storage.findByCode(tBox_salesWineCode.Text.Trim());
+            if (aStorageInfoRow != null)
+            {
+                weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+                table.ImportRow(aStorageInfoRow);
+                m_salesMgr.bindStorageTable(table);
+            }
+            else
+            {
+                WARNING("未找到编码为 " + tBox_salesWineCode.Text.Trim() + " 酒的库存信息！");
+            }
+        }
+
+        private void doSearchStorgeByDescription()
+        {
+            string description = tBox_salesWineDescription.Text.Trim();
+            //if (description != "")
+            //{
+                weitongDataSet1.storageDataTable table = Storage.findByDescription(description);
+                m_salesMgr.bindStorageTable(table);
+            //}
+        }
+
+        /// <summary>
+        /// 酒编码输入框的回车相应函数
+        /// 如果输入了编码，则按照编码查找
+        /// 如果没有输入编码，函数会试图按照描述查找
+        /// 如果描述也没有输入，则提示输入适当的信息以便查找。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_salesWineCode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    //string code = tBox_salesWineCode.Text.Trim();
+                    //if (code != "")
+                    //{
+                    //    doSearchStorgeByCode();
+                    //}
+
+                    if (tBox_salesWineCode.Text.Trim() != "")
+                    {
+                        doSearchStorgeByCode();
+                    }
+                    else// if (tBox_salesWineDescription.Text.Trim() != "")
+                    {
+                        doSearchStorgeByDescription();
+                    }
+                    //else
+                    //{
+                    //    WARNING("请输入正确的酒信息以便于查找！");
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_salesWineDescription_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string description = tBox_salesWineDescription.Text.Trim();
+                    //if (description != "")
+                    //{
+                        //doSearchStorgeByCode();
+                        weitongDataSet1.storageDataTable table = Storage.findByDescription(description);
+                        m_salesMgr.bindStorageTable(table);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 酒编码框的回车相应函数
+        /// 如果编码不为空，则按编码查找库存信息
+        /// 如果酒编码为空，则按照描述信息查找库存信息
+        /// 如果描述信息为空，则返回所有的库存信息。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_code_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string code = tBox_code.Text.Trim();
+                    if (code != "")
+                    {
+                        weitongDataSet1.storageRow row = Storage.findByCode(code);
+                        if (row != null)
+                        {
+                            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+                            table.ImportRow(row);
+                            m_wineStorageMgr.WineStorageGridView.DataSource = table;
+                        }
+                    }
+                    else
+                    {
+                        tBox_description_KeyPress(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据描述信息模糊查找库存信息
+        /// 如果描述信息为空，则会返回所有库存信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_description_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string description = tBox_description.Text.Trim();
+                    //if (description != "")
+                    //{
+                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByDescription(description);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        
         
     }
 }

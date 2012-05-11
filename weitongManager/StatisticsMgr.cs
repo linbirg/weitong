@@ -94,7 +94,7 @@ namespace weitongManager
             {
                 qryCmd.Connection.Open();
                 MySqlDataReader reader = qryCmd.ExecuteReader();
-                if (reader.Read())
+                if (reader.Read()&&!reader.IsDBNull(0))
                 {
                     total = reader.GetInt32("total");
                 }

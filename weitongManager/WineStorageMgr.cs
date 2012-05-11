@@ -72,40 +72,40 @@ namespace weitongManager
             }
         }
 
-        // 根据编码查找库存信息
-        // 查找完整的库存信息
-        public weitongDataSet1.storageRow findStorageByCode(string code)
-        {
-            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
-                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
-                            supplier.name
-                            FROM storage INNER JOIN
-                            wines ON storage.code = wines.code LEFT OUTER JOIN
-                            supplier ON storage.supplierid = supplier.id
-                            WHERE storage.code = @code";
-            MySql.Data.MySqlClient.MySqlCommand queryCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            queryCmd.Connection = m_dataAdapter.Connection;
-            queryCmd.CommandText = qStr;
-            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+//        // 根据编码查找库存信息
+//        // 查找完整的库存信息
+//        public weitongDataSet1.storageRow findStorageByCode(string code)
+//        {
+//            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+//                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+//                            supplier.name
+//                            FROM storage INNER JOIN
+//                            wines ON storage.code = wines.code LEFT OUTER JOIN
+//                            supplier ON storage.supplierid = supplier.id
+//                            WHERE storage.code = @code";
+//            MySql.Data.MySqlClient.MySqlCommand queryCmd = new MySql.Data.MySqlClient.MySqlCommand();
+//            queryCmd.Connection = m_dataAdapter.Connection;
+//            queryCmd.CommandText = qStr;
+//            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
 
-            // 先保存原查询命令，再执行完本查询后，立即回复原有的查询命令
-            MySqlCommand temp = m_dataAdapter.Adapter.SelectCommand;
-            m_dataAdapter.Adapter.SelectCommand = queryCmd;
+//            // 先保存原查询命令，再执行完本查询后，立即回复原有的查询命令
+//            MySqlCommand temp = m_dataAdapter.Adapter.SelectCommand;
+//            m_dataAdapter.Adapter.SelectCommand = queryCmd;
             
-            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-            m_dataAdapter.Adapter.Fill(table);
-            m_dataAdapter.Adapter.SelectCommand = temp;
+//            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+//            m_dataAdapter.Adapter.Fill(table);
+//            m_dataAdapter.Adapter.SelectCommand = temp;
 
-            if (table != null && table.Rows.Count != 0)
-            {
-                // 如果查询结果不为空，应该只有一条记录
-                return table[0];                           
-            }
-            else
-            {
-                return null;
-            }
-        }
+//            if (table != null && table.Rows.Count != 0)
+//            {
+//                // 如果查询结果不为空，应该只有一条记录
+//                return table[0];                           
+//            }
+//            else
+//            {
+//                return null;
+//            }
+//        }
 
         public weitongDataSet1.winesRow findWineByCode(string code)
         {
@@ -167,7 +167,7 @@ namespace weitongManager
         {
             m_wineStorageGrid.AutoGenerateColumns = false;
             m_wineStorageGrid.DataSource = m_dataset.storage;
-            
+           
             // bind column
             m_wineStorageGrid.Columns["codeDataGridViewTextBoxColumn"].DataPropertyName = "code";
             m_wineStorageGrid.Columns["chateauDataGridViewTextBoxColumn"].DataPropertyName = "chateau";
@@ -181,6 +181,7 @@ namespace weitongManager
             m_wineStorageGrid.Columns["priceDataGridViewTextBoxColumn"].DataPropertyName = "price";
             m_wineStorageGrid.Columns["retailpriceDataGridViewTextBoxColumn"].DataPropertyName = "retailprice";
             m_wineStorageGrid.Columns["countryDataGridViewTextBoxColumn"].DataPropertyName = "country";
+            m_wineStorageGrid.Columns["discriptionDataGridViewTextBoxColumn"].DataPropertyName = "description";
         }
 
         // 添加酒的信息，code不能为空

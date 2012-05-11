@@ -222,83 +222,13 @@ namespace weitongManager
                 aRow.Description = order.Description;
                 aRow.Discount = CartCustomer.Discount;//
                 aRow.Units = order.Units;
-                weitongDataSet1.storageRow storageRow = findStorageByCode(aRow.Code);
+                weitongDataSet1.storageRow storageRow = Storage.findByCode(aRow.Code);
                 //CartDetailRowData item = new CartDetailRowData(dataRow.code, dataRow.description, dataRow.bottle, dataRow.retailprice);
                 aRow.Bottle = storageRow.bottle;
                 aRow.Price = storageRow.retailprice;
                 m_cartDetailList.Add(aRow);
             }
         }
-
-
-        // utities
-        // 根据编码查找库存信息
-        // 查找完整的库存信息
-        public weitongDataSet1.storageRow findStorageByCode(string code)
-        {
-            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
-                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
-                            supplier.name
-                            FROM storage INNER JOIN
-                            wines ON storage.code = wines.code LEFT OUTER JOIN
-                            supplier ON storage.supplierid = supplier.id
-                            WHERE storage.code = @code";
-            MySqlCommand queryCmd = new MySqlCommand();
-            queryCmd.Connection = this.m_storageAdapter.Connection;
-            queryCmd.CommandText = qStr;
-            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
-
-            // 先保存原查询命令，再执行完本查询后，立即回复原有的查询命令
-            MySqlCommand temp = m_storageAdapter.Adapter.SelectCommand;
-            m_storageAdapter.Adapter.SelectCommand = queryCmd;
-
-            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-            m_storageAdapter.Adapter.Fill(table);
-            m_storageAdapter.Adapter.SelectCommand = temp;
-            
-            if (table != null && table.Rows.Count != 0)
-            {
-                // 如果查询结果不为空，应该只有一条记录
-                //DataTable table2 = table.Clone();
-                return table[0]; //as weitongDataSet1.storageRow;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-//        // 根据客户名称查找客户信息(暂时不考虑多个客户同名的问题)。
-//        public Customer findCustomerByName(string name)
-//        {
-//            Customer aCustomer = null;
-
-//            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
-//                customers.birthday, customers.address, customers.email, 
-//                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
-//                FROM customers INNER JOIN
-//                     member ON customers.id = member.customerid
-//                WHERE customers.name like @name";
-//            MySqlCommand queryCmd = new MySql.Data.MySqlClient.MySqlCommand();
-//            queryCmd.CommandText = queryStr;
-//            queryCmd.Parameters.Add("@name", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = name;
-//            queryCmd.Connection = ConnSingleton.Connection;//this.m_storageAdapter.Connection;
-
-//            try
-//            {
-//                queryCmd.Connection.Open();
-//                MySqlDataReader reader = queryCmd.ExecuteReader();
-//                reader.Read();
-//                aCustomer = getCustomerFromReader(reader); 
-                
-//            }
-//            finally
-//            {
-//                queryCmd.Connection.Close();
-//            }
-
-//            return aCustomer;
-//        }
 
 
 

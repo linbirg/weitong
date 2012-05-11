@@ -428,7 +428,7 @@ FROM      memberlevel</CommandText>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="storage_ibfk_1" msdata:parent="wines" msdata:child="storage" msdata:parentkey="code" msdata:childkey="code" msprop:Generator_UserChildTable="storage" msprop:Generator_ChildPropName="GetstorageRows" msprop:Generator_ParentPropName="winesRow" msprop:Generator_UserRelationName="storage_ibfk_1" msprop:Generator_RelationVarName="relationstorage_ibfk_1" msprop:Generator_UserParentTable="wines" />
+      <msdata:Relationship name="storage_ibfk_1" msdata:parent="wines" msdata:child="storage" msdata:parentkey="code" msdata:childkey="code" msprop:Generator_UserChildTable="storage" msprop:Generator_ChildPropName="GetstorageRows" msprop:Generator_UserParentTable="wines" msprop:Generator_UserRelationName="storage_ibfk_1" msprop:Generator_RelationVarName="relationstorage_ibfk_1" msprop:Generator_ParentPropName="winesRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

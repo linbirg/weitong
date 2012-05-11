@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btn_ListStorageInfo = new System.Windows.Forms.Button();
             this.btn_SearchStorageInfo = new System.Windows.Forms.Button();
-            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.tBox_salesWineDescription = new System.Windows.Forms.TextBox();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.tBox_salesWineCode = new System.Windows.Forms.TextBox();
             this.textBox25 = new System.Windows.Forms.TextBox();
@@ -64,7 +64,6 @@
             this.tabPg_Cart = new System.Windows.Forms.TabPage();
             this.tBox_CellEditer = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btn_PreViewCart = new System.Windows.Forms.Button();
             this.btn_CalcOrder = new System.Windows.Forms.Button();
             this.dgv_cartDetail = new System.Windows.Forms.DataGridView();
             this.codeDGVOrderDetailTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -165,28 +164,10 @@
             this.ctms_storageInfo = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_addToCart = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.dgv_storage = new System.Windows.Forms.DataGridView();
-            this.codeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chateauDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vintageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.appelationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qualityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bottleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.scoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.supplierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unitsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.retailpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctms_storage = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmi_deleteStorage = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.btn_seachStorage = new System.Windows.Forms.Button();
-            this.btn_addStorage = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btn_seachStorage = new System.Windows.Forms.Button();
             this.tBox_supplier = new System.Windows.Forms.TextBox();
+            this.btn_addStorage = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.tBox_retailprice = new System.Windows.Forms.TextBox();
             this.tBox_units = new System.Windows.Forms.TextBox();
@@ -212,6 +193,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tBox_code = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.dgv_storage = new System.Windows.Forms.DataGridView();
+            this.codeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chateauDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vintageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.appelationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qualityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bottleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.supplierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.retailpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ctms_storage = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_deleteStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_supplier = new System.Windows.Forms.TabPage();
             this.dgv_roles = new System.Windows.Forms.DataGridView();
             this.roleNameTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -266,12 +263,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).BeginInit();
             this.ctms_storageInfo.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).BeginInit();
             this.ctms_storage.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.tp_supplier.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).BeginInit();
@@ -313,7 +307,7 @@
             // 
             this.groupBox7.Controls.Add(this.btn_ListStorageInfo);
             this.groupBox7.Controls.Add(this.btn_SearchStorageInfo);
-            this.groupBox7.Controls.Add(this.textBox22);
+            this.groupBox7.Controls.Add(this.tBox_salesWineDescription);
             this.groupBox7.Controls.Add(this.textBox23);
             this.groupBox7.Controls.Add(this.tBox_salesWineCode);
             this.groupBox7.Controls.Add(this.textBox25);
@@ -356,13 +350,13 @@
             this.btn_SearchStorageInfo.UseVisualStyleBackColor = true;
             this.btn_SearchStorageInfo.Click += new System.EventHandler(this.btn_SearchStorageInfo_Click);
             // 
-            // textBox22
+            // tBox_salesWineDescription
             // 
-            this.textBox22.Location = new System.Drawing.Point(283, 30);
-            this.textBox22.Multiline = true;
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(185, 49);
-            this.textBox22.TabIndex = 15;
+            this.tBox_salesWineDescription.Location = new System.Drawing.Point(243, 58);
+            this.tBox_salesWineDescription.Name = "tBox_salesWineDescription";
+            this.tBox_salesWineDescription.Size = new System.Drawing.Size(244, 21);
+            this.tBox_salesWineDescription.TabIndex = 15;
+            this.tBox_salesWineDescription.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesWineDescription_KeyPress);
             // 
             // textBox23
             // 
@@ -377,6 +371,7 @@
             this.tBox_salesWineCode.Name = "tBox_salesWineCode";
             this.tBox_salesWineCode.Size = new System.Drawing.Size(100, 21);
             this.tBox_salesWineCode.TabIndex = 13;
+            this.tBox_salesWineCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesWineCode_KeyPress);
             // 
             // textBox25
             // 
@@ -416,7 +411,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(212, 33);
+            this.label22.Location = new System.Drawing.Point(197, 61);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(41, 12);
             this.label22.TabIndex = 7;
@@ -521,31 +516,20 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btn_PreViewCart);
             this.groupBox2.Controls.Add(this.btn_CalcOrder);
-            this.groupBox2.Location = new System.Drawing.Point(1085, 156);
+            this.groupBox2.Location = new System.Drawing.Point(1085, 9);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(110, 155);
+            this.groupBox2.Size = new System.Drawing.Size(110, 302);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             // 
-            // btn_PreViewCart
-            // 
-            this.btn_PreViewCart.Location = new System.Drawing.Point(17, 33);
-            this.btn_PreViewCart.Name = "btn_PreViewCart";
-            this.btn_PreViewCart.Size = new System.Drawing.Size(75, 23);
-            this.btn_PreViewCart.TabIndex = 10;
-            this.btn_PreViewCart.Text = "预览";
-            this.btn_PreViewCart.UseVisualStyleBackColor = true;
-            this.btn_PreViewCart.Click += new System.EventHandler(this.btn_PreViewCart_Click);
-            // 
             // btn_CalcOrder
             // 
-            this.btn_CalcOrder.Location = new System.Drawing.Point(17, 98);
+            this.btn_CalcOrder.Location = new System.Drawing.Point(18, 145);
             this.btn_CalcOrder.Name = "btn_CalcOrder";
             this.btn_CalcOrder.Size = new System.Drawing.Size(75, 23);
             this.btn_CalcOrder.TabIndex = 9;
-            this.btn_CalcOrder.Text = "确定";
+            this.btn_CalcOrder.Text = "结算";
             this.btn_CalcOrder.UseVisualStyleBackColor = true;
             this.btn_CalcOrder.Click += new System.EventHandler(this.btn_CalcOrder_Click);
             // 
@@ -572,8 +556,8 @@
             this.dgv_cartDetail.Name = "dgv_cartDetail";
             this.dgv_cartDetail.ReadOnly = true;
             this.dgv_cartDetail.RowHeadersVisible = false;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle11;
             this.dgv_cartDetail.RowTemplate.Height = 23;
             this.dgv_cartDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_cartDetail.Size = new System.Drawing.Size(797, 305);
@@ -1171,8 +1155,8 @@
             this.dgv_currentOrder.Name = "dgv_currentOrder";
             this.dgv_currentOrder.ReadOnly = true;
             this.dgv_currentOrder.RowHeadersVisible = false;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_currentOrder.RowTemplate.Height = 23;
             this.dgv_currentOrder.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_currentOrder.Size = new System.Drawing.Size(561, 165);
@@ -1268,8 +1252,8 @@
             this.dgv_orderList.Name = "dgv_orderList";
             this.dgv_orderList.ReadOnly = true;
             this.dgv_orderList.RowHeadersVisible = false;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgv_orderList.RowTemplate.Height = 23;
             this.dgv_orderList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_orderList.Size = new System.Drawing.Size(633, 311);
@@ -1357,8 +1341,8 @@
             this.dgv_storageInfo.ReadOnly = true;
             this.dgv_storageInfo.RowHeadersVisible = false;
             this.dgv_storageInfo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_storageInfo.RowTemplate.Height = 23;
             this.dgv_storageInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storageInfo.Size = new System.Drawing.Size(1205, 214);
@@ -1453,8 +1437,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage2.Controls.Add(this.groupBox4);
-            this.tabPage2.Controls.Add(this.groupBox3);
+            this.tabPage2.Controls.Add(this.groupBox5);
+            this.tabPage2.Controls.Add(this.dgv_storage);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -1462,14 +1446,272 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "库存";
             // 
-            // groupBox4
+            // groupBox5
             // 
-            this.groupBox4.Controls.Add(this.dgv_storage);
-            this.groupBox4.Location = new System.Drawing.Point(0, 306);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(1219, 386);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
+            this.groupBox5.Controls.Add(this.btn_seachStorage);
+            this.groupBox5.Controls.Add(this.tBox_supplier);
+            this.groupBox5.Controls.Add(this.btn_addStorage);
+            this.groupBox5.Controls.Add(this.label13);
+            this.groupBox5.Controls.Add(this.tBox_retailprice);
+            this.groupBox5.Controls.Add(this.tBox_units);
+            this.groupBox5.Controls.Add(this.tBox_price);
+            this.groupBox5.Controls.Add(this.label12);
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.label10);
+            this.groupBox5.Controls.Add(this.tBox_description);
+            this.groupBox5.Controls.Add(this.label9);
+            this.groupBox5.Controls.Add(this.tBox_country);
+            this.groupBox5.Controls.Add(this.tBox_score);
+            this.groupBox5.Controls.Add(this.tBox_bottle);
+            this.groupBox5.Controls.Add(this.tBox_quality);
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.label7);
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.tBox_appellation);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.tBox_Vintage);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Controls.Add(this.tBox_chateau);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.tBox_code);
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Location = new System.Drawing.Point(6, 6);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(1220, 118);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            // 
+            // btn_seachStorage
+            // 
+            this.btn_seachStorage.Location = new System.Drawing.Point(839, 83);
+            this.btn_seachStorage.Name = "btn_seachStorage";
+            this.btn_seachStorage.Size = new System.Drawing.Size(75, 23);
+            this.btn_seachStorage.TabIndex = 3;
+            this.btn_seachStorage.Text = "查找";
+            this.btn_seachStorage.UseVisualStyleBackColor = true;
+            this.btn_seachStorage.Click += new System.EventHandler(this.btn_seachStorage_Click);
+            // 
+            // tBox_supplier
+            // 
+            this.tBox_supplier.Location = new System.Drawing.Point(69, 85);
+            this.tBox_supplier.Name = "tBox_supplier";
+            this.tBox_supplier.Size = new System.Drawing.Size(100, 21);
+            this.tBox_supplier.TabIndex = 30;
+            // 
+            // btn_addStorage
+            // 
+            this.btn_addStorage.Location = new System.Drawing.Point(924, 83);
+            this.btn_addStorage.Name = "btn_addStorage";
+            this.btn_addStorage.Size = new System.Drawing.Size(75, 23);
+            this.btn_addStorage.TabIndex = 2;
+            this.btn_addStorage.Text = "入库";
+            this.btn_addStorage.UseVisualStyleBackColor = true;
+            this.btn_addStorage.Click += new System.EventHandler(this.btn_addStorage_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(10, 88);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(53, 12);
+            this.label13.TabIndex = 29;
+            this.label13.Text = "供货商：";
+            // 
+            // tBox_retailprice
+            // 
+            this.tBox_retailprice.Location = new System.Drawing.Point(588, 85);
+            this.tBox_retailprice.Name = "tBox_retailprice";
+            this.tBox_retailprice.Size = new System.Drawing.Size(100, 21);
+            this.tBox_retailprice.TabIndex = 28;
+            // 
+            // tBox_units
+            // 
+            this.tBox_units.Location = new System.Drawing.Point(408, 85);
+            this.tBox_units.Name = "tBox_units";
+            this.tBox_units.Size = new System.Drawing.Size(100, 21);
+            this.tBox_units.TabIndex = 27;
+            // 
+            // tBox_price
+            // 
+            this.tBox_price.Location = new System.Drawing.Point(233, 85);
+            this.tBox_price.Name = "tBox_price";
+            this.tBox_price.Size = new System.Drawing.Size(100, 21);
+            this.tBox_price.TabIndex = 26;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(529, 88);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "零售价：";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(361, 88);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 12);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "数量：";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(186, 88);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 12);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "价格：";
+            // 
+            // tBox_description
+            // 
+            this.tBox_description.Location = new System.Drawing.Point(233, 15);
+            this.tBox_description.Multiline = true;
+            this.tBox_description.Name = "tBox_description";
+            this.tBox_description.Size = new System.Drawing.Size(203, 22);
+            this.tBox_description.TabIndex = 17;
+            this.tBox_description.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_description_KeyPress);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(186, 21);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(41, 12);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "描述：";
+            // 
+            // tBox_country
+            // 
+            this.tBox_country.Location = new System.Drawing.Point(899, 15);
+            this.tBox_country.Name = "tBox_country";
+            this.tBox_country.Size = new System.Drawing.Size(100, 21);
+            this.tBox_country.TabIndex = 15;
+            // 
+            // tBox_score
+            // 
+            this.tBox_score.Location = new System.Drawing.Point(716, 45);
+            this.tBox_score.Name = "tBox_score";
+            this.tBox_score.Size = new System.Drawing.Size(100, 21);
+            this.tBox_score.TabIndex = 14;
+            // 
+            // tBox_bottle
+            // 
+            this.tBox_bottle.Location = new System.Drawing.Point(716, 18);
+            this.tBox_bottle.Name = "tBox_bottle";
+            this.tBox_bottle.Size = new System.Drawing.Size(100, 21);
+            this.tBox_bottle.TabIndex = 13;
+            // 
+            // tBox_quality
+            // 
+            this.tBox_quality.Location = new System.Drawing.Point(531, 49);
+            this.tBox_quality.Name = "tBox_quality";
+            this.tBox_quality.Size = new System.Drawing.Size(100, 21);
+            this.tBox_quality.TabIndex = 12;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(837, 18);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 12);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "国家：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(654, 48);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(41, 12);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "评分：";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(654, 21);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 12);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "规格：";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(469, 52);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "等级：";
+            // 
+            // tBox_appellation
+            // 
+            this.tBox_appellation.Location = new System.Drawing.Point(531, 15);
+            this.tBox_appellation.Name = "tBox_appellation";
+            this.tBox_appellation.Size = new System.Drawing.Size(100, 21);
+            this.tBox_appellation.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(469, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "法定产区：";
+            // 
+            // tBox_Vintage
+            // 
+            this.tBox_Vintage.Location = new System.Drawing.Point(233, 49);
+            this.tBox_Vintage.Name = "tBox_Vintage";
+            this.tBox_Vintage.Size = new System.Drawing.Size(100, 21);
+            this.tBox_Vintage.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(186, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "年份：";
+            // 
+            // tBox_chateau
+            // 
+            this.tBox_chateau.Location = new System.Drawing.Point(69, 45);
+            this.tBox_chateau.Name = "tBox_chateau";
+            this.tBox_chateau.Size = new System.Drawing.Size(100, 21);
+            this.tBox_chateau.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "酒庄：";
+            // 
+            // tBox_code
+            // 
+            this.tBox_code.Location = new System.Drawing.Point(69, 18);
+            this.tBox_code.Name = "tBox_code";
+            this.tBox_code.Size = new System.Drawing.Size(100, 21);
+            this.tBox_code.TabIndex = 1;
+            this.tBox_code.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_code_KeyPress);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "编号：";
             // 
             // dgv_storage
             // 
@@ -1484,6 +1726,7 @@
             this.dgv_storage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.codeDataGridViewTextBoxColumn,
             this.chateauDataGridViewTextBoxColumn,
+            this.discriptionDataGridViewTextBoxColumn,
             this.vintageDataGridViewTextBoxColumn,
             this.appelationDataGridViewTextBoxColumn,
             this.qualityDataGridViewTextBoxColumn,
@@ -1495,25 +1738,25 @@
             this.retailpriceDataGridViewTextBoxColumn,
             this.countryDataGridViewTextBoxColumn});
             this.dgv_storage.ContextMenuStrip = this.ctms_storage;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgv_storage.Location = new System.Drawing.Point(7, 13);
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgv_storage.Location = new System.Drawing.Point(6, 130);
             this.dgv_storage.MultiSelect = false;
             this.dgv_storage.Name = "dgv_storage";
             this.dgv_storage.ReadOnly = true;
             this.dgv_storage.RowHeadersVisible = false;
             this.dgv_storage.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle13;
             this.dgv_storage.RowTemplate.Height = 23;
             this.dgv_storage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_storage.Size = new System.Drawing.Size(1206, 367);
+            this.dgv_storage.Size = new System.Drawing.Size(1220, 537);
             this.dgv_storage.TabIndex = 0;
             this.dgv_storage.SelectionChanged += new System.EventHandler(this.dgv_storage_SelectionChanged);
             // 
@@ -1528,6 +1771,12 @@
             this.chateauDataGridViewTextBoxColumn.HeaderText = "酒庄";
             this.chateauDataGridViewTextBoxColumn.Name = "chateauDataGridViewTextBoxColumn";
             this.chateauDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // discriptionDataGridViewTextBoxColumn
+            // 
+            this.discriptionDataGridViewTextBoxColumn.HeaderText = "描述";
+            this.discriptionDataGridViewTextBoxColumn.Name = "discriptionDataGridViewTextBoxColumn";
+            this.discriptionDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // vintageDataGridViewTextBoxColumn
             // 
@@ -1603,289 +1852,6 @@
             this.tsmi_deleteStorage.Text = "&D删除";
             this.tsmi_deleteStorage.Click += new System.EventHandler(this.tsmi_deleteStorage_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.groupBox8);
-            this.groupBox3.Controls.Add(this.groupBox5);
-            this.groupBox3.Location = new System.Drawing.Point(0, 7);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1219, 306);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.btn_seachStorage);
-            this.groupBox8.Controls.Add(this.btn_addStorage);
-            this.groupBox8.Location = new System.Drawing.Point(523, 12);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(141, 288);
-            this.groupBox8.TabIndex = 1;
-            this.groupBox8.TabStop = false;
-            // 
-            // btn_seachStorage
-            // 
-            this.btn_seachStorage.Location = new System.Drawing.Point(33, 133);
-            this.btn_seachStorage.Name = "btn_seachStorage";
-            this.btn_seachStorage.Size = new System.Drawing.Size(75, 23);
-            this.btn_seachStorage.TabIndex = 3;
-            this.btn_seachStorage.Text = "查找";
-            this.btn_seachStorage.UseVisualStyleBackColor = true;
-            this.btn_seachStorage.Click += new System.EventHandler(this.btn_seachStorage_Click);
-            // 
-            // btn_addStorage
-            // 
-            this.btn_addStorage.Location = new System.Drawing.Point(33, 68);
-            this.btn_addStorage.Name = "btn_addStorage";
-            this.btn_addStorage.Size = new System.Drawing.Size(75, 23);
-            this.btn_addStorage.TabIndex = 2;
-            this.btn_addStorage.Text = "入库";
-            this.btn_addStorage.UseVisualStyleBackColor = true;
-            this.btn_addStorage.Click += new System.EventHandler(this.btn_addStorage_Click);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.tBox_supplier);
-            this.groupBox5.Controls.Add(this.label13);
-            this.groupBox5.Controls.Add(this.tBox_retailprice);
-            this.groupBox5.Controls.Add(this.tBox_units);
-            this.groupBox5.Controls.Add(this.tBox_price);
-            this.groupBox5.Controls.Add(this.label12);
-            this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.label10);
-            this.groupBox5.Controls.Add(this.tBox_description);
-            this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Controls.Add(this.tBox_country);
-            this.groupBox5.Controls.Add(this.tBox_score);
-            this.groupBox5.Controls.Add(this.tBox_bottle);
-            this.groupBox5.Controls.Add(this.tBox_quality);
-            this.groupBox5.Controls.Add(this.label8);
-            this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.label6);
-            this.groupBox5.Controls.Add(this.label5);
-            this.groupBox5.Controls.Add(this.tBox_appellation);
-            this.groupBox5.Controls.Add(this.label4);
-            this.groupBox5.Controls.Add(this.tBox_Vintage);
-            this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Controls.Add(this.tBox_chateau);
-            this.groupBox5.Controls.Add(this.label2);
-            this.groupBox5.Controls.Add(this.tBox_code);
-            this.groupBox5.Controls.Add(this.label1);
-            this.groupBox5.Location = new System.Drawing.Point(7, 12);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(509, 288);
-            this.groupBox5.TabIndex = 0;
-            this.groupBox5.TabStop = false;
-            // 
-            // tBox_supplier
-            // 
-            this.tBox_supplier.Location = new System.Drawing.Point(359, 18);
-            this.tBox_supplier.Name = "tBox_supplier";
-            this.tBox_supplier.Size = new System.Drawing.Size(100, 21);
-            this.tBox_supplier.TabIndex = 30;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(286, 21);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(53, 12);
-            this.label13.TabIndex = 29;
-            this.label13.Text = "供货商：";
-            // 
-            // tBox_retailprice
-            // 
-            this.tBox_retailprice.Location = new System.Drawing.Point(359, 107);
-            this.tBox_retailprice.Name = "tBox_retailprice";
-            this.tBox_retailprice.Size = new System.Drawing.Size(100, 21);
-            this.tBox_retailprice.TabIndex = 28;
-            // 
-            // tBox_units
-            // 
-            this.tBox_units.Location = new System.Drawing.Point(359, 79);
-            this.tBox_units.Name = "tBox_units";
-            this.tBox_units.Size = new System.Drawing.Size(100, 21);
-            this.tBox_units.TabIndex = 27;
-            // 
-            // tBox_price
-            // 
-            this.tBox_price.Location = new System.Drawing.Point(359, 49);
-            this.tBox_price.Name = "tBox_price";
-            this.tBox_price.Size = new System.Drawing.Size(100, 21);
-            this.tBox_price.TabIndex = 26;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(286, 110);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 25;
-            this.label12.Text = "零售价：";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(286, 79);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 12);
-            this.label11.TabIndex = 24;
-            this.label11.Text = "数量：";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(286, 52);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 12);
-            this.label10.TabIndex = 23;
-            this.label10.Text = "价格：";
-            // 
-            // tBox_description
-            // 
-            this.tBox_description.Location = new System.Drawing.Point(69, 243);
-            this.tBox_description.Multiline = true;
-            this.tBox_description.Name = "tBox_description";
-            this.tBox_description.Size = new System.Drawing.Size(180, 38);
-            this.tBox_description.TabIndex = 17;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 246);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 12);
-            this.label9.TabIndex = 16;
-            this.label9.Text = "描述：";
-            // 
-            // tBox_country
-            // 
-            this.tBox_country.Location = new System.Drawing.Point(69, 217);
-            this.tBox_country.Name = "tBox_country";
-            this.tBox_country.Size = new System.Drawing.Size(100, 21);
-            this.tBox_country.TabIndex = 15;
-            // 
-            // tBox_score
-            // 
-            this.tBox_score.Location = new System.Drawing.Point(69, 189);
-            this.tBox_score.Name = "tBox_score";
-            this.tBox_score.Size = new System.Drawing.Size(100, 21);
-            this.tBox_score.TabIndex = 14;
-            // 
-            // tBox_bottle
-            // 
-            this.tBox_bottle.Location = new System.Drawing.Point(69, 162);
-            this.tBox_bottle.Name = "tBox_bottle";
-            this.tBox_bottle.Size = new System.Drawing.Size(100, 21);
-            this.tBox_bottle.TabIndex = 13;
-            // 
-            // tBox_quality
-            // 
-            this.tBox_quality.Location = new System.Drawing.Point(69, 134);
-            this.tBox_quality.Name = "tBox_quality";
-            this.tBox_quality.Size = new System.Drawing.Size(100, 21);
-            this.tBox_quality.TabIndex = 12;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 220);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "国家：";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 192);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 12);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "评分：";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 165);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "规格：";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 137);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 12);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "等级：";
-            // 
-            // tBox_appellation
-            // 
-            this.tBox_appellation.Location = new System.Drawing.Point(69, 103);
-            this.tBox_appellation.Name = "tBox_appellation";
-            this.tBox_appellation.Size = new System.Drawing.Size(100, 21);
-            this.tBox_appellation.TabIndex = 7;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 109);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "法定产区：";
-            // 
-            // tBox_Vintage
-            // 
-            this.tBox_Vintage.Location = new System.Drawing.Point(69, 76);
-            this.tBox_Vintage.Name = "tBox_Vintage";
-            this.tBox_Vintage.Size = new System.Drawing.Size(100, 21);
-            this.tBox_Vintage.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 79);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "年份：";
-            // 
-            // tBox_chateau
-            // 
-            this.tBox_chateau.Location = new System.Drawing.Point(69, 45);
-            this.tBox_chateau.Name = "tBox_chateau";
-            this.tBox_chateau.Size = new System.Drawing.Size(100, 21);
-            this.tBox_chateau.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "酒庄：";
-            // 
-            // tBox_code
-            // 
-            this.tBox_code.Location = new System.Drawing.Point(69, 18);
-            this.tBox_code.Name = "tBox_code";
-            this.tBox_code.Size = new System.Drawing.Size(100, 21);
-            this.tBox_code.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "编号：";
-            // 
             // tp_supplier
             // 
             this.tp_supplier.Controls.Add(this.dgv_roles);
@@ -1913,8 +1879,8 @@
             this.dgv_roles.MultiSelect = false;
             this.dgv_roles.Name = "dgv_roles";
             this.dgv_roles.RowHeadersVisible = false;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_roles.RowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_roles.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgv_roles.RowTemplate.Height = 23;
             this.dgv_roles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_roles.Size = new System.Drawing.Size(328, 215);
@@ -1950,8 +1916,8 @@
             this.dgv_memberLevel.MultiSelect = false;
             this.dgv_memberLevel.Name = "dgv_memberLevel";
             this.dgv_memberLevel.RowHeadersVisible = false;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_memberLevel.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_memberLevel.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgv_memberLevel.RowTemplate.Height = 23;
             this.dgv_memberLevel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_memberLevel.Size = new System.Drawing.Size(392, 215);
@@ -2021,22 +1987,22 @@
             this.dataGridViewTextBoxColumn8});
             this.dgv_supplier.ContextMenuStrip = this.ctms_supplier;
             this.dgv_supplier.DataSource = this.supplierBindingSource;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgv_supplier.Location = new System.Drawing.Point(4, 66);
             this.dgv_supplier.MultiSelect = false;
             this.dgv_supplier.Name = "dgv_supplier";
             this.dgv_supplier.ReadOnly = true;
             this.dgv_supplier.RowHeadersVisible = false;
             this.dgv_supplier.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_supplier.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_supplier.RowsDefaultCellStyle = dataGridViewCellStyle14;
             this.dgv_supplier.RowTemplate.Height = 23;
             this.dgv_supplier.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_supplier.Size = new System.Drawing.Size(392, 163);
@@ -2237,13 +2203,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).EndInit();
             this.ctms_storageInfo.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).EndInit();
-            this.ctms_storage.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).EndInit();
+            this.ctms_storage.ResumeLayout(false);
             this.tp_supplier.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).EndInit();
@@ -2267,8 +2230,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox tBox_chateau;
         private System.Windows.Forms.Label label2;
@@ -2298,7 +2259,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DataGridView dgv_storageInfo;
-        private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button btn_seachStorage;
         private System.Windows.Forms.DataGridView dgv_storage;
         private System.Windows.Forms.TabPage tp_supplier;
@@ -2312,18 +2272,6 @@
         private weitongDataSet1TableAdapters.supplierTableAdapter supplierTableAdapter;
         private System.Windows.Forms.ContextMenuStrip ctms_supplier;
         private System.Windows.Forms.ToolStripMenuItem tsmi_deleteSupplier;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn chateauDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vintageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn appelationDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qualityDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bottleDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn scoreDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn supplierDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unitsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
         private System.Windows.Forms.ContextMenuStrip ctms_storage;
         private System.Windows.Forms.ToolStripMenuItem tsmi_deleteStorage;
         private System.Windows.Forms.TabControl tabCtrl_Order;
@@ -2349,11 +2297,10 @@
         private System.Windows.Forms.DataGridView dgv_currentOrder;
         private System.Windows.Forms.DataGridView dgv_cartDetail;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btn_PreViewCart;
         private System.Windows.Forms.Button btn_CalcOrder;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button btn_SearchStorageInfo;
-        private System.Windows.Forms.TextBox textBox22;
+        private System.Windows.Forms.TextBox tBox_salesWineDescription;
         private System.Windows.Forms.TextBox textBox23;
         private System.Windows.Forms.TextBox tBox_salesWineCode;
         private System.Windows.Forms.TextBox textBox25;
@@ -2472,6 +2419,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn codeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chateauDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn discriptionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vintageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn appelationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qualityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bottleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn scoreDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn supplierDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unitsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
     }
 }
 
