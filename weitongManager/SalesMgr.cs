@@ -134,17 +134,16 @@ namespace weitongManager
             foreach (CartDetailRowData item in m_cartDetailList)
             {
                 amount += item.Amount;
+                anOrder.addDetail(item.Code, item.Units, item.Memberprice, item.Discount);
             }
             anOrder.Amount = amount;
-            anOrder.save();
-
-            if (anOrder.ID == -1) return;
             
+            //foreach (CartDetailRowData item in m_cartDetailList)
+            //{
+            //    anOrder.addDetail(item.Code, item.Units, item.Memberprice, item.Discount);
+            //}
+            anOrder.save();
             CurrentOrder = anOrder;
-            foreach (CartDetailRowData item in m_cartDetailList)
-            {
-                CurrentOrder.saveDetail2DB(item.Code, item.Units, item.Memberprice,item.Discount);
-            }
 
             
             reloadStorageInfo();

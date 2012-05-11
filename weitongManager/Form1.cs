@@ -795,6 +795,12 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 计算购物车中输入单元格的位置。
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnIndex"></param>
+        /// <returns></returns>
         private Point calcCartDetailCellLocation(int rowIndex, int columnIndex)
         {
             int x = dgv_cartDetail.Location.X;
@@ -1024,6 +1030,12 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 根据描述信息模糊查找库存信息
+        /// 如果描述信息为空，则返回所有的库存信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tBox_salesWineDescription_KeyPress(object sender, KeyPressEventArgs e)
         {
             try

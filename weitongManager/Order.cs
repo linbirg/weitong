@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 
 namespace weitongManager
 {
+    
     class Order
     {
         /*
@@ -71,23 +72,28 @@ namespace weitongManager
 
 
         // 公用接口
+        /// <summary>
+        /// 保存订单信息。
+        /// 如果订单是新订单（id为负值），则将订单信息和订单细项插入数据库。
+        /// 如果数据库中已经有该订单的信息（id为正值），则更新订单信息，
+        /// 然后删除所有订单的细项，再插入新的订单的细项到数据库。
+        /// </summary>
         public void save()
         {
             if (ID == -1)
             {
                 this.m_id = insertOrderAndGetID(CustomerID, UserID, EffectDate, (int)State, Amount);
+                insertOrderDetails();
             }
             else
             {
                 updateOrder(m_id, CustomerID, UserID, EffectDate, State, Amount, Received);
+                clearOrderDetails(m_id);
+                insertOrderDetails();
             }
         }
 
-        public void saveDetail2DB(string Code, int Units, decimal memberPrice, int discount)
-        {
-            insertOrderDetail(ID, Code, Units, memberPrice, discount);
-            necStorageUnits(Code, Units);
-        }
+        
 
         // 取消订单
         public void cancelOrder()
@@ -97,24 +103,29 @@ namespace weitongManager
             State = OrderState.CANCEL;
         }
 
-        // 
+        /// <summary>
+        /// 从数据库中查找订单的细项，并更新内存中的副本。
+        /// </summary>
+        /// <returns></returns>
+ 
         public List<OrderDetail> getDetails()
         {
-            return getOrderDetail(this.ID);
+            m_details = getOrderDetail(this.ID);
+            return m_details;
         }
 
-
-
-
-        //
-        // 
-        //
-        private bool isCompletedState()
+        public void addDetail(string code, int units, decimal memberPrice, int discount)
         {
-            return (m_id != -1 && State == OrderState.COMPLETED);
+            OrderDetail detail = new OrderDetail();
+            detail.ID = -1;
+            detail.OrderID = this.m_id;
+            detail.Code = code;
+            detail.Units = units;
+            detail.Discount = discount;
+            detail.KnockDownPrice = memberPrice;
+            if (m_details == null) m_details = new List<OrderDetail>();
+            m_details.Add(detail);
         }
-
-
 
 
         // ==================================== 公用静态方法区 ===================================
@@ -176,6 +187,65 @@ namespace weitongManager
                 stateStr = "已取消";
             }
             return stateStr;
+        }
+
+
+
+        // ==========================私有方法=========================
+        /// <summary>
+        /// 将订单的所有细项插入数据库，并修改对应的库存信息。
+        /// </summary>
+        private void insertOrderDetails()
+        {
+            if (m_details != null)
+            {
+                foreach (OrderDetail detail in m_details)
+                {
+                    insertDetail(detail.Code, detail.Units, detail.KnockDownPrice, detail.Discount);
+                }
+            }
+        }
+        /// <summary>
+        /// 将订单详细信息保存（插入）到数据库，并修改相应的库存信息。
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="Units"></param>
+        /// <param name="memberPrice"></param>
+        /// <param name="discount"></param>
+        private void insertDetail(string Code, int Units, decimal memberPrice, int discount)
+        {
+            insertOrderDetail(ID, Code, Units, memberPrice, discount);
+            necStorageUnits(Code, Units);
+        }
+
+        /// <summary>
+        /// 清除订单的所有细项，并还原相应的库存信息。
+        /// </summary>
+        /// <param name="order_id">订单编号，必须是数据库中存在的（id为正值)</param>
+        private void clearOrderDetails(int order_id)
+        {
+            if (order_id < 0) return;
+            List<OrderDetail> details = Order.getOrderDetail(order_id);
+            // 订单没有对应的细项，返回。
+            if (details == null) return;
+            // 还原对应的库存信息。
+            foreach (OrderDetail detail in details)
+            {
+                plusStorageUnits(detail.Code, detail.Units);
+            }
+
+            Order.deleteOrderDetails(order_id);
+
+        }
+
+        /// <summary>
+        /// 判断订单是否为完成状态。
+        /// 完成状态的订单，必须是数据库中存在的（id为正值）,且状态为完成状态。
+        /// </summary>
+        /// <returns></returns>
+        private bool isCompletedState()
+        {
+            return (m_id > 0 && State == OrderState.COMPLETED);
         }
 
 
@@ -283,6 +353,11 @@ namespace weitongManager
         }
 
 
+        /// <summary>
+        /// 从数据库中查找订单的细项
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns>包含细项的列表或者null</returns>
         private static List<OrderDetail> getOrderDetail(int orderID)
         {
             List<OrderDetail> list = null;
@@ -317,14 +392,39 @@ namespace weitongManager
 
             return list;
         }
+
+        /// <summary>
+        /// 删除数据库中订单的所有细项。
+        /// </summary>
+        /// <param name="order_id">订单编号，必须为正，即订单必须在数据库中存在。</param>
+        private static void deleteOrderDetails(int order_id)
+        {
+            if (order_id < 0) return;
+            string dStr = @"DELETE FROM order_wines WHERE orderid=@orderid";
+            MySqlCommand delCmd = new MySqlCommand();
+            delCmd.CommandText = dStr;
+            delCmd.Connection = ConnSingleton.Connection;
+            delCmd.Parameters.Add("@orderid", MySqlDbType.Int32).Value = order_id;
+
+            try
+            {
+                delCmd.Connection.Open();
+                delCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                delCmd.Connection.Close();
+            }
+        }
         
-        // 取消订单。
-        /* 
-         * 函数需要做以下两件事情
-         * 1. 找到订单的详细记录，增加相应的酒的库存。
-         * 2. 修改订单的状态为取消（对应的状态是3）。已完成的订单无法撤销。
-         * 
-         */
+        
+        /// <summary>
+        /// 取消订单。
+        /// 函数需要做以下两件事情
+        /// * 1. 找到订单的详细记录，增加相应的酒的库存。
+        /// * 2. 修改订单的状态为取消（对应的状态是3）。已完成的订单无法撤销。
+        /// </summary>
+        /// <param name="orderID"></param>
         private static void cancelOrder(int orderID)
         {
             MySqlConnection conn = ConnSingleton.Connection;
@@ -361,6 +461,7 @@ namespace weitongManager
                 {
                     plusStorageUnits(pair.Key, pair.Value);
                 }
+
                 updateOrderState(orderID, OrderState.CANCEL);
             }
             //catch (Exception ex)
@@ -468,6 +569,54 @@ namespace weitongManager
         private OrderState m_orderState;
         private decimal m_amount;
         private decimal m_received;
+        private List<OrderDetail> m_details = null;
+    }
+
+
+    class OrderDetail
+    {
+        private int m_id;
+        private int m_order_id;
+        private string m_code;
+        private int m_units;
+        private decimal m_knock_price;
+        private int discount;
+
+        public int ID
+        {
+            get { return m_id; }
+            set { m_id = value; }
+        }
+
+        public int OrderID
+        {
+            get { return m_order_id; }
+            set { m_order_id = value; }
+        }
+
+        public string Code
+        {
+            get { return m_code; }
+            set { m_code = value; }
+        }
+
+        public int Units
+        {
+            get { return m_units; }
+            set { m_units = value; }
+        }
+
+        public decimal KnockDownPrice
+        {
+            get { return m_knock_price; }
+            set { m_knock_price = value; }
+        }
+
+        public int Discount
+        {
+            get { return discount; }
+            set { discount = value; }
+        }
     }
 
     enum OrderState
