@@ -9,7 +9,6 @@ namespace weitongManager
     {
         private User m_user = null;
         private Customer m_customer = null;
-        private Order m_order = null;
         
     }
 }

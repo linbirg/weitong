@@ -14,6 +14,7 @@ namespace weitongManager
          *  分别存放订单的信息，订单的客户信息和订单的详细信息。
          */
 
+
         // 属性
         public int ID
         {
@@ -55,8 +56,12 @@ namespace weitongManager
 
         public decimal Amount
         {
-            get { return m_amount; }
-            set { m_amount = value; }
+            get
+            {
+                if (m_id > 0) return m_amount;
+                return calcAmount(); 
+            }
+            //set { m_amount = value; }
         }
 
         public decimal Received
@@ -82,7 +87,7 @@ namespace weitongManager
         {
             if (ID == -1)
             {
-                this.m_id = insertOrderAndGetID(CustomerID, UserID, EffectDate, (int)State, Amount);
+                this.m_id = insertOrderAndGetID(CustomerID, UserID, EffectDate, (int)State, Amount,Received);
                 insertOrderDetails();
             }
             else
@@ -104,16 +109,34 @@ namespace weitongManager
         }
 
         /// <summary>
-        /// 从数据库中查找订单的细项，并更新内存中的副本。
+        /// 如果订单是新订单，返回内存中的细项。
+        /// 如果订单已经存入数据库，返回数据库中的细项，并替换内存中的副本。
         /// </summary>
         /// <returns></returns>
  
         public List<OrderDetail> getDetails()
         {
+            if (ID < 0) return m_details;
             m_details = getOrderDetail(this.ID);
             return m_details;
         }
 
+        /// <summary>
+        /// 清空内存中的订单列表。
+        /// </summary>
+        public void emptyDetails()
+        {
+            if (m_details == null) return;
+            m_details.Clear();
+        }
+
+        /// <summary>
+        /// 添加订单细项到列表中。
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="units"></param>
+        /// <param name="memberPrice"></param>
+        /// <param name="discount"></param>
         public void addDetail(string code, int units, decimal memberPrice, int discount)
         {
             OrderDetail detail = new OrderDetail();
@@ -127,13 +150,24 @@ namespace weitongManager
             m_details.Add(detail);
         }
 
+        /// <summary>
+        /// 将其他订单信息的内容copy到当前订单。copy不会改变当前订单的id,和状态信息（当前状态必须为FOR_PAY，否则会抛出异常）
+        /// </summary>
+        /// <param name="other"></param>
+        public void copy(Order other)
+        {
+            if (other == null) return;
+
+            copyOrder(this, other);
+        }
+
 
         // ==================================== 公用静态方法区 ===================================
 
         public static Order findByID(int orderID)
         {
             Order newOrder = null;
-            string qryStr = @"SELECT customerid,effectdate,orderstate,amount,received
+            string qryStr = @"SELECT customerid,userid,effectdate,orderstate,amount,received
                               FROM orders
                               WHERE id=@id";
             MySqlCommand qryCmd = new MySqlCommand();
@@ -149,8 +183,9 @@ namespace weitongManager
                 {
                     newOrder = new Order();
                     newOrder.m_id = orderID;
-                    newOrder.Amount = reader.GetDecimal("amount");
+                    newOrder.m_amount = reader.GetDecimal("amount");
                     newOrder.CustomerID = reader.GetInt32("customerid");
+                    newOrder.UserID = reader.GetInt32("userid");
                     newOrder.EffectDate = reader.GetDateTime("effectdate");
                     newOrder.Received = reader.GetDecimal("received");
                     newOrder.State = (OrderState)reader.GetInt32("orderstate");
@@ -164,10 +199,48 @@ namespace weitongManager
             return newOrder;
         }
 
+        /// <summary>
+        /// 新建订单,并设置订单id为-1.
+        /// </summary>
+        /// <returns></returns>
         public static Order NewOrder()
         {
             Order anOrder = new Order();
             anOrder.m_id = -1;
+            return anOrder;
+        }
+
+        /// <summary>
+        /// 根据现有的订单生产新的订单。
+        /// 新的订单，其id为-1，且其状态为等待付款状态，日期为当前日期，
+        /// 其余信息,包括userid和订单细项与现有订单一致
+        /// </summary>
+        /// <param name="other">现有订单,如果现有订单为null，则简单的新建订单</param>
+        /// <returns>新的订单</returns>
+        public static Order NewOrder(Order other)
+        {
+            if (other == null) return NewOrder();
+
+            Order anOrder = new Order();
+            anOrder.m_id = -1;
+            anOrder.State = OrderState.FOR_PAY;
+
+            copyOrder(anOrder, other);
+            //anOrder.CustomerID = other.CustomerID;
+            //anOrder.EffectDate = DateTime.Now;
+            //anOrder.Received = 0;
+            //anOrder.UserID = other.UserID;
+
+            ////
+            //anOrder.emptyDetails();
+            //if (other.m_details != null)
+            //{
+            //    foreach (OrderDetail detail in other.m_details)
+            //    {
+            //        anOrder.addDetail(detail.Code, detail.Units, detail.KnockDownPrice, detail.Discount);
+            //    }
+            //}
+
             return anOrder;
         }
 
@@ -192,6 +265,12 @@ namespace weitongManager
 
 
         // ==========================私有方法=========================
+        
+        /// <summary>
+        /// 声明私有的构造函数，防止在外部被构造。
+        /// </summary>
+        private Order()
+        { }
         /// <summary>
         /// 将订单的所有细项插入数据库，并修改对应的库存信息。
         /// </summary>
@@ -248,15 +327,30 @@ namespace weitongManager
             return (m_id > 0 && State == OrderState.COMPLETED);
         }
 
+        /// <summary>
+        /// 根据订单的细项计算订单的总金额。
+        /// </summary>
+        /// <returns>根据细项计算出的订单金额</returns>
+        private decimal calcAmount()
+        {
+            decimal amount = 0;
+            if (m_details == null) return 0;
+            foreach (OrderDetail detail in m_details)
+            {
+                amount += detail.KnockDownPrice * detail.Units;
+            }
+            return amount;
+        }
+
 
         // ==================================== 私有静态方法区 ===================================
 
         //order 
-        private static int insertOrderAndGetID(int customerID, int userID, DateTime effectDate, int orderState, decimal amount)
+        private static int insertOrderAndGetID(int customerID, int userID, DateTime effectDate, int orderState, decimal amount, decimal received)
         {
             int orderID = -1;
-            string insertStr = @"INSERT INTO orders(customerid,userid,effectdate,orderstate,amount) 
-                                        VALUES(@customerid,@userid,@effectdate,@orderstate,@amount)";
+            string insertStr = @"INSERT INTO orders(customerid,userid,effectdate,orderstate,amount,received) 
+                                        VALUES(@customerid,@userid,@effectdate,@orderstate,@amount,@received)";
             MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
             insertCmd.CommandText = insertStr;
             insertCmd.Connection = ConnSingleton.Connection;
@@ -265,6 +359,7 @@ namespace weitongManager
             insertCmd.Parameters.Add("@effectdate", MySqlDbType.DateTime).Value = effectDate;
             insertCmd.Parameters.Add("@orderstate", MySqlDbType.Int32).Value = orderState;
             insertCmd.Parameters.Add("@amount", MySqlDbType.Decimal).Value = amount;
+            insertCmd.Parameters.Add("@received", MySqlDbType.Decimal).Value = received;
 
             try
             {
@@ -559,6 +654,35 @@ namespace weitongManager
         private static void necStorageUnits(string code, int nec = 1)
         {
             plusStorageUnits(code, -nec);
+        }
+
+        /// <summary>
+        /// 将other订单的信息copy到one订单。拷贝函数不会改变订单的id,状态等信息。
+        /// 拷贝的one订单的状态必须是FOR_PAY(完成和取消的订单意味着不可修改)
+        /// </summary>
+        /// <param name="one"></param>
+        /// <param name="other"></param>
+        private static void copyOrder(Order one, Order other)
+        {
+            if (one == null || other == null) return;
+            if (one.State != OrderState.FOR_PAY) 
+                throw new Exception("不能对只读的订单(非FOR_PAY状态)赋值！");
+
+            one.CustomerID = other.CustomerID;
+            one.EffectDate = DateTime.Now;
+            one.Received = 0;
+            one.UserID = other.UserID;
+
+            //
+            one.emptyDetails();
+            List<OrderDetail> other_details = other.getDetails();
+            if (other_details != null)
+            {
+                foreach (OrderDetail detail in other_details)
+                {
+                    one.addDetail(detail.Code, detail.Units, detail.KnockDownPrice, detail.Discount);
+                }
+            }
         }
 
 

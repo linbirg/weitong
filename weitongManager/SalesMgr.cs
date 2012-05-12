@@ -28,7 +28,8 @@ namespace weitongManager
 
             m_cartDetailList = new BindingList<CartDetailRowData>();
             bindCartDetailData();
-            bindCurrentOrder();
+            bindOrderDetails();
+            //bindCurrentOrder();
             bindOrderList();
 
             //m_currentCart = new Cart();
@@ -118,11 +119,21 @@ namespace weitongManager
         }
 
         
-        // 生成订单信息(订单和订单详情)，订单状态为未付款(当完成付款后，修改状态为完成)。
-        // 再更新相关的信息。
-        public void calcCart()
+        
+        /// <summary>
+        /// 生成订单信息(订单和订单详情)，订单状态为未付款(当完成付款后，修改状态为完成)。
+        /// </summary>
+        public Order calcCart()
         {
-            Order anOrder = Order.NewOrder();
+            Order anOrder = null;
+            //if (CurrentOrder != null)
+            //{
+            //    anOrder = CurrentOrder;
+            //}
+            //else
+            //{
+              anOrder = Order.NewOrder();
+            //}
 
             anOrder.CustomerID = CartCustomer.ID;
             anOrder.UserID = m_currentUser.ID;
@@ -130,36 +141,42 @@ namespace weitongManager
             anOrder.State = OrderState.FOR_PAY;
         
             decimal amount = 0;
-
+            anOrder.emptyDetails();
             foreach (CartDetailRowData item in m_cartDetailList)
             {
                 amount += item.Amount;
                 anOrder.addDetail(item.Code, item.Units, item.Memberprice, item.Discount);
             }
-            anOrder.Amount = amount;
+            //anOrder.Amount = amount;
             
             //foreach (CartDetailRowData item in m_cartDetailList)
             //{
             //    anOrder.addDetail(item.Code, item.Units, item.Memberprice, item.Discount);
             //}
-            anOrder.save();
-            CurrentOrder = anOrder;
-
+            //anOrder.save();
+            //CurrentOrder = anOrder;
+            return anOrder;
             
-            reloadStorageInfo();
-            CurrentOrderID = CurrentOrder.ID;
-            bindCurrentOrder();
+            //reloadStorageInfo();
+            //CurrentOrderID = CurrentOrder.ID;
+            //bindCurrentOrder();
         }
 
+        /// <summary>
+        /// 完成订单，将订单写入数据库。
+        /// 函数修改订单的日期为当前日期，状态为完成，写入收到的数额，设置当前用户为订单用户。
+        /// </summary>
+        /// <param name="recved"></param>
         public void completeCurrentOrder(decimal recved)
         {
-            CurrentOrder.CustomerID = CartCustomer.ID;
+            if (CurrentOrder == null) return;
+            //CurrentOrder.CustomerID = CartCustomer.ID;
             CurrentOrder.EffectDate = DateTime.Now;
             CurrentOrder.State = OrderState.COMPLETED;
-            CurrentOrder.Amount = CurrentOrderAmount;
-            CurrentOrder.Received = recved;
-            CurrentOrder.save();
             
+            CurrentOrder.Received = recved;
+            CurrentOrder.UserID = m_currentUser.ID;
+            CurrentOrder.save(); 
         }
 
         // 更新除ID之外的所有列
@@ -167,7 +184,6 @@ namespace weitongManager
         {
             anOrder.cancelOrder();
             reloadStorageInfo();
-            
         }
 
         public void updateOrderList()
@@ -175,52 +191,99 @@ namespace weitongManager
             m_orderAdapter.Fill(m_dataset.order);
         }
 
-        // 设置指定的orderID为当前的订单(订单必须已经存在于数据库中)。
-        // 根据订单信息，分别设定当前的客户信息和订单详细信息。
-        // 返回值：-1表示未找到订单 -2表示未找到指定的客户信息 0表示正常完成。
-        public int setCurrentOrder(int orderID)
+        public void generateCurrentOrderDetails()
         {
-            Order curOrder = Order.findByID(orderID);
-            if (curOrder == null) return -1;
-            m_orderID = curOrder.ID;
-            m_currentOrder = curOrder;
-
-            Customer curCustomer = Customer.findByID(curOrder.CustomerID);
-            if (curCustomer == null) return -2;
-            m_currentCustomer = curCustomer;
-
-            List<OrderRowData> detailList = getOrderDetailByOrderID(m_orderID);
-            // 如果没有订单的详细信息，则正常返回
-            if (detailList == null) return 0;
-            if (this.m_currentOrderDetailList == null)
+            if (m_currentOrder == null) return;
+            List<OrderDetail> details = m_currentOrder.getDetails();
+            if (details != null)
             {
-                m_currentOrderDetailList = new BindingList<OrderRowData>(detailList);
-            }
-            else
-            {
-                m_currentOrderDetailList.Clear();
-                foreach (OrderRowData item in detailList)
+                if (m_currentOrderDetailList == null)
                 {
-                    m_currentOrderDetailList.Add(item);
+                    m_currentOrderDetailList = new BindingList<OrderRowData>();
+                }
+                m_currentOrderDetailList.Clear();
+
+                foreach (OrderDetail detail in details)
+                {
+                    OrderRowData data = new OrderRowData();
+                    data.Code = detail.Code;
+                    weitongDataSet1.storageRow aWineStrge = Storage.findByCode(data.Code);
+                    data.Description = aWineStrge.description;
+                    data.KnockDownPrice = detail.KnockDownPrice;
+                    data.Units = detail.Units;
+                    data.FavorablePrice = aWineStrge.retailprice - detail.KnockDownPrice;
+                    m_currentOrderDetailList.Add(data);
                 }
             }
-
-            //
-            calcAmountAndFavorableAmountProperty();
-            return 0;
         }
+
+        //public decimal getCurrentOrderAmount()
+        //{
+        //    decimal amount = 0;
+        //    foreach (OrderRowData item in m_currentOrderDetailList)
+        //    {
+        //        amount += item.KnockDownPrice * item.Units;
+        //        //favorableAmount += item.FavorablePrice * item.Units;
+        //    }
+        //    return amount;
+        //}
+
+        //public decimal getCurrentOrderFavorableAmount()
+        //{
+        //    decimal amount = 0;
+        //    foreach (OrderRowData item in m_currentOrderDetailList)
+        //    {
+        //        //amount += item.KnockDownPrice * item.Units;
+        //        amount += item.FavorablePrice * item.Units;
+        //    }
+        //    return amount;
+        //}
+        //// 设置指定的orderID为当前的订单(订单必须已经存在于数据库中)。
+        //// 根据订单信息，分别设定当前的客户信息和订单详细信息。
+        //// 返回值：-1表示未找到订单 -2表示未找到指定的客户信息 0表示正常完成。
+        //public int setCurrentOrder(int orderID)
+        //{
+        //    Order curOrder = Order.findByID(orderID);
+        //    if (curOrder == null) return -1;
+        //    m_orderID = curOrder.ID;
+        //    m_currentOrder = curOrder;
+
+        //    Customer curCustomer = Customer.findByID(curOrder.CustomerID);
+        //    if (curCustomer == null) return -2;
+        //    m_currentCustomer = curCustomer;
+
+        //    List<OrderRowData> detailList = getOrderDetailByOrderID(m_orderID);
+        //    // 如果没有订单的详细信息，则正常返回
+        //    if (detailList == null) return 0;
+        //    if (this.m_currentOrderDetailList == null)
+        //    {
+        //        m_currentOrderDetailList = new BindingList<OrderRowData>(detailList);
+        //    }
+        //    else
+        //    {
+        //        m_currentOrderDetailList.Clear();
+        //        foreach (OrderRowData item in detailList)
+        //        {
+        //            m_currentOrderDetailList.Add(item);
+        //        }
+        //    }
+
+        //    //
+        //    calcAmountAndFavorableAmountProperty();
+        //    return 0;
+        //}
 
         public void generateCartDetail()
         {
             if (m_cartDetailList == null) m_cartDetailList = new BindingList<CartDetailRowData>();
             m_cartDetailList.Clear();
-            foreach (OrderRowData order in m_currentOrderDetailList)
+            foreach (OrderRowData orderDetail in m_currentOrderDetailList)
             {
                 CartDetailRowData aRow = new CartDetailRowData();
-                aRow.Code = order.Code;
-                aRow.Description = order.Description;
-                aRow.Discount = CartCustomer.Discount;//
-                aRow.Units = order.Units;
+                aRow.Code = orderDetail.Code;
+                aRow.Description = orderDetail.Description;
+                aRow.Discount = (int)(100*orderDetail.KnockDownPrice / (orderDetail.KnockDownPrice + orderDetail.FavorablePrice)); //CartCustomer.Discount;//
+                aRow.Units = orderDetail.Units;
                 weitongDataSet1.storageRow storageRow = Storage.findByCode(aRow.Code);
                 //CartDetailRowData item = new CartDetailRowData(dataRow.code, dataRow.description, dataRow.bottle, dataRow.retailprice);
                 aRow.Bottle = storageRow.bottle;
@@ -308,10 +371,53 @@ namespace weitongManager
             set { m_orderID = value; }
         }
 
+        /// <summary>
+        /// 设置或者获取当前订单的值
+        /// 设置订单时，如果值为空，则会清除当前订单的相关信息。
+        /// 如果值不为空，则会生成订单的详细列表等操作。
+        /// </summary>
         public Order CurrentOrder
         {
             get { return m_currentOrder; }
-            set { m_currentOrder = value; }
+            set { 
+                m_currentOrder = value;
+                if (m_currentOrder != null)
+                {
+                    //generateCurrentOrderDetails();
+                    // 设置
+                    //CartCustomer = Customer.findByID(m_currentOrder.CustomerID);
+                    //List<OrderDetail> details = m_currentOrder.getDetails();
+                    //if (details != null)
+                    //{
+                    //    if (m_currentOrderDetailList == null)
+                    //    {
+                    //        m_currentOrderDetailList = new BindingList<OrderRowData>();
+                    //    }
+                    //    m_currentOrderDetailList.Clear();
+                        
+                    //    foreach (OrderDetail detail in details)
+                    //    {
+                    //        OrderRowData data = new OrderRowData();
+                    //        data.Code = detail.Code;
+                    //        weitongDataSet1.storageRow aWineStrge = Storage.findByCode(data.Code);
+                    //        data.Description = aWineStrge.description;
+                    //        data.KnockDownPrice = detail.KnockDownPrice;
+                    //        data.Units = detail.Units;
+                    //        data.FavorablePrice = aWineStrge.retailprice - detail.KnockDownPrice;
+                    //        m_currentOrderDetailList.Add(data);
+                    //    }
+                    //    //calcAmountAndFavorableAmountProperty();
+                    //}
+                    //m_currentOrderDetailList
+                    //bindCurrentOrder();
+                }
+                else
+                {
+                    // 清空订单的信息。
+                    if(m_currentOrderDetailList != null)
+                        m_currentOrderDetailList.Clear();
+                }
+            }
         }
 
         public decimal CurrentOrderAmount
@@ -359,9 +465,16 @@ namespace weitongManager
         // 绑定订单详细信息到列表
         private void bindCurrentOrder()
         {
-            this.CurrentOrderView.AutoGenerateColumns = false;
-            m_currentOrderDetailList = new BindingList<OrderRowData>();
-            m_currentOrderGrid.DataSource = m_currentOrderDetailList;
+           
+            if (m_currentOrderDetailList == null)
+            {
+                m_currentOrderDetailList = new BindingList<OrderRowData>();
+            }
+            else
+            {
+                m_currentOrderDetailList.Clear();
+            }
+           
             foreach (CartDetailRowData item in m_cartDetailList)
             {
                 OrderRowData aRow = new OrderRowData();
@@ -373,14 +486,27 @@ namespace weitongManager
                 m_currentOrderDetailList.Add(aRow);
             }
 
+            //calcAmountAndFavorableAmountProperty();
+        }
+
+        private void bindOrderDetails()
+        {
+            this.CurrentOrderView.AutoGenerateColumns = false;
+            if (m_currentOrderDetailList == null)
+            {
+                m_currentOrderDetailList = new BindingList<OrderRowData>();
+            }
+            else
+            {
+                m_currentOrderDetailList.Clear();
+            }
+            m_currentOrderGrid.DataSource = m_currentOrderDetailList;
             // bind column
             this.m_currentOrderGrid.Columns["currentOrderCode"].DataPropertyName = "code";
             this.m_currentOrderGrid.Columns["currentOrderDescription"].DataPropertyName = "description";
             this.m_currentOrderGrid.Columns["currentOrderKnockDownPrice"].DataPropertyName = "KnockDownPrice";
             this.m_currentOrderGrid.Columns["currentOrderFavorablePrice"].DataPropertyName = "FavorablePrice";
             this.m_currentOrderGrid.Columns["currentOrderUnits"].DataPropertyName = "Units";
-
-            calcAmountAndFavorableAmountProperty();
         }
 
         private void bindOrderList()
@@ -421,46 +547,48 @@ namespace weitongManager
             }
         }
 
-        private void calcAmountAndFavorableAmountProperty()
-        {
-            decimal amount = 0;
-            decimal favorableAmount = 0;
-            if (m_currentOrderDetailList == null) return;
-            foreach (OrderRowData item in m_currentOrderDetailList)
-            {
-                amount += item.KnockDownPrice * item.Units;
-                favorableAmount += item.FavorablePrice * item.Units;
-            }
+        //private void calcAmountAndFavorableAmountProperty()
+        //{
+        //    decimal amount = 0;
+        //    decimal favorableAmount = 0;
+        //    if (m_currentOrderDetailList == null) return;
+        //    foreach (OrderRowData item in m_currentOrderDetailList)
+        //    {
+        //        amount += item.KnockDownPrice * item.Units;
+        //        favorableAmount += item.FavorablePrice * item.Units;
+        //    }
 
-            m_currentOrderAmount = amount;
-            m_currentOrderFavorableAmount = favorableAmount;
-        }
+        //    m_currentOrderAmount = amount;
+        //    m_currentOrderFavorableAmount = favorableAmount;
+        //}
+
+
 
 
         // storage
 
 
-        // 将库存中相应酒的库存减少（如果为负数则为增加）。
-        private void necStorageUnits(string code, int nec = 1)
-        {
-            string updateStr = @"UPDATE storage SET units = units - @nec WHERE code = @code";
-            MySqlCommand updateCmd = new MySqlCommand();
-            updateCmd.CommandText = updateStr;
-            updateCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
-            updateCmd.Parameters.Add("@nec", MySqlDbType.Int32).Value = nec;
+        //// 将库存中相应酒的库存减少（如果为负数则为增加）。
+        //private void necStorageUnits(string code, int nec = 1)
+        //{
+        //    string updateStr = @"UPDATE storage SET units = units - @nec WHERE code = @code";
+        //    MySqlCommand updateCmd = new MySqlCommand();
+        //    updateCmd.CommandText = updateStr;
+        //    updateCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+        //    updateCmd.Parameters.Add("@nec", MySqlDbType.Int32).Value = nec;
 
-            updateCmd.Connection = ConnSingleton.Connection;
+        //    updateCmd.Connection = ConnSingleton.Connection;
 
-            try
-            {
-                updateCmd.Connection.Open();
-                updateCmd.ExecuteNonQuery();
-            }
-            finally
-            {
-                updateCmd.Connection.Close();
-            }
-        }
+        //    try
+        //    {
+        //        updateCmd.Connection.Open();
+        //        updateCmd.ExecuteNonQuery();
+        //    }
+        //    finally
+        //    {
+        //        updateCmd.Connection.Close();
+        //    }
+        //}
 
         private void reloadStorageInfo()
         {
@@ -516,49 +644,49 @@ namespace weitongManager
             m_cartDetailGrid.Refresh();
         }
 
-        private List<OrderRowData> getOrderDetailByOrderID(int orderID)
-        {
-            List<OrderRowData> detailList = null;
-            string qryStr = @"SELECT order_wines.id, order_wines.orderid, order_wines.code, order_wines.units, order_wines.knockdownprice, 
-                                    wines.description, storage.retailprice
-                              FROM order_wines INNER JOIN
-                                   wines ON order_wines.code = wines.code INNER JOIN
-                                   storage ON wines.code = storage.code
-                              WHERE order_wines.orderid=@orderid";
-            MySqlCommand qryCmd = new MySqlCommand();
-            qryCmd.Connection = m_storageAdapter.Connection;
-            qryCmd.CommandText = qryStr;
-            qryCmd.Parameters.Add("@orderid", MySqlDbType.Int32).Value = orderID;
-            try
-            {
-                qryCmd.Connection.Open();
-                MySqlDataReader reader = qryCmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    if (detailList == null) detailList = new List<OrderRowData>();
-                    OrderRowData aRow = new OrderRowData();
+//        private List<OrderRowData> getOrderDetailByOrderID(int orderID)
+//        {
+//            List<OrderRowData> detailList = null;
+//            string qryStr = @"SELECT order_wines.id, order_wines.orderid, order_wines.code, order_wines.units, order_wines.knockdownprice, 
+//                                    wines.description, storage.retailprice
+//                              FROM order_wines INNER JOIN
+//                                   wines ON order_wines.code = wines.code INNER JOIN
+//                                   storage ON wines.code = storage.code
+//                              WHERE order_wines.orderid=@orderid";
+//            MySqlCommand qryCmd = new MySqlCommand();
+//            qryCmd.Connection = m_storageAdapter.Connection;
+//            qryCmd.CommandText = qryStr;
+//            qryCmd.Parameters.Add("@orderid", MySqlDbType.Int32).Value = orderID;
+//            try
+//            {
+//                qryCmd.Connection.Open();
+//                MySqlDataReader reader = qryCmd.ExecuteReader();
+//                while (reader.Read())
+//                {
+//                    if (detailList == null) detailList = new List<OrderRowData>();
+//                    OrderRowData aRow = new OrderRowData();
                     
-                    aRow.Code = reader.GetString("code");
-                    aRow.Description = reader.GetString("description");
-                    decimal retailPrice = reader.GetDecimal("retailprice");
+//                    aRow.Code = reader.GetString("code");
+//                    aRow.Description = reader.GetString("description");
+//                    decimal retailPrice = reader.GetDecimal("retailprice");
                     
-                    aRow.KnockDownPrice = reader.GetDecimal("knockdownprice");
-                    aRow.FavorablePrice = retailPrice - aRow.KnockDownPrice;
-                    aRow.Units = reader.GetInt32("units");
+//                    aRow.KnockDownPrice = reader.GetDecimal("knockdownprice");
+//                    aRow.FavorablePrice = retailPrice - aRow.KnockDownPrice;
+//                    aRow.Units = reader.GetInt32("units");
 
-                    detailList.Add(aRow);
-                }
-            }
-            catch (Exception e)
-            {
-                string str = e.Message;
-            }
-            finally
-            {
-                qryCmd.Connection.Close();
-            }
-            return detailList;
-        }
+//                    detailList.Add(aRow);
+//                }
+//            }
+//            catch (Exception e)
+//            {
+//                string str = e.Message;
+//            }
+//            finally
+//            {
+//                qryCmd.Connection.Close();
+//            }
+//            return detailList;
+//        }
 
 
 

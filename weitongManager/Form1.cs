@@ -323,28 +323,38 @@ namespace weitongManager
         }
 
 
-        // 结算购物车
-        // 函数首先确定联系人信息，如果是新的联系人信息，则添加到客户表中(默认为最低等级会员)。
-        // 再生成订单信息，订单状态为未付款(当完成付款后，修改状态为完成)。
+        
+        /// <summary>
+        /// 结算购物车
+        /// 函数首先确定联系人信息，如果是新的联系人信息，则添加到客户表中(默认为等级1的会员)。
+        /// 再生成订单信息，订单状态为未付款(当完成付款后，修改状态为完成)。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_CalcOrder_Click(object sender, EventArgs e)
         {
             try
             {
                 if (checkCustomerValidtion())
                 {
-                    //Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
-                    //if (aCustomer == null)
-                    //{
-                    //    aCustomer = new Customer();
-                    //    assignCustomerInfo(aCustomer);
-                    //    m_salesMgr.addCustomer2DB(aCustomer);
-                    //}
-                    //if (m_salesMgr.CartCustomer == null || m_salesMgr.CartCustomer.Name != aCustomer.Name)
-                    //{
-                    //    m_salesMgr.CartCustomer = aCustomer;
-                    //}
                     doSaveCustomer();
-                    m_salesMgr.calcCart();
+                    Order newOrder = m_salesMgr.calcCart();
+                    if (m_salesMgr.CurrentOrder == null)
+                    {
+                        m_salesMgr.CurrentOrder = newOrder;
+                    }
+                    else
+                    {
+                        // 将新订单的信息付给现有订单
+                        Order curOrder = m_salesMgr.CurrentOrder;
+                        curOrder.copy(newOrder);
+                    }
+
+                    // 使能按钮
+                    btn_cancelOrder.Enabled = true;
+                    btn_CompleteOrder.Enabled = true;
+                    btn_continueOrder.Enabled = true;
+
                     jump2CurrentOrder();
                     showCurrentOrder();
                 }
@@ -420,13 +430,55 @@ namespace weitongManager
             cbox_membLevel_Show(aCustomer.MemberLevel);
         }
 
+
+        /// <summary>
+        /// 显示当前订单。
+        /// </summary>
         private void showCurrentOrder()
         {
             showOrderCustomer(m_salesMgr.CartCustomer);
             //m_salesMgr.bindCurrentOrder();
-            lbl_currentOrderAmount.Text = m_salesMgr.CurrentOrderAmount.ToString();
-            lbl_currentOrderFavorablePrice.Text = "0";
-            lbl_curOrderTotal.Text = m_salesMgr.CurrentOrderAmount.ToString();
+            //lbl_currentOrderAmount.Text = m_salesMgr.getCurrentOrderAmount().ToString();
+            //lbl_currentOrderFavorablePrice.Text = "0";
+            //lbl_curOrderTotal.Text = m_salesMgr.getCurrentOrderAmount().ToString();//m_salesMgr.CurrentOrderAmount.ToString();
+            
+            if (m_salesMgr.CurrentOrder == null)
+            {
+                btn_continueOrder.Enabled = false;
+                btn_CompleteOrder.Enabled = false;
+                btn_cancelOrder.Enabled = false;
+
+                lbl_currentOrderAmount.Text ="0";
+                lbl_currentOrderFavorablePrice.Text = "0";
+                lbl_curOrderTotal.Text = "0";
+            }
+            else
+            {
+                m_salesMgr.generateCurrentOrderDetails();
+                lbl_currentOrderAmount.Text = m_salesMgr.CurrentOrder.Amount.ToString();
+                lbl_currentOrderFavorablePrice.Text = "0";
+                lbl_curOrderTotal.Text = m_salesMgr.CurrentOrder.Amount.ToString();
+
+                enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
+            }
+
+            dgv_currentOrder.Refresh();
+        }
+
+        private void enableCurrentOrderBtnByState(OrderState state)
+        {
+            if (state == OrderState.FOR_PAY)
+            {
+                btn_continueOrder.Enabled = true;
+                btn_CompleteOrder.Enabled = true;
+                btn_cancelOrder.Enabled = true;
+            }
+            else
+            {
+                btn_continueOrder.Enabled = true;
+                btn_CompleteOrder.Enabled = false;
+                btn_cancelOrder.Enabled = false;
+            }
         }
 
         private void showOrderCustomer(Customer aCustomer)
@@ -451,11 +503,12 @@ namespace weitongManager
                 decimal change = Decimal.Parse(tBox_change.Text);
                 decimal recved = money - change;
                 if (recved == 0)
-                {                 
-                    DialogResult rst = MessageBox.Show("你确定订单免费么？","警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                {
+                    DialogResult rst = SelectionDlgShow("你确定订单免费么？");//, "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (rst == DialogResult.Cancel) return;
                 }
                 m_salesMgr.completeCurrentOrder(recved);
+                enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
                 m_salesMgr.updateOrderList();
                 jump2OrderList();
             }
@@ -478,21 +531,18 @@ namespace weitongManager
                 DataRowView curRow = dgv_orderList.CurrentRow.DataBoundItem as DataRowView;
                 weitongDataSet1.orderRow data = curRow.Row as weitongDataSet1.orderRow;
                 // 设置订单为当前的订单
-                int ret = m_salesMgr.setCurrentOrder(data.id);
-                if (ret == 0)
+                Order anOrder = Order.findByID(data.id);
+                if(anOrder != null)
                 {
-                    if ((OrderState)data.orderstate == OrderState.CANCEL)
-                    {
-                        btn_CompleteOrder.Enabled = false;
-                        btn_continueOrder.Enabled = false;
-                        btn_cancelOrder.Enabled = false;
-                    }
+                    m_salesMgr.CartCustomer = Customer.findByID(anOrder.CustomerID);
+                    m_salesMgr.CurrentOrder = anOrder;
+                    enableCurrentOrderBtnByState(anOrder.State);
                     showCurrentOrder();
                     jump2CurrentOrder();
                 }
                 else
                 {
-                    MessageBox.Show("指定的订单不存在，请于管理员联系！");
+                    WARNING("指定的订单不存在，请于管理员联系！");
                 }
             }
             catch (Exception ex)
@@ -522,19 +572,50 @@ namespace weitongManager
             try
             {
                 decimal money = Decimal.Parse(tBox_actualMoney.Text);
-                tBox_change.Text = (money - m_salesMgr.CurrentOrderAmount).ToString();
+                tBox_change.Text = (money - m_salesMgr.CurrentOrder.Amount).ToString();
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        // 继续购物，根据现有的订单信息生成购物车。
+        // 
+        /// <summary>
+        /// 继续购物响应函数。
+        /// 继续购物，根据现有的订单信息生成购物车。
+        /// 现有订单如果是待付款，则直接生成购物车；
+        /// 现有订单如果是已完成或者取消订单，则根据完成订单新生成待付款订单，再生成购物车.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_curOrderContinue_Click(object sender, EventArgs e)
         {
-            m_salesMgr.generateCartDetail();
-            showCustomerInfo(m_salesMgr.CartCustomer);
-            jump2CurrentCart();
+            try
+            {
+                Order newOrder = m_salesMgr.CurrentOrder;
+                if (m_salesMgr.CurrentOrder != null)
+                {
+                    if (m_salesMgr.CurrentOrder.State != OrderState.FOR_PAY)
+                    {
+                        newOrder = Order.NewOrder(m_salesMgr.CurrentOrder);
+
+                        //// 使能三个按钮
+                        //btn_CompleteOrder.Enabled = false;
+                        //btn_continueOrder.Enabled = false;
+                        //btn_cancelOrder.Enabled = false;
+                        enableCurrentOrderBtnByState(OrderState.FOR_PAY);
+                    }
+                    m_salesMgr.CartCustomer = Customer.findByID(newOrder.CustomerID);
+                    m_salesMgr.CurrentOrder = newOrder;
+                    m_salesMgr.generateCartDetail();
+                    showCustomerInfo(m_salesMgr.CartCustomer);
+                    jump2CurrentCart();
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         private void jump2CurrentCart()
@@ -591,7 +672,7 @@ namespace weitongManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show("出现异常：" + ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                WARNING("出现异常：" + ex.Message);//, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -619,8 +700,8 @@ namespace weitongManager
 
                 MemberLevel data = m_membLevelMgr.getMaxLevel(); //curRow.DataBoundItem as MemberLevel;
                 if (data == null) return;
-                if(DialogResult.OK == 
-                    MessageBox.Show("您确定删除级别" + data.Level.ToString() + "的信息么？","警告",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2))
+                if(DialogResult.OK ==
+                    SelectionDlgShow("您确定删除级别" + data.Level.ToString() + "的信息么？"))//, "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
                 {
                     m_membLevelMgr.remove(data);
                 }
@@ -1111,6 +1192,30 @@ namespace weitongManager
                     //{
                         m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByDescription(description);
                     //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tabCtrl_Order_Selected(object sender, TabControlEventArgs e)
+        {
+            try
+            {
+                if (e.TabPage.Name == "tabPg_Cart")
+                {
+                   // WARNING("tabPg_Cart");
+                }
+                else if (e.TabPage.Name == "tabPg_CurrentOrder")
+                {
+                    //WARNING("tabPg_CurrentOrder");
+                    showCurrentOrder();
+                }
+                else if (e.TabPage.Name == "tabPg_OrderList")
+                {
+                    showStatistics();
                 }
             }
             catch (Exception ex)

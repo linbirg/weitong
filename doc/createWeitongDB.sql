@@ -133,6 +133,7 @@ CREATE TABLE users(
 # 保留取消的订单便于做用户行为分析，或者顾客再次消费的时候可以将取消的单子重新下单即可。
 # amount为账单总金额
 # received为实收金额
+# userid 为销售订单的用户ID。
 DROP TABLE IF EXISTS orders;
 CREATE TABLE orders(
 	id INT UNIQUE NOT NULL AUTO_INCREMENT,
@@ -143,6 +144,7 @@ CREATE TABLE orders(
 	amount DECIMAL DEFAULT 0,
 	received DECIMAL DEFAULT 0,
 	FOREIGN KEY(customerid) REFERENCES customers(id),
+	FOREIGN KEY(userid) REFERENCES users(id),
 	PRIMARY KEY(id)
 )TYPE=INNODB;
 
