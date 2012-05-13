@@ -84,13 +84,15 @@ INSERT INTO memberlevel(memlevel,discount,levelname) VALUES(3,40,"银牌会员");
 INSERT INTO memberlevel(memlevel,discount,levelname) VALUES(4,20,"金牌会员");
 INSERT INTO memberlevel(memlevel,discount,levelname) VALUES(5,0,"超级VIP会员");
 
+# customerid应该是唯一的，客户和会员是一对一的关系。
+# memberid应该是4位的年份加上8位的会员编码。
 # member table
 # discount折扣为百分比
 DROP TABLE IF EXISTS member;
 CREATE TABLE member(
 	id INT UNIQUE NOT NULL AUTO_INCREMENT,
 	memberid CHAR(100) UNIQUE NOT NULL,
-	customerid INT NOT NULL,
+	customerid INT UNIQUE NOT NULL,
 	memlevel INT NOT NULL DEFAULT 1,
 	registerdate DATETIME,
 	discount INT DEFAULT 100,

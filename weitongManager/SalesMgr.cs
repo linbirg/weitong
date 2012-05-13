@@ -653,30 +653,38 @@ namespace weitongManager
 
         private void assignMember2Customer(Customer aCustomer)
         {
-            string insertStr = @"sp_insertmember";
-            MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            insertCmd.CommandText = insertStr;
-            insertCmd.Connection = m_storageAdapter.Connection;
-            insertCmd.CommandType = CommandType.StoredProcedure;
+            if (aCustomer == null) return;
+            Member member = Member.findByCustomer(aCustomer.ID);
+            if(member == null)
+                member = Member.NewMember();
 
-            insertCmd.Parameters.Add("?customerid", MySqlDbType.Int32).Value = aCustomer.ID;
-            insertCmd.Parameters.Add("?mem_id", MySqlDbType.VarChar).Direction = ParameterDirection.Output;
+            member.CustomerID = aCustomer.ID;
+            member.Level = aCustomer.MemberLevel;
+            member.save();
+            //string insertStr = @"sp_insertmember";
+            //MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
+            //insertCmd.CommandText = insertStr;
+            //insertCmd.Connection = m_storageAdapter.Connection;
+            //insertCmd.CommandType = CommandType.StoredProcedure;
 
-            try
-            {
-                insertCmd.Connection.Open();
-                insertCmd.ExecuteNonQuery();
+            //insertCmd.Parameters.Add("?customerid", MySqlDbType.Int32).Value = aCustomer.ID;
+            //insertCmd.Parameters.Add("?mem_id", MySqlDbType.VarChar).Direction = ParameterDirection.Output;
+
+            //try
+            //{
+            //    insertCmd.Connection.Open();
+            //    insertCmd.ExecuteNonQuery();
                 
-                string memberid = insertCmd.Parameters["?mem_id"].Value.ToString();
-            }
-            catch (Exception e)
-            {
-                string str = e.Message;
-            }
-            finally
-            {
-                insertCmd.Connection.Close();
-            }
+            //    string memberid = insertCmd.Parameters["?mem_id"].Value.ToString();
+            //}
+            //catch (Exception e)
+            //{
+            //    string str = e.Message;
+            //}
+            //finally
+            //{
+            //    insertCmd.Connection.Close();
+            //}
         }
 
         // 根据客户的折扣信息更新购物车中的折扣信息。

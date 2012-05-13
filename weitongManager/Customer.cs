@@ -157,7 +157,7 @@ namespace weitongManager
             string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
                 customers.birthday, customers.address, customers.email, 
                 member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
-                FROM customers INNER JOIN
+                FROM customers LEFT OUTER JOIN
                      member ON customers.id = member.customerid
                 WHERE customers.name like @name";
             MySqlCommand queryCmd = new MySqlCommand();
@@ -191,7 +191,7 @@ namespace weitongManager
             string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
                 customers.birthday, customers.address, customers.email, 
                 member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
-                FROM customers INNER JOIN
+                FROM customers LEFT OUTER JOIN
                      member ON customers.id = member.customerid
                 WHERE customers.phonenumber = @phonenumber";
             MySqlCommand queryCmd = new MySqlCommand();
@@ -347,9 +347,23 @@ namespace weitongManager
             aCustomer.RegisterDate = reader.GetDateTime("registedate");
             aCustomer.Sex = reader.GetInt32("sex");
 
-            aCustomer.MemberID = reader.GetString("memberid");
-            aCustomer.MemberLevel = reader.GetInt32("memlevel");
-            aCustomer.MemberDate = reader.GetDateTime("memberdate");
+            if (!reader.IsDBNull(9))
+            {
+                aCustomer.MemberID = reader.GetString("memberid");
+            }
+            if (!reader.IsDBNull(10))
+            {
+                aCustomer.MemberLevel = reader.GetInt32("memlevel");
+            }
+            else
+            {
+                aCustomer.MemberLevel = 1;
+            }
+            if (!reader.IsDBNull(11))
+            {
+                aCustomer.MemberDate = reader.GetDateTime("memberdate");
+            }
+            
 
             return aCustomer;
         }

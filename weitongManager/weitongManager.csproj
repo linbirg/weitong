@@ -73,6 +73,7 @@
     <Compile Include="FrmPrint.Designer.cs">
       <DependentUpon>FrmPrint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Member.cs" />
     <Compile Include="MemberLevel.cs" />
     <Compile Include="MembLevelMgr.cs" />
     <Compile Include="Order.cs" />
