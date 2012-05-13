@@ -247,6 +247,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tsmi_deleteCartDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -621,22 +622,24 @@
             // 
             this.ctms_cartDetail.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_cartAddUnits,
-            this.tsmi_cartNecUnits});
+            this.tsmi_cartNecUnits,
+            this.tsmi_deleteCartDetail});
             this.ctms_cartDetail.Name = "ctms_cartDetail";
-            this.ctms_cartDetail.Size = new System.Drawing.Size(99, 48);
+            this.ctms_cartDetail.Size = new System.Drawing.Size(153, 92);
             // 
             // tsmi_cartAddUnits
             // 
             this.tsmi_cartAddUnits.Name = "tsmi_cartAddUnits";
-            this.tsmi_cartAddUnits.Size = new System.Drawing.Size(98, 22);
+            this.tsmi_cartAddUnits.Size = new System.Drawing.Size(152, 22);
             this.tsmi_cartAddUnits.Text = "&A加";
             this.tsmi_cartAddUnits.Click += new System.EventHandler(this.tsmi_cartAddUnits_Click);
             // 
             // tsmi_cartNecUnits
             // 
             this.tsmi_cartNecUnits.Name = "tsmi_cartNecUnits";
-            this.tsmi_cartNecUnits.Size = new System.Drawing.Size(98, 22);
+            this.tsmi_cartNecUnits.Size = new System.Drawing.Size(152, 22);
             this.tsmi_cartNecUnits.Text = "&N减";
+            this.tsmi_cartNecUnits.Click += new System.EventHandler(this.tsmi_cartNecUnits_Click);
             // 
             // groupBox6
             // 
@@ -1356,6 +1359,7 @@
             this.dgv_storageInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storageInfo.Size = new System.Drawing.Size(1205, 214);
             this.dgv_storageInfo.TabIndex = 2;
+            this.dgv_storageInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_storageInfo_CellFormatting);
             // 
             // codeDGVStorageInfoTextBoxColumn
             // 
@@ -2177,6 +2181,13 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // tsmi_deleteCartDetail
+            // 
+            this.tsmi_deleteCartDetail.Name = "tsmi_deleteCartDetail";
+            this.tsmi_deleteCartDetail.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteCartDetail.Text = "&D删除";
+            this.tsmi_deleteCartDetail.Click += new System.EventHandler(this.tsmi_deleteCartDetail_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2443,6 +2454,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_deleteCartDetail;
     }
 }
 

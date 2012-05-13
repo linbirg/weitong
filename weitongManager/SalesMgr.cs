@@ -59,9 +59,9 @@ namespace weitongManager
             weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
             if (dataRow.units < 1)
             {
-                //throw ShortStorageException
-                // 库存为0则不能加入购物车。
-                return;
+                throw new ZeroStorageException();
+                // 库存为零则不能加入购物车。
+                //return;
             }
             int discount = 100;
             if (CartCustomer != null) discount = CartCustomer.Discount;
@@ -84,28 +84,76 @@ namespace weitongManager
             
         }
 
-        // 增加购物车中指定酒的数量
+        /// <summary>
+        /// 增加购物车中指定酒的数量，如果库存不足，则无法增加数量。
+        /// 如果购物车中的数量加上增加的数量units(units可能为负，即减去购物车的内容，加入库存)，则无法增加数量。
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="units">增加的数量，默认为1。</param>
         public void plusCartWineUnits(string code, int units = 1)
         {
             if (m_cartDetailList == null) return;
-            int i = 0;
-            for (; i < m_cartDetailList.Count; i++)
-            {
-                if (m_cartDetailList[i].Code == code) break;
-            }
 
-            if (i == m_cartDetailList.Count) return;       // 指定的酒不在购物车中。
-            m_cartDetailList[i].Units += units;            // 增加购物车中指定酒的数量
 
             // 减少内存中用于显示的库存信息，主要包括库存表和销售库存显示表。
-            DataRow[] dtRows = m_dataset.storage.Select("code ='"+ code + "'");
-            if (dtRows.Length > 0)
+            //DataTable bindedTable = m_storageInfoGrid.DataSource as DataTable;
+            //DataRow[] dtRows = bindedTable.Select("code ='" + code + "'");
+            weitongDataSet1.storageRow dataRow = findCodeInStorageInf(code);
+
+            if (dataRow != null)
             {
-                weitongDataSet1.storageRow dataRow = dtRows[0] as weitongDataSet1.storageRow;
-                dataRow.units -= units;
+                int i = 0;
+                for (; i < m_cartDetailList.Count; i++)
+                {
+                    if (m_cartDetailList[i].Code == code) break;
+                }
+
+                if (i == m_cartDetailList.Count) return;       // 指定的酒不在购物车中。
+
+                // 
+                if ((dataRow.units - units >= 0))
+                {
+                    if ((m_cartDetailList[i].Units + units > 0))
+                    {
+                        dataRow.units -= units;
+                        m_cartDetailList[i].Units += units;            // 增加购物车中指定酒的数量
+                    }
+                    else
+                    {
+                        // 购物车里数量不足
+                        throw new ZeroCartException();
+                    }
+                }
+                else
+                {
+                    // 库存不足
+                    throw new ZeroStorageException("库存不足！");
+                }
+            }
+            else
+            {
+                return;   // 如果指定code的酒不存在，直接退出。
+            }
+        }
+
+        /// <summary>
+        /// 删除购物车中指定行的数据。
+        /// 函数首先修改对应的库存信息，然后再删除。
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        public void deleteCartDetailRow(int rowIndex)
+        {
+            DataGridViewRow row = m_cartDetailGrid.Rows[rowIndex];
+            CartDetailRowData data = row.DataBoundItem as CartDetailRowData;
+            // 增加内存中用于显示的库存信息，主要包括库存表和销售库存显示表。
+            //DataRow[] dtRows = m_dataset.storage.Select("code ='" + data.Code + "'");
+            weitongDataSet1.storageRow dataRow = findCodeInStorageInf(data.Code);
+            if (dataRow != null)
+            {
+                dataRow.units += data.Units;
             }
 
-            // 更新显示界面
+            m_cartDetailList.Remove(data);
             m_cartDetailGrid.Refresh();
         }
 
@@ -643,6 +691,81 @@ namespace weitongManager
             }
             m_cartDetailGrid.Refresh();
         }
+
+        ///// <summary>
+        ///// 减少内存中的酒的数量
+        ///// </summary>
+        ///// <param name="code"></param>
+        ///// <param name="units">减少的数量（units为负表示增加）</param>
+        //private void necStorgeUnits(string code, int units = 1)
+        //{
+        //    DataRow[] dtRows = m_dataset.storage.Select("code ='" + code + "'");
+        //    if (dtRows.Length > 0)
+        //    {
+        //        weitongDataSet1.storageRow dataRow = dtRows[0] as weitongDataSet1.storageRow;
+        //        if (dataRow.units - units >= 0)
+        //        {
+        //            dataRow.units -= units;
+        //        }
+        //        else
+        //        {
+        //            throw new ZeroStorageException();
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 增加购物车中酒的数量
+        ///// </summary>
+        ///// <param name="code"></param>
+        ///// <param name="units">待增加的酒的数量（如果为负值表示减少）</param>
+        //private void plusCartUnits(string code, int units = 1)
+        //{
+        //    CartDetailRowData data = findCodeInCartDetails(code);
+        //    if (data == null) return;
+        //    if (data.Units + units > 0)
+        //    {
+        //        data.Units += units;
+        //    }
+        //    else
+        //    {
+        //        throw new ZeroCartException();
+        //    }
+        //}
+
+        /// <summary>
+        /// 在m_cartDetailList中查找code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        private CartDetailRowData findCodeInCartDetails(string code)
+        {
+            if (code == null || code == "") return null;
+
+            int i = 0;
+            for (; i < m_cartDetailList.Count; i++)
+            {
+                if (m_cartDetailList[i].Code == code) break;
+            }
+
+            if (i == m_cartDetailList.Count) return null;       // 指定的酒不在购物车中。
+
+            return m_cartDetailList[i];
+        }
+
+        private weitongDataSet1.storageRow findCodeInStorageInf(string code)
+        {
+            DataTable bindedTable = m_storageInfoGrid.DataSource as DataTable;
+            DataRow[] dtRows = bindedTable.Select("code ='" + code + "'");
+            if (dtRows.Length > 0)
+            {
+                weitongDataSet1.storageRow dataRow = dtRows[0] as weitongDataSet1.storageRow;
+                return dataRow;
+            }
+            else return null;
+        }
+
+
 
 //        private List<OrderRowData> getOrderDetailByOrderID(int orderID)
 //        {

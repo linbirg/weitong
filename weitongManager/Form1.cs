@@ -294,7 +294,14 @@ namespace weitongManager
 
         private void tsmi_addToCart_Click(object sender, EventArgs e)
         {
-            m_salesMgr.addCurrentStorage2Cart();
+            try
+            {
+                m_salesMgr.addCurrentStorage2Cart();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         private void assignCustomerInfo(Customer customer)
@@ -653,6 +660,29 @@ namespace weitongManager
                 CartDetailRowData curRow = dgv_cartDetail.CurrentRow.DataBoundItem as CartDetailRowData;
 
                 m_salesMgr.plusCartWineUnits(curRow.Code);
+                dgv_cartDetail.Refresh();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tsmi_cartNecUnits_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgv_cartDetail.CurrentRow == null) return;
+                CartDetailRowData curRow = dgv_cartDetail.CurrentRow.DataBoundItem as CartDetailRowData;
+                m_salesMgr.plusCartWineUnits(curRow.Code, -1);
+                dgv_cartDetail.Refresh();
+            }
+            catch (ZeroCartException ex)
+            {
+                if (DialogResult.Yes == SelectionDlgShow("酒的数量为零，是否从购物车中删除？"))
+                {
+                    m_salesMgr.deleteCartDetailRow(dgv_cartDetail.CurrentRow.Index);
+                }
             }
             catch (Exception ex)
             {
@@ -1223,6 +1253,70 @@ namespace weitongManager
                 WARNING(ex.Message);
             }
         }
+
+        private void dgv_storageInfo_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+                if (dgv_storageInfo.Columns[e.ColumnIndex].Name == "unitsDGVStorageInfoTextBoxColumn")
+                {
+                    int units = 1;
+                    units = (int)e.Value;
+                    Color backColor = dgv_storageInfo.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor;
+                    //Color selectionBackColor = dgv_storageInfo.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor;
+                    if (units <= 0)
+                    {
+                        backColor = Color.Yellow;
+                        //selectionBackColor = Color.Yellow;
+                    }
+                    
+                    dgv_storageInfo.Rows[e.RowIndex].DefaultCellStyle.BackColor = backColor;
+                    //dgv_storageInfo.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = selectionBackColor;
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tsmi_deleteCartDetail_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (DialogResult.Yes == SelectionDlgShow("你确定要从购物车中删除吗？"))
+                {
+                    m_salesMgr.deleteCartDetailRow(dgv_cartDetail.CurrentRow.Index);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        //private void dgv_cartDetail_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    try
+        //    {
+        //        //WARNING("column:" + e.ColumnIndex + " row:" + e.RowIndex);
+        //        if (dgv_cartDetail.Columns[e.ColumnIndex].Name == "unitsDGVOrderDetailTextBoxColumn")
+        //        {
+        //            int units = (int)dgv_cartDetail.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+        //            if ( units == 0)
+        //            {
+        //                if (DialogResult.Yes == SelectionDlgShow("该酒的数量为零，您确定将该酒从购物车中移除么？"))
+        //                {
+        //                    m_salesMgr.deleteCartDetailRow(e.RowIndex);                            
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        WARNING(ex.Message);
+        //    }
+        //}
 
         
         
