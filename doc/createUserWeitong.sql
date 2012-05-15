@@ -1,0 +1,1 @@
+GRANT ALL PRIVILEGES ON weitong.* TO 'weitong'@'localhost' IDENTIFIED BY 'weitong' WITH GRANT OPTION;

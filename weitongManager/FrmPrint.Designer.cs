@@ -518,6 +518,7 @@
             this.Controls.Add(this.lbl_orderTime);
             this.Controls.Add(this.lbl_orderDate);
             this.Controls.Add(this.lbl_Logo);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmPrint";
             this.Text = "FrmPrint";
             this.Load += new System.EventHandler(this.FrmPrint_Load);

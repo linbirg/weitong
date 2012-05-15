@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>20120514072612816_easyicon_cn_48.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -173,6 +176,9 @@
     <None Include="weitongDataSet2.xss">
       <DependentUpon>weitongDataSet2.xsd</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="20120514072612816_easyicon_cn_48.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

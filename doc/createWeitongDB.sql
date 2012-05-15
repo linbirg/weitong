@@ -113,20 +113,39 @@ BEGIN
 END//
 delimiter ;
 
-# users table
-# 用户分为几个级别，分别具有不同的权限。0级最高，具有所以权限
-# 销售人员有一点的打折权限
-# 管理人员具有设置销售人员权限等权限
+
+DROP TABLE IF EXISTS roles;
+CREATE TABLE roles(
+	id INT UNIQUE NOT NULL AUTO_INCREMENT,
+	name CHAR(50) NOT NULL,
+	discount int DEFAULT 100,
+	PRIMARY KEY(id)
+)TYPE=INNODB;
+
+# 角色分系统管理员，经理，销售人员和客户等几种。
+INSERT INTO roles(name) VALUES("administrator");
+INSERT INTO roles(name) VALUES("manager");
+INSERT INTO roles(name) VALUES("saler");
+INSERT INTO roles(name) VALUES("customer");
+
+# 用户表
 DROP TABLE IF EXISTS users;
 CREATE TABLE users(
 	id INT UNIQUE NOT NULL AUTO_INCREMENT,
-	name CHAR(100) UNIQUE NOT NULL,
-	email TEXT,
+	user_name CHAR(255) NOT NULL UNIQUE,
 	passwd TEXT NOT NULL,
-	usertype int NOT NULL,
-	userlevel int NOT NULL,
-	PRIMARY KEY(id)
+	salt TEXT,
+	alias_name TEXT,
+	email TEXT,
+	reg_date DATETIME,
+	role_id INT NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(role_id) REFERENCES roles(id)
 )TYPE=INNODB;
+
+INSERT INTO users(user_name,passwd,salt,alias_name,reg_date,role_id) VALUES('admin',SHA('adminxxbucunzai'),'xxbucunzai','王嘉梁',NOW(),1);
+INSERT INTO users(user_name,passwd,salt,alias_name,reg_date,role_id) VALUES('wentong',SHA('wentongxxbucunzai'),'xxbucunzai','吴文通',NOW(),3);
+
 
 # 销售相关表
 # orders table
@@ -166,37 +185,6 @@ CREATE TABLE order_wines(
 	FOREIGN KEY(code) REFERENCES wines(code)
 )TYPE=INNODB;
 
-DROP TABLE IF EXISTS roles;
-CREATE TABLE roles(
-	id INT UNIQUE NOT NULL AUTO_INCREMENT,
-	name CHAR(50) NOT NULL,
-	discount int DEFAULT 100,
-	PRIMARY KEY(id)
-)TYPE=INNODB;
-
-# 角色分系统管理员，经理，销售人员和客户等几种。
-INSERT INTO roles(name) VALUES("administrator");
-INSERT INTO roles(name) VALUES("manager");
-INSERT INTO roles(name) VALUES("saler");
-INSERT INTO roles(name) VALUES("customer");
-
-# 用户表
-DROP TABLE IF EXISTS users;
-CREATE TABLE users(
-	id INT UNIQUE NOT NULL AUTO_INCREMENT,
-	user_name CHAR(255) NOT NULL UNIQUE,
-	passwd TEXT NOT NULL,
-	salt TEXT,
-	alias_name TEXT,
-	email TEXT,
-	reg_date DATETIME,
-	role_id INT NOT NULL,
-	PRIMARY KEY(id),
-	FOREIGN KEY(role_id) REFERENCES roles(id)
-)TYPE=INNODB;
-
-INSERT INTO users(user_name,passwd,salt,alias_name,reg_date,role_id) VALUES('admin',SHA('adminxxbucunzai'),'xxbucunzai','王嘉梁',NOW(),1);
-INSERT INTO users(user_name,passwd,salt,alias_name,reg_date,role_id) VALUES('wentong',SHA('wentongxxbucunzai'),'xxbucunzai','吴文通',NOW(),3);
 
 
 

@@ -42,6 +42,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -80,6 +81,7 @@
             this.ctms_cartDetail = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_cartAddUnits = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_cartNecUnits = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_deleteCartDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.cbox_membLevel = new System.Windows.Forms.ComboBox();
             this.btn_saveCustomer = new System.Windows.Forms.Button();
@@ -247,7 +249,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tsmi_deleteCartDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -640,6 +641,13 @@
             this.tsmi_cartNecUnits.Size = new System.Drawing.Size(152, 22);
             this.tsmi_cartNecUnits.Text = "&N减";
             this.tsmi_cartNecUnits.Click += new System.EventHandler(this.tsmi_cartNecUnits_Click);
+            // 
+            // tsmi_deleteCartDetail
+            // 
+            this.tsmi_deleteCartDetail.Name = "tsmi_deleteCartDetail";
+            this.tsmi_deleteCartDetail.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteCartDetail.Text = "&D删除";
+            this.tsmi_deleteCartDetail.Click += new System.EventHandler(this.tsmi_deleteCartDetail_Click);
             // 
             // groupBox6
             // 
@@ -2181,13 +2189,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tsmi_deleteCartDetail
-            // 
-            this.tsmi_deleteCartDetail.Name = "tsmi_deleteCartDetail";
-            this.tsmi_deleteCartDetail.Size = new System.Drawing.Size(152, 22);
-            this.tsmi_deleteCartDetail.Text = "&D删除";
-            this.tsmi_deleteCartDetail.Click += new System.EventHandler(this.tsmi_deleteCartDetail_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2196,6 +2197,7 @@
             this.ClientSize = new System.Drawing.Size(1261, 747);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.Text = "微通红酒销售管理1.0";
             this.TransparencyKey = System.Drawing.Color.LightGray;
