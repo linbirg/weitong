@@ -1192,6 +1192,10 @@ namespace weitongManager
                             table.ImportRow(row);
                             m_wineStorageMgr.WineStorageGridView.DataSource = table;
                         }
+                        else
+                        {
+                            WARNING("未找到酒的信息！");
+                        }
                     }
                     else
                     {
@@ -1287,6 +1291,29 @@ namespace weitongManager
                 if (DialogResult.Yes == SelectionDlgShow("你确定要从购物车中删除吗？"))
                 {
                     m_salesMgr.deleteCartDetailRow(dgv_cartDetail.CurrentRow.Index);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void FrmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                // F1快捷键，设置code为焦点（便于输入code查找）
+                if (e.KeyCode == Keys.F1)
+                {
+                    if (tab_mainControl.SelectedTab.Name == "tabPage_sale")
+                    {
+                        tBox_salesWineCode.Focus();
+                    }
+                    else if (tab_mainControl.SelectedTab.Name == "tabPage_storage")
+                    {
+                        tBox_code.Focus();
+                    }
                 }
             }
             catch (Exception ex)

@@ -43,8 +43,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tab_mainControl = new System.Windows.Forms.TabControl();
+            this.tabPage_sale = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btn_ListStorageInfo = new System.Windows.Forms.Button();
             this.btn_SearchStorageInfo = new System.Windows.Forms.Button();
@@ -168,7 +168,7 @@
             this.countryDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_storageInfo = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_addToCart = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage_storage = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btn_seachStorage = new System.Windows.Forms.Button();
             this.tBox_supplier = new System.Windows.Forms.TextBox();
@@ -249,8 +249,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tab_mainControl.SuspendLayout();
+            this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tabCtrl_Order.SuspendLayout();
             this.tabPg_Cart.SuspendLayout();
@@ -267,7 +267,7 @@
             this.ctms_orderList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).BeginInit();
             this.ctms_storageInfo.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabPage_storage.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).BeginInit();
             this.ctms_storage.SuspendLayout();
@@ -284,29 +284,29 @@
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tab_mainControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tp_supplier);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1240, 723);
-            this.tabControl1.TabIndex = 0;
+            this.tab_mainControl.Controls.Add(this.tabPage_sale);
+            this.tab_mainControl.Controls.Add(this.tabPage_storage);
+            this.tab_mainControl.Controls.Add(this.tp_supplier);
+            this.tab_mainControl.Location = new System.Drawing.Point(12, 12);
+            this.tab_mainControl.Name = "tab_mainControl";
+            this.tab_mainControl.SelectedIndex = 0;
+            this.tab_mainControl.Size = new System.Drawing.Size(1240, 723);
+            this.tab_mainControl.TabIndex = 0;
             // 
-            // tabPage1
+            // tabPage_sale
             // 
-            this.tabPage1.Controls.Add(this.groupBox7);
-            this.tabPage1.Controls.Add(this.tabCtrl_Order);
-            this.tabPage1.Controls.Add(this.dgv_storageInfo);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1232, 697);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "销售";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage_sale.Controls.Add(this.groupBox7);
+            this.tabPage_sale.Controls.Add(this.tabCtrl_Order);
+            this.tabPage_sale.Controls.Add(this.dgv_storageInfo);
+            this.tabPage_sale.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_sale.Name = "tabPage_sale";
+            this.tabPage_sale.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_sale.Size = new System.Drawing.Size(1232, 697);
+            this.tabPage_sale.TabIndex = 0;
+            this.tabPage_sale.Text = "销售";
+            this.tabPage_sale.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
@@ -626,26 +626,26 @@
             this.tsmi_cartNecUnits,
             this.tsmi_deleteCartDetail});
             this.ctms_cartDetail.Name = "ctms_cartDetail";
-            this.ctms_cartDetail.Size = new System.Drawing.Size(153, 92);
+            this.ctms_cartDetail.Size = new System.Drawing.Size(110, 70);
             // 
             // tsmi_cartAddUnits
             // 
             this.tsmi_cartAddUnits.Name = "tsmi_cartAddUnits";
-            this.tsmi_cartAddUnits.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_cartAddUnits.Size = new System.Drawing.Size(109, 22);
             this.tsmi_cartAddUnits.Text = "&A加";
             this.tsmi_cartAddUnits.Click += new System.EventHandler(this.tsmi_cartAddUnits_Click);
             // 
             // tsmi_cartNecUnits
             // 
             this.tsmi_cartNecUnits.Name = "tsmi_cartNecUnits";
-            this.tsmi_cartNecUnits.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_cartNecUnits.Size = new System.Drawing.Size(109, 22);
             this.tsmi_cartNecUnits.Text = "&N减";
             this.tsmi_cartNecUnits.Click += new System.EventHandler(this.tsmi_cartNecUnits_Click);
             // 
             // tsmi_deleteCartDetail
             // 
             this.tsmi_deleteCartDetail.Name = "tsmi_deleteCartDetail";
-            this.tsmi_deleteCartDetail.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteCartDetail.Size = new System.Drawing.Size(109, 22);
             this.tsmi_deleteCartDetail.Text = "&D删除";
             this.tsmi_deleteCartDetail.Click += new System.EventHandler(this.tsmi_deleteCartDetail_Click);
             // 
@@ -1455,17 +1455,17 @@
             this.tsmi_addToCart.Text = "&B加入购物车";
             this.tsmi_addToCart.Click += new System.EventHandler(this.tsmi_addToCart_Click);
             // 
-            // tabPage2
+            // tabPage_storage
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage2.Controls.Add(this.groupBox5);
-            this.tabPage2.Controls.Add(this.dgv_storage);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1232, 697);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "库存";
+            this.tabPage_storage.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage_storage.Controls.Add(this.groupBox5);
+            this.tabPage_storage.Controls.Add(this.dgv_storage);
+            this.tabPage_storage.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_storage.Name = "tabPage_storage";
+            this.tabPage_storage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_storage.Size = new System.Drawing.Size(1232, 697);
+            this.tabPage_storage.TabIndex = 1;
+            this.tabPage_storage.Text = "库存";
             // 
             // groupBox5
             // 
@@ -1590,9 +1590,8 @@
             // tBox_description
             // 
             this.tBox_description.Location = new System.Drawing.Point(233, 15);
-            this.tBox_description.Multiline = true;
             this.tBox_description.Name = "tBox_description";
-            this.tBox_description.Size = new System.Drawing.Size(203, 22);
+            this.tBox_description.Size = new System.Drawing.Size(203, 21);
             this.tBox_description.TabIndex = 17;
             this.tBox_description.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_description_KeyPress);
             // 
@@ -2196,14 +2195,16 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1261, 747);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tab_mainControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "FrmMain";
             this.Text = "微通红酒销售管理1.0";
             this.TransparencyKey = System.Drawing.Color.LightGray;
             this.Load += new System.EventHandler(this.FrmMain_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyUp);
+            this.tab_mainControl.ResumeLayout(false);
+            this.tabPage_sale.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.tabCtrl_Order.ResumeLayout(false);
@@ -2226,7 +2227,7 @@
             this.ctms_orderList.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).EndInit();
             this.ctms_storageInfo.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.tabPage_storage.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).EndInit();
@@ -2251,9 +2252,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl tab_mainControl;
+        private System.Windows.Forms.TabPage tabPage_sale;
+        private System.Windows.Forms.TabPage tabPage_storage;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox tBox_chateau;
         private System.Windows.Forms.Label label2;

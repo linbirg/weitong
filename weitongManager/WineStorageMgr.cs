@@ -51,8 +51,10 @@ namespace weitongManager
                 insertStorage(code, supplierID, price, retailprice, units);
             }
             
-            m_dataset.storage.AcceptChanges();
+            //m_dataset.storage.AcceptChanges();
+            m_dataAdapter.ClearBeforeFill = true;
             m_dataAdapter.Fill(m_dataset.storage);
+            
         }
 
         // 删除storage表中的相关记录
@@ -61,15 +63,13 @@ namespace weitongManager
         {
             DataRowView dataRowView = m_wineStorageGrid.CurrentRow.DataBoundItem as DataRowView;
             weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
-            try
-            {
-                deleteStorageRow(dataRow.id);
-                m_dataset.AcceptChanges();
-                m_dataAdapter.Fill(m_dataset.storage);
-            }
-            catch (Exception e)
-            {
-            }
+            
+            deleteStorageRow(dataRow.id);
+            //m_dataset.AcceptChanges();
+            m_dataAdapter.ClearBeforeFill = true;
+            m_dataAdapter.Fill(m_dataset.storage);
+
+            m_wineStorageGrid.Refresh();
         }
 
 //        // 根据编码查找库存信息
