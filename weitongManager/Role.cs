@@ -12,6 +12,9 @@ namespace weitongManager
         private string m_name;
         private int m_discount;
 
+        // 作为role的缓存
+        private static Dictionary<int, string> parirs = null;
+
         public string Name
         {
             get { return m_name; }
@@ -104,6 +107,13 @@ namespace weitongManager
             return aRole;
         }
 
+        public static string GetName(int role_id)
+        {
+            loadPairs();
+
+            return parirs[role_id];
+        }
+
 
         // ====================私有静态方法======================
         // 将role的插入到数据库，函数返回新插入的role的id。
@@ -158,6 +168,24 @@ namespace weitongManager
             finally
             {
                 updateCmd.Connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// 从数据库中加载角色信息。如果parirs不为null，则说明内存已有数据，直接返回。
+        /// </summary>
+        private static void loadPairs()
+        {
+            if (parirs == null)
+            {
+                parirs = new Dictionary<int, string>();
+                List<Role> lists = loadData();
+                if (lists == null) return;
+
+                foreach (Role role in lists)
+                {
+                    parirs.Add(role.m_id, role.m_name);
+                }
             }
         }
     }

@@ -93,6 +93,7 @@
     <Compile Include="Supplier.cs" />
     <Compile Include="supplierMgr.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserMgr.cs" />
     <Compile Include="weitongDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

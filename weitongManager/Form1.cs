@@ -17,6 +17,7 @@ namespace weitongManager
         private MembLevelMgr m_membLevelMgr = null;
         private User m_currentUser = null;
         private RolesMgr m_rolesMgr = null;
+        private UserMgr m_userMgr = null;
 
 
         public FrmMain()
@@ -82,6 +83,11 @@ namespace weitongManager
 
                 // 加载统计信息
                 showStatistics();
+
+                // 加载用户信息
+                m_userMgr = new UserMgr();
+                m_userMgr.UserGridView = dgv_Users;
+                m_userMgr.init();
             }
             catch (Exception ex)
             {
@@ -1322,28 +1328,28 @@ namespace weitongManager
             }
         }
 
-        //private void dgv_cartDetail_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    try
-        //    {
-        //        //WARNING("column:" + e.ColumnIndex + " row:" + e.RowIndex);
-        //        if (dgv_cartDetail.Columns[e.ColumnIndex].Name == "unitsDGVOrderDetailTextBoxColumn")
-        //        {
-        //            int units = (int)dgv_cartDetail.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-        //            if ( units == 0)
-        //            {
-        //                if (DialogResult.Yes == SelectionDlgShow("该酒的数量为零，您确定将该酒从购物车中移除么？"))
-        //                {
-        //                    m_salesMgr.deleteCartDetailRow(e.RowIndex);                            
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        WARNING(ex.Message);
-        //    }
-        //}
+        private void dgv_Users_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+                if (e.ColumnIndex == 2)
+                {
+                    int role_id = (int)e.Value;
+                    //long ticks = DateTime.Now.Ticks;
+                    // 如果通过查找id的方式，每次都查数据库，第一次大概40000*100ns（4毫秒）,以后基本稳定在10000*100ns（1毫秒）
+                    // 1毫秒=1000微妙
+                    // 1微妙=1000毫微秒（ns）
+                    // 
+                    e.Value = Role.GetName(role_id);    
+                    //ticks = DateTime.Now.Ticks - ticks;
+                    //WARNING(ticks.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
 
         
         

@@ -67,13 +67,67 @@ namespace weitongManager
             }
         }
 
+        //======================公有方法==========================
         public bool isAdministrator()
         {
             Role role = Role.findByID(this.m_roleid);
             return role.Name == "administrator";
         }
 
+        //=====================私有方法==========================
+        /// <summary>
+        /// 声明私有的构造函数
+        /// </summary>
+        private User() { }
+
         //====================================公有静态方法=============================
+        /// <summary>
+        /// 从数据库中加载所有的用户信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<User> loadData()
+        {
+            List<User> list = null;
+            string qryStr = @"SELECT id, user_name,passwd,salt,alias_name,email,reg_date,role_id
+                               FROM users";
+
+            MySqlCommand qryCmd = new MySqlCommand();
+            qryCmd.CommandText = qryStr;
+            qryCmd.Connection = ConnSingleton.Connection;
+
+            try
+            {
+                qryCmd.Connection.Open();
+                MySqlDataReader reader = qryCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (list == null) list = new List<User>();
+                    User aUser = new User();
+                    aUser.m_id = reader.GetInt32("id");
+                    aUser.Name = reader.GetString("user_name");
+                    aUser.m_hashedpassword = reader.GetString("passwd");
+                    aUser.m_salt = reader.IsDBNull(3) ? "" : reader.GetString("salt");
+                    aUser.m_alias = reader.IsDBNull(4) ? "" : reader.GetString("alias_name");
+                    aUser.Email = reader.IsDBNull(5) ? "" : reader.GetString("email");
+                    if (!reader.IsDBNull(6)) aUser.m_regDate = reader.GetDateTime("reg_date");
+                    aUser.m_roleid = reader.GetInt32("role_id");
+
+                    list.Add(aUser);
+                }
+            }
+            finally
+            {
+                qryCmd.Connection.Close();
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 验证用户名密码是否正确
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="passwd"></param>
+        /// <returns></returns>
         public static bool authenticate(string name,string passwd)
         {
             User aUser = find_by_name(name);

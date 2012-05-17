@@ -215,6 +215,12 @@
             this.ctms_storage = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_deleteStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_supplier = new System.Windows.Forms.TabPage();
+            this.dgv_Users = new System.Windows.Forms.DataGridView();
+            this.userGridNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userGridAliasNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userGridRoleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userGridEmailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userGridRegDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_roles = new System.Windows.Forms.DataGridView();
             this.roleNameTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.roleDiscountTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -272,6 +278,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).BeginInit();
             this.ctms_storage.SuspendLayout();
             this.tp_supplier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Users)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).BeginInit();
             this.ctms_MembLevel.SuspendLayout();
@@ -1876,6 +1883,7 @@
             // 
             // tp_supplier
             // 
+            this.tp_supplier.Controls.Add(this.dgv_Users);
             this.tp_supplier.Controls.Add(this.dgv_roles);
             this.tp_supplier.Controls.Add(this.dgv_memberLevel);
             this.tp_supplier.Controls.Add(this.dgv_supplier);
@@ -1886,6 +1894,62 @@
             this.tp_supplier.TabIndex = 2;
             this.tp_supplier.Text = "供货商管理";
             this.tp_supplier.UseVisualStyleBackColor = true;
+            // 
+            // dgv_Users
+            // 
+            this.dgv_Users.AllowUserToAddRows = false;
+            this.dgv_Users.AllowUserToDeleteRows = false;
+            this.dgv_Users.AllowUserToResizeColumns = false;
+            this.dgv_Users.AllowUserToResizeRows = false;
+            this.dgv_Users.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgv_Users.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Users.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.userGridNameColumn,
+            this.userGridAliasNameColumn,
+            this.userGridRoleColumn,
+            this.userGridEmailColumn,
+            this.userGridRegDateColumn});
+            this.dgv_Users.Location = new System.Drawing.Point(4, 236);
+            this.dgv_Users.MultiSelect = false;
+            this.dgv_Users.Name = "dgv_Users";
+            this.dgv_Users.ReadOnly = true;
+            this.dgv_Users.RowHeadersVisible = false;
+            this.dgv_Users.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_Users.RowTemplate.Height = 23;
+            this.dgv_Users.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_Users.Size = new System.Drawing.Size(506, 222);
+            this.dgv_Users.TabIndex = 5;
+            this.dgv_Users.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_Users_CellFormatting);
+            // 
+            // userGridNameColumn
+            // 
+            this.userGridNameColumn.HeaderText = "用户名";
+            this.userGridNameColumn.Name = "userGridNameColumn";
+            this.userGridNameColumn.ReadOnly = true;
+            // 
+            // userGridAliasNameColumn
+            // 
+            this.userGridAliasNameColumn.HeaderText = "真实姓名";
+            this.userGridAliasNameColumn.Name = "userGridAliasNameColumn";
+            this.userGridAliasNameColumn.ReadOnly = true;
+            // 
+            // userGridRoleColumn
+            // 
+            this.userGridRoleColumn.HeaderText = "角色";
+            this.userGridRoleColumn.Name = "userGridRoleColumn";
+            this.userGridRoleColumn.ReadOnly = true;
+            // 
+            // userGridEmailColumn
+            // 
+            this.userGridEmailColumn.HeaderText = "Email";
+            this.userGridEmailColumn.Name = "userGridEmailColumn";
+            this.userGridEmailColumn.ReadOnly = true;
+            // 
+            // userGridRegDateColumn
+            // 
+            this.userGridRegDateColumn.HeaderText = "日期";
+            this.userGridRegDateColumn.Name = "userGridRegDateColumn";
+            this.userGridRegDateColumn.ReadOnly = true;
             // 
             // dgv_roles
             // 
@@ -2233,6 +2297,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).EndInit();
             this.ctms_storage.ResumeLayout(false);
             this.tp_supplier.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Users)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).EndInit();
             this.ctms_MembLevel.ResumeLayout(false);
@@ -2458,6 +2523,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem tsmi_deleteCartDetail;
+        private System.Windows.Forms.DataGridView dgv_Users;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userGridNameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userGridAliasNameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userGridRoleColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userGridEmailColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userGridRegDateColumn;
     }
 }
 
