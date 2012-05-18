@@ -221,6 +221,10 @@
             this.userGridRoleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userGridEmailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userGridRegDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ctms_users = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_addUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_deleteUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_editUser = new System.Windows.Forms.ToolStripMenuItem();
             this.dgv_roles = new System.Windows.Forms.DataGridView();
             this.roleNameTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.roleDiscountTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -279,6 +283,7 @@
             this.ctms_storage.SuspendLayout();
             this.tp_supplier.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Users)).BeginInit();
+            this.ctms_users.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).BeginInit();
             this.ctms_MembLevel.SuspendLayout();
@@ -1909,6 +1914,7 @@
             this.userGridRoleColumn,
             this.userGridEmailColumn,
             this.userGridRegDateColumn});
+            this.dgv_Users.ContextMenuStrip = this.ctms_users;
             this.dgv_Users.Location = new System.Drawing.Point(4, 236);
             this.dgv_Users.MultiSelect = false;
             this.dgv_Users.Name = "dgv_Users";
@@ -1950,6 +1956,36 @@
             this.userGridRegDateColumn.HeaderText = "日期";
             this.userGridRegDateColumn.Name = "userGridRegDateColumn";
             this.userGridRegDateColumn.ReadOnly = true;
+            // 
+            // ctms_users
+            // 
+            this.ctms_users.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_addUser,
+            this.tsmi_deleteUser,
+            this.tsmi_editUser});
+            this.ctms_users.Name = "ctms_users";
+            this.ctms_users.Size = new System.Drawing.Size(153, 92);
+            // 
+            // tsmi_addUser
+            // 
+            this.tsmi_addUser.Name = "tsmi_addUser";
+            this.tsmi_addUser.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_addUser.Text = "&A添加";
+            this.tsmi_addUser.Click += new System.EventHandler(this.tsmi_addUser_Click);
+            // 
+            // tsmi_deleteUser
+            // 
+            this.tsmi_deleteUser.Name = "tsmi_deleteUser";
+            this.tsmi_deleteUser.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteUser.Text = "&D删除";
+            this.tsmi_deleteUser.Click += new System.EventHandler(this.tsmi_deleteUser_Click);
+            // 
+            // tsmi_editUser
+            // 
+            this.tsmi_editUser.Name = "tsmi_editUser";
+            this.tsmi_editUser.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_editUser.Text = "&E修改";
+            this.tsmi_editUser.Click += new System.EventHandler(this.tsmi_editUser_Click);
             // 
             // dgv_roles
             // 
@@ -2298,6 +2334,7 @@
             this.ctms_storage.ResumeLayout(false);
             this.tp_supplier.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Users)).EndInit();
+            this.ctms_users.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_roles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_memberLevel)).EndInit();
             this.ctms_MembLevel.ResumeLayout(false);
@@ -2529,6 +2566,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn userGridRoleColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userGridEmailColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userGridRegDateColumn;
+        private System.Windows.Forms.ContextMenuStrip ctms_users;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_addUser;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_deleteUser;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_editUser;
     }
 }
 

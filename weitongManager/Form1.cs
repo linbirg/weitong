@@ -1340,9 +1340,66 @@ namespace weitongManager
                     // 1毫秒=1000微妙
                     // 1微妙=1000毫微秒（ns）
                     // 
-                    e.Value = Role.GetName(role_id);    
+                    e.Value = Role.getNameByID(role_id);    
                     //ticks = DateTime.Now.Ticks - ticks;
                     //WARNING(ticks.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tsmi_deleteUser_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgv_Users.CurrentRow == null) return;
+                User aUser = dgv_Users.CurrentRow.DataBoundItem as User;
+                if (aUser == null) return;
+                if (DialogResult.Yes == SelectionDlgShow("您确定删除用户 " + aUser.Name + " 的信息么？"))
+                {
+                    m_userMgr.deleteUser(aUser.ID);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tsmi_addUser_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FrmNewUser userFrm = new FrmNewUser();
+                User newUser = User.NewUser();
+                userFrm.User = newUser;
+                if (DialogResult.OK == userFrm.ShowDialog())
+                {
+                    newUser.save();
+                    m_userMgr.reLoadUsers();
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tsmi_editUser_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                User aUser = dgv_Users.CurrentRow.DataBoundItem as User;
+                if (aUser == null) return;
+                FrmNewUser userFrm = new FrmNewUser();
+
+                userFrm.User = aUser;
+                if (DialogResult.OK == userFrm.ShowDialog())
+                {
+                    aUser.save();
                 }
             }
             catch (Exception ex)

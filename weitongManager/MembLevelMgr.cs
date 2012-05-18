@@ -45,6 +45,9 @@ namespace weitongManager
         }
 
         // 添加级别从大到小。
+        /// <summary>
+        /// 添加新的级别信息，新级别的级别数=topLevel+1。
+        /// </summary>
         public void addDefaultTopLevelInfo()
         {
             MemberLevel lvl = MemberLevel.NewMemberLevel();

@@ -15,6 +15,11 @@ namespace weitongManager
         // 作为role的缓存
         private static Dictionary<int, string> parirs = null;
 
+        public int ID
+        {
+            get { return m_id; }
+        }
+
         public string Name
         {
             get { return m_name; }
@@ -31,12 +36,18 @@ namespace weitongManager
         {
             if (m_id < 0)
             {
-                this.m_id = insertRole(this);
+                this.m_id = insertRoleAndGetID(this);
             }
             else
             {
                 updateRole(this);
             }
+        }
+
+        
+        public override string ToString()
+        {
+            return Name;
         }
 
         // ====================公开静态方法======================
@@ -107,7 +118,12 @@ namespace weitongManager
             return aRole;
         }
 
-        public static string GetName(int role_id)
+        /// <summary>
+        /// 根据role的id获取其名称。
+        /// </summary>
+        /// <param name="role_id"></param>
+        /// <returns></returns>
+        public static string getNameByID(int role_id)
         {
             loadPairs();
 
@@ -117,7 +133,7 @@ namespace weitongManager
 
         // ====================私有静态方法======================
         // 将role的插入到数据库，函数返回新插入的role的id。
-        private static int insertRole(Role role)
+        private static int insertRoleAndGetID(Role role)
         {
             int role_id = -1;
             if (role == null) return role_id;

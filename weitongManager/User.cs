@@ -55,6 +55,7 @@ namespace weitongManager
         public int RoleID
         {
             get { return m_roleid; }
+            set { m_roleid = value; }
         }
 
         public int MinDiscount
@@ -67,12 +68,43 @@ namespace weitongManager
             }
         }
 
+        
+
         //======================公有方法==========================
         public bool isAdministrator()
         {
             Role role = Role.findByID(this.m_roleid);
             return role.Name == "administrator";
         }
+
+        /// <summary>
+        /// 设置用户的密码属性(密码属性为只写)。
+        /// </summary>
+        public void setPasswd(string passwd)
+        {
+            m_hashedpassword = encrypt_passwd(passwd, m_salt);
+        }
+
+        public void delete()
+        {
+            deleteUser(this.m_id);
+        }
+
+        /// <summary>
+        /// 保存User信息到数据库。如果用户信息是全新的，则插入数据库；如果用户信息已经存入数据库，则更新相应信息。
+        /// </summary>
+        public void save()
+        {
+            if (m_id < 0)
+            {
+                this.m_id = insertAndGetID(this);
+            }
+            else
+            {
+                updateUser(this);
+            }
+        }
+
 
         //=====================私有方法==========================
         /// <summary>
@@ -81,6 +113,20 @@ namespace weitongManager
         private User() { }
 
         //====================================公有静态方法=============================
+
+        /// <summary>
+        /// 新建用户。新建用户id为负值,注册日期为当前值，salt为随即10为字符串。
+        /// </summary>
+        /// <returns></returns>
+        public static User NewUser()
+        {
+            User aUser = new User();
+            aUser.m_id = -1;
+            aUser.m_regDate = DateTime.Now;
+            aUser.m_salt = util.GetRandomString(10);
+            return aUser;
+        }
+        
         /// <summary>
         /// 从数据库中加载所有的用户信息
         /// </summary>
@@ -214,7 +260,12 @@ namespace weitongManager
 
         //====================================私有静态方法=============================
         
-
+        /// <summary>
+        /// 根据密码和随机字串生成加密的密码
+        /// </summary>
+        /// <param name="passwd">密码</param>
+        /// <param name="salt">随机字符串</param>
+        /// <returns>已经加密的密码</returns>
         private static string encrypt_passwd(string passwd, string salt)
         {
             string str_sha_in = passwd + salt;
@@ -229,6 +280,100 @@ namespace weitongManager
                 EnText.AppendFormat("{0:x2}", Byte);
             }
             return EnText.ToString();
+        }
+
+        private static int insertAndGetID(User aNewUser)
+        {
+            int id = -1;
+            if (aNewUser == null||aNewUser.m_id >= 0) return id;
+            string insStr = @"INSERT INTO users(user_name,passwd,salt,alias_name,email,reg_date,role_id)
+                              VALUES(@user_name,@hashed_passwd,@salt,@alias,@email,@reg_date,@role_id)";
+
+            MySqlCommand insrtCmd = new MySqlCommand();
+            insrtCmd.CommandText = insStr;
+            insrtCmd.Connection = ConnSingleton.Connection;
+
+            insrtCmd.Parameters.Add("@user_name", MySqlDbType.VarChar).Value = aNewUser.Name;
+            insrtCmd.Parameters.Add("@hashed_passwd", MySqlDbType.VarChar).Value = aNewUser.m_hashedpassword;
+            insrtCmd.Parameters.Add("@salt", MySqlDbType.VarChar).Value = aNewUser.m_salt;
+            insrtCmd.Parameters.Add("@alias", MySqlDbType.VarChar).Value = aNewUser.m_alias;
+            insrtCmd.Parameters.Add("@email", MySqlDbType.VarChar).Value = aNewUser.m_email;
+            insrtCmd.Parameters.Add("@reg_date", MySqlDbType.DateTime).Value = aNewUser.m_regDate;
+            insrtCmd.Parameters.Add("@role_id", MySqlDbType.Int32).Value = aNewUser.m_roleid;
+
+            try
+            {
+                insrtCmd.Connection.Open();
+                insrtCmd.ExecuteNonQuery();
+
+                string queryIdStr = "SELECT LAST_INSERT_ID()";
+                insrtCmd.CommandText = queryIdStr;
+                MySqlDataReader reader = insrtCmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    id = reader.GetInt32(0);
+                }
+            }
+            finally
+            {
+                insrtCmd.Connection.Close();
+            }
+            
+            return id;
+        }
+
+        private static void updateUser(User aUser)
+        {
+            if (aUser == null || aUser.m_id < 0) return;
+
+            string insStr = @"UPDATE users SET user_name=@user_name,passwd=@hashed_passwd,salt=@salt,alias_name=@alias,
+                                                email=@email,reg_date=@reg_date,role_id=@role_id
+                              WHERE id=@id";
+
+            MySqlCommand insrtCmd = new MySqlCommand();
+            insrtCmd.CommandText = insStr;
+            insrtCmd.Connection = ConnSingleton.Connection;
+
+            insrtCmd.Parameters.Add("@user_name", MySqlDbType.VarChar).Value = aUser.Name;
+            insrtCmd.Parameters.Add("@hashed_passwd", MySqlDbType.VarChar).Value = aUser.m_hashedpassword;
+            insrtCmd.Parameters.Add("@salt", MySqlDbType.VarChar).Value = aUser.m_salt;
+            insrtCmd.Parameters.Add("@alias", MySqlDbType.VarChar).Value = aUser.m_alias;
+            insrtCmd.Parameters.Add("@email", MySqlDbType.VarChar).Value = aUser.m_email;
+            insrtCmd.Parameters.Add("@reg_date", MySqlDbType.DateTime).Value = aUser.m_regDate;
+            insrtCmd.Parameters.Add("@role_id", MySqlDbType.Int32).Value = aUser.m_roleid;
+            insrtCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = aUser.m_id;
+
+            try
+            {
+                insrtCmd.Connection.Open();
+                insrtCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                insrtCmd.Connection.Close();
+            }
+        }
+
+        private void deleteUser(int id)
+        {
+            if (id < 0) return;
+            string delStr = @"DELETE FROM users WHERE id=@id";
+
+            MySqlCommand delCmd = new MySqlCommand();
+            delCmd.CommandText = delStr;
+            delCmd.Connection = ConnSingleton.Connection;
+            delCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+
+            try
+            {
+                delCmd.Connection.Open();
+                delCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                delCmd.Connection.Close();
+            }
         }
     }
 }
