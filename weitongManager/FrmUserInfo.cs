@@ -61,11 +61,13 @@ namespace weitongManager
 
         private void showUserInfo(User aUser)
         {
+            cmbBox_Role_setDefaultRole();
             if (aUser != null)
             {
                 lbl_regDate.Text = aUser.RegisterDate.ToShortDateString();
                 if (aUser.ID >= 0)
                 {
+                    this.Text = "修改用户";
                     tBox_Aliase.Text = m_curUser.Alias;
                     tBox_Email.Text = m_curUser.Email;
                     tBox_userName.Text = m_curUser.Name;
@@ -76,14 +78,14 @@ namespace weitongManager
                 }
                 else
                 {
-                    cmbBox_Role_setDefaultRole();
+                    //cmbBox_Role_setDefaultRole();
                 }
                 
             }
             else
             {
                 //showEmptyUser();
-                cmbBox_Role_setDefaultRole();
+                //cmbBox_Role_setDefaultRole();
                 lbl_regDate.Text = DateTime.Now.ToShortDateString();
             }
         }
@@ -98,7 +100,7 @@ namespace weitongManager
             if (m_rolesList == null) return;
             foreach (Role role in m_rolesList)
             {
-                //默认设置为销售
+                // 默认设置为销售
                 if (role.Name == role_name)
                 {
                     cmbBox_Role.SelectedItem = role;

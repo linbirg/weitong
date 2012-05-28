@@ -17,4 +17,9 @@ namespace weitongManager
     {
         public ZeroCartException(string str = "购物车中酒的数量为零") : base(str) { }
     }
+
+    class InvalidWineCodeException : ApplicationException
+    {
+        public InvalidWineCodeException(string msg = "错误的酒编码") : base(msg) { }
+    }
 }

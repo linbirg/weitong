@@ -315,7 +315,11 @@ namespace weitongManager
             if (customer == null) return;
             customer.Name = tBox_custermorName.Text;
             customer.Address = tBox_customerAddress.Text;
-            customer.Birthday = DateTime.Parse(tBox_customerBirthday.Text);
+            if (tBox_customerBirthday.Text != "")
+            {
+                customer.Birthday = DateTime.Parse(tBox_customerBirthday.Text);
+            }
+            
             customer.Email = tBox_customerEmail.Text;
             customer.Job = tBox_customerJob.Text;
             customer.PhoneNumber = tBox_customerPhNumber.Text;
@@ -464,6 +468,8 @@ namespace weitongManager
                 lbl_currentOrderAmount.Text ="0";
                 lbl_currentOrderFavorablePrice.Text = "0";
                 lbl_curOrderTotal.Text = "0";
+                tBox_actualMoney.Text = "0";
+                tBox_change.Text = "0";
             }
             else
             {
@@ -471,6 +477,8 @@ namespace weitongManager
                 lbl_currentOrderAmount.Text = m_salesMgr.CurrentOrder.Amount.ToString();
                 lbl_currentOrderFavorablePrice.Text = "0";
                 lbl_curOrderTotal.Text = m_salesMgr.CurrentOrder.Amount.ToString();
+                tBox_actualMoney.Text = m_salesMgr.CurrentOrder.Amount.ToString();
+                tBox_change.Text = "0";
 
                 enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
             }
@@ -513,12 +521,23 @@ namespace weitongManager
             try
             {
                 decimal money = Decimal.Parse(tBox_actualMoney.Text);
+                
                 decimal change = Decimal.Parse(tBox_change.Text);
+                if (change < 0)
+                {
+                    WARNING("您的款还不够呢！");
+                    return;
+                }
                 decimal recved = money - change;
                 if (recved == 0)
                 {
-                    DialogResult rst = SelectionDlgShow("你确定订单免费么？");//, "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    DialogResult rst = SelectionDlgShow("您确定订单免费么？");//, "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (rst == DialogResult.Cancel) return;
+                }
+                if (money <0||recved < 0)
+                {
+                    WARNING("您确定要倒找客人钱吗？");
+                    return;
                 }
                 m_salesMgr.completeCurrentOrder(recved);
                 enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
@@ -584,6 +603,8 @@ namespace weitongManager
         {
             try
             {
+                if (m_salesMgr.CurrentOrder == null) return;
+
                 decimal money = Decimal.Parse(tBox_actualMoney.Text);
                 tBox_change.Text = (money - m_salesMgr.CurrentOrder.Amount).ToString();
             }catch(Exception ex)
@@ -962,6 +983,7 @@ namespace weitongManager
             {
                 cbox_membLevel.Items.Add(lv);
             }
+            cbox_membLevel.SelectedIndex = 1;
         }
 
         private void cbox_membLevel_Show(int level)

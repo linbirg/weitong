@@ -293,8 +293,8 @@ namespace weitongManager
         /// <param name="discount"></param>
         private void insertDetail(string Code, int Units, decimal memberPrice, int discount)
         {
-            insertOrderDetail(ID, Code, Units, memberPrice, discount);
             necStorageUnits(Code, Units);
+            insertOrderDetail(ID, Code, Units, memberPrice, discount);
         }
 
         /// <summary>
@@ -628,9 +628,16 @@ namespace weitongManager
         }
 
         // 增加酒的库存（如果为负数则为减少）。
+        /// <summary>
+        /// 修改指定酒的库存数量。如果修改后库存数量为负，则抛出ZeroStorageException异常。
+        /// 如果指定的酒不存在，则抛出InvalidWineCodeException.
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="plus"></param>
         private static void plusStorageUnits(string code, int plus = 1)
         {
             string updateStr = @"UPDATE storage SET units = units + @plus WHERE code = @code";
+            string qUnitsStr = @"SELECT units FROM storage WHERE code = @code";
             MySqlCommand updateCmd = new MySqlCommand();
             updateCmd.CommandText = updateStr;
             updateCmd.Connection = ConnSingleton.Connection;
@@ -640,7 +647,26 @@ namespace weitongManager
             try
             {
                 updateCmd.Connection.Open();
-                updateCmd.ExecuteNonQuery();
+                updateCmd.CommandText = qUnitsStr;
+                MySqlDataReader reader = updateCmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    int units = reader.GetInt32("units");
+                    reader.Close();
+                    if (units + plus >= 0)
+                    {
+                        updateCmd.CommandText = updateStr;
+                        updateCmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        throw new ZeroStorageException("库存不足");
+                    }
+                }
+                else
+                {
+                    throw new InvalidWineCodeException();
+                }
             }
             //catch (Exception ex)
             //{
@@ -666,7 +692,7 @@ namespace weitongManager
         {
             if (one == null || other == null) return;
             if (one.State != OrderState.FOR_PAY) 
-                throw new Exception("不能对只读的订单(非FOR_PAY状态)赋值！");
+                throw new Exception("不能修改已完成或取消的订单！");
 
             one.CustomerID = other.CustomerID;
             one.EffectDate = DateTime.Now;
