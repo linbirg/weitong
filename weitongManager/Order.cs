@@ -81,7 +81,7 @@ namespace weitongManager
         /// 保存订单信息。
         /// 如果订单是新订单（id为负值），则将订单信息和订单细项插入数据库。
         /// 如果数据库中已经有该订单的信息（id为正值），则更新订单信息，
-        /// 然后删除所有订单的细项，再插入新的订单的细项到数据库。
+        /// 然后回滚所有订单的细项，删除已有的细项，再重新插入新的订单的细项。
         /// </summary>
         public void save()
         {
@@ -93,7 +93,7 @@ namespace weitongManager
             else
             {
                 updateOrder(m_id, CustomerID, UserID, EffectDate, State, Amount, Received);
-                clearOrderDetails(m_id);
+                clearDetails(m_id);
                 insertOrderDetails();
             }
         }
@@ -299,11 +299,14 @@ namespace weitongManager
 
         /// <summary>
         /// 清除订单的所有细项，并还原相应的库存信息。
+        /// 对于。
         /// </summary>
         /// <param name="order_id">订单编号，必须是数据库中存在的（id为正值)</param>
-        private void clearOrderDetails(int order_id)
+        private void clearDetails(int order_id)
         {
             if (order_id < 0) return;
+            //OrderState state = (OrderState)getOrderState(order_id);
+            //if (state != OrderState.FOR_PAY) return;
             List<OrderDetail> details = Order.getOrderDetail(order_id);
             // 订单没有对应的细项，返回。
             if (details == null) return;
@@ -312,7 +315,7 @@ namespace weitongManager
             {
                 plusStorageUnits(detail.Code, detail.Units);
             }
-
+            
             Order.deleteOrderDetails(order_id);
 
         }
@@ -523,11 +526,12 @@ namespace weitongManager
         private static void cancelOrder(int orderID)
         {
             MySqlConnection conn = ConnSingleton.Connection;
+            OrderState state = (OrderState)getOrderState(orderID);
+            if (state != OrderState.FOR_PAY) return;
+
             try
             {
                 conn.Open();
-                OrderState state = (OrderState)getOrderState(orderID);
-                if (state != OrderState.FOR_PAY) return;
                 string qryStr = @"SELECT code, units FROM order_wines WHERE orderid=@orderid";
                 MySqlCommand qryCmd = new MySqlCommand();
                 qryCmd.Connection = conn;

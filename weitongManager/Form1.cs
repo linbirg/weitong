@@ -290,7 +290,7 @@ namespace weitongManager
         {
             try
             {
-                m_salesMgr.updateTable(this.m_salesMgr.DataSet.storage);
+                m_salesMgr.reloadStorage(this.m_salesMgr.DataSet.storage);
             }
             catch (Exception ex)
             {
@@ -356,21 +356,23 @@ namespace weitongManager
                 {
                     doSaveCustomer();
                     Order newOrder = m_salesMgr.calcCart();
-                    if (m_salesMgr.CurrentOrder == null)
-                    {
-                        m_salesMgr.CurrentOrder = newOrder;
-                    }
-                    else
-                    {
-                        // 将新订单的信息付给现有订单
-                        Order curOrder = m_salesMgr.CurrentOrder;
-                        curOrder.copy(newOrder);
-                    }
+                    m_salesMgr.CurrentOrder = newOrder;
+                    enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
+                    //if (m_salesMgr.CurrentOrder == null)
+                    //{
+                    //    m_salesMgr.CurrentOrder = newOrder;
+                    //}
+                    //else
+                    //{
+                    //    // 将新订单的信息付给现有订单
+                    //    Order curOrder = m_salesMgr.CurrentOrder;
+                    //    curOrder.copy(newOrder);
+                    //}
 
                     // 使能按钮
-                    btn_cancelOrder.Enabled = true;
-                    btn_CompleteOrder.Enabled = true;
-                    btn_continueOrder.Enabled = true;
+                    //btn_cancelOrder.Enabled = true;
+                    //btn_CompleteOrder.Enabled = true;
+                    //btn_continueOrder.Enabled = true;
 
                     jump2CurrentOrder();
                     showCurrentOrder();
@@ -540,7 +542,7 @@ namespace weitongManager
                     return;
                 }
                 m_salesMgr.completeCurrentOrder(recved);
-                enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
+                //enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
                 m_salesMgr.updateOrderList();
                 jump2OrderList();
             }
@@ -637,11 +639,12 @@ namespace weitongManager
                         //btn_CompleteOrder.Enabled = false;
                         //btn_continueOrder.Enabled = false;
                         //btn_cancelOrder.Enabled = false;
-                        enableCurrentOrderBtnByState(OrderState.FOR_PAY);
+                        //enableCurrentOrderBtnByState(OrderState.FOR_PAY);
                     }
                     m_salesMgr.CartCustomer = Customer.findByID(newOrder.CustomerID);
                     m_salesMgr.CurrentOrder = newOrder;
                     m_salesMgr.generateCartDetail();
+                    enableCurrentOrderBtnByState(OrderState.FOR_PAY);
                     showCustomerInfo(m_salesMgr.CartCustomer);
                     jump2CurrentCart();
                 }
@@ -649,6 +652,7 @@ namespace weitongManager
             catch (Exception ex)
             {
                 WARNING(ex.Message);
+                m_salesMgr.initCart();
             }
         }
 
