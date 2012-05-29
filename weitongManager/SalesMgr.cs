@@ -371,6 +371,14 @@ namespace weitongManager
         }
 
 
+        /// <summary>
+        /// 更新orderlist列表
+        /// </summary>
+        public void reloadOrderList()
+        {
+            m_orderAdapter.Fill(DataSet.order);
+        }
+
 
         //================================= 属性 =================================
         public DataGridView StorgeInfoView

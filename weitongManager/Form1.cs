@@ -554,6 +554,7 @@ namespace weitongManager
 
         private void jump2OrderList()
         {
+            m_salesMgr.reloadOrderList();
             tabCtrl_Order.SelectTab("tabPg_OrderList");
         }
 
@@ -1281,6 +1282,7 @@ namespace weitongManager
                 }
                 else if (e.TabPage.Name == "tabPg_OrderList")
                 {
+                    m_salesMgr.reloadOrderList();
                     showStatistics();
                 }
             }

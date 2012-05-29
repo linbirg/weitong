@@ -16,6 +16,7 @@ namespace weitongManager
 
 
         // 属性
+        #region public property
         public int ID
         {
             get { return m_id; }
@@ -58,7 +59,7 @@ namespace weitongManager
         {
             get
             {
-                if (m_id > 0) return m_amount;
+                //if (m_id > 0) return m_amount;
                 return calcAmount(); 
             }
             //set { m_amount = value; }
@@ -75,7 +76,10 @@ namespace weitongManager
             get { return isCompletedState(); }
         }
 
+        #endregion
 
+
+        #region public method
         // 公用接口
         /// <summary>
         /// 保存订单信息。
@@ -85,16 +89,18 @@ namespace weitongManager
         /// </summary>
         public void save()
         {
-            if (ID == -1)
+            if (ID <= 0)
             {
-                this.m_id = insertOrderAndGetID(CustomerID, UserID, EffectDate, (int)State, Amount,Received);
-                insertOrderDetails();
+                //this.m_id = insertOrderAndGetID(CustomerID, UserID, EffectDate, (int)State, Amount,Received);
+                //insertOrderDetails();
+                insert();
             }
             else
             {
-                updateOrder(m_id, CustomerID, UserID, EffectDate, State, Amount, Received);
-                clearDetails(m_id);
-                insertOrderDetails();
+                //updateOrder(m_id, CustomerID, UserID, EffectDate, State, Amount, Received);
+                //clearDetails(m_id);
+                //insertOrderDetails();
+                update();
             }
         }
 
@@ -113,7 +119,6 @@ namespace weitongManager
         /// 如果订单已经存入数据库，返回数据库中的细项，并替换内存中的副本。
         /// </summary>
         /// <returns></returns>
- 
         public List<OrderDetail> getDetails()
         {
             if (ID < 0) return m_details;
@@ -161,9 +166,18 @@ namespace weitongManager
             copyOrder(this, other);
         }
 
+        #endregion
+
 
         // ==================================== 公用静态方法区 ===================================
+        #region public static method(Class method)
 
+        /// <summary>
+        /// 从order表中取出订单的信息。
+        /// 此时取出的订单并不包含订单细项。
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
         public static Order findByID(int orderID)
         {
             Order newOrder = null;
@@ -262,10 +276,13 @@ namespace weitongManager
             return stateStr;
         }
 
+        #endregion
+
 
 
         // ==========================私有方法=========================
-        
+
+        #region private method
         /// <summary>
         /// 声明私有的构造函数，防止在外部被构造。
         /// </summary>
@@ -283,41 +300,6 @@ namespace weitongManager
                     insertDetail(detail.Code, detail.Units, detail.KnockDownPrice, detail.Discount);
                 }
             }
-        }
-        /// <summary>
-        /// 将订单详细信息保存（插入）到数据库，并修改相应的库存信息。
-        /// </summary>
-        /// <param name="Code"></param>
-        /// <param name="Units"></param>
-        /// <param name="memberPrice"></param>
-        /// <param name="discount"></param>
-        private void insertDetail(string Code, int Units, decimal memberPrice, int discount)
-        {
-            necStorageUnits(Code, Units);
-            insertOrderDetail(ID, Code, Units, memberPrice, discount);
-        }
-
-        /// <summary>
-        /// 清除订单的所有细项，并还原相应的库存信息。
-        /// 对于。
-        /// </summary>
-        /// <param name="order_id">订单编号，必须是数据库中存在的（id为正值)</param>
-        private void clearDetails(int order_id)
-        {
-            if (order_id < 0) return;
-            //OrderState state = (OrderState)getOrderState(order_id);
-            //if (state != OrderState.FOR_PAY) return;
-            List<OrderDetail> details = Order.getOrderDetail(order_id);
-            // 订单没有对应的细项，返回。
-            if (details == null) return;
-            // 还原对应的库存信息。
-            foreach (OrderDetail detail in details)
-            {
-                plusStorageUnits(detail.Code, detail.Units);
-            }
-            
-            Order.deleteOrderDetails(order_id);
-
         }
 
         /// <summary>
@@ -345,9 +327,112 @@ namespace weitongManager
             return amount;
         }
 
+        /// <summary>
+        /// 将订单插入数据库中。
+        /// 订单必须是新订单(id小于0)。
+        /// 函数保证订单要么完整的插入，要么完全不会插入。
+        /// </summary>
+        private void insert()
+        {
+            if (ID > 0) return;    //mysql中的id是正数。
+
+            try
+            {
+                this.m_id = insertOrderAndGetID(CustomerID, UserID, EffectDate, (int)State, Amount, Received);
+                insertOrderDetails();
+            }
+            catch (ZeroStorageException zsEx)
+            {
+                //log(zsEx.msg)
+                // 如果出现插入细项时库存不足的异常，则撤销对库存的修改。
+                clearDetails(this.m_id);
+                Order.delete(m_id);
+                m_id = -1;
+                throw zsEx;
+            }
+            
+        }
+
+        /// <summary>
+        /// 将订单更新到数据库。
+        /// 订单必须是数据库已存在的，并且其状态只能为For_Pay状态（取消或者完成的订单不能再修改）。
+        /// 函数保证更新要么完成，所有细项都被写入，要么完全不会被更新。
+        /// 注意：无法通过设置状态为取消来达到撤销订单的目的。
+        /// </summary>
+        private void update()
+        {
+            
+            if (this.m_id <= 0) return;
+
+            //temp用于备份数据库中当前订单的信息，如果再更新数据库的过程中出现异常，则恢复数据库的内容。
+            Order temp = Order.findByID(this.m_id);
+            //如果数据库中的该订单不是待付款状态，是不允许再更新的。
+            if (temp.State != OrderState.FOR_PAY) return;
+            temp.m_details = getOrderDetail(this.m_id);
+
+            try
+            {
+                updateOrder(m_id, CustomerID, UserID, EffectDate, State, Amount, Received);
+                clearDetails(m_id);
+                insertOrderDetails();
+            }
+            catch (ZeroStorageException zsEx)
+            {
+                // 清除已经插入的细项
+                clearDetails(m_id);
+                updateOrder(temp.m_id, temp.CustomerID, temp.UserID, temp.EffectDate, temp.State, temp.Amount, temp.Received);
+                if (temp.m_details != null)
+                {
+                    foreach (OrderDetail detail in temp.m_details)
+                    {
+                        insertDetail(detail.Code, detail.Units, detail.KnockDownPrice, detail.Discount);
+                    }
+                }
+                throw zsEx;
+            }
+
+        }
+
+        /// <summary>
+        /// 修改相应的库存信息，并将订单详细信息保存（插入）到数据库。
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="Units"></param>
+        /// <param name="memberPrice"></param>
+        /// <param name="discount"></param>
+        private void insertDetail(string Code, int Units, decimal memberPrice, int discount)
+        {
+            necStorageUnits(Code, Units);
+            insertOrderDetail(ID, Code, Units, memberPrice, discount);
+        }
+
+        /// <summary>
+        /// 还原数据库中相应的库存信息,并清除订单的所有细项。
+        /// </summary>
+        /// <param name="order_id">订单编号，必须是数据库中存在的（id为正值)</param>
+        private void clearDetails(int order_id)
+        {
+            if (order_id < 0) return;
+            //OrderState state = (OrderState)getOrderState(order_id);
+            //if (state != OrderState.FOR_PAY) return;
+            List<OrderDetail> details = Order.getOrderDetail(order_id);
+            // 订单没有对应的细项，返回。
+            if (details == null) return;
+            // 还原对应的库存信息。
+            foreach (OrderDetail detail in details)
+            {
+                plusStorageUnits(detail.Code, detail.Units);
+            }
+
+            Order.deleteOrderDetails(order_id);
+
+        }
+
+        #endregion
+
 
         // ==================================== 私有静态方法区 ===================================
-
+        #region private static methord
         //order 
         private static int insertOrderAndGetID(int customerID, int userID, DateTime effectDate, int orderState, decimal amount, decimal received)
         {
@@ -714,6 +799,35 @@ namespace weitongManager
                 }
             }
         }
+
+        /// <summary>
+        /// 从order表中删除指定id的order信息。
+        /// order的id必须是已经存在数据库中的。
+        /// 调用此函数之前请确保order的细项已经删除，所有可能依赖order的信息都已经不存在，否则可能会抛出异常。
+        /// </summary>
+        /// <param name="id"></param>
+        private static void delete(int id)
+        {
+            if (id < 0) return;
+            //@"UPDATE orders SET orderstate = @state WHERE id = @orderid";
+            string delStr = @"DELETE FROM orders WHERE id=@order_id";
+            MySqlCommand delCmd = new MySqlCommand();
+            delCmd.CommandText = delStr;
+            delCmd.Connection = ConnSingleton.Connection;
+            delCmd.Parameters.Add("@order_id", MySqlDbType.Int32).Value = id;
+
+            try
+            {
+                delCmd.Connection.Open();
+                delCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                delCmd.Connection.Close();
+            }
+        }
+
+        #endregion
 
 
         private int m_id = -1;
