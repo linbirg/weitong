@@ -222,7 +222,7 @@ namespace weitongManager
                 anOrder.addDetail(item.Code, item.Units, item.Memberprice, item.Discount);
             }
             
-            anOrder.save();
+            //anOrder.save();
             
             return anOrder;
             

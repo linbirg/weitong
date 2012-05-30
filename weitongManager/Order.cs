@@ -84,8 +84,8 @@ namespace weitongManager
         /// <summary>
         /// 保存订单信息。
         /// 如果订单是新订单（id为负值），则将订单信息和订单细项插入数据库。
-        /// 如果数据库中已经有该订单的信息（id为正值），则更新订单信息，
-        /// 然后回滚所有订单的细项，删除已有的细项，再重新插入新的订单的细项。
+        /// 如果数据库中已经有该订单的信息（id为正值），则更新订单信息。
+        /// 对于更新，
         /// </summary>
         public void save()
         {
@@ -358,15 +358,16 @@ namespace weitongManager
         /// 订单必须是数据库已存在的，并且其状态只能为For_Pay状态（取消或者完成的订单不能再修改）。
         /// 函数保证更新要么完成，所有细项都被写入，要么完全不会被更新。
         /// 注意：无法通过设置状态为取消来达到撤销订单的目的。
+        /// 函数会先回滚所有订单的细项，然后删除已有的细项，再重新插入新的订单的细项。
         /// </summary>
         private void update()
         {
             
             if (this.m_id <= 0) return;
 
-            //temp用于备份数据库中当前订单的信息，如果再更新数据库的过程中出现异常，则恢复数据库的内容。
+            // temp用于备份数据库中当前订单的信息，如果再更新数据库的过程中出现异常，则恢复数据库的内容。
             Order temp = Order.findByID(this.m_id);
-            //如果数据库中的该订单不是待付款状态，是不允许再更新的。
+            // 如果数据库中的该订单不是待付款状态，是不允许再更新的。
             if (temp.State != OrderState.FOR_PAY) return;
             temp.m_details = getOrderDetail(this.m_id);
 
@@ -773,7 +774,8 @@ namespace weitongManager
 
         /// <summary>
         /// 将other订单的信息copy到one订单。拷贝函数不会改变订单的id,状态等信息。
-        /// 拷贝的one订单的状态必须是FOR_PAY(完成和取消的订单意味着不可修改)
+        /// 拷贝的one订单的状态必须是FOR_PAY(完成和取消的订单意味着不可修改)。
+        /// 
         /// </summary>
         /// <param name="one"></param>
         /// <param name="other"></param>

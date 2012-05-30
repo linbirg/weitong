@@ -356,23 +356,19 @@ namespace weitongManager
                 {
                     doSaveCustomer();
                     Order newOrder = m_salesMgr.calcCart();
-                    m_salesMgr.CurrentOrder = newOrder;
-                    enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
-                    //if (m_salesMgr.CurrentOrder == null)
-                    //{
-                    //    m_salesMgr.CurrentOrder = newOrder;
-                    //}
-                    //else
-                    //{
-                    //    // 将新订单的信息付给现有订单
-                    //    Order curOrder = m_salesMgr.CurrentOrder;
-                    //    curOrder.copy(newOrder);
-                    //}
+                    if (m_salesMgr.CurrentOrder == null || m_salesMgr.CurrentOrder.State != OrderState.FOR_PAY)
+                    {
+                        m_salesMgr.CurrentOrder = newOrder;
+                    }
+                    else
+                    {
+                        m_salesMgr.CurrentOrder.copy(newOrder);
+                        
+                    }
 
-                    // 使能按钮
-                    //btn_cancelOrder.Enabled = true;
-                    //btn_CompleteOrder.Enabled = true;
-                    //btn_continueOrder.Enabled = true;
+                    //保存变更到数据库
+                    m_salesMgr.CurrentOrder.save();
+                    enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
 
                     jump2CurrentOrder();
                     showCurrentOrder();
