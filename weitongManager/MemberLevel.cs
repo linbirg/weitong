@@ -52,7 +52,7 @@ namespace weitongManager
             return this.Name;
         }
 
-
+        #region public static method
         // 从数据库中加载级别信息。
         public static List<MemberLevel> loadData()
         {
@@ -128,9 +128,46 @@ namespace weitongManager
         {
             insertMemberLevel(level.Level, level.Name, level.Discount,level.MinConsuption);
         }
-        
 
-        // ==========================私有===============================
+        /// <summary>
+        /// 通过级别查找。
+        /// </summary>
+        /// <param name="lv"></param>
+        /// <returns></returns>
+        public static MemberLevel findByLevel(int lv)
+        {
+            MemberLevel level = null;
+            string qryStr = @"SELECT memlevel,discount,levelname,minconsuption FROM memberlevel WHERE memlevel=@level";
+            MySqlCommand qryCmd = new MySqlCommand();
+            qryCmd.CommandText = qryStr;
+            qryCmd.Connection = ConnSingleton.Connection;
+            qryCmd.Parameters.Add("@level", MySqlDbType.Int32).Value = lv;
+
+            try
+            {
+                qryCmd.Connection.Open();
+                MySqlDataReader reader = qryCmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    level = new MemberLevel();
+                    level.Level = reader.GetInt32("memlevel");
+                    level.Discount = reader.GetInt32("discount");
+                    level.Name = reader.GetString("levelname");
+                    level.MinConsuption = reader.GetInt32("minconsuption");
+                }
+            }
+            finally
+            {
+                qryCmd.Connection.Close();
+            }
+            return level;
+        }
+
+        #endregion
+
+        // ==========================私有静态方法===============================
+
+        #region private static method
         // 插入数据库
         private static void insertMemberLevel(int level, string name, int discount, int minConsuption)
         {
@@ -202,6 +239,8 @@ namespace weitongManager
                 updateCmd.Connection.Close();
             }
         }
+
+        #endregion
 
     }
 }

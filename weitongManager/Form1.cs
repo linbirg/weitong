@@ -138,7 +138,7 @@ namespace weitongManager
                     }
                 }
 
-                int supplier_id = aSpler == null ? -1 : aSpler.ID;
+                int supplier_id = (aSpler == null ? -1 : aSpler.ID);
 
                 string code = tBox_code.Text;
                 string chateau = tBox_chateau.Text;
@@ -508,7 +508,17 @@ namespace weitongManager
         {
             if (aCustomer == null) return;
             lbl_customerName.Text = aCustomer.Name;
-            lbl_membLevel.Text = aCustomer.MemberLevel.ToString();
+            MemberLevel customerLevel = MemberLevel.findByLevel(aCustomer.MemberLevel);
+            if (customerLevel != null)
+            {
+                lbl_membLevel.Text = customerLevel.ToString();
+            }
+            else
+            {
+                WARNING("未找到客户对应的级别！");
+                lbl_membLevel.Text = "普通会员";
+            }
+            
             lbl_customerJob.Text = aCustomer.Job;
             lbl_customerBirthday.Text = aCustomer.Birthday.ToShortDateString();
             lbl_custAddress.Text = aCustomer.Address;
@@ -895,7 +905,8 @@ namespace weitongManager
             try
             {
                 DataGridViewCell cell = dgv_cartDetail.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                if (dgv_cartDetail.Columns[e.ColumnIndex].Name == "discountDGVOrderDetailTextBoxColumn")
+                if (dgv_cartDetail.Columns[e.ColumnIndex].Name == "discountDGVOrderDetailTextBoxColumn"
+                    || dgv_cartDetail.Columns[e.ColumnIndex].Name == "unitsDGVOrderDetailTextBoxColumn")
                 {
                     tBox_CellEditer.Size = cell.Size;
                     tBox_CellEditer.Text = cell.Value.ToString();
@@ -903,6 +914,10 @@ namespace weitongManager
                     tBox_CellEditer.Location = calcCartDetailCellLocation(e.RowIndex,e.ColumnIndex);
                     tBox_CellEditer.Focus();
                 }
+                //else if (dgv_cartDetail.Columns[e.ColumnIndex].Name == "unitsDGVOrderDetailTextBoxColumn")
+                //{
+                //    //WARNING(cell.Value.ToString());
+                //}
             }
             catch (Exception ex)
             {
@@ -916,7 +931,7 @@ namespace weitongManager
             {
                 
                 tBox_CellEditer.Visible = false;
-                string value = tBox_CellEditer.Text;
+                string value = tBox_CellEditer.Text.Trim();
                 DataGridViewCell cell = dgv_cartDetail.CurrentCell;
                 CartDetailRowData data = dgv_cartDetail.Rows[cell.RowIndex].DataBoundItem as CartDetailRowData;
                 if (dgv_cartDetail.Columns[cell.ColumnIndex].Name == "discountDGVOrderDetailTextBoxColumn")
@@ -924,13 +939,26 @@ namespace weitongManager
                     int discount = int.Parse(value);
                     if (discount < CurrentUser.MinDiscount)
                     {
-                        WARNING("您的折扣权限不够，请于店长联系！");
+                        WARNING("您的折扣权限不够，请与店长联系！");
                     }
                     else
                     {
                         data.Discount = discount;
                     }
-                }        
+                }
+                else if (dgv_cartDetail.Columns[cell.ColumnIndex].Name == "unitsDGVOrderDetailTextBoxColumn")
+                {
+                    int units = int.Parse(value);
+                    int delta = units - data.Units;
+                    m_salesMgr.plusCartWineUnits(data.Code, delta);
+                }
+            }
+            catch (ZeroCartException ex)
+            {
+                if (DialogResult.Yes == SelectionDlgShow("购物车中的数量为零或者负值，是否从购物车中删除？"))
+                {
+                    m_salesMgr.deleteCartDetailRow(dgv_cartDetail.CurrentRow.Index);
+                }
             }
             catch (Exception ex)
             {
