@@ -290,6 +290,10 @@ namespace weitongManager
                     m_currentOrderDetailList.Add(data);
                 }
             }
+            else
+            {
+                if(m_currentOrderDetailList != null) m_currentOrderDetailList.Clear();
+            }
         }
 
         //public decimal getCurrentOrderAmount()
@@ -602,9 +606,11 @@ namespace weitongManager
 
             m_orderListGrid.Columns["orderListOrderID"].DataPropertyName = "id";
             m_orderListGrid.Columns["orderListCustomerName"].DataPropertyName = "name";
-            m_orderListGrid.Columns["orderListOrderAmount"].DataPropertyName = "received";
+            m_orderListGrid.Columns["orderListOrderAmount"].DataPropertyName = "amount";
+            m_orderListGrid.Columns["orderListOrderReceived"].DataPropertyName = "received";
             m_orderListGrid.Columns["orderListOrderDate"].DataPropertyName = "effectdate";
             m_orderListGrid.Columns["orderListOrderState"].DataPropertyName = "orderstate";
+            m_orderListGrid.Columns["orderListOrderComment"].DataPropertyName = "comment";
         }
 
         private void bindCartDetailData()

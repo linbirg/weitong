@@ -276,6 +276,26 @@ namespace weitongManager
             return stateStr;
         }
 
+        public static void updateComment(int id, string comment)
+        {
+            string sqlStr = @"UPDATE orders SET comment=@comment WHERE id=@id";
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.CommandText = sqlStr;
+            cmd.Connection = ConnSingleton.Connection;
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+            cmd.Parameters.Add("@comment", MySqlDbType.Text).Value = comment;
+
+            try
+            {
+                cmd.Connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                cmd.Connection.Close();
+            }
+        }
+
         #endregion
 
 

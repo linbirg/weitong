@@ -1575,6 +1575,10 @@ namespace weitongManager {
             
             private global::System.Data.DataColumn columnreceived;
             
+            private global::System.Data.DataColumn columnamount;
+            
+            private global::System.Data.DataColumn columncomment;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public orderDataTable() {
@@ -1650,6 +1654,22 @@ namespace weitongManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn amountColumn {
+                get {
+                    return this.columnamount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn commentColumn {
+                get {
+                    return this.columncomment;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1685,14 +1705,16 @@ namespace weitongManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public orderRow AddorderRow(string name, System.DateTime effectdate, int orderstate, decimal received) {
+            public orderRow AddorderRow(string name, System.DateTime effectdate, int orderstate, decimal received, decimal amount, string comment) {
                 orderRow roworderRow = ((orderRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         name,
                         null,
                         effectdate,
                         orderstate,
-                        received};
+                        received,
+                        amount,
+                        comment};
                 roworderRow.ItemArray = columnValuesArray;
                 this.Rows.Add(roworderRow);
                 return roworderRow;
@@ -1727,6 +1749,8 @@ namespace weitongManager {
                 this.columneffectdate = base.Columns["effectdate"];
                 this.columnorderstate = base.Columns["orderstate"];
                 this.columnreceived = base.Columns["received"];
+                this.columnamount = base.Columns["amount"];
+                this.columncomment = base.Columns["comment"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1742,6 +1766,10 @@ namespace weitongManager {
                 base.Columns.Add(this.columnorderstate);
                 this.columnreceived = new global::System.Data.DataColumn("received", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnreceived);
+                this.columnamount = new global::System.Data.DataColumn("amount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnamount);
+                this.columncomment = new global::System.Data.DataColumn("comment", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncomment);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnname.AllowDBNull = false;
@@ -1752,6 +1780,7 @@ namespace weitongManager {
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
                 this.columneffectdate.AllowDBNull = false;
+                this.columncomment.MaxLength = 32767;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2915,6 +2944,38 @@ namespace weitongManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal amount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableorder.amountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'amount\' in table \'order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableorder.amountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string comment {
+                get {
+                    try {
+                        return ((string)(this[this.tableorder.commentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'comment\' in table \'order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableorder.commentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsorderstateNull() {
                 return this.IsNull(this.tableorder.orderstateColumn);
             }
@@ -2935,6 +2996,30 @@ namespace weitongManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetreceivedNull() {
                 this[this.tableorder.receivedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsamountNull() {
+                return this.IsNull(this.tableorder.amountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetamountNull() {
+                this[this.tableorder.amountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscommentNull() {
+                return this.IsNull(this.tableorder.commentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcommentNull() {
+                this[this.tableorder.commentColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -4452,6 +4537,8 @@ FROM      storage INNER JOIN
             tableMapping.ColumnMappings.Add("effectdate", "effectdate");
             tableMapping.ColumnMappings.Add("orderstate", "orderstate");
             tableMapping.ColumnMappings.Add("received", "received");
+            tableMapping.ColumnMappings.Add("amount", "amount");
+            tableMapping.ColumnMappings.Add("comment", "comment");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -4469,8 +4556,8 @@ FROM      storage INNER JOIN
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT   customers.name, orders.id, orders.effectdate, orders.orderstate, orders." +
-                "received\r\nFROM      orders INNER JOIN\r\n                customers ON orders.custo" +
-                "merid = customers.id";
+                "received,orders.amount,orders.comment\r\nFROM      orders INNER JOIN\r\n            " +
+                "    customers ON orders.customerid = customers.id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

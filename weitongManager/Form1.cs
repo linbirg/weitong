@@ -25,6 +25,7 @@ namespace weitongManager
             InitializeComponent();
             CenterToScreen();
             tBox_CellEditer.LostFocus += new EventHandler(tBox_CellEditer_LostFocus);
+            tBox_OrdersCellEditor.LostFocus += new EventHandler(tBox_OrdersCellEditor_LostFocus);
         }
 
         public User CurrentUser
@@ -970,29 +971,30 @@ namespace weitongManager
         /// <returns></returns>
         private Point calcCartDetailCellLocation(int rowIndex, int columnIndex)
         {
-            int x = dgv_cartDetail.Location.X;
-            int y = dgv_cartDetail.Location.Y;
-            int width = 0;
-            int height = dgv_cartDetail.ColumnHeadersHeight;
+            return calcDGVCellLocation(dgv_cartDetail, rowIndex, columnIndex);
+            //int x = dgv_cartDetail.Location.X;
+            //int y = dgv_cartDetail.Location.Y;
+            //int width = 0;
+            //int height = dgv_cartDetail.ColumnHeadersHeight;
 
-            for (int row = 0; row < rowIndex; row++)
-            {
-                height += dgv_cartDetail.Rows[row].Height;
-            }
+            //for (int row = 0; row < rowIndex; row++)
+            //{
+            //    height += dgv_cartDetail.Rows[row].Height;
+            //}
 
-            for (int col = 0; col < columnIndex; col++)
-            {
-                width += dgv_cartDetail.Columns[col].Width;
-            }
+            //for (int col = 0; col < columnIndex; col++)
+            //{
+            //    width += dgv_cartDetail.Columns[col].Width;
+            //}
 
-            return new Point(x + width, y + height);
+            //return new Point(x + width, y + height);
         }
 
         private void dgv_orderList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             try
             {
-                if (e.ColumnIndex == 4)
+                if (dgv_orderList.Columns[e.ColumnIndex].Name == "orderListOrderState")
                 {
                     OrderState state = (OrderState)e.Value;
                     e.Value = Order.getStateName(state);
@@ -1452,6 +1454,93 @@ namespace weitongManager
                 if (DialogResult.OK == userFrm.ShowDialog())
                 {
                     aUser.save();
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void dgv_orderList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridViewCell cell = dgv_orderList.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (dgv_orderList.Columns[e.ColumnIndex].Name == "orderListOrderComment")
+                {
+                    tBox_OrdersCellEditor.Size = cell.Size;
+                    tBox_OrdersCellEditor.Text = cell.Value.ToString();
+                    tBox_OrdersCellEditor.Visible = true;
+                    tBox_OrdersCellEditor.Location = calcDGVCellLocation(dgv_orderList, e.RowIndex, e.ColumnIndex);
+                    tBox_OrdersCellEditor.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 计算指定grid的某一cell的位置
+        /// </summary>
+        /// <param name="dgv"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnIndex"></param>
+        private Point calcDGVCellLocation(DataGridView dgv, int rowIndex, int columnIndex)
+        {
+            int x = dgv.Location.X;
+            int y = dgv.Location.Y;
+            int width = 0;
+            int height = dgv.ColumnHeadersHeight;
+
+            for (int row = 0; row < rowIndex; row++)
+            {
+                if(dgv.Rows[row].Displayed) height += dgv.Rows[row].Height;
+            }
+
+            for (int col = 0; col < columnIndex; col++)
+            {
+                width += dgv.Columns[col].Width;
+            }
+
+            return new Point(x + width, y + height);
+        }
+
+        private void tBox_OrdersCellEditor_LostFocus(object sender,EventArgs e)
+        {
+            try
+            {
+                tBox_OrdersCellEditor.Visible = false;
+
+                string value = tBox_OrdersCellEditor.Text.Trim();
+                DataGridViewCell cell = dgv_orderList.CurrentCell;
+
+                //DataRowView curRow = dgv_orderList.CurrentRow.DataBoundItem as DataRowView;
+                //weitongDataSet1.orderRow data = curRow.Row as weitongDataSet1.orderRow;
+
+                DataRowView row = dgv_orderList.Rows[cell.RowIndex].DataBoundItem as DataRowView;
+                weitongDataSet1.orderRow data = row.Row as weitongDataSet1.orderRow;
+                if (dgv_orderList.Columns[cell.ColumnIndex].Name == "orderListOrderComment")
+                {
+                    Order.updateComment(data.id, value);
+                }
+                m_salesMgr.reloadOrderList();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_OrdersCellEditor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    tBox_OrdersCellEditor_LostFocus(tBox_OrdersCellEditor, new EventArgs());
                 }
             }
             catch (Exception ex)

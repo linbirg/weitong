@@ -141,6 +141,7 @@
             this.currentOrderFavorablePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.currentOrderUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPg_OrderList = new System.Windows.Forms.TabPage();
+            this.tBox_OrdersCellEditor = new System.Windows.Forms.TextBox();
             this.lbl_curDate = new System.Windows.Forms.Label();
             this.lbl_statisticsCurMonthTotal = new System.Windows.Forms.Label();
             this.lbl_statisticsCurDateTotal = new System.Windows.Forms.Label();
@@ -148,8 +149,10 @@
             this.orderListOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderListCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderListOrderAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderReceived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderListOrderDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderListOrderState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderListOrderComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_orderList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_viewOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_PrintPrder = new System.Windows.Forms.ToolStripMenuItem();
@@ -1221,6 +1224,7 @@
             // 
             // tabPg_OrderList
             // 
+            this.tabPg_OrderList.Controls.Add(this.tBox_OrdersCellEditor);
             this.tabPg_OrderList.Controls.Add(this.lbl_curDate);
             this.tabPg_OrderList.Controls.Add(this.lbl_statisticsCurMonthTotal);
             this.tabPg_OrderList.Controls.Add(this.lbl_statisticsCurDateTotal);
@@ -1232,10 +1236,19 @@
             this.tabPg_OrderList.Text = "完成订单";
             this.tabPg_OrderList.UseVisualStyleBackColor = true;
             // 
+            // tBox_OrdersCellEditor
+            // 
+            this.tBox_OrdersCellEditor.Location = new System.Drawing.Point(651, 226);
+            this.tBox_OrdersCellEditor.Name = "tBox_OrdersCellEditor";
+            this.tBox_OrdersCellEditor.Size = new System.Drawing.Size(100, 21);
+            this.tBox_OrdersCellEditor.TabIndex = 5;
+            this.tBox_OrdersCellEditor.Visible = false;
+            this.tBox_OrdersCellEditor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_OrdersCellEditor_KeyPress);
+            // 
             // lbl_curDate
             // 
             this.lbl_curDate.AutoSize = true;
-            this.lbl_curDate.Location = new System.Drawing.Point(704, 70);
+            this.lbl_curDate.Location = new System.Drawing.Point(915, 102);
             this.lbl_curDate.Name = "lbl_curDate";
             this.lbl_curDate.Size = new System.Drawing.Size(125, 12);
             this.lbl_curDate.TabIndex = 4;
@@ -1244,7 +1257,7 @@
             // lbl_statisticsCurMonthTotal
             // 
             this.lbl_statisticsCurMonthTotal.AutoSize = true;
-            this.lbl_statisticsCurMonthTotal.Location = new System.Drawing.Point(704, 148);
+            this.lbl_statisticsCurMonthTotal.Location = new System.Drawing.Point(915, 180);
             this.lbl_statisticsCurMonthTotal.Name = "lbl_statisticsCurMonthTotal";
             this.lbl_statisticsCurMonthTotal.Size = new System.Drawing.Size(215, 12);
             this.lbl_statisticsCurMonthTotal.TabIndex = 3;
@@ -1253,7 +1266,7 @@
             // lbl_statisticsCurDateTotal
             // 
             this.lbl_statisticsCurDateTotal.AutoSize = true;
-            this.lbl_statisticsCurDateTotal.Location = new System.Drawing.Point(704, 112);
+            this.lbl_statisticsCurDateTotal.Location = new System.Drawing.Point(915, 144);
             this.lbl_statisticsCurDateTotal.Name = "lbl_statisticsCurDateTotal";
             this.lbl_statisticsCurDateTotal.Size = new System.Drawing.Size(191, 12);
             this.lbl_statisticsCurDateTotal.TabIndex = 2;
@@ -1273,8 +1286,10 @@
             this.orderListOrderID,
             this.orderListCustomerName,
             this.orderListOrderAmount,
+            this.orderListOrderReceived,
             this.orderListOrderDate,
-            this.orderListOrderState});
+            this.orderListOrderState,
+            this.orderListOrderComment});
             this.dgv_orderList.ContextMenuStrip = this.ctms_orderList;
             this.dgv_orderList.Location = new System.Drawing.Point(4, 3);
             this.dgv_orderList.MultiSelect = false;
@@ -1285,8 +1300,9 @@
             this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_orderList.RowTemplate.Height = 23;
             this.dgv_orderList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_orderList.Size = new System.Drawing.Size(633, 311);
+            this.dgv_orderList.Size = new System.Drawing.Size(905, 311);
             this.dgv_orderList.TabIndex = 1;
+            this.dgv_orderList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_orderList_CellDoubleClick);
             this.dgv_orderList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_orderList_CellFormatting);
             // 
             // orderListOrderID
@@ -1307,6 +1323,12 @@
             this.orderListOrderAmount.Name = "orderListOrderAmount";
             this.orderListOrderAmount.ReadOnly = true;
             // 
+            // orderListOrderReceived
+            // 
+            this.orderListOrderReceived.HeaderText = "实收金额";
+            this.orderListOrderReceived.Name = "orderListOrderReceived";
+            this.orderListOrderReceived.ReadOnly = true;
+            // 
             // orderListOrderDate
             // 
             this.orderListOrderDate.HeaderText = "订单时间";
@@ -1319,6 +1341,13 @@
             this.orderListOrderState.HeaderText = "订单状态";
             this.orderListOrderState.Name = "orderListOrderState";
             this.orderListOrderState.ReadOnly = true;
+            // 
+            // orderListOrderComment
+            // 
+            this.orderListOrderComment.HeaderText = "备注";
+            this.orderListOrderComment.Name = "orderListOrderComment";
+            this.orderListOrderComment.ReadOnly = true;
+            this.orderListOrderComment.Width = 220;
             // 
             // ctms_orderList
             // 
@@ -1964,26 +1993,26 @@
             this.tsmi_deleteUser,
             this.tsmi_editUser});
             this.ctms_users.Name = "ctms_users";
-            this.ctms_users.Size = new System.Drawing.Size(153, 92);
+            this.ctms_users.Size = new System.Drawing.Size(110, 70);
             // 
             // tsmi_addUser
             // 
             this.tsmi_addUser.Name = "tsmi_addUser";
-            this.tsmi_addUser.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_addUser.Size = new System.Drawing.Size(109, 22);
             this.tsmi_addUser.Text = "&A添加";
             this.tsmi_addUser.Click += new System.EventHandler(this.tsmi_addUser_Click);
             // 
             // tsmi_deleteUser
             // 
             this.tsmi_deleteUser.Name = "tsmi_deleteUser";
-            this.tsmi_deleteUser.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteUser.Size = new System.Drawing.Size(109, 22);
             this.tsmi_deleteUser.Text = "&D删除";
             this.tsmi_deleteUser.Click += new System.EventHandler(this.tsmi_deleteUser_Click);
             // 
             // tsmi_editUser
             // 
             this.tsmi_editUser.Name = "tsmi_editUser";
-            this.tsmi_editUser.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_editUser.Size = new System.Drawing.Size(109, 22);
             this.tsmi_editUser.Text = "&E修改";
             this.tsmi_editUser.Click += new System.EventHandler(this.tsmi_editUser_Click);
             // 
@@ -2541,11 +2570,6 @@
         private System.Windows.Forms.Label lbl_statisticsCurDateTotal;
         private System.Windows.Forms.Label lbl_statisticsCurMonthTotal;
         private System.Windows.Forms.Label lbl_curDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListCustomerName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderAmount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderState;
         private System.Windows.Forms.DataGridViewTextBoxColumn codeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn chateauDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn discriptionDataGridViewTextBoxColumn;
@@ -2570,6 +2594,14 @@
         private System.Windows.Forms.ToolStripMenuItem tsmi_addUser;
         private System.Windows.Forms.ToolStripMenuItem tsmi_deleteUser;
         private System.Windows.Forms.ToolStripMenuItem tsmi_editUser;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListCustomerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderReceived;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderComment;
+        private System.Windows.Forms.TextBox tBox_OrdersCellEditor;
     }
 }
 

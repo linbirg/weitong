@@ -160,10 +160,10 @@ FROM      wines</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="orderTableAdapter" GeneratorDataComponentClassName="orderTableAdapter" Name="order" UserDataComponentName="orderTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="weitongConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="weitongConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT   customers.name, orders.id, orders.effectdate, orders.orderstate, orders.received
+                    <CommandText>SELECT   customers.name, orders.id, orders.effectdate, orders.orderstate, orders.received,orders.amount,orders.comment
 FROM      orders INNER JOIN
                 customers ON orders.customerid = customers.id</CommandText>
                     <Parameters />
@@ -177,6 +177,8 @@ FROM      orders INNER JOIN
               <Mapping SourceColumn="effectdate" DataSetColumn="effectdate" />
               <Mapping SourceColumn="orderstate" DataSetColumn="orderstate" />
               <Mapping SourceColumn="received" DataSetColumn="received" />
+              <Mapping SourceColumn="amount" DataSetColumn="amount" />
+              <Mapping SourceColumn="comment" DataSetColumn="comment" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -373,6 +375,14 @@ FROM      memberlevel</CommandText>
               <xs:element name="effectdate" msprop:Generator_ColumnVarNameInTable="columneffectdate" msprop:Generator_ColumnPropNameInRow="effectdate" msprop:Generator_ColumnPropNameInTable="effectdateColumn" msprop:Generator_UserColumnName="effectdate" type="xs:dateTime" />
               <xs:element name="orderstate" msprop:Generator_ColumnVarNameInTable="columnorderstate" msprop:Generator_ColumnPropNameInRow="orderstate" msprop:Generator_ColumnPropNameInTable="orderstateColumn" msprop:Generator_UserColumnName="orderstate" type="xs:int" minOccurs="0" />
               <xs:element name="received" msprop:Generator_ColumnVarNameInTable="columnreceived" msprop:Generator_ColumnPropNameInRow="received" msprop:Generator_ColumnPropNameInTable="receivedColumn" msprop:Generator_UserColumnName="received" type="xs:decimal" minOccurs="0" />
+              <xs:element name="amount" msprop:Generator_ColumnVarNameInTable="columnamount" msprop:Generator_ColumnPropNameInRow="amount" msprop:Generator_ColumnPropNameInTable="amountColumn" msprop:Generator_UserColumnName="amount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="comment" msprop:Generator_ColumnVarNameInTable="columncomment" msprop:Generator_ColumnPropNameInRow="comment" msprop:Generator_ColumnPropNameInTable="commentColumn" msprop:Generator_UserColumnName="comment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32767" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -428,7 +438,7 @@ FROM      memberlevel</CommandText>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="storage_ibfk_1" msdata:parent="wines" msdata:child="storage" msdata:parentkey="code" msdata:childkey="code" msprop:Generator_UserChildTable="storage" msprop:Generator_ChildPropName="GetstorageRows" msprop:Generator_UserParentTable="wines" msprop:Generator_UserRelationName="storage_ibfk_1" msprop:Generator_RelationVarName="relationstorage_ibfk_1" msprop:Generator_ParentPropName="winesRow" />
+      <msdata:Relationship name="storage_ibfk_1" msdata:parent="wines" msdata:child="storage" msdata:parentkey="code" msdata:childkey="code" msprop:Generator_UserChildTable="storage" msprop:Generator_ChildPropName="GetstorageRows" msprop:Generator_ParentPropName="winesRow" msprop:Generator_UserRelationName="storage_ibfk_1" msprop:Generator_RelationVarName="relationstorage_ibfk_1" msprop:Generator_UserParentTable="wines" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>
