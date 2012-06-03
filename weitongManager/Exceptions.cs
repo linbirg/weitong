@@ -22,4 +22,17 @@ namespace weitongManager
     {
         public InvalidWineCodeException(string msg = "错误的酒编码") : base(msg) { }
     }
+
+    class CodeConflictException : ApplicationException
+    {
+        public CodeConflictException(string msg = "购物车中已经存在") : base(msg) { }
+    }
+
+    /// <summary>
+    /// 参数错误异常
+    /// </summary>
+    class InvalidArgumentException : ApplicationException
+    {
+        public InvalidArgumentException(string msg = "参数错误") : base(msg) { }
+    }
 }

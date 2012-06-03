@@ -897,6 +897,7 @@
             this.btn_continueOrder.TabIndex = 32;
             this.btn_continueOrder.Text = "继续购物";
             this.btn_continueOrder.UseVisualStyleBackColor = true;
+            this.btn_continueOrder.Visible = false;
             this.btn_continueOrder.Click += new System.EventHandler(this.btn_curOrderContinue_Click);
             // 
             // lbl_curOrderTotal

@@ -28,8 +28,8 @@ namespace weitongManager
             bindStorageInfoData();
             setOffColumn();
 
-            m_cartDetailList = new BindingList<CartDetailRowData>();
-            bindCartDetailData();
+            //m_cartDetailList = new BindingList<CartDetailRowData>();
+            
             bindOrderDetails();
             //bindCurrentOrder();
             bindOrderList();
@@ -37,13 +37,18 @@ namespace weitongManager
             //m_currentCart = new Cart();
             // 添加事件
             this.StorageReload += new storageReloadEventHandler(OnStorageReload);
+            
+            m_currentCart = new Cart();
+            m_currentCart.WineAdded += new Cart.WineAddedHander(Cart_WineAdded);
+            bindCartDetailData();
         }
 
         public void initCart()
         {
-            if (m_cartDetailList == null) m_cartDetailList = new BindingList<CartDetailRowData>();
-            m_cartDetailList.Clear();
+            //if (m_cartDetailList == null) m_cartDetailList = new BindingList<CartDetailRowData>();
+            //m_cartDetailList.Clear();
             CurrentOrder = null;
+            //m_currentCart = new Cart();
         }
 
         /// <summary>
@@ -82,30 +87,6 @@ namespace weitongManager
             DataRowView dataRowView = this.m_storageInfoGrid.CurrentRow.DataBoundItem as DataRowView;
             weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
             addStorage2Cart(dataRow.code, 1);
-            //if (dataRow.units < 1)
-            //{
-            //    throw new ZeroStorageException();
-            //    // 库存为零则不能加入购物车。
-            //    //return;
-            //}
-            //int discount = 100;
-            //if (CartCustomer != null) discount = CartCustomer.Discount;
-            //int units = 1;
-            //CartDetailRowData item = new CartDetailRowData(dataRow.code, dataRow.description, dataRow.bottle, dataRow.retailprice, discount, units);
-            //int i =0;
-            //for(;i<m_cartDetailList.Count; i++) // CartDetailRowData data in m_cartDetailList)
-            //{
-            //    CartDetailRowData data = m_cartDetailList[i];
-            //    if (data.Code == item.Code)
-            //    {
-            //        data.Units = data.Units + 1;
-            //        break;
-            //    }
-            //}
-            //if(i == m_cartDetailList.Count) m_cartDetailList.Add(item);
-            //CartDetailView.Refresh();
-            //// 此时并没有减少实际的库存量，库存量在生成订单的时候会修改。
-            //dataRow.units = dataRow.units - 1;
             
         }
 
@@ -117,7 +98,7 @@ namespace weitongManager
         /// <param name="units">增加的数量，默认为1。</param>
         public void plusCartWineUnits(string code, int units = 1)
         {
-            if (m_cartDetailList == null) return;
+            if (m_currentCart == null) return;
 
 
             // 减少内存中用于显示的库存信息，主要包括库存表和销售库存显示表。
@@ -127,27 +108,29 @@ namespace weitongManager
 
             if (dataRow != null)
             {
-                int i = 0;
-                for (; i < m_cartDetailList.Count; i++)
-                {
-                    if (m_cartDetailList[i].Code == code) break;
-                }
+                //int i = 0;
+                //for (; i < m_cartDetailList.Count; i++)
+                //{
+                //    if (m_cartDetailList[i].Code == code) break;
+                //}
 
-                if (i == m_cartDetailList.Count) return;       // 指定的酒不在购物车中。
+                //if (i == m_cartDetailList.Count) return;       // 指定的酒不在购物车中。
 
-                // 
-                if ((dataRow.units - units >= 0))
+                //// 
+                if (dataRow.units - units >= 0)
                 {
-                    if ((m_cartDetailList[i].Units + units > 0))
-                    {
-                        dataRow.units -= units;
-                        m_cartDetailList[i].Units += units;            // 增加购物车中指定酒的数量
-                    }
-                    else
-                    {
-                        // 购物车里数量不足
-                        throw new ZeroCartException();
-                    }
+                    m_currentCart.addWine(code,units);
+                    dataRow.units -= units;
+                //    if ((m_cartDetailList[i].Units + units > 0))
+                //    {
+                //        dataRow.units -= units;
+                //        m_cartDetailList[i].Units += units;            // 增加购物车中指定酒的数量
+                //    }
+                //    else
+                //    {
+                //        // 购物车里数量不足
+                //        throw new ZeroCartException();
+                //    }
                 }
                 else
                 {
@@ -170,6 +153,7 @@ namespace weitongManager
         {
             DataGridViewRow row = m_cartDetailGrid.Rows[rowIndex];
             CartDetailRowData data = row.DataBoundItem as CartDetailRowData;
+            m_currentCart.removeWine(data.Code);
             // 增加内存中用于显示的库存信息，主要包括库存表和销售库存显示表。
             //DataRow[] dtRows = m_dataset.storage.Select("code ='" + data.Code + "'");
             weitongDataSet1.storageRow dataRow = findCodeInStorageInf(data.Code);
@@ -177,8 +161,8 @@ namespace weitongManager
             {
                 dataRow.units += data.Units;
             }
-
-            m_cartDetailList.Remove(data);
+            
+            
             m_cartDetailGrid.Refresh();
         }
 
@@ -199,31 +183,31 @@ namespace weitongManager
         /// </summary>
         public Order calcCart()
         {
-            Order anOrder = null;
-            //if (CurrentOrder != null)
-            //{
-            //    anOrder = CurrentOrder;
-            //}
-            //else
-            //{
-              anOrder = Order.NewOrder();
-            //}
+            Order anOrder = m_currentCart.calcCart();
+            ////if (CurrentOrder != null)
+            ////{
+            ////    anOrder = CurrentOrder;
+            ////}
+            ////else
+            ////{
+            //  anOrder = Order.NewOrder();
+            ////}
 
-            anOrder.CustomerID = CartCustomer.ID;
-            anOrder.UserID = m_currentUser.ID;
-            anOrder.EffectDate = DateTime.Now;
-            anOrder.State = OrderState.FOR_PAY;
+            //anOrder.CustomerID = CartCustomer.ID;
+            //anOrder.UserID = m_currentUser.ID;
+            //anOrder.EffectDate = DateTime.Now;
+            //anOrder.State = OrderState.FOR_PAY;
         
-            decimal amount = 0;
-            anOrder.emptyDetails();
-            foreach (CartDetailRowData item in m_cartDetailList)
-            {
-                amount += item.Amount;
-                anOrder.addDetail(item.Code, item.Units, item.Memberprice, item.Discount);
-            }
+            //decimal amount = 0;
+            //anOrder.emptyDetails();
+            //foreach (CartDetailRowData item in m_cartDetailList)
+            //{
+            //    amount += item.Amount;
+            //    anOrder.addDetail(item.Code, item.Units, item.Memberprice, item.Discount);
+            //}
             
-            //anOrder.save();
-            
+            ////anOrder.save();
+            anOrder.UserID = m_currentUser.ID;
             return anOrder;
             
             //reloadStorageInfo();
@@ -247,7 +231,7 @@ namespace weitongManager
             CurrentOrder.UserID = m_currentUser.ID;
             CurrentOrder.save(); 
             // 完成订单之后，购物系统应该处于初始化状态，等待新的购物流程开始。
-            m_cartDetailList.Clear();
+            //m_cartDetailList.Clear();
             CurrentOrder = null;
         }
 
@@ -296,66 +280,10 @@ namespace weitongManager
             }
         }
 
-        //public decimal getCurrentOrderAmount()
-        //{
-        //    decimal amount = 0;
-        //    foreach (OrderRowData item in m_currentOrderDetailList)
-        //    {
-        //        amount += item.KnockDownPrice * item.Units;
-        //        //favorableAmount += item.FavorablePrice * item.Units;
-        //    }
-        //    return amount;
-        //}
-
-        //public decimal getCurrentOrderFavorableAmount()
-        //{
-        //    decimal amount = 0;
-        //    foreach (OrderRowData item in m_currentOrderDetailList)
-        //    {
-        //        //amount += item.KnockDownPrice * item.Units;
-        //        amount += item.FavorablePrice * item.Units;
-        //    }
-        //    return amount;
-        //}
-        //// 设置指定的orderID为当前的订单(订单必须已经存在于数据库中)。
-        //// 根据订单信息，分别设定当前的客户信息和订单详细信息。
-        //// 返回值：-1表示未找到订单 -2表示未找到指定的客户信息 0表示正常完成。
-        //public int setCurrentOrder(int orderID)
-        //{
-        //    Order curOrder = Order.findByID(orderID);
-        //    if (curOrder == null) return -1;
-        //    m_orderID = curOrder.ID;
-        //    m_currentOrder = curOrder;
-
-        //    Customer curCustomer = Customer.findByID(curOrder.CustomerID);
-        //    if (curCustomer == null) return -2;
-        //    m_currentCustomer = curCustomer;
-
-        //    List<OrderRowData> detailList = getOrderDetailByOrderID(m_orderID);
-        //    // 如果没有订单的详细信息，则正常返回
-        //    if (detailList == null) return 0;
-        //    if (this.m_currentOrderDetailList == null)
-        //    {
-        //        m_currentOrderDetailList = new BindingList<OrderRowData>(detailList);
-        //    }
-        //    else
-        //    {
-        //        m_currentOrderDetailList.Clear();
-        //        foreach (OrderRowData item in detailList)
-        //        {
-        //            m_currentOrderDetailList.Add(item);
-        //        }
-        //    }
-
-        //    //
-        //    calcAmountAndFavorableAmountProperty();
-        //    return 0;
-        //}
 
         public void generateCartDetail()
         {
-            if (m_cartDetailList == null) m_cartDetailList = new BindingList<CartDetailRowData>();
-            m_cartDetailList.Clear();
+            m_currentCart.Clear();
             foreach (OrderRowData orderDetail in m_currentOrderDetailList)
             {
                 //CartDetailRowData aRow = new CartDetailRowData();
@@ -369,8 +297,9 @@ namespace weitongManager
                 //aRow.Price = storageRow.retailprice;
                 //m_cartDetailList.Add(aRow);
                 addStorage2Cart(orderDetail.Code, orderDetail.Units);
-                CartDetailRowData detail = findCodeInCartDetails(orderDetail.Code);
-                detail.Discount = (int)(100 * orderDetail.KnockDownPrice / (orderDetail.KnockDownPrice + orderDetail.FavorablePrice));
+                //CartDetailRowData detail = findCodeInCartDetails(orderDetail.Code);
+                int discount = (int)(100 * orderDetail.KnockDownPrice / (orderDetail.KnockDownPrice + orderDetail.FavorablePrice));
+                m_currentCart.setDiscount(orderDetail.Code, discount);
             }
         }
 
@@ -441,11 +370,10 @@ namespace weitongManager
 
         public Customer CartCustomer
         {
-            get { return m_currentCustomer; }
+            get { return m_currentCart.Customer; }
             set 
             { 
-                m_currentCustomer = value;
-                updateCartMemberDiscout(m_currentCustomer);
+                m_currentCart.Customer = value;
             }
         }
 
@@ -473,33 +401,7 @@ namespace weitongManager
                 m_currentOrder = value;
                 if (m_currentOrder != null)
                 {
-                    //generateCurrentOrderDetails();
-                    // 设置
-                    //CartCustomer = Customer.findByID(m_currentOrder.CustomerID);
-                    //List<OrderDetail> details = m_currentOrder.getDetails();
-                    //if (details != null)
-                    //{
-                    //    if (m_currentOrderDetailList == null)
-                    //    {
-                    //        m_currentOrderDetailList = new BindingList<OrderRowData>();
-                    //    }
-                    //    m_currentOrderDetailList.Clear();
-                        
-                    //    foreach (OrderDetail detail in details)
-                    //    {
-                    //        OrderRowData data = new OrderRowData();
-                    //        data.Code = detail.Code;
-                    //        weitongDataSet1.storageRow aWineStrge = Storage.findByCode(data.Code);
-                    //        data.Description = aWineStrge.description;
-                    //        data.KnockDownPrice = detail.KnockDownPrice;
-                    //        data.Units = detail.Units;
-                    //        data.FavorablePrice = aWineStrge.retailprice - detail.KnockDownPrice;
-                    //        m_currentOrderDetailList.Add(data);
-                    //    }
-                    //    //calcAmountAndFavorableAmountProperty();
-                    //}
-                    //m_currentOrderDetailList
-                    //bindCurrentOrder();
+                    //do nothing
                 }
                 else
                 {
@@ -565,7 +467,7 @@ namespace weitongManager
                 m_currentOrderDetailList.Clear();
             }
            
-            foreach (CartDetailRowData item in m_cartDetailList)
+            foreach (CartDetailRowData item in m_currentCart.Items)
             {
                 OrderRowData aRow = new OrderRowData();
                 aRow.Code = item.Code;
@@ -616,7 +518,7 @@ namespace weitongManager
         private void bindCartDetailData()
         {
             this.CartDetailView.AutoGenerateColumns = false;
-            CartDetailView.DataSource = m_cartDetailList;
+            CartDetailView.DataSource = m_currentCart.Items;
 
             CartDetailView.Columns["codeDGVOrderDetailTextBoxColumn"].DataPropertyName = "Code";
             CartDetailView.Columns["descriptionDGVOrderDetailTextBoxColumn"].DataPropertyName = "description";
@@ -683,17 +585,17 @@ namespace weitongManager
         }
 
         // 根据客户的折扣信息更新购物车中的折扣信息。
-        private void updateCartMemberDiscout(Customer aCustomer)
-        {
-            if (m_cartDetailList != null)
-            {
-                foreach(CartDetailRowData item in m_cartDetailList)
-                {
-                    item.Discount = aCustomer.Discount;
-                }
-            }
-            m_cartDetailGrid.Refresh();
-        }
+        //private void updateCartMemberDiscout(Customer aCustomer)
+        //{
+        //    if (m_cartDetailList != null)
+        //    {
+        //        foreach(CartDetailRowData item in m_cartDetailList)
+        //        {
+        //            item.Discount = aCustomer.Discount;
+        //        }
+        //    }
+        //    m_cartDetailGrid.Refresh();
+        //}
 
         ///// <summary>
         ///// 减少内存中的酒的数量
@@ -741,20 +643,20 @@ namespace weitongManager
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        private CartDetailRowData findCodeInCartDetails(string code)
-        {
-            if (code == null || code == "") return null;
+        //private CartDetailRowData findCodeInCartDetails(string code)
+        //{
+        //    if (code == null || code == "") return null;
 
-            int i = 0;
-            for (; i < m_cartDetailList.Count; i++)
-            {
-                if (m_cartDetailList[i].Code == code) break;
-            }
+        //    int i = 0;
+        //    for (; i < m_cartDetailList.Count; i++)
+        //    {
+        //        if (m_cartDetailList[i].Code == code) break;
+        //    }
 
-            if (i == m_cartDetailList.Count) return null;       // 指定的酒不在购物车中。
+        //    if (i == m_cartDetailList.Count) return null;       // 指定的酒不在购物车中。
 
-            return m_cartDetailList[i];
-        }
+        //    return m_cartDetailList[i];
+        //}
 
         private weitongDataSet1.storageRow findCodeInStorageInf(string code)
         {
@@ -783,25 +685,26 @@ namespace weitongManager
                 // 库存为零则不能加入购物车。
                 //return;
             }
-            int discount = 100;
-            if (CartCustomer != null) discount = CartCustomer.Discount;
-            //int units = 1;
-            CartDetailRowData item = new CartDetailRowData(dataRow.code, dataRow.description, dataRow.bottle, dataRow.retailprice, discount, units);
+            m_currentCart.addWine(code, units);
+            //int discount = 100;
+            //if (CartCustomer != null) discount = CartCustomer.Discount;
+            ////int units = 1;
+            //CartDetailRowData item = new CartDetailRowData(dataRow.code, dataRow.description, dataRow.bottle, dataRow.retailprice, discount, units);
 
-            if (m_cartDetailList == null)            
-                m_cartDetailList = new BindingList<CartDetailRowData>();
-            
-            int i = 0;
-            for (; i < m_cartDetailList.Count; i++) // CartDetailRowData data in m_cartDetailList)
-            {
-                CartDetailRowData data = m_cartDetailList[i];
-                if (data.Code == item.Code)
-                {
-                    data.Units = data.Units + units;
-                    break;
-                }
-            }
-            if (i == m_cartDetailList.Count) m_cartDetailList.Add(item);
+            //if (m_cartDetailList == null)
+            //    m_cartDetailList = new BindingList<CartDetailRowData>();
+
+            //int i = 0;
+            //for (; i < m_cartDetailList.Count; i++) // CartDetailRowData data in m_cartDetailList)
+            //{
+            //    CartDetailRowData data = m_cartDetailList[i];
+            //    if (data.Code == item.Code)
+            //    {
+            //        data.Units = data.Units + units;
+            //        break;
+            //    }
+            //}
+            //if (i == m_cartDetailList.Count) m_cartDetailList.Add(item);
             CartDetailView.Refresh();
             // 此时并没有减少实际的库存量，库存量在生成订单的时候会修改。
             dataRow.units = dataRow.units - units;
@@ -813,7 +716,8 @@ namespace weitongManager
         /// <param name="sender"></param>
         private void OnStorageReload(object sender)
         {
-            if (m_cartDetailList != null) m_cartDetailList.Clear();
+            //if (m_cartDetailList != null) m_cartDetailList.Clear();
+            m_currentCart.Clear();
         }
 
         /// <summary>
@@ -826,6 +730,16 @@ namespace weitongManager
             m_orderAdapter.Fill(DataSet.order);
         }
 
+        private void refreshCartGridView()
+        {
+            m_cartDetailGrid.DataSource = m_currentCart.Items;
+        }
+
+        private void Cart_WineAdded(object sender, EventArgs e)
+        {
+            refreshCartGridView();
+        }
+
 
 
         private DataGridView m_storageInfoGrid = null;
@@ -833,7 +747,7 @@ namespace weitongManager
         private weitongDataSet1TableAdapters.storageTableAdapter m_storageAdapter = null;
 
         private DataGridView m_cartDetailGrid = null;
-        private BindingList<CartDetailRowData> m_cartDetailList = null;
+        //private BindingList<CartDetailRowData> m_cartDetailList = null;
 
         private DataGridView m_currentOrderGrid = null;
         private BindingList<OrderRowData> m_currentOrderDetailList = null;

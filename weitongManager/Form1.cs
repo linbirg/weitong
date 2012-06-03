@@ -96,7 +96,7 @@ namespace weitongManager
             }
             
         }
-
+        
         private void btn_addSupplier_Click(object sender, EventArgs e)
         {
             try
@@ -357,22 +357,30 @@ namespace weitongManager
                 {
                     doSaveCustomer();
                     Order newOrder = m_salesMgr.calcCart();
-                    if (m_salesMgr.CurrentOrder == null || m_salesMgr.CurrentOrder.State != OrderState.FOR_PAY)
+                    FrmOrderPreview FrmPrev = new FrmOrderPreview();
+                    FrmPrev.Order = newOrder;
+                    if (DialogResult.OK == FrmPrev.ShowDialog())
                     {
-                        m_salesMgr.CurrentOrder = newOrder;
+                        m_salesMgr.CurrentOrder = FrmPrev.Order;
+                        jump2CurrentOrder();
+                        showCurrentOrder();
                     }
-                    else
-                    {
-                        m_salesMgr.CurrentOrder.copy(newOrder);
+                    //if (m_salesMgr.CurrentOrder == null || m_salesMgr.CurrentOrder.State != OrderState.FOR_PAY)
+                    //{
+                    //    m_salesMgr.CurrentOrder = newOrder;
+                    //}
+                    //else
+                    //{
+                    //    m_salesMgr.CurrentOrder.copy(newOrder);
                         
-                    }
+                    //}
 
-                    //保存变更到数据库
-                    m_salesMgr.CurrentOrder.save();
-                    enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
+                    ////保存变更到数据库
+                    //m_salesMgr.CurrentOrder.save();
+                    //enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
 
-                    jump2CurrentOrder();
-                    showCurrentOrder();
+                    //jump2CurrentOrder();
+                    //showCurrentOrder();
                 }
             }
             catch (Exception ex)
@@ -596,16 +604,23 @@ namespace weitongManager
         // 撤销订单，只有等待付款的订单可以撤销，已经完成付款的单子无法撤销。
         private void btn_cancelOrder_Click(object sender, EventArgs e)
         {
-            if (m_salesMgr.CurrentOrder != null && m_salesMgr.CurrentOrder.isCompleted)
+            try
             {
-                MessageBox.Show("订单已完成付款，无法撤销！");
+                if (m_salesMgr.CurrentOrder != null && m_salesMgr.CurrentOrder.isCompleted)
+                {
+                    MessageBox.Show("订单已完成付款，无法撤销！");
+                }
+                else
+                {
+                    // 修改库存，并更新订单状态为撤销
+                    m_salesMgr.cancelOrder(m_salesMgr.CurrentOrder);
+                    m_salesMgr.updateOrderList();
+                    jump2OrderList();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // 修改库存，并更新订单状态为撤销
-                m_salesMgr.cancelOrder(m_salesMgr.CurrentOrder);
-                m_salesMgr.updateOrderList();
-                jump2OrderList();
+                WARNING(ex.Message);
             }
         }
 

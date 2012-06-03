@@ -38,6 +38,11 @@ namespace weitongManager
             set { m_units = value; }
         }
 
+        public decimal Amount
+        {
+            get { return KnockDownPrice * Units; }
+        }
+
         private string m_code;
         private string m_description;
         private decimal m_knockdownPrice;
