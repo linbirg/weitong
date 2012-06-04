@@ -161,5 +161,93 @@ namespace weitongManager
         {
             plusUnits(code, -nec);
         }
+
+        // 添加库存信息
+        // supplierid若为-1这表示没有设置对应的供应商
+        /// <summary>
+        /// 添加库存信息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="supplierid"></param>
+        /// <param name="price"></param>
+        /// <param name="retailprice"></param>
+        /// <param name="units"></param>
+        public static void insert(string code, int supplierid = -1, decimal price = 0,
+            decimal retailprice = 0, int units = 0)
+        {
+            string insStr = @"INSERT INTO storage(code, supplierid, price, retailprice, units) 
+                                VALUES(@code, @supplierid, @price, @retailprice, @units)";
+            MySql.Data.MySqlClient.MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
+            insertCmd.Connection = ConnSingleton.Connection;
+            insertCmd.CommandText = insStr;
+            insertCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
+            if (supplierid > 0)
+            {
+                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = supplierid;
+            }
+            else
+            {
+                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
+            }
+            insertCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
+            //insertCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
+            insertCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
+            insertCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
+
+            //m_dataAdapter.Adapter.InsertCommand = insertCmd;
+            try
+            {
+                insertCmd.Connection.Open();
+                insertCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                insertCmd.Connection.Close();
+            }
+            
+        }
+
+        // 更新库存信息
+        // supplierid若为-1这表示没有设置对应的供应商
+        /// <summary>
+        /// 更新库存信息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="supplierid"></param>
+        /// <param name="price"></param>
+        /// <param name="retailprice"></param>
+        /// <param name="units"></param>
+        public static void update(string code, int supplierid = -1, decimal price = 0, decimal retailprice = 0, int units = 0)
+        {
+            string updateStr = @"UPDATE storage SET supplierid = @supplierid, price = @price, 
+                                                 retailprice = @retailprice, units = @units
+                                 WHERE code = @code";
+            MySql.Data.MySqlClient.MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
+            updateCmd.Connection = ConnSingleton.Connection;
+            updateCmd.CommandText = updateStr;
+            updateCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
+            if (supplierid > 0)
+            {
+                updateCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = supplierid;
+            }
+            else
+            {
+                updateCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
+            }
+            updateCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
+            //updateCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
+            updateCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
+            updateCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
+
+            try
+            {
+                updateCmd.Connection.Open();
+                updateCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                updateCmd.Connection.Close();
+            }
+        }
     }
 }

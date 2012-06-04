@@ -36,19 +36,19 @@ namespace weitongManager
             if (Storage.existsWine(code))
             {
                 Wine.update(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                updateStorage(code, supplierID, price, retailprice, units);
+                Storage.update(code, supplierID, price, retailprice, units);
             }
             // 如果没有库存记录，但是已经有酒的信息了，则更新酒的信息，再插入库存记录
             else if (Wine.existsWine(code))
             {
                 Wine.update(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                insertStorage(code, supplierID, price, retailprice, units);
+                Storage.insert(code, supplierID, price, retailprice, units);
             }
             // 否则先插入酒记录，再插入库存记录
             else
             {
                 Wine.insert(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                insertStorage(code, supplierID, price, retailprice, units);
+                Storage.insert(code, supplierID, price, retailprice, units);
             }
             
             //m_dataset.storage.AcceptChanges();
@@ -149,37 +149,6 @@ namespace weitongManager
             m_wineStorageGrid.Columns["discriptionDataGridViewTextBoxColumn"].DataPropertyName = "description";
         }
 
-        // 添加库存信息
-        // supplierid若为-1这表示没有设置对应的供应商
-        private void insertStorage(string code, int supplierid = -1, decimal price = 0, 
-            decimal retailprice = 0, int units = 0)
-        {
-            string insStr = @"INSERT INTO storage(code, supplierid, price, retailprice, units) 
-                                VALUES(@code, @supplierid, @price, @retailprice, @units)";
-            MySql.Data.MySqlClient.MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            insertCmd.Connection = m_dataAdapter.Connection;
-            insertCmd.CommandText = insStr;
-            insertCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
-            if (supplierid > 0)
-            {
-                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = supplierid;
-            }
-            else
-            {
-                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
-            }
-            insertCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
-            //insertCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
-            insertCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
-            insertCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
-
-            //m_dataAdapter.Adapter.InsertCommand = insertCmd;
-            insertCmd.Connection.Open();
-            IAsyncResult rest = insertCmd.BeginExecuteNonQuery();
-            insertCmd.EndExecuteNonQuery(rest);
-            insertCmd.Connection.Close();
-        }
-
         // 通过storage表的id，删除storage记录
         private void deleteStorageRow(int id)
         {
@@ -192,36 +161,6 @@ namespace weitongManager
             //IAsyncResult rest = deleteCmd.BeginExecuteNonQuery();
             //deleteCmd.EndExecuteNonQuery(rest);
             //deleteCmd.Connection.Close();
-        }
-
-
-        // 更新库存信息
-        // supplierid若为-1这表示没有设置对应的供应商
-        private void updateStorage(string code, int supplierid = -1, decimal price = 0, decimal retailprice = 0, int units = 0)
-        {
-            string updateStr = @"UPDATE storage SET supplierid = @supplierid, price = @price, 
-                                                 retailprice = @retailprice, units = @units
-                                 WHERE code = @code";
-            MySql.Data.MySqlClient.MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            updateCmd.Connection = m_dataAdapter.Connection;
-            updateCmd.CommandText = updateStr;
-            updateCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
-            if (supplierid > 0)
-            {
-                updateCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = supplierid;
-            }
-            else
-            {
-                updateCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
-            }
-            updateCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
-            //updateCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
-            updateCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
-            updateCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
-
-            updateCmd.Connection.Open();
-            updateCmd.ExecuteNonQuery();
-            updateCmd.Connection.Close();
         }
 
 
