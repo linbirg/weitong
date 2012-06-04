@@ -6,8 +6,13 @@ using MySql.Data.MySqlClient;
 
 namespace weitongManager
 {
+    /// <summary>
+    /// 库存类，需要维护两个表，一个是storage,一个是his_storage。
+    /// </summary>
     class Storage
     {
+
+        #region public static method
         /// <summary>
         /// 根据酒的编码查找库存信息，结果或者为空，或者为一条库存记录。
         /// </summary>
@@ -140,7 +145,7 @@ namespace weitongManager
                     }
                     else
                     {
-                        throw new ZeroStorageException("库存不足");
+                        throw new ZeroStorageException("你真的确定你要修改库存为负么，请不要开玩笑。");
                     }
                 }
                 else
@@ -165,7 +170,7 @@ namespace weitongManager
         // 添加库存信息
         // supplierid若为-1这表示没有设置对应的供应商
         /// <summary>
-        /// 添加库存信息
+        /// 添加库存信息,同时添加历史库存信息中的记录。
         /// </summary>
         /// <param name="code"></param>
         /// <param name="supplierid"></param>
@@ -175,52 +180,38 @@ namespace weitongManager
         public static void insert(string code, int supplierid = -1, decimal price = 0,
             decimal retailprice = 0, int units = 0)
         {
-            string insStr = @"INSERT INTO storage(code, supplierid, price, retailprice, units) 
-                                VALUES(@code, @supplierid, @price, @retailprice, @units)";
-            MySql.Data.MySqlClient.MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            insertCmd.Connection = ConnSingleton.Connection;
-            insertCmd.CommandText = insStr;
-            insertCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
-            if (supplierid > 0)
-            {
-                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = supplierid;
-            }
-            else
-            {
-                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
-            }
-            insertCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
-            //insertCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
-            insertCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
-            insertCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
-
-            //m_dataAdapter.Adapter.InsertCommand = insertCmd;
-            try
-            {
-                insertCmd.Connection.Open();
-                insertCmd.ExecuteNonQuery();
-            }
-            finally
-            {
-                insertCmd.Connection.Close();
-            }
-            
+            insert_his_storage(code, supplierid, price, retailprice, units);
+            insert_table("storage", code, supplierid, price, retailprice, units);
         }
 
-        // 更新库存信息
-        // supplierid若为-1这表示没有设置对应的供应商
         /// <summary>
-        /// 更新库存信息
+        /// 向历史库存加入记录。
         /// </summary>
         /// <param name="code"></param>
         /// <param name="supplierid"></param>
         /// <param name="price"></param>
         /// <param name="retailprice"></param>
         /// <param name="units"></param>
-        public static void update(string code, int supplierid = -1, decimal price = 0, decimal retailprice = 0, int units = 0)
+        public static void insert_his_storage(string code, int supplierid = -1, decimal price = 0,
+            decimal retailprice = 0, int units = 0)
+        {
+            insert_table("his_storage", code, supplierid, price, retailprice, units);
+        }
+
+        // 更新库存信息
+        // supplierid若为-1这表示没有设置对应的供应商
+        /// <summary>
+        /// 更新库存记录，但不更新库存数量。
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="supplierid"></param>
+        /// <param name="price"></param>
+        /// <param name="retailprice"></param>
+        /// <param name="units"></param>
+        public static void update(string code, int supplierid = -1, decimal price = 0, decimal retailprice = 0)
         {
             string updateStr = @"UPDATE storage SET supplierid = @supplierid, price = @price, 
-                                                 retailprice = @retailprice, units = @units
+                                                 retailprice = @retailprice
                                  WHERE code = @code";
             MySql.Data.MySqlClient.MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
             updateCmd.Connection = ConnSingleton.Connection;
@@ -237,7 +228,7 @@ namespace weitongManager
             updateCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
             //updateCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
             updateCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
-            updateCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
+            //updateCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
 
             try
             {
@@ -249,5 +240,76 @@ namespace weitongManager
                 updateCmd.Connection.Close();
             }
         }
+
+        #endregion
+
+
+        #region private static method
+
+        // 添加库存信息
+        // supplierid若为-1这表示没有设置对应的供应商
+        /// <summary>
+        /// 添加历史库存信息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="supplierid"></param>
+        /// <param name="price"></param>
+        /// <param name="retailprice"></param>
+        /// <param name="units"></param>
+        private static void insert_table(string table, string code, int supplierid = -1, decimal price = 0,
+            decimal retailprice = 0, int units = 0)
+        {
+            if (units < 0) throw new ZeroStorageException("添加库存不能为负值");
+            string columns = @"(code, supplierid, price, retailprice, units";
+            string values = @"(@code, @supplierid, @price, @retailprice, @units";
+            
+            if (table == "his_storage")
+            {
+                columns += ",effectdate)";
+                values += ",@effectdate)";
+            }
+            else
+            {
+                columns += ")";
+                values += ")";
+            }
+            string insStr = @"INSERT INTO " + table + columns +  
+                                "VALUES" + values;
+
+            MySql.Data.MySqlClient.MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
+            insertCmd.Connection = ConnSingleton.Connection;
+            insertCmd.CommandText = insStr;
+            //insertCmd.Parameters.Add("@table", MySqlDbType.VarChar).Value = table;
+            insertCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
+            if (supplierid > 0)
+            {
+                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = supplierid;
+            }
+            else
+            {
+                insertCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
+            }
+            insertCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
+            //insertCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
+            insertCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
+            insertCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
+
+            if (table == "his_storage")
+            {
+                insertCmd.Parameters.Add("@effectdate", MySqlDbType.DateTime).Value = DateTime.Now;
+            }
+            //m_dataAdapter.Adapter.InsertCommand = insertCmd;
+            try
+            {
+                insertCmd.Connection.Open();
+                insertCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                insertCmd.Connection.Close();
+            }
+
+        }
+        #endregion
     }
 }

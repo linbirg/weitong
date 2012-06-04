@@ -173,6 +173,8 @@
             this.tsmi_addToCart = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage_storage = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btn_cancel = new System.Windows.Forms.Button();
+            this.btn_OK = new System.Windows.Forms.Button();
             this.btn_seachStorage = new System.Windows.Forms.Button();
             this.tBox_supplier = new System.Windows.Forms.TextBox();
             this.btn_addStorage = new System.Windows.Forms.Button();
@@ -1511,6 +1513,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.btn_cancel);
+            this.groupBox5.Controls.Add(this.btn_OK);
             this.groupBox5.Controls.Add(this.btn_seachStorage);
             this.groupBox5.Controls.Add(this.tBox_supplier);
             this.groupBox5.Controls.Add(this.btn_addStorage);
@@ -1545,6 +1549,28 @@
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             // 
+            // btn_cancel
+            // 
+            this.btn_cancel.Location = new System.Drawing.Point(1086, 83);
+            this.btn_cancel.Name = "btn_cancel";
+            this.btn_cancel.Size = new System.Drawing.Size(75, 23);
+            this.btn_cancel.TabIndex = 32;
+            this.btn_cancel.Text = "取消";
+            this.btn_cancel.UseVisualStyleBackColor = true;
+            this.btn_cancel.Visible = false;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
+            // 
+            // btn_OK
+            // 
+            this.btn_OK.Location = new System.Drawing.Point(1005, 83);
+            this.btn_OK.Name = "btn_OK";
+            this.btn_OK.Size = new System.Drawing.Size(75, 23);
+            this.btn_OK.TabIndex = 31;
+            this.btn_OK.Text = "确定";
+            this.btn_OK.UseVisualStyleBackColor = true;
+            this.btn_OK.Visible = false;
+            this.btn_OK.Click += new System.EventHandler(this.btn_OK_Click);
+            // 
             // btn_seachStorage
             // 
             this.btn_seachStorage.Location = new System.Drawing.Point(839, 83);
@@ -1557,6 +1583,7 @@
             // 
             // tBox_supplier
             // 
+            this.tBox_supplier.Enabled = false;
             this.tBox_supplier.Location = new System.Drawing.Point(69, 85);
             this.tBox_supplier.Name = "tBox_supplier";
             this.tBox_supplier.Size = new System.Drawing.Size(100, 21);
@@ -1583,6 +1610,7 @@
             // 
             // tBox_retailprice
             // 
+            this.tBox_retailprice.Enabled = false;
             this.tBox_retailprice.Location = new System.Drawing.Point(588, 85);
             this.tBox_retailprice.Name = "tBox_retailprice";
             this.tBox_retailprice.Size = new System.Drawing.Size(100, 21);
@@ -1590,6 +1618,7 @@
             // 
             // tBox_units
             // 
+            this.tBox_units.Enabled = false;
             this.tBox_units.Location = new System.Drawing.Point(408, 85);
             this.tBox_units.Name = "tBox_units";
             this.tBox_units.Size = new System.Drawing.Size(100, 21);
@@ -1597,6 +1626,7 @@
             // 
             // tBox_price
             // 
+            this.tBox_price.Enabled = false;
             this.tBox_price.Location = new System.Drawing.Point(233, 85);
             this.tBox_price.Name = "tBox_price";
             this.tBox_price.Size = new System.Drawing.Size(100, 21);
@@ -1631,6 +1661,7 @@
             // 
             // tBox_description
             // 
+            this.tBox_description.Enabled = false;
             this.tBox_description.Location = new System.Drawing.Point(233, 15);
             this.tBox_description.Name = "tBox_description";
             this.tBox_description.Size = new System.Drawing.Size(203, 21);
@@ -1648,6 +1679,7 @@
             // 
             // tBox_country
             // 
+            this.tBox_country.Enabled = false;
             this.tBox_country.Location = new System.Drawing.Point(899, 15);
             this.tBox_country.Name = "tBox_country";
             this.tBox_country.Size = new System.Drawing.Size(100, 21);
@@ -1655,6 +1687,7 @@
             // 
             // tBox_score
             // 
+            this.tBox_score.Enabled = false;
             this.tBox_score.Location = new System.Drawing.Point(716, 45);
             this.tBox_score.Name = "tBox_score";
             this.tBox_score.Size = new System.Drawing.Size(100, 21);
@@ -1662,6 +1695,7 @@
             // 
             // tBox_bottle
             // 
+            this.tBox_bottle.Enabled = false;
             this.tBox_bottle.Location = new System.Drawing.Point(716, 18);
             this.tBox_bottle.Name = "tBox_bottle";
             this.tBox_bottle.Size = new System.Drawing.Size(100, 21);
@@ -1669,6 +1703,7 @@
             // 
             // tBox_quality
             // 
+            this.tBox_quality.Enabled = false;
             this.tBox_quality.Location = new System.Drawing.Point(531, 49);
             this.tBox_quality.Name = "tBox_quality";
             this.tBox_quality.Size = new System.Drawing.Size(100, 21);
@@ -1712,6 +1747,7 @@
             // 
             // tBox_appellation
             // 
+            this.tBox_appellation.Enabled = false;
             this.tBox_appellation.Location = new System.Drawing.Point(531, 15);
             this.tBox_appellation.Name = "tBox_appellation";
             this.tBox_appellation.Size = new System.Drawing.Size(100, 21);
@@ -1728,6 +1764,7 @@
             // 
             // tBox_Vintage
             // 
+            this.tBox_Vintage.Enabled = false;
             this.tBox_Vintage.Location = new System.Drawing.Point(233, 49);
             this.tBox_Vintage.Name = "tBox_Vintage";
             this.tBox_Vintage.Size = new System.Drawing.Size(100, 21);
@@ -1744,6 +1781,7 @@
             // 
             // tBox_chateau
             // 
+            this.tBox_chateau.Enabled = false;
             this.tBox_chateau.Location = new System.Drawing.Point(69, 45);
             this.tBox_chateau.Name = "tBox_chateau";
             this.tBox_chateau.Size = new System.Drawing.Size(100, 21);
@@ -1760,6 +1798,7 @@
             // 
             // tBox_code
             // 
+            this.tBox_code.Enabled = false;
             this.tBox_code.Location = new System.Drawing.Point(69, 18);
             this.tBox_code.Name = "tBox_code";
             this.tBox_code.Size = new System.Drawing.Size(100, 21);
@@ -2603,6 +2642,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderState;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderListOrderComment;
         private System.Windows.Forms.TextBox tBox_OrdersCellEditor;
+        private System.Windows.Forms.Button btn_OK;
+        private System.Windows.Forms.Button btn_cancel;
     }
 }
 

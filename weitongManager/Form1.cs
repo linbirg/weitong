@@ -54,6 +54,7 @@ namespace weitongManager
                 m_wineStorageMgr.DataSet = weitongDataSet1;
                 m_wineStorageMgr.Adapter = new weitongDataSet1TableAdapters.storageTableAdapter();
                 m_wineStorageMgr.init();
+                set_all_storage_box_state(true);
 
                 // 
                 m_salesMgr = new SalesMgr();
@@ -122,42 +123,96 @@ namespace weitongManager
             m_supplierMgr.deleteCurrentSupplier();
         }
 
+        /// <summary>
+        /// 使能所有的库存输入框。
+        /// </summary>
+        private void set_all_storage_box_state(bool bState)
+        {
+            tBox_supplier.Enabled = bState;
+            tBox_code.Enabled = bState;
+            tBox_chateau.Enabled = bState;
+            tBox_country.Enabled = bState;
+            tBox_appellation.Enabled = bState;
+            tBox_quality.Enabled = bState;
+            tBox_Vintage.Enabled = bState;
+
+            tBox_description.Enabled = bState;
+            tBox_bottle.Enabled = bState;
+            tBox_score.Enabled = bState;
+
+            tBox_price.Enabled = bState;
+            
+            tBox_retailprice.Enabled = bState;
+            tBox_units.Enabled = bState;
+        }
+
         private void btn_addStorage_Click(object sender, EventArgs e)
         {
             try
             {
-                string supplierName = tBox_supplier.Text;
-                Supplier aSpler = Supplier.findByName(supplierName);
-                // 如果供应商信息不存在，则提示是否添加供应商，如果客户选择不添加供应商，则供应商信息为空。
-                if (aSpler == null)
+                if (btn_seachStorage.Enabled)
                 {
-                    if (DialogResult.Yes == SelectionDlgShow("供应商" + supplierName + "信息不在库中，你要保存供应商信息么？"))
-                    {
-                        aSpler = Supplier.NewSupplier();
-                        aSpler.Name = supplierName;
-                        aSpler.save();
-                    }
+                    set_all_storage_box_state(true);
+                    btn_addStorage.Enabled = false;
+                    btn_OK.Visible = true;
+                    btn_cancel.Visible = true;
+                    btn_OK.Focus();
                 }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
 
-                int supplier_id = (aSpler == null ? -1 : aSpler.ID);
+        /// <summary>
+        /// 根据是入库状态执行相应的入库工作。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_OK_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 入库
+                if (!btn_addStorage.Enabled)
+                {
+                    string code = tBox_code.Text.Trim();
+                    doAddStorage();
+                    //set_all_storage_box_state(false);
+                    btn_addStorage.Enabled = true;
+                    btn_OK.Visible = false;
+                    btn_cancel.Visible = false;
+                    setCodeSelected(code);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
 
-                string code = tBox_code.Text;
-                string chateau = tBox_chateau.Text;
-                string country = tBox_country.Text;
-                string appellation = tBox_appellation.Text;
-                string quality = tBox_quality.Text;
-                string vintage = tBox_Vintage.Text;
-                if (vintage == "") vintage = null;
-                string description = tBox_description.Text;
-                string bottle = tBox_bottle.Text;
-                string score = tBox_score.Text;
-                
-                decimal price = decimal.Parse(tBox_price.Text);
-                decimal caseprice = decimal.Parse(tBox_price.Text);
-                decimal retailprice = decimal.Parse(tBox_retailprice.Text);
-                int units = Int32.Parse(tBox_units.Text);
-                m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score,
-                    supplier_id, price, caseprice, retailprice, units);
+        private void setCodeSelected(string code)
+        {
+            foreach (DataGridViewRow row in dgv_storage.Rows)
+            {
+                DataRowView dataRowView = row.DataBoundItem as DataRowView;
+                weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
+                if (dataRow.code == code)
+                {
+                    row.Selected = true;
+                    break;
+                }
+            }
+        }
+
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                btn_addStorage.Enabled = true;
+                btn_OK.Visible = false;
+                btn_cancel.Visible = false;
             }
             catch (Exception ex)
             {
@@ -224,34 +279,59 @@ namespace weitongManager
             {
                 // 模拟tbox_KeyPress事件,调用其相应函数
                 tBox_code_KeyPress(sender,new KeyPressEventArgs('\r'));
-                //weitongDataSet1.storageRow aStorageRow = Storage.findByCode(tBox_code.Text.Trim());
-                //// 如果没有对应酒的库存，则在wines里面查找酒的信息。
-                //if (aStorageRow == null)
+                //if (btn_addStorage.Enabled)
                 //{
-                //    weitongDataSet1.winesRow aWineRow = m_wineStorageMgr.findWineByCode(tBox_code.Text);
-                //    if (aWineRow == null)
-                //    {
-                //        WARNING("未找到指定酒的相关信息，请确定编码是否正确！");
-                //        return;
-                //    }
-
-                //    showWineInfo(aWineRow.code,
-                //        aWineRow.IschateauNull() ? null : aWineRow.chateau,
-                //        aWineRow.IsvintageNull() ? 0 : aWineRow.vintage,
-                //        aWineRow.IsappellationNull() ? null : aWineRow.appellation,
-                //        aWineRow.IsqualityNull() ? null : aWineRow.quality,
-                //        aWineRow.IsscoreNull() ? null : aWineRow.score,
-                //        aWineRow.IsdescriptionNull() ? null : aWineRow.description,
-                //        aWineRow.IscountryNull() ? null : aWineRow.country);
-                //}
-                //else
-                //{
-                //    showStorageInfo(aStorageRow);
+                //    set_all_storage_box_state(true);
+                //    btn_seachStorage.Enabled = false;
+                //    btn_OK.Visible = true;
+                //    btn_OK.Focus();
                 //}
             }
             catch (Exception ex)
             {
                 WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 执行添加库存的工作。
+        /// </summary>
+        private void doAddStorage()
+        {
+            string supplierName = tBox_supplier.Text;
+            Supplier aSpler = Supplier.findByName(supplierName);
+            // 如果供应商信息不存在，则提示是否添加供应商，如果客户选择不添加供应商，则供应商信息为空。
+            if (aSpler == null)
+            {
+                if (DialogResult.Yes == SelectionDlgShow("供应商" + supplierName + "信息不在库中，你要保存供应商信息么？"))
+                {
+                    aSpler = Supplier.NewSupplier();
+                    aSpler.Name = supplierName;
+                    aSpler.save();
+                }
+            }
+
+            int supplier_id = (aSpler == null ? -1 : aSpler.ID);
+
+            string code = tBox_code.Text;
+            string chateau = tBox_chateau.Text;
+            string country = tBox_country.Text;
+            string appellation = tBox_appellation.Text;
+            string quality = tBox_quality.Text;
+            string vintage = tBox_Vintage.Text;
+            if (vintage == "") vintage = null;
+            string description = tBox_description.Text;
+            string bottle = tBox_bottle.Text;
+            string score = tBox_score.Text;
+
+            decimal price = decimal.Parse(tBox_price.Text);
+            decimal caseprice = decimal.Parse(tBox_price.Text);
+            decimal retailprice = decimal.Parse(tBox_retailprice.Text);
+            int units = Int32.Parse(tBox_units.Text.Trim());
+            if (DialogResult.Yes == SelectionDlgShow("您确定要入库" + units.ToString() + "瓶" + description + "吗？"))
+            {
+                m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score,
+                    supplier_id, price, caseprice, retailprice, units);
             }
         }
 
@@ -1563,6 +1643,8 @@ namespace weitongManager
                 WARNING(ex.Message);
             }
         }
+
+        
 
         
         

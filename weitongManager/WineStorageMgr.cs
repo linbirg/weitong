@@ -36,7 +36,9 @@ namespace weitongManager
             if (Storage.existsWine(code))
             {
                 Wine.update(code, chateau, country, appellation, quality, vintage, description, bottle, score);
-                Storage.update(code, supplierID, price, retailprice, units);
+                Storage.update(code, supplierID, price, retailprice);
+                Storage.plusUnits(code, units);
+                Storage.insert_his_storage(code, supplierID, price, retailprice, units);
             }
             // 如果没有库存记录，但是已经有酒的信息了，则更新酒的信息，再插入库存记录
             else if (Wine.existsWine(code))
