@@ -127,5 +127,120 @@ namespace weitongManager
 
             return aWine;
         }
+
+        // 
+        /// <summary>
+        /// 测试指定的酒是否已经在wines表中
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static bool existsWine(string code)
+        {
+            bool result = false;
+            string qStr = @"SELECT EXISTS(
+                                SELECT * FROM wines WHERE code = @code)";
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.Connection = ConnSingleton.Connection;
+            queryCmd.CommandText = qStr;
+            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+            queryCmd.Connection.Open();
+            MySqlDataReader reader = queryCmd.ExecuteReader();
+            reader.Read();
+
+            if (reader.HasRows)
+            {
+                result = reader.GetBoolean(0);
+            }
+            queryCmd.Connection.Close();
+
+            return result;
+        }
+
+        // 
+        /// <summary>
+        /// 添加酒的信息，code不能为空
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="chateau"></param>
+        /// <param name="country"></param>
+        /// <param name="appellation"></param>
+        /// <param name="quality"></param>
+        /// <param name="vintage"></param>
+        /// <param name="description"></param>
+        /// <param name="bottle"></param>
+        /// <param name="score"></param>
+        public static void insert(string code, string chateau = null, string country = null,
+            string appellation = null, string quality = null, string vintage = null,
+            string description = null, string bottle = null, string score = null)
+        {
+            string insStr = @"INSERT INTO wines(code,chateau,country,appellation,quality,vintage,description,bottle,score) 
+                                VALUES(@code,@chateau,@country,@appellation,@quality,@vintage,@description,@bottle,@score)";
+            MySql.Data.MySqlClient.MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
+            insertCmd.Connection = ConnSingleton.Connection;
+            insertCmd.CommandText = insStr;
+            insertCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
+            insertCmd.Parameters.Add("@chateau", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = chateau;
+            insertCmd.Parameters.Add("@country", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = country;
+            insertCmd.Parameters.Add("@appellation", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = appellation;
+            insertCmd.Parameters.Add("@quality", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = quality;
+            insertCmd.Parameters.Add("@vintage", MySql.Data.MySqlClient.MySqlDbType.Year).Value = vintage;
+            insertCmd.Parameters.Add("@description", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = description;
+            insertCmd.Parameters.Add("@bottle", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = bottle;
+            insertCmd.Parameters.Add("@score", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = score;
+            //m_dataAdapter.Adapter.InsertCommand = insertCmd;
+            try
+            {
+                insertCmd.Connection.Open();
+                insertCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                insertCmd.Connection.Close();
+            }
+            
+        }
+
+        // 
+        /// <summary>
+        /// 更新酒的信息，code不能为空
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="chateau"></param>
+        /// <param name="country"></param>
+        /// <param name="appellation"></param>
+        /// <param name="quality"></param>
+        /// <param name="vintage"></param>
+        /// <param name="description"></param>
+        /// <param name="bottle"></param>
+        /// <param name="score"></param>
+        public static void update(string code, string chateau = null, string country = null, string appellation = null, string quality = null, string vintage = null, string description = null, string bottle = null, string score = null)
+        {
+            string updateStr = @"UPDATE wines SET chateau = @chateau ,country = @country, appellation = @appellation, 
+                                quality = @quality, vintage = @vintage, description = @description, bottle = @bottle, score = @score
+                                WHERE code = @code";
+            MySql.Data.MySqlClient.MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
+            updateCmd.Connection = ConnSingleton.Connection;
+            updateCmd.CommandText = updateStr;
+            updateCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
+            updateCmd.Parameters.Add("@chateau", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = chateau;
+            updateCmd.Parameters.Add("@country", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = country;
+            updateCmd.Parameters.Add("@appellation", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = appellation;
+            updateCmd.Parameters.Add("@quality", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = quality;
+            updateCmd.Parameters.Add("@vintage", MySql.Data.MySqlClient.MySqlDbType.Year).Value = vintage;
+            updateCmd.Parameters.Add("@description", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = description;
+            updateCmd.Parameters.Add("@bottle", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = bottle;
+            updateCmd.Parameters.Add("@score", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = score;
+
+            try
+            {
+                updateCmd.Connection.Open();
+                updateCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                updateCmd.Connection.Close();
+            }
+            
+        }
     }
 }

@@ -79,5 +79,87 @@ namespace weitongManager
 
             return table;
         }
+
+        // 
+        /// <summary>
+        /// 测试是否有相关酒的库存记录
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static bool existsWine(string code)
+        {
+            bool result = false;
+            string qStr = @"SELECT EXISTS(
+                                SELECT * FROM storage WHERE code = @code)";
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.Connection = ConnSingleton.Connection;
+            queryCmd.CommandText = qStr;
+            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+            queryCmd.Connection.Open();
+            MySqlDataReader reader = queryCmd.ExecuteReader();
+            reader.Read();
+            if (reader.HasRows)
+            {
+                result = reader.GetBoolean(0);
+            }
+            queryCmd.Connection.Close();
+
+            return result;
+        }
+
+        // 增加酒的库存（如果为负数则为减少）。
+        /// <summary>
+        /// 修改指定酒的库存数量。如果修改后库存数量为负，则抛出ZeroStorageException异常。
+        /// 如果指定的酒不存在，则抛出InvalidWineCodeException.
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="plus"></param>
+        public static void plusUnits(string code, int plus = 1)
+        {
+            string updateStr = @"UPDATE storage SET units = units + @plus WHERE code = @code";
+            string qUnitsStr = @"SELECT units FROM storage WHERE code = @code";
+            MySqlCommand updateCmd = new MySqlCommand();
+            updateCmd.CommandText = updateStr;
+            updateCmd.Connection = ConnSingleton.Connection;
+            updateCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+            updateCmd.Parameters.Add("@plus", MySqlDbType.Int32).Value = plus;
+
+            try
+            {
+                updateCmd.Connection.Open();
+                updateCmd.CommandText = qUnitsStr;
+                MySqlDataReader reader = updateCmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    int units = reader.GetInt32("units");
+                    reader.Close();
+                    if (units + plus >= 0)
+                    {
+                        updateCmd.CommandText = updateStr;
+                        updateCmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        throw new ZeroStorageException("库存不足");
+                    }
+                }
+                else
+                {
+                    throw new InvalidWineCodeException();
+                }
+            }
+            //catch (Exception ex)
+            //{
+            //}
+            finally
+            {
+                updateCmd.Connection.Close();
+            }
+        }
+
+        public static void necUnits(string code, int nec = 1)
+        {
+            plusUnits(code, -nec);
+        }
     }
 }

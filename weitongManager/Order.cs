@@ -423,7 +423,7 @@ namespace weitongManager
         /// <param name="discount"></param>
         private void insertDetail(string Code, int Units, decimal memberPrice, int discount)
         {
-            necStorageUnits(Code, Units);
+            Storage.necUnits(Code, Units);
             insertOrderDetail(ID, Code, Units, memberPrice, discount);
         }
 
@@ -442,7 +442,7 @@ namespace weitongManager
             // 还原对应的库存信息。
             foreach (OrderDetail detail in details)
             {
-                plusStorageUnits(detail.Code, detail.Units);
+                Storage.plusUnits(detail.Code, detail.Units);
             }
 
             Order.deleteOrderDetails(order_id);
@@ -664,7 +664,7 @@ namespace weitongManager
                 reader.Close();
                 foreach(KeyValuePair<string,int> pair in dtailList )
                 {
-                    plusStorageUnits(pair.Key, pair.Value);
+                    Storage.plusUnits(pair.Key, pair.Value);
                 }
 
                 updateOrderState(orderID, OrderState.CANCEL);
@@ -737,60 +737,60 @@ namespace weitongManager
             }
         }
 
-        // 增加酒的库存（如果为负数则为减少）。
-        /// <summary>
-        /// 修改指定酒的库存数量。如果修改后库存数量为负，则抛出ZeroStorageException异常。
-        /// 如果指定的酒不存在，则抛出InvalidWineCodeException.
-        /// </summary>
-        /// <param name="code"></param>
-        /// <param name="plus"></param>
-        private static void plusStorageUnits(string code, int plus = 1)
-        {
-            string updateStr = @"UPDATE storage SET units = units + @plus WHERE code = @code";
-            string qUnitsStr = @"SELECT units FROM storage WHERE code = @code";
-            MySqlCommand updateCmd = new MySqlCommand();
-            updateCmd.CommandText = updateStr;
-            updateCmd.Connection = ConnSingleton.Connection;
-            updateCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
-            updateCmd.Parameters.Add("@plus", MySqlDbType.Int32).Value = plus;
+        //// 增加酒的库存（如果为负数则为减少）。
+        ///// <summary>
+        ///// 修改指定酒的库存数量。如果修改后库存数量为负，则抛出ZeroStorageException异常。
+        ///// 如果指定的酒不存在，则抛出InvalidWineCodeException.
+        ///// </summary>
+        ///// <param name="code"></param>
+        ///// <param name="plus"></param>
+        //private static void plusStorageUnits(string code, int plus = 1)
+        //{
+        //    string updateStr = @"UPDATE storage SET units = units + @plus WHERE code = @code";
+        //    string qUnitsStr = @"SELECT units FROM storage WHERE code = @code";
+        //    MySqlCommand updateCmd = new MySqlCommand();
+        //    updateCmd.CommandText = updateStr;
+        //    updateCmd.Connection = ConnSingleton.Connection;
+        //    updateCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+        //    updateCmd.Parameters.Add("@plus", MySqlDbType.Int32).Value = plus;
 
-            try
-            {
-                updateCmd.Connection.Open();
-                updateCmd.CommandText = qUnitsStr;
-                MySqlDataReader reader = updateCmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    int units = reader.GetInt32("units");
-                    reader.Close();
-                    if (units + plus >= 0)
-                    {
-                        updateCmd.CommandText = updateStr;
-                        updateCmd.ExecuteNonQuery();
-                    }
-                    else
-                    {
-                        throw new ZeroStorageException("库存不足");
-                    }
-                }
-                else
-                {
-                    throw new InvalidWineCodeException();
-                }
-            }
-            //catch (Exception ex)
-            //{
-            //}
-            finally
-            {
-                updateCmd.Connection.Close();
-            }
-        }
+        //    try
+        //    {
+        //        updateCmd.Connection.Open();
+        //        updateCmd.CommandText = qUnitsStr;
+        //        MySqlDataReader reader = updateCmd.ExecuteReader();
+        //        if (reader.Read())
+        //        {
+        //            int units = reader.GetInt32("units");
+        //            reader.Close();
+        //            if (units + plus >= 0)
+        //            {
+        //                updateCmd.CommandText = updateStr;
+        //                updateCmd.ExecuteNonQuery();
+        //            }
+        //            else
+        //            {
+        //                throw new ZeroStorageException("库存不足");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            throw new InvalidWineCodeException();
+        //        }
+        //    }
+        //    //catch (Exception ex)
+        //    //{
+        //    //}
+        //    finally
+        //    {
+        //        updateCmd.Connection.Close();
+        //    }
+        //}
 
-        private static void necStorageUnits(string code, int nec = 1)
-        {
-            plusStorageUnits(code, -nec);
-        }
+        //private static void necStorageUnits(string code, int nec = 1)
+        //{
+        //    plusStorageUnits(code, -nec);
+        //}
 
         /// <summary>
         /// 将other订单的信息copy到one订单。拷贝函数不会改变订单的id,状态等信息。

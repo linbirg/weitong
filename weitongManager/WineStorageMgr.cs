@@ -33,21 +33,21 @@ namespace weitongManager
             int supplierID = -1, decimal price = 0, decimal caseprice = 0, decimal retailprice = 0, int units = 0)
         {
             // 如果已经存在酒的库存记录，则更新wines的相关信息，包括wines和storage库存信息。
-            if (existsWineInStorage(code))
+            if (Storage.existsWine(code))
             {
-                updateWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
+                Wine.update(code, chateau, country, appellation, quality, vintage, description, bottle, score);
                 updateStorage(code, supplierID, price, retailprice, units);
             }
             // 如果没有库存记录，但是已经有酒的信息了，则更新酒的信息，再插入库存记录
-            else if (existsWineInWines(code))
+            else if (Wine.existsWine(code))
             {
-                updateWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
+                Wine.update(code, chateau, country, appellation, quality, vintage, description, bottle, score);
                 insertStorage(code, supplierID, price, retailprice, units);
             }
             // 否则先插入酒记录，再插入库存记录
             else
             {
-                insertWine(code, chateau, country, appellation, quality, vintage, description, bottle, score);
+                Wine.insert(code, chateau, country, appellation, quality, vintage, description, bottle, score);
                 insertStorage(code, supplierID, price, retailprice, units);
             }
             
@@ -71,41 +71,6 @@ namespace weitongManager
 
             m_wineStorageGrid.Refresh();
         }
-
-//        // 根据编码查找库存信息
-//        // 查找完整的库存信息
-//        public weitongDataSet1.storageRow findStorageByCode(string code)
-//        {
-//            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
-//                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
-//                            supplier.name
-//                            FROM storage INNER JOIN
-//                            wines ON storage.code = wines.code LEFT OUTER JOIN
-//                            supplier ON storage.supplierid = supplier.id
-//                            WHERE storage.code = @code";
-//            MySql.Data.MySqlClient.MySqlCommand queryCmd = new MySql.Data.MySqlClient.MySqlCommand();
-//            queryCmd.Connection = m_dataAdapter.Connection;
-//            queryCmd.CommandText = qStr;
-//            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
-
-//            // 先保存原查询命令，再执行完本查询后，立即回复原有的查询命令
-//            MySqlCommand temp = m_dataAdapter.Adapter.SelectCommand;
-//            m_dataAdapter.Adapter.SelectCommand = queryCmd;
-            
-//            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-//            m_dataAdapter.Adapter.Fill(table);
-//            m_dataAdapter.Adapter.SelectCommand = temp;
-
-//            if (table != null && table.Rows.Count != 0)
-//            {
-//                // 如果查询结果不为空，应该只有一条记录
-//                return table[0];                           
-//            }
-//            else
-//            {
-//                return null;
-//            }
-//        }
 
         public weitongDataSet1.winesRow findWineByCode(string code)
         {
@@ -184,32 +149,6 @@ namespace weitongManager
             m_wineStorageGrid.Columns["discriptionDataGridViewTextBoxColumn"].DataPropertyName = "description";
         }
 
-        // 添加酒的信息，code不能为空
-        private void insertWine(string code, string chateau = null, string country = null, 
-            string appellation = null, string quality = null, string vintage = null, 
-            string description = null, string bottle = null, string score = null)
-        {
-            string insStr = @"INSERT INTO wines(code,chateau,country,appellation,quality,vintage,description,bottle,score) 
-                                VALUES(@code,@chateau,@country,@appellation,@quality,@vintage,@description,@bottle,@score)";
-            MySql.Data.MySqlClient.MySqlCommand insertCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            insertCmd.Connection = m_dataAdapter.Connection;
-            insertCmd.CommandText = insStr;
-            insertCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
-            insertCmd.Parameters.Add("@chateau", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = chateau;
-            insertCmd.Parameters.Add("@country", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = country;
-            insertCmd.Parameters.Add("@appellation", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = appellation;
-            insertCmd.Parameters.Add("@quality", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = quality;
-            insertCmd.Parameters.Add("@vintage", MySql.Data.MySqlClient.MySqlDbType.Year).Value = vintage;
-            insertCmd.Parameters.Add("@description", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = description;
-            insertCmd.Parameters.Add("@bottle", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = bottle;
-            insertCmd.Parameters.Add("@score", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = score;
-            //m_dataAdapter.Adapter.InsertCommand = insertCmd;
-            insertCmd.Connection.Open();
-            IAsyncResult rest = insertCmd.BeginExecuteNonQuery();
-            insertCmd.EndExecuteNonQuery(rest);
-            insertCmd.Connection.Close();
-        }
-
         // 添加库存信息
         // supplierid若为-1这表示没有设置对应的供应商
         private void insertStorage(string code, int supplierid = -1, decimal price = 0, 
@@ -244,40 +183,17 @@ namespace weitongManager
         // 通过storage表的id，删除storage记录
         private void deleteStorageRow(int id)
         {
-            string deleteStr = @"DELETE FROM STORAGE WHERE ID=@id";
-            MySql.Data.MySqlClient.MySqlCommand deleteCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            deleteCmd.Connection = m_dataAdapter.Connection;
-            deleteCmd.CommandText = deleteStr;
-            deleteCmd.Parameters.Add("@id", MySql.Data.MySqlClient.MySqlDbType.Int32).Value = id;
-            deleteCmd.Connection.Open();
-            IAsyncResult rest = deleteCmd.BeginExecuteNonQuery();
-            deleteCmd.EndExecuteNonQuery(rest);
-            deleteCmd.Connection.Close();
+            //string deleteStr = @"DELETE FROM STORAGE WHERE ID=@id";
+            //MySql.Data.MySqlClient.MySqlCommand deleteCmd = new MySql.Data.MySqlClient.MySqlCommand();
+            //deleteCmd.Connection = m_dataAdapter.Connection;
+            //deleteCmd.CommandText = deleteStr;
+            //deleteCmd.Parameters.Add("@id", MySql.Data.MySqlClient.MySqlDbType.Int32).Value = id;
+            //deleteCmd.Connection.Open();
+            //IAsyncResult rest = deleteCmd.BeginExecuteNonQuery();
+            //deleteCmd.EndExecuteNonQuery(rest);
+            //deleteCmd.Connection.Close();
         }
 
-        // 更新酒的信息，code不能为空
-        private void updateWine(string code, string chateau = null, string country = null, string appellation = null, string quality = null, string vintage = null, string description = null, string bottle = null, string score = null)
-        {
-            string updateStr = @"UPDATE wines SET chateau = @chateau ,country = @country, appellation = @appellation, 
-                                quality = @quality, vintage = @vintage, description = @description, bottle = @bottle, score = @score
-                                WHERE code = @code";
-            MySql.Data.MySqlClient.MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
-            updateCmd.Connection = m_dataAdapter.Connection;
-            updateCmd.CommandText = updateStr;
-            updateCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
-            updateCmd.Parameters.Add("@chateau", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = chateau;
-            updateCmd.Parameters.Add("@country", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = country;
-            updateCmd.Parameters.Add("@appellation", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = appellation;
-            updateCmd.Parameters.Add("@quality", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = quality;
-            updateCmd.Parameters.Add("@vintage", MySql.Data.MySqlClient.MySqlDbType.Year).Value = vintage;
-            updateCmd.Parameters.Add("@description", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = description;
-            updateCmd.Parameters.Add("@bottle", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = bottle;
-            updateCmd.Parameters.Add("@score", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = score;
-            updateCmd.Connection.Open();
-            IAsyncResult rest = updateCmd.BeginExecuteNonQuery();
-            updateCmd.EndExecuteNonQuery(rest);
-            updateCmd.Connection.Close();
-        }
 
         // 更新库存信息
         // supplierid若为-1这表示没有设置对应的供应商
@@ -306,51 +222,6 @@ namespace weitongManager
             updateCmd.Connection.Open();
             updateCmd.ExecuteNonQuery();
             updateCmd.Connection.Close();
-        }
-
-        // 测试是否有相关酒的库存记录
-        public bool existsWineInStorage(string code)
-        {
-            bool result = false;
-            string qStr = @"SELECT EXISTS(
-                                SELECT * FROM storage WHERE code = @code)";
-            MySqlCommand queryCmd = new MySqlCommand();
-            queryCmd.Connection = m_dataAdapter.Connection;
-            queryCmd.CommandText = qStr;
-            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
-            queryCmd.Connection.Open();
-            MySqlDataReader reader = queryCmd.ExecuteReader();
-            reader.Read();
-            if (reader.HasRows)
-            {
-                result = reader.GetBoolean(0);
-            }
-            queryCmd.Connection.Close();
-
-            return result;
-        }
-
-        // 测试指定的酒是否已经在wines表中。
-        public bool existsWineInWines(string code)
-        {
-            bool result = false;
-            string qStr = @"SELECT EXISTS(
-                                SELECT * FROM wines WHERE code = @code)";
-            MySqlCommand queryCmd = new MySqlCommand();
-            queryCmd.Connection = m_dataAdapter.Connection;
-            queryCmd.CommandText = qStr;
-            queryCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
-            queryCmd.Connection.Open();
-            MySqlDataReader reader = queryCmd.ExecuteReader();
-            reader.Read();
-            
-            if (reader.HasRows)
-            {
-                result = reader.GetBoolean(0);
-            }
-            queryCmd.Connection.Close();
-
-            return result;
         }
 
 
