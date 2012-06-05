@@ -220,11 +220,22 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 查看历史记录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsmi_deleteStorage_Click(object sender, EventArgs e)
         {
             try
             {
-                m_wineStorageMgr.deleteCurrentStorage();
+                //m_wineStorageMgr.deleteCurrentStorage();
+
+                DataRowView dataRowView = this.dgv_storage.CurrentRow.DataBoundItem as DataRowView;
+                weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
+                FrmHisStorage history = new FrmHisStorage();
+                history.Wine = dataRow.code;
+                history.ShowDialog();
             }
             catch (Exception ex)
             {

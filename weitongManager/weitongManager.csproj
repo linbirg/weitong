@@ -70,6 +70,12 @@
     <Compile Include="FrmEditUser.Designer.cs">
       <DependentUpon>FrmEditUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmHisStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmHisStorage.Designer.cs">
+      <DependentUpon>FrmHisStorage.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,7 @@
     <Compile Include="FrmUserInfo.Designer.cs">
       <DependentUpon>FrmUserInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="HisStorage.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberLevel.cs" />
     <Compile Include="MembLevelMgr.cs" />
@@ -139,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEditUser.resx">
       <DependentUpon>FrmEditUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmHisStorage.resx">
+      <DependentUpon>FrmHisStorage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>

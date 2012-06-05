@@ -1946,13 +1946,13 @@
             this.ctms_storage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_deleteStorage});
             this.ctms_storage.Name = "contextMenuStrip1";
-            this.ctms_storage.Size = new System.Drawing.Size(110, 26);
+            this.ctms_storage.Size = new System.Drawing.Size(153, 48);
             // 
             // tsmi_deleteStorage
             // 
             this.tsmi_deleteStorage.Name = "tsmi_deleteStorage";
-            this.tsmi_deleteStorage.Size = new System.Drawing.Size(109, 22);
-            this.tsmi_deleteStorage.Text = "&D删除";
+            this.tsmi_deleteStorage.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteStorage.Text = "&V历史记录";
             this.tsmi_deleteStorage.Click += new System.EventHandler(this.tsmi_deleteStorage_Click);
             // 
             // tp_supplier

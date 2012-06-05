@@ -64,6 +64,34 @@ namespace weitongManager
             return splr;
         }
 
+        public static Supplier findByID(int id)
+        {
+            Supplier splr = null;
+            string qryStr = @"SELECT id, name FROM supplier WHERE id=@id";
+            MySqlCommand qryCmd = new MySqlCommand();
+            qryCmd.Connection = ConnSingleton.Connection;
+            qryCmd.CommandText = qryStr;
+            qryCmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+
+            try
+            {
+                qryCmd.Connection.Open();
+                MySqlDataReader reader = qryCmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    splr = new Supplier();
+                    splr.ID = reader.GetInt32("id");
+                    splr.Name = reader.GetString("name");
+                }
+            }
+            finally
+            {
+                qryCmd.Connection.Close();
+            }
+
+            return splr;
+        }
+
         public static Supplier NewSupplier()
         {
             Supplier spler = new Supplier();

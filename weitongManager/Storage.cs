@@ -49,6 +49,57 @@ namespace weitongManager
             return row;
         }
 
+//        CREATE TABLE his_storage(
+//    id INT UNIQUE NOT NULL AUTO_INCREMENT,
+//    code CHAR(100) NOT NULL,
+//    supplierid INT,
+//    price DECIMAL(10,2) DEFAULT 0,
+//    retailprice DECIMAL(10,2),
+//    units INT NOT NULL DEFAULT 0,
+//    effectdate DATETIME NOT NULL,
+//    FOREIGN KEY(code) REFERENCES wines(code) 
+//    ON DELETE CASCADE,
+//    FOREIGN KEY(supplierid) REFERENCES supplier(id)
+//)TYPE=INNODB;
+        public static List<HisStorage> findHistoryByCode(string code)
+        {
+            List<HisStorage> list = null;
+            string qStr = @"SELECT id,code,supplierid,price,retailprice,units,effectdate FROM his_storage WHERE code=@code";
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.CommandText = qStr;
+            cmd.Connection = ConnSingleton.Connection;
+
+            cmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+            try
+            {
+                cmd.Connection.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (list == null) list = new List<HisStorage>();
+                    HisStorage his = new HisStorage();
+                    his.ID = reader.GetInt32("id");
+                    his.Code = reader.GetString("code");
+                    Wine aWine = Wine.findByCode(his.Code);
+                    if (aWine != null) his.Description = aWine.Description;
+                    int supplier_id = reader.GetInt32("supplierid");
+                    Supplier splr = Supplier.findByID(supplier_id);
+                    if (splr != null) his.Supplier = splr.Name;
+                    his.Price = reader.GetDecimal("price");
+                    his.RetailPrice = reader.GetDecimal("retailprice");
+                    his.Units = reader.GetInt32("units");
+                    his.EffectDate = reader.GetDateTime("effectdate");
+                    list.Add(his);
+                }
+            }
+            finally
+            {
+                cmd.Connection.Close();
+            }
+
+            return list;
+        }
+
         /// <summary>
         /// 根据描述查找库存信息，查找方式为模糊查询
         /// </summary>
@@ -312,4 +363,5 @@ namespace weitongManager
         }
         #endregion
     }
+    
 }
