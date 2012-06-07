@@ -67,6 +67,7 @@ namespace weitongManager
                 m_salesMgr.OrderListView = dgv_orderList;
                 m_salesMgr.OrderAdapter = new weitongDataSet1TableAdapters.orderTableAdapter();
                 m_salesMgr.CurrentUser = m_currentUser;
+                m_salesMgr.OrderTable = m_salesMgr.DataSet.order;
 
                 m_salesMgr.init();
 
@@ -85,6 +86,8 @@ namespace weitongManager
 
                 // 加载统计信息
                 showStatistics();
+                // 初始化订单查询的日期选择
+                init_order_list_timepiker();
 
                 // 加载用户信息
                 m_userMgr = new UserMgr();
@@ -183,7 +186,7 @@ namespace weitongManager
                     btn_addStorage.Enabled = true;
                     btn_OK.Visible = false;
                     btn_cancel.Visible = false;
-                    setCodeSelected(code);
+                    dgv_storage_setSelected(code);
                 }
             }
             catch (Exception ex)
@@ -192,7 +195,11 @@ namespace weitongManager
             }
         }
 
-        private void setCodeSelected(string code)
+        /// <summary>
+        /// 在grid中设置库存信息中指定酒为选中行。
+        /// </summary>
+        /// <param name="code"></param>
+        private void dgv_storage_setSelected(string code)
         {
             foreach (DataGridViewRow row in dgv_storage.Rows)
             {
@@ -660,7 +667,7 @@ namespace weitongManager
 
         private void jump2OrderList()
         {
-            m_salesMgr.reloadOrderList();
+            //m_salesMgr.reloadOrderList();
             tabCtrl_Order.SelectTab("tabPg_OrderList");
         }
 
@@ -1414,7 +1421,7 @@ namespace weitongManager
                 }
                 else if (e.TabPage.Name == "tabPg_OrderList")
                 {
-                    m_salesMgr.reloadOrderList();
+                    //m_salesMgr.reloadOrderList();
                     showStatistics();
                 }
             }
@@ -1628,15 +1635,54 @@ namespace weitongManager
 
                 DataRowView row = dgv_orderList.Rows[cell.RowIndex].DataBoundItem as DataRowView;
                 weitongDataSet1.orderRow data = row.Row as weitongDataSet1.orderRow;
+                int id = data.id;
                 if (dgv_orderList.Columns[cell.ColumnIndex].Name == "orderListOrderComment")
                 {
                     Order.updateComment(data.id, value);
                 }
                 m_salesMgr.reloadOrderList();
+                dgv_orderList_setSelected(id);
             }
             catch (Exception ex)
             {
                 WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 在订单列表中，设置指定的订单为选中行。如果该该订单不在列表中，则不作任何操作。
+        /// </summary>
+        /// <param name="code"></param>
+        private void dgv_orderList_setSelected(int id)
+        {
+            foreach (DataGridViewRow row in dgv_orderList.Rows)
+            {
+                DataRowView dataRowView = row.DataBoundItem as DataRowView;
+                weitongDataSet1.orderRow dataRow = dataRowView.Row as weitongDataSet1.orderRow;
+                if (dataRow.id == id)
+                {
+                    row.Selected = true;
+                    scrollGrid(dgv_orderList);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 将grid中选中的行移到可视区,选中的行在中间位置。
+        /// </summary>
+        /// <param name="grid"></param>
+        private void scrollGrid(DataGridView grid)
+        {
+            int halfWay = (grid.DisplayedRowCount(false) / 2);
+            if (grid.FirstDisplayedScrollingRowIndex + halfWay > grid.SelectedRows[0].Index ||
+                (grid.FirstDisplayedScrollingRowIndex + grid.DisplayedRowCount(false) - halfWay) <= grid.SelectedRows[0].Index)
+            {
+                int targetRow = grid.SelectedRows[0].Index;
+
+                targetRow = Math.Max(targetRow - halfWay, 0);
+                grid.FirstDisplayedScrollingRowIndex = targetRow;
+
             }
         }
 
@@ -1653,6 +1699,120 @@ namespace weitongManager
             {
                 WARNING(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// 根据条件查找订单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_SearchOrder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string order_id_str = tBox_OrderID.Text.Trim();
+                string cust_name = tBox_OrderCustomer.Text.Trim();
+                string code = tBox_OrderCode.Text.Trim();
+                string description = tBox_OrderDescription.Text.Trim();
+                string amount_low_str = tBox_OrderAmountLow.Text.Trim();
+                string amount_high_str = tBox_OrderAmount_high.Text.Trim();
+                string order_date_low_str = picker_OrderDate_low.Text.Trim();
+                string order_date_high_str = picker_OrderDate_high.Text.Trim();
+                
+                string wine = code;
+                List<Wine> wines = new List<Wine>();
+                if (wine == "")
+                {
+                    wine = description;
+                    wines = Wine.findByDescription(wine);
+                }
+                else
+                {
+                    Wine aWine = Wine.findByCode(wine);
+                    if (aWine == null)
+                    {
+                        WARNING("未能找到编码为"+wine+"的相关信息！");
+                        return;
+                    }
+
+                    wines.Add(aWine);
+                }
+
+                if (wine!="" && wines.Count == 0)
+                {
+                    WARNING("未找到酒的信息！");
+                    return;
+                }
+
+                int amount_low = int.MinValue;
+                int amount_high = int.MaxValue;
+                if (amount_low_str != "") amount_low = int.Parse(amount_low_str);
+                if (amount_high_str != "") amount_high = int.Parse(amount_high_str);
+                
+
+                DateTime order_date_low = picker_OrderDate_low.Value;
+                DateTime order_date_high = picker_OrderDate_high.Value;
+                
+                //if (order_date_low_str != "") order_date_low = DateTime.Parse(order_date_low_str);
+                //if (order_date_high_str != "") order_date_high = DateTime.Parse(order_date_high_str);
+                
+
+                List<Order> list = new List<Order>();
+                // order_id存在时忽略其他条件。
+                if (order_id_str != "")
+                {
+                    int id = int.Parse(order_id_str);
+                    Order anOrder = Order.findByID(id);
+                    
+                    if (anOrder != null) list.Add(anOrder);
+                }
+                // C4,4
+                else if (cust_name != ""&&wine!="")
+                {
+                    
+                    Customer cust = Customer.findByName(cust_name);
+                    if (cust == null) 
+                    {
+                        WARNING("找不到客户"+cust_name+"的信息！");
+                        return;
+                    }
+                    list = Order.find_by_customer_wine_date(cust.ID,wines,order_date_low,order_date_high,amount_low,amount_high);
+                }
+                //C4,3
+                else if (cust_name != "")
+                {
+                    Customer cust = Customer.findByName(cust_name);
+                    if (cust == null)
+                    {
+                        WARNING("找不到客户" + cust_name + "的信息！");
+                        return;
+                    }
+                    list = Order.find_by_customer_date(cust.ID, order_date_low, order_date_high,amount_low,amount_high);
+                }
+                else if (wine != "")
+                {
+                    list = Order.find_by_wine_date(wines, order_date_low, order_date_high, amount_low, amount_high);
+                }
+                else
+                {
+                    list = Order.find_by_date(order_date_low, order_date_high, amount_low, amount_high);
+                }
+                m_salesMgr.OrderTable = util.Order2Table(list);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 初始化订单查询中的日期选择其，以当前月的月初和月末分别初始化两个picker
+        /// </summary>
+        private void init_order_list_timepiker()
+        {
+            picker_OrderDate_low.Value = util.FirstDayOfMonth(DateTime.Now);
+            picker_OrderDate_high.Value = util.LastDayOfMonth(DateTime.Now);
         }
 
         

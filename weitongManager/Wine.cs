@@ -88,7 +88,11 @@ namespace weitongManager
             set { m_score = value; }
         }
 
-
+        /// <summary>
+        /// 根据编码查找酒
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public static Wine findByCode(string code)
         {
             Wine aWine = null;
@@ -126,6 +130,51 @@ namespace weitongManager
             }
 
             return aWine;
+        }
+
+        /// <summary>
+        /// 根据描述查找酒
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns>包含酒的列表，如果没找到则列表元素数量为零</returns>
+        public static List<Wine> findByDescription(string description)
+        {
+            List<Wine> list = new List<Wine>();
+            string qStr = @"SELECT id, code, chateau, country, appellation, quality, vintage, description, bottle, score
+                            FROM wines
+                            WHERE description like @description";
+
+            MySqlCommand qryCmd = new MySqlCommand();
+            qryCmd.CommandText = qStr;
+            qryCmd.Connection = ConnSingleton.Connection;
+            qryCmd.Parameters.Add("@description", MySqlDbType.VarChar).Value = "%" + description + "%";
+
+            try
+            {
+                qryCmd.Connection.Open();
+                MySqlDataReader reader = qryCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Wine aWine = new Wine();
+                    aWine.m_id = reader.GetInt32("id");
+                    aWine.Code = reader.GetString("code");
+                    aWine.Chateau = reader.GetString("chateau");
+                    aWine.Country = reader.GetString("country");
+                    aWine.Appellation = reader.GetString("appellation");
+                    aWine.Quality = reader.GetString("quality");
+                    aWine.Vintage = reader.GetInt32("vintage");
+                    aWine.Description = reader.GetString("description");
+                    aWine.Bottle = reader.GetString("bottle");
+                    aWine.Score = reader.GetString("score");
+                    list.Add(aWine);
+                }
+            }
+            finally
+            {
+                qryCmd.Connection.Close();
+            }
+
+            return list;
         }
 
         // 

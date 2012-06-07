@@ -141,6 +141,24 @@
             this.currentOrderFavorablePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.currentOrderUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPg_OrderList = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.picker_OrderDate_high = new System.Windows.Forms.DateTimePicker();
+            this.picker_OrderDate_low = new System.Windows.Forms.DateTimePicker();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.tBox_OrderAmount_high = new System.Windows.Forms.TextBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.tBox_OrderAmountLow = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.btn_SearchOrder = new System.Windows.Forms.Button();
+            this.tBox_OrderCustomer = new System.Windows.Forms.TextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.tBox_OrderDescription = new System.Windows.Forms.TextBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.tBox_OrderCode = new System.Windows.Forms.TextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.tBox_OrderID = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
             this.tBox_OrdersCellEditor = new System.Windows.Forms.TextBox();
             this.lbl_curDate = new System.Windows.Forms.Label();
             this.lbl_statisticsCurMonthTotal = new System.Windows.Forms.Label();
@@ -278,6 +296,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_currentOrder)).BeginInit();
             this.tabPg_OrderList.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_orderList)).BeginInit();
             this.ctms_orderList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).BeginInit();
@@ -1227,6 +1246,7 @@
             // 
             // tabPg_OrderList
             // 
+            this.tabPg_OrderList.Controls.Add(this.groupBox3);
             this.tabPg_OrderList.Controls.Add(this.tBox_OrdersCellEditor);
             this.tabPg_OrderList.Controls.Add(this.lbl_curDate);
             this.tabPg_OrderList.Controls.Add(this.lbl_statisticsCurMonthTotal);
@@ -1238,6 +1258,169 @@
             this.tabPg_OrderList.TabIndex = 2;
             this.tabPg_OrderList.Text = "完成订单";
             this.tabPg_OrderList.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.picker_OrderDate_high);
+            this.groupBox3.Controls.Add(this.picker_OrderDate_low);
+            this.groupBox3.Controls.Add(this.label52);
+            this.groupBox3.Controls.Add(this.label51);
+            this.groupBox3.Controls.Add(this.tBox_OrderAmount_high);
+            this.groupBox3.Controls.Add(this.label50);
+            this.groupBox3.Controls.Add(this.tBox_OrderAmountLow);
+            this.groupBox3.Controls.Add(this.label49);
+            this.groupBox3.Controls.Add(this.btn_SearchOrder);
+            this.groupBox3.Controls.Add(this.tBox_OrderCustomer);
+            this.groupBox3.Controls.Add(this.label48);
+            this.groupBox3.Controls.Add(this.tBox_OrderDescription);
+            this.groupBox3.Controls.Add(this.label47);
+            this.groupBox3.Controls.Add(this.tBox_OrderCode);
+            this.groupBox3.Controls.Add(this.label46);
+            this.groupBox3.Controls.Add(this.tBox_OrderID);
+            this.groupBox3.Controls.Add(this.label45);
+            this.groupBox3.Location = new System.Drawing.Point(917, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(284, 247);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            // 
+            // picker_OrderDate_high
+            // 
+            this.picker_OrderDate_high.Location = new System.Drawing.Point(175, 178);
+            this.picker_OrderDate_high.Name = "picker_OrderDate_high";
+            this.picker_OrderDate_high.Size = new System.Drawing.Size(92, 21);
+            this.picker_OrderDate_high.TabIndex = 29;
+            // 
+            // picker_OrderDate_low
+            // 
+            this.picker_OrderDate_low.Location = new System.Drawing.Point(60, 178);
+            this.picker_OrderDate_low.Name = "picker_OrderDate_low";
+            this.picker_OrderDate_low.Size = new System.Drawing.Size(92, 21);
+            this.picker_OrderDate_low.TabIndex = 28;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(158, 181);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(11, 12);
+            this.label52.TabIndex = 26;
+            this.label52.Text = "-";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(7, 181);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(41, 12);
+            this.label51.TabIndex = 24;
+            this.label51.Text = "日期：";
+            // 
+            // tBox_OrderAmount_high
+            // 
+            this.tBox_OrderAmount_high.Location = new System.Drawing.Point(146, 144);
+            this.tBox_OrderAmount_high.Name = "tBox_OrderAmount_high";
+            this.tBox_OrderAmount_high.Size = new System.Drawing.Size(61, 21);
+            this.tBox_OrderAmount_high.TabIndex = 23;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(129, 147);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(11, 12);
+            this.label50.TabIndex = 22;
+            this.label50.Text = "-";
+            // 
+            // tBox_OrderAmountLow
+            // 
+            this.tBox_OrderAmountLow.Location = new System.Drawing.Point(62, 144);
+            this.tBox_OrderAmountLow.Name = "tBox_OrderAmountLow";
+            this.tBox_OrderAmountLow.Size = new System.Drawing.Size(61, 21);
+            this.tBox_OrderAmountLow.TabIndex = 21;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(7, 147);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(41, 12);
+            this.label49.TabIndex = 20;
+            this.label49.Text = "金额：";
+            // 
+            // btn_SearchOrder
+            // 
+            this.btn_SearchOrder.Location = new System.Drawing.Point(108, 218);
+            this.btn_SearchOrder.Name = "btn_SearchOrder";
+            this.btn_SearchOrder.Size = new System.Drawing.Size(75, 23);
+            this.btn_SearchOrder.TabIndex = 19;
+            this.btn_SearchOrder.Text = "查询";
+            this.btn_SearchOrder.UseVisualStyleBackColor = true;
+            this.btn_SearchOrder.Click += new System.EventHandler(this.btn_SearchOrder_Click);
+            // 
+            // tBox_OrderCustomer
+            // 
+            this.tBox_OrderCustomer.Location = new System.Drawing.Point(62, 51);
+            this.tBox_OrderCustomer.Name = "tBox_OrderCustomer";
+            this.tBox_OrderCustomer.Size = new System.Drawing.Size(100, 21);
+            this.tBox_OrderCustomer.TabIndex = 7;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(7, 54);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(41, 12);
+            this.label48.TabIndex = 6;
+            this.label48.Text = "客户：";
+            // 
+            // tBox_OrderDescription
+            // 
+            this.tBox_OrderDescription.Location = new System.Drawing.Point(62, 112);
+            this.tBox_OrderDescription.Name = "tBox_OrderDescription";
+            this.tBox_OrderDescription.Size = new System.Drawing.Size(205, 21);
+            this.tBox_OrderDescription.TabIndex = 5;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(7, 115);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(41, 12);
+            this.label47.TabIndex = 4;
+            this.label47.Text = "描述：";
+            // 
+            // tBox_OrderCode
+            // 
+            this.tBox_OrderCode.Location = new System.Drawing.Point(62, 82);
+            this.tBox_OrderCode.Name = "tBox_OrderCode";
+            this.tBox_OrderCode.Size = new System.Drawing.Size(100, 21);
+            this.tBox_OrderCode.TabIndex = 3;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(7, 85);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(41, 12);
+            this.label46.TabIndex = 2;
+            this.label46.Text = "编码：";
+            // 
+            // tBox_OrderID
+            // 
+            this.tBox_OrderID.Location = new System.Drawing.Point(62, 18);
+            this.tBox_OrderID.Name = "tBox_OrderID";
+            this.tBox_OrderID.Size = new System.Drawing.Size(100, 21);
+            this.tBox_OrderID.TabIndex = 1;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(7, 21);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(53, 12);
+            this.label45.TabIndex = 0;
+            this.label45.Text = "订单号：";
             // 
             // tBox_OrdersCellEditor
             // 
@@ -1251,7 +1434,7 @@
             // lbl_curDate
             // 
             this.lbl_curDate.AutoSize = true;
-            this.lbl_curDate.Location = new System.Drawing.Point(915, 102);
+            this.lbl_curDate.Location = new System.Drawing.Point(915, 255);
             this.lbl_curDate.Name = "lbl_curDate";
             this.lbl_curDate.Size = new System.Drawing.Size(125, 12);
             this.lbl_curDate.TabIndex = 4;
@@ -1260,7 +1443,7 @@
             // lbl_statisticsCurMonthTotal
             // 
             this.lbl_statisticsCurMonthTotal.AutoSize = true;
-            this.lbl_statisticsCurMonthTotal.Location = new System.Drawing.Point(915, 180);
+            this.lbl_statisticsCurMonthTotal.Location = new System.Drawing.Point(915, 304);
             this.lbl_statisticsCurMonthTotal.Name = "lbl_statisticsCurMonthTotal";
             this.lbl_statisticsCurMonthTotal.Size = new System.Drawing.Size(215, 12);
             this.lbl_statisticsCurMonthTotal.TabIndex = 3;
@@ -1269,7 +1452,7 @@
             // lbl_statisticsCurDateTotal
             // 
             this.lbl_statisticsCurDateTotal.AutoSize = true;
-            this.lbl_statisticsCurDateTotal.Location = new System.Drawing.Point(915, 144);
+            this.lbl_statisticsCurDateTotal.Location = new System.Drawing.Point(915, 281);
             this.lbl_statisticsCurDateTotal.Name = "lbl_statisticsCurDateTotal";
             this.lbl_statisticsCurDateTotal.Size = new System.Drawing.Size(191, 12);
             this.lbl_statisticsCurDateTotal.TabIndex = 2;
@@ -1946,12 +2129,12 @@
             this.ctms_storage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_deleteStorage});
             this.ctms_storage.Name = "contextMenuStrip1";
-            this.ctms_storage.Size = new System.Drawing.Size(153, 48);
+            this.ctms_storage.Size = new System.Drawing.Size(133, 26);
             // 
             // tsmi_deleteStorage
             // 
             this.tsmi_deleteStorage.Name = "tsmi_deleteStorage";
-            this.tsmi_deleteStorage.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteStorage.Size = new System.Drawing.Size(132, 22);
             this.tsmi_deleteStorage.Text = "&V历史记录";
             this.tsmi_deleteStorage.Click += new System.EventHandler(this.tsmi_deleteStorage_Click);
             // 
@@ -2392,6 +2575,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_currentOrder)).EndInit();
             this.tabPg_OrderList.ResumeLayout(false);
             this.tabPg_OrderList.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_orderList)).EndInit();
             this.ctms_orderList.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).EndInit();
@@ -2644,6 +2829,24 @@
         private System.Windows.Forms.TextBox tBox_OrdersCellEditor;
         private System.Windows.Forms.Button btn_OK;
         private System.Windows.Forms.Button btn_cancel;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.TextBox tBox_OrderID;
+        private System.Windows.Forms.TextBox tBox_OrderCode;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.TextBox tBox_OrderDescription;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.TextBox tBox_OrderCustomer;
+        private System.Windows.Forms.Button btn_SearchOrder;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.TextBox tBox_OrderAmountLow;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.TextBox tBox_OrderAmount_high;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.DateTimePicker picker_OrderDate_low;
+        private System.Windows.Forms.DateTimePicker picker_OrderDate_high;
     }
 }
 

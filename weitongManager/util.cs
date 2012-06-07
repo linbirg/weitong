@@ -7,6 +7,7 @@ namespace weitongManager
 {
     class util
     {
+        #region random string
         static int GetRandomSeed()
         {
             byte[] bytes = new byte[4];
@@ -53,6 +54,87 @@ namespace weitongManager
             return sbPwd.ToString();
         }
 
-        
+        #endregion
+
+        #region order2table
+
+        public static weitongDataSet1.orderDataTable Order2Table(List<Order> orders)
+        {
+            weitongDataSet1.orderDataTable table = new weitongDataSet1.orderDataTable();
+            if (orders != null)
+            {
+                foreach (Order anOrder in orders)
+                {
+                    weitongDataSet1.orderRow row = table.NeworderRow();
+                    row.amount = anOrder.Amount;
+                    row.comment = anOrder.Comment;
+                    row.effectdate = anOrder.EffectDate;
+                    row.id = anOrder.ID;
+                    row.name = Customer.findByID(anOrder.CustomerID).Name;
+                    row.orderstate = (int)anOrder.State;
+                    row.received = anOrder.Received;
+                    table.AddorderRow(row);
+                }
+            }
+            return table;
+        }
+
+        /// <summary>
+        /// 交互两个变量的值。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="my"></param>
+        /// <param name="other"></param>
+        public static void Swap<T>(ref T my, ref T other)
+        {
+            T temp = my;
+            my = other;
+            other = temp;
+        }
+
+
+        /// <summary>  
+        /// 取得某月的第一天  
+        /// </summary>  
+        /// <param name="datetime">要取得月份第一天的时间</param>  
+        /// <returns></returns>  
+        public static DateTime FirstDayOfMonth(DateTime datetime)  
+        {
+            return datetime.AddDays(1 - datetime.Day);
+        }  
+  
+        /**//// <summary>  
+        /// 取得某月的最后一天  
+        /// </summary>  
+        /// <param name="datetime">要取得月份最后一天的时间</param>  
+        /// <returns></returns>  
+        public static DateTime LastDayOfMonth(DateTime datetime)
+        {
+            return datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1);
+        }  
+  
+        /**//// <summary>  
+        /// 取得上个月第一天  
+        /// </summary>  
+        /// <param name="datetime">要取得上个月第一天的当前时间</param>  
+        /// <returns></returns>  
+        public static DateTime FirstDayOfPreviousMonth(DateTime datetime)  
+        {
+            return datetime.AddDays(1 - datetime.Day).AddMonths(-1); 
+        }  
+  
+        /**//// <summary>  
+        /// 取得上个月的最后一天  
+        /// </summary>  
+        /// <param name="datetime">要取得上个月最后一天的当前时间</param>  
+        /// <returns></returns>  
+        public static DateTime LastDayOfPrdviousMonth(DateTime datetime)  
+        {
+            return datetime.AddDays(1 - datetime.Day).AddDays(-1); 
+        }  
+
+        #endregion
+
+
     }
 }

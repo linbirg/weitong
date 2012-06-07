@@ -59,7 +59,7 @@ namespace weitongManager
         {
             get
             {
-                //if (m_id > 0) return m_amount;
+                if (m_id > 0) return m_amount;
                 return calcAmount(); 
             }
             //set { m_amount = value; }
@@ -69,6 +69,14 @@ namespace weitongManager
         {
             get { return m_received; }
             set { m_received = value; }
+        }
+
+        // 暂时对comment的更新由专门函数负责。
+        // comment字段与其他字段的区别在于，comment是任何时候都可以更改的。
+        public string Comment
+        {
+            get { return m_comment; }
+            set { m_comment = value; }
         }
 
         public bool isCompleted
@@ -181,7 +189,7 @@ namespace weitongManager
         public static Order findByID(int orderID)
         {
             Order newOrder = null;
-            string qryStr = @"SELECT customerid,userid,effectdate,orderstate,amount,received
+            string qryStr = @"SELECT customerid,userid,effectdate,orderstate,amount,received,comment
                               FROM orders
                               WHERE id=@id";
             MySqlCommand qryCmd = new MySqlCommand();
@@ -203,6 +211,7 @@ namespace weitongManager
                     newOrder.EffectDate = reader.GetDateTime("effectdate");
                     newOrder.Received = reader.GetDecimal("received");
                     newOrder.State = (OrderState)reader.GetInt32("orderstate");
+                    newOrder.Comment = reader.IsDBNull(6) ? "": reader.GetString("comment");
                 }
             }
             finally
@@ -212,6 +221,108 @@ namespace weitongManager
 
             return newOrder;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <param name="wines">包含酒id的列表</param>
+        /// <param name="amount_low"></param>
+        /// <param name="amount_high"></param>
+        /// <param name="order_date_low"></param>
+        /// <param name="order_date_high"></param>
+        /// <returns></returns>
+        public static List<Order> find_by_customer_wine_date(int customerID, List<Wine> wines, DateTime order_date_low, DateTime order_date_high,
+            decimal amount_low = decimal.MinValue, decimal amount_high = decimal.MaxValue)
+        {
+            string qryStr = getSelection();
+            
+            qryStr += " WHERE " + getCondition_Customer(customerID) +
+                " AND " + getCondition_wines(wines) +
+                " AND " + getCondition_date(order_date_low,order_date_high)
+                + " AND " + getCondition_amount(amount_low, amount_high);
+
+            return queryCmd(qryStr);
+        }
+
+        public static List<Order> find_by_wine_date(List<Wine> wines, DateTime order_date_low, DateTime order_date_high,
+            int amount_low = int.MinValue, int amount_high = int.MaxValue)
+        {
+            string qryStr = getSelection();
+            qryStr += " WHERE " + getCondition_wines(wines)
+                + " AND " + getCondition_date(order_date_low, order_date_high)
+                + " AND " + getCondition_amount(amount_low,amount_high);
+            return queryCmd(qryStr);
+        }
+
+        public static List<Order> find_by_customer_date(int customerID, DateTime order_date_low, DateTime order_date_high,
+            decimal amount_low = decimal.MinValue, decimal amount_high = decimal.MaxValue)
+        {
+            string qryStr = getSelection();
+
+            qryStr += " WHERE " + getCondition_Customer(customerID) + 
+                " AND " + getCondition_date(order_date_low,order_date_high) +
+                " AND " + getCondition_amount(amount_low, amount_high);
+
+            return queryCmd(qryStr);
+        }
+
+        public static List<Order> find_by_customer_wine(int customerID, List<Wine> wines,
+            int amount_low = int.MinValue, int amount_high = int.MaxValue)
+        {
+            string qryStr = getSelection();
+
+            qryStr += " WHERE " + getCondition_Customer(customerID) +
+                " AND " + getCondition_wines(wines) +
+                " AND " + getCondition_amount(amount_low, amount_high);
+
+            return queryCmd(qryStr);
+        }
+
+        public static List<Order> find_by_customer(int customerID,
+            int amount_low = int.MinValue, int amount_high = int.MaxValue)
+        {
+            string qryStr = getSelection();
+
+            qryStr += " WHERE " + getCondition_Customer(customerID) +
+                " AND " + getCondition_amount(amount_low, amount_high);
+
+            return queryCmd(qryStr);
+        }
+
+        public static List<Order> find_by_wine(List<Wine> wines, 
+            int amount_low = int.MinValue, int amount_high = int.MaxValue)
+        {
+            string qryStr = getSelection();
+
+            qryStr += "WHERE " + getCondition_wines(wines) +
+                " AND " + getCondition_amount(amount_low, amount_high);
+
+            return queryCmd(qryStr);
+        }
+
+        public static List<Order> find_by_date(DateTime order_date_low, DateTime order_date_high,
+            int amount_low = int.MinValue, int amount_high = int.MaxValue)
+        {
+            string qryStr = getSelection();
+
+            qryStr += " WHERE " + getCondition_date(order_date_low, order_date_high) +
+                " AND " + getCondition_amount(amount_low, amount_high);
+
+            return queryCmd(qryStr);
+        }
+
+        public static List<Order> find_by_amount(int amount_low = int.MinValue, int amount_high = int.MaxValue)
+        {
+            string qryStr = getSelection();
+
+            qryStr += " WHERE " + getCondition_amount(amount_low, amount_high);
+
+            return queryCmd(qryStr);
+        }
+
+  
+
 
         /// <summary>
         /// 新建订单,并设置订单id为-1.
@@ -737,61 +848,6 @@ namespace weitongManager
             }
         }
 
-        //// 增加酒的库存（如果为负数则为减少）。
-        ///// <summary>
-        ///// 修改指定酒的库存数量。如果修改后库存数量为负，则抛出ZeroStorageException异常。
-        ///// 如果指定的酒不存在，则抛出InvalidWineCodeException.
-        ///// </summary>
-        ///// <param name="code"></param>
-        ///// <param name="plus"></param>
-        //private static void plusStorageUnits(string code, int plus = 1)
-        //{
-        //    string updateStr = @"UPDATE storage SET units = units + @plus WHERE code = @code";
-        //    string qUnitsStr = @"SELECT units FROM storage WHERE code = @code";
-        //    MySqlCommand updateCmd = new MySqlCommand();
-        //    updateCmd.CommandText = updateStr;
-        //    updateCmd.Connection = ConnSingleton.Connection;
-        //    updateCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
-        //    updateCmd.Parameters.Add("@plus", MySqlDbType.Int32).Value = plus;
-
-        //    try
-        //    {
-        //        updateCmd.Connection.Open();
-        //        updateCmd.CommandText = qUnitsStr;
-        //        MySqlDataReader reader = updateCmd.ExecuteReader();
-        //        if (reader.Read())
-        //        {
-        //            int units = reader.GetInt32("units");
-        //            reader.Close();
-        //            if (units + plus >= 0)
-        //            {
-        //                updateCmd.CommandText = updateStr;
-        //                updateCmd.ExecuteNonQuery();
-        //            }
-        //            else
-        //            {
-        //                throw new ZeroStorageException("库存不足");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidWineCodeException();
-        //        }
-        //    }
-        //    //catch (Exception ex)
-        //    //{
-        //    //}
-        //    finally
-        //    {
-        //        updateCmd.Connection.Close();
-        //    }
-        //}
-
-        //private static void necStorageUnits(string code, int nec = 1)
-        //{
-        //    plusStorageUnits(code, -nec);
-        //}
-
         /// <summary>
         /// 将other订单的信息copy到one订单。拷贝函数不会改变订单的id,状态等信息。
         /// 拷贝的one订单的状态必须是FOR_PAY(完成和取消的订单意味着不可修改)。
@@ -849,6 +905,132 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 生成客户查询的条件
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        static string getCondition_Customer(int customerID)
+        {
+            return @"customerid=" + customerID.ToString(); 
+        }
+
+        /// <summary>
+        /// 生成带exists判断条件的子查询，外层的表必须是orders.
+        /// </summary>
+        /// <param name="wines"></param>
+        /// <returns></returns>
+        static string getCondition_wines(List<Wine> wines)
+        {
+            if (wines == null) return "";
+            string inStr = @"EXISTS(SELECT 1 FROM order_wines 
+                            WHERE order_wines.orderid=orders.id 
+                            AND code in(";
+            for (int i = 0; i < wines.Count; i++ )
+            {
+                Wine wine = wines[i];
+                inStr += "'" + wine.Code + "'";
+                if (i != wines.Count - 1)
+                {
+                    inStr += ",";
+                }
+                else
+                {
+                    inStr += ")";
+                }
+            }
+            inStr += ")";
+            return inStr;
+        }
+
+        /// <summary>
+        /// 生成日期查询的判断条件。函数会检查min和max的大小关系。
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        static string getCondition_date(DateTime min, DateTime max)
+        {
+            if (min > max) util.Swap(ref min, ref max);
+            string date = @"effectdate >= '" + min.ToShortDateString()
+                            + "' AND effectdate <'" + max.ToShortDateString() + "'";
+            return date;
+        }
+
+        /// <summary>
+        /// 组合生成amount的查询条件。函数会检查min和max的大小关系。
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        static string getCondition_amount(decimal min, decimal max)
+        {
+            if (min > max) util.Swap(ref min, ref max);
+            string amount = @"amount >= " + min.ToString()
+                            + " AND amount <" + max.ToString();
+            return amount;
+        }
+
+        /// <summary>
+        /// 获取查询order的select语句,不包含where.
+        /// </summary>
+        /// <returns></returns>
+        static string getSelection()
+        {
+            string qrySql = @"SELECT orders.id, customerid,userid,effectdate,orderstate,amount,received,comment
+                             FROM orders";
+            return qrySql;
+        }
+
+        /// <summary>
+        /// 从reader中读取order，reader必须是打开的。
+        /// 且查询语句必须是“SELECT orders.id, customerid,userid,effectdate,orderstate,amount,received,comment”
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        static Order getOrderFromReader(MySqlDataReader reader)
+        {
+            Order newOrder = new Order();
+            newOrder.m_id = reader.GetInt32("id");
+            newOrder.m_amount = reader.GetDecimal("amount");
+            newOrder.CustomerID = reader.GetInt32("customerid");
+            newOrder.UserID = reader.GetInt32("userid");
+            newOrder.EffectDate = reader.GetDateTime("effectdate");
+            newOrder.Received = reader.GetDecimal("received");
+            newOrder.State = (OrderState)reader.GetInt32("orderstate");
+            newOrder.Comment = reader.IsDBNull(7) ? "" : reader.GetString("comment");
+            return newOrder;
+        }
+
+        /// <summary>
+        /// 根据查询语句执行查询
+        /// </summary>
+        /// <param name="qrySql"></param>
+        /// <returns>返回包含Order结果的列表</returns>
+        static List<Order> queryCmd(string qrySql)
+        {
+            List<Order> list = new List<Order>();
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.CommandText = qrySql;
+            cmd.Connection = ConnSingleton.Connection;
+
+            try
+            {
+                cmd.Connection.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(getOrderFromReader(reader));
+                }
+            }
+            finally
+            {
+                cmd.Connection.Close();
+            }
+
+            return list;
+        }
+
         #endregion
 
 
@@ -859,6 +1041,7 @@ namespace weitongManager
         private OrderState m_orderState;
         private decimal m_amount;
         private decimal m_received;
+        private string m_comment;
         private List<OrderDetail> m_details = null;
     }
 

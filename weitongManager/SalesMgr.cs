@@ -310,10 +310,12 @@ namespace weitongManager
         public void reloadOrderList()
         {
             m_orderAdapter.Fill(DataSet.order);
+            OrderTable = DataSet.order;
         }
 
 
         //================================= 属性 =================================
+        #region public property
         public DataGridView StorgeInfoView
         {
             get
@@ -428,6 +430,16 @@ namespace weitongManager
             set { m_orderListGrid = value; }
         }
 
+        public weitongDataSet1.orderDataTable OrderTable
+        {
+            get { return m_orderTable; }
+            set { 
+                m_orderTable = value;
+                this.bindOrderList();
+            }
+        }
+
+        #endregion
 
 
         //================================= 私有方法 =================================
@@ -504,7 +516,7 @@ namespace weitongManager
         private void bindOrderList()
         {
             this.m_orderListGrid.AutoGenerateColumns = false;
-            m_orderListGrid.DataSource = m_dataset.order;
+            m_orderListGrid.DataSource = this.m_orderTable;
 
             m_orderListGrid.Columns["orderListOrderID"].DataPropertyName = "id";
             m_orderListGrid.Columns["orderListCustomerName"].DataPropertyName = "name";
@@ -752,7 +764,7 @@ namespace weitongManager
         private DataGridView m_currentOrderGrid = null;
         private BindingList<OrderRowData> m_currentOrderDetailList = null;
 
-        private Customer m_currentCustomer = null;
+        //private Customer m_currentCustomer = null;
         private int m_orderID = -1;
         private Order m_currentOrder = null;
 
@@ -761,6 +773,7 @@ namespace weitongManager
 
         private DataGridView m_orderListGrid = null;
         private weitongDataSet1TableAdapters.orderTableAdapter m_orderAdapter = null;
+        private weitongDataSet1.orderDataTable m_orderTable = null;
 
         // 当前购物车
         private Cart m_currentCart = null;
