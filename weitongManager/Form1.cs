@@ -414,15 +414,15 @@ namespace weitongManager
             if (customer == null) return;
             customer.Name = tBox_custermorName.Text;
             customer.Address = tBox_customerAddress.Text;
-            if (tBox_customerBirthday.Text != "")
-            {
-                customer.Birthday = DateTime.Parse(tBox_customerBirthday.Text);
-            }
+            //if (tBox_customerBirthday.Text != "")
+            //{
+                customer.Birthday = picker_customerBirthday.Value.Date;
+            //}
             
             customer.Email = tBox_customerEmail.Text;
             customer.Job = tBox_customerJob.Text;
             customer.PhoneNumber = tBox_customerPhNumber.Text;
-            customer.RegisterDate = DateTime.Now;
+            customer.RegisterDate = picker_customerRegDate.Value;
             customer.Sex = 1;
             
             // memberinfo
@@ -543,13 +543,25 @@ namespace weitongManager
             if (aCustomer == null) return;
             tBox_custermorName.Text = aCustomer.Name;
             tBox_customerAddress.Text = aCustomer.Address;
-            tBox_customerBirthday.Text = aCustomer.Birthday.ToShortDateString();
+            //tBox_customerBirthday.Text = aCustomer.Birthday.ToShortDateString();
+            
             tBox_customerEmail.Text = aCustomer.Email;
             tBox_customerJob.Text = aCustomer.Job;
             tBox_customerPhNumber.Text = aCustomer.PhoneNumber;
-            tBox_customerRegisterDay.Text = aCustomer.RegisterDate.ToShortDateString();
+            //tBox_customerRegisterDay.Text = aCustomer.RegisterDate.ToShortDateString();
+            
             //tBox_cartMemLevel.Text = aCustomer.MemberLevel.ToString();
             cbox_membLevel_Show(aCustomer.MemberLevel);
+
+            try
+            {
+                picker_customerBirthday.Value = aCustomer.Birthday;
+                picker_customerRegDate.Value = aCustomer.RegisterDate;
+            }
+            catch (Exception ex)
+            {
+                //log(ex.message)
+            }
         }
 
 
@@ -624,11 +636,12 @@ namespace weitongManager
             
             lbl_customerJob.Text = aCustomer.Job;
             lbl_customerBirthday.Text = aCustomer.Birthday.ToShortDateString();
+            
             lbl_custAddress.Text = aCustomer.Address;
             lbl_custEmail.Text = aCustomer.Email;
             lbl_custPhone.Text = aCustomer.PhoneNumber;
             lbl_custRegisterDay.Text = aCustomer.RegisterDate.ToShortDateString();
-            
+            //picker_customerRegDate.Value = aCustomer.RegisterDate;
         }
 
         private void btn_CompleteOrder_Click(object sender, EventArgs e)
@@ -1813,6 +1826,81 @@ namespace weitongManager
         {
             picker_OrderDate_low.Value = util.FirstDayOfMonth(DateTime.Now);
             picker_OrderDate_high.Value = util.LastDayOfMonth(DateTime.Now);
+        }
+
+        private void tBox_OrderID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    btn_SearchOrder_Click(this, new EventArgs());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_OrderCustomer_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    btn_SearchOrder_Click(this, new EventArgs());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_OrderCode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    btn_SearchOrder_Click(this, new EventArgs());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_OrderDescription_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    btn_SearchOrder_Click(this, new EventArgs());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_OrderAmount_high_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    btn_SearchOrder_Click(this, new EventArgs());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
         }
 
         

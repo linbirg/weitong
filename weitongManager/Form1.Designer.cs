@@ -83,6 +83,8 @@
             this.tsmi_cartNecUnits = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_deleteCartDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.picker_customerRegDate = new System.Windows.Forms.DateTimePicker();
+            this.picker_customerBirthday = new System.Windows.Forms.DateTimePicker();
             this.cbox_membLevel = new System.Windows.Forms.ComboBox();
             this.btn_saveCustomer = new System.Windows.Forms.Button();
             this.btn_SearchCustomer = new System.Windows.Forms.Button();
@@ -687,6 +689,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.picker_customerRegDate);
+            this.groupBox6.Controls.Add(this.picker_customerBirthday);
             this.groupBox6.Controls.Add(this.cbox_membLevel);
             this.groupBox6.Controls.Add(this.btn_saveCustomer);
             this.groupBox6.Controls.Add(this.btn_SearchCustomer);
@@ -711,6 +715,20 @@
             this.groupBox6.TabIndex = 3;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "客户信息";
+            // 
+            // picker_customerRegDate
+            // 
+            this.picker_customerRegDate.Location = new System.Drawing.Point(77, 184);
+            this.picker_customerRegDate.Name = "picker_customerRegDate";
+            this.picker_customerRegDate.Size = new System.Drawing.Size(104, 21);
+            this.picker_customerRegDate.TabIndex = 20;
+            // 
+            // picker_customerBirthday
+            // 
+            this.picker_customerBirthday.Location = new System.Drawing.Point(77, 120);
+            this.picker_customerBirthday.Name = "picker_customerBirthday";
+            this.picker_customerBirthday.Size = new System.Drawing.Size(104, 21);
+            this.picker_customerBirthday.TabIndex = 19;
             // 
             // cbox_membLevel
             // 
@@ -1322,6 +1340,7 @@
             this.tBox_OrderAmount_high.Name = "tBox_OrderAmount_high";
             this.tBox_OrderAmount_high.Size = new System.Drawing.Size(61, 21);
             this.tBox_OrderAmount_high.TabIndex = 23;
+            this.tBox_OrderAmount_high.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_OrderAmount_high_KeyPress);
             // 
             // label50
             // 
@@ -1364,6 +1383,7 @@
             this.tBox_OrderCustomer.Name = "tBox_OrderCustomer";
             this.tBox_OrderCustomer.Size = new System.Drawing.Size(100, 21);
             this.tBox_OrderCustomer.TabIndex = 7;
+            this.tBox_OrderCustomer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_OrderCustomer_KeyPress);
             // 
             // label48
             // 
@@ -1380,6 +1400,7 @@
             this.tBox_OrderDescription.Name = "tBox_OrderDescription";
             this.tBox_OrderDescription.Size = new System.Drawing.Size(205, 21);
             this.tBox_OrderDescription.TabIndex = 5;
+            this.tBox_OrderDescription.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_OrderDescription_KeyPress);
             // 
             // label47
             // 
@@ -1396,6 +1417,7 @@
             this.tBox_OrderCode.Name = "tBox_OrderCode";
             this.tBox_OrderCode.Size = new System.Drawing.Size(100, 21);
             this.tBox_OrderCode.TabIndex = 3;
+            this.tBox_OrderCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_OrderCode_KeyPress);
             // 
             // label46
             // 
@@ -1412,6 +1434,7 @@
             this.tBox_OrderID.Name = "tBox_OrderID";
             this.tBox_OrderID.Size = new System.Drawing.Size(100, 21);
             this.tBox_OrderID.TabIndex = 1;
+            this.tBox_OrderID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_OrderID_KeyPress);
             // 
             // label45
             // 
@@ -2847,6 +2870,8 @@
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.DateTimePicker picker_OrderDate_low;
         private System.Windows.Forms.DateTimePicker picker_OrderDate_high;
+        private System.Windows.Forms.DateTimePicker picker_customerBirthday;
+        private System.Windows.Forms.DateTimePicker picker_customerRegDate;
     }
 }
 
