@@ -727,7 +727,8 @@ namespace weitongManager
                 {
                     // 修改库存，并更新订单状态为撤销
                     m_salesMgr.cancelOrder(m_salesMgr.CurrentOrder);
-                    m_salesMgr.updateOrderList();
+                    //m_salesMgr.updateOrderList();
+                    m_salesMgr.reloadOrderList();
                     jump2OrderList();
                 }
             }
