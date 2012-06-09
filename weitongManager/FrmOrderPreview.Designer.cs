@@ -336,7 +336,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgv_currentOrder);
             this.Name = "FrmOrderPreview";
-            this.Text = "FrmOrderPreview";
+            this.Text = "订单预览";
             this.Load += new System.EventHandler(this.FrmOrderPreview_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

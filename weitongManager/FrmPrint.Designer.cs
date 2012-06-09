@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrint));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lbl_Logo = new System.Windows.Forms.Label();
             this.lbl_orderDate = new System.Windows.Forms.Label();
             this.lbl_orderTime = new System.Windows.Forms.Label();
@@ -249,14 +249,14 @@
             this.dingJinDanMemberprice,
             this.dingJinDanDiscount,
             this.dingJinDanAmount});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgv_dingjindan.GridColor = System.Drawing.SystemColors.Control;
             this.dgv_dingjindan.Location = new System.Drawing.Point(12, 243);
             this.dgv_dingjindan.MultiSelect = false;
@@ -283,8 +283,8 @@
             // 
             // dingJinDanUnits
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle5;
             this.dingJinDanUnits.HeaderText = "数量";
             this.dingJinDanUnits.Name = "dingJinDanUnits";
             this.dingJinDanUnits.ReadOnly = true;
@@ -416,20 +416,20 @@
             // lbl_logoAdress
             // 
             this.lbl_logoAdress.AutoSize = true;
-            this.lbl_logoAdress.Location = new System.Drawing.Point(300, 98);
+            this.lbl_logoAdress.Location = new System.Drawing.Point(277, 98);
             this.lbl_logoAdress.Name = "lbl_logoAdress";
-            this.lbl_logoAdress.Size = new System.Drawing.Size(167, 12);
+            this.lbl_logoAdress.Size = new System.Drawing.Size(203, 12);
             this.lbl_logoAdress.TabIndex = 30;
-            this.lbl_logoAdress.Text = "上海市海宁路1913主题广场1号";
+            this.lbl_logoAdress.Text = "上海市哈尔滨路160号1913老洋行A102";
             // 
             // lbl_LogoPhone
             // 
             this.lbl_LogoPhone.AutoSize = true;
-            this.lbl_LogoPhone.Location = new System.Drawing.Point(213, 114);
+            this.lbl_LogoPhone.Location = new System.Drawing.Point(274, 112);
             this.lbl_LogoPhone.Name = "lbl_LogoPhone";
-            this.lbl_LogoPhone.Size = new System.Drawing.Size(365, 12);
+            this.lbl_LogoPhone.Size = new System.Drawing.Size(209, 12);
             this.lbl_LogoPhone.TabIndex = 31;
-            this.lbl_LogoPhone.Text = "Ｃｅｌｌ　Ｐｈｏｎｅ：１５６８８７２６３６６　联系人：王嘉梁";
+            this.lbl_LogoPhone.Text = "Ｃｅｌｌ　Ｐｈｏｎｅ：021-63561196";
             // 
             // btn_Print
             // 

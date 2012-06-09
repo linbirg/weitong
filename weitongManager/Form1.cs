@@ -462,6 +462,7 @@ namespace weitongManager
                         m_salesMgr.CurrentOrder = FrmPrev.Order;
                         jump2CurrentOrder();
                         showCurrentOrder();
+                        m_salesMgr.reloadOrderList();
                     }
                     //if (m_salesMgr.CurrentOrder == null || m_salesMgr.CurrentOrder.State != OrderState.FOR_PAY)
                     //{
@@ -660,7 +661,7 @@ namespace weitongManager
                 if (recved == 0)
                 {
                     DialogResult rst = SelectionDlgShow("您确定订单免费么？");//, "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                    if (rst == DialogResult.Cancel) return;
+                    if (rst != DialogResult.Yes) return;
                 }
                 if (money <0||recved < 0)
                 {
@@ -669,7 +670,8 @@ namespace weitongManager
                 }
                 m_salesMgr.completeCurrentOrder(recved);
                 //enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
-                m_salesMgr.updateOrderList();
+                //m_salesMgr.updateOrderList();
+                m_salesMgr.reloadOrderList();
                 jump2OrderList();
             }
             catch (Exception ex)

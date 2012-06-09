@@ -185,7 +185,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 22);
             this.label1.TabIndex = 0;
-            this.label1.Text = "微通红酒";
+            this.label1.Text = "葡驿红酒";
             // 
             // FrmLogin
             // 

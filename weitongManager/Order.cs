@@ -59,7 +59,11 @@ namespace weitongManager
         {
             get
             {
-                if (m_id > 0) return m_amount;
+                if (m_id > 0)
+                {
+                    if (m_details == null) m_details = getDetails();
+                    //return m_amount;
+                }
                 return calcAmount(); 
             }
             //set { m_amount = value; }
