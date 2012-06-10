@@ -23,6 +23,7 @@ namespace weitongManager
         private User m_user = null;
 
         private DateTime m_orderTime;
+        private int m_order_total_units = 0;
 
         private int m_currentPageIndex = 0;
         private int m_maxRowPerPage = MAX_ROW_PER_PAGE;
@@ -211,7 +212,10 @@ namespace weitongManager
             drawAnancement(posX, posY, scaleX, scaleY, e);
 
             if (m_currentPageIndex == m_totalPageCount - 1)
+            {
+                drawTotalCount(posX, posY, scaleX, scaleY, e);
                 drawTotalAmount(posX, posY, scaleX, scaleY, e);
+            }
 
             drawColumnHeader(posX, posY, scaleX, scaleY, e);
             // drawRows会改变当前页面的索引等一些全局的设置，因此必须在此页面最后打印。
@@ -249,7 +253,7 @@ namespace weitongManager
                 lbl_Logo.Width*scaleX ,
                 lbl_Logo.Height*scaleY);
             drowLabel(posX, posY, scaleX,scaleY, lbl_logoAdress, e);
-            drowLabel(posX, posY, scaleX,scaleY, lbl_LogoPhone, e);
+            //drowLabel(posX, posY, scaleX,scaleY, lbl_LogoPhone, e);
         }
 
         private void drowCode(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
@@ -289,15 +293,15 @@ namespace weitongManager
             drowLabel(posX, posY, scaleX, scaleY, lbl_custNameContent, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_custNumber, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_custNumberContent, e);
-            drowLabel(posX, posY, scaleX, scaleY, lbl_custEffectDate, e);
-            drowLabel(posX, posY, scaleX, scaleY, lbl_custEffectDateContent, e);
+            //drowLabel(posX, posY, scaleX, scaleY, lbl_custEffectDate, e);
+            //drowLabel(posX, posY, scaleX, scaleY, lbl_custEffectDateContent, e);
         }
 
         private void drawSignAndBeizhu(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
             drowLabel(posX, posY, scaleX, scaleY, lbl_beizhu, e);
-            drowLabel(posX, posY, scaleX, scaleY, lbl_signature, e);
-            drowLabel(posX, posY, scaleX, scaleY, lbl_signLine, e);
+            //drowLabel(posX, posY, scaleX, scaleY, lbl_signature, e);
+            //drowLabel(posX, posY, scaleX, scaleY, lbl_signLine, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_salerSign, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_salerSignLine, e);
             //drowLabel(lbl_anuncment1, e);
@@ -330,9 +334,18 @@ namespace weitongManager
 
         private void drawTotalAmount(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
-            drowLabel(posX, posY, scaleX, scaleY, lbl_AmountSigleLine, e);
+            //drowLabel(posX, posY, scaleX, scaleY, lbl_AmountSigleLine, e);
+            drawLine(posX, posY, scaleX, scaleY, lbl_AmountSigleLine.Location.X, lbl_AmountSigleLine.Location.Y + lbl_AmountSigleLine.Height, lbl_AmountSigleLine.Width, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_Amount, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_AmountContent, e);
+            drawLine(posX, posY, scaleX, scaleY, lbl_AmountSigleLine.Location.X, lbl_Amount.Location.Y + lbl_Amount.Height + 3, lbl_AmountSigleLine.Width, e);
+        }
+
+        private void drawTotalCount(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
+        {
+            //drowLabel(posX, posY, scaleX, scaleY, lbl_AmountSigleLine, e);
+            drowLabel(posX, posY, scaleX, scaleY, lbl_count, e);
+            drowLabel(posX, posY, scaleX, scaleY, lbl_CountContent, e);
         }
 
         private void drawColumnHeader(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
@@ -434,7 +447,16 @@ namespace weitongManager
             }
         }
 
-        // 该函数按照一定的比例，将控件的大小转换成纸张上的大小。
+        // 
+        /// <summary>
+        /// 该函数按照一定的比例，将控件的大小转换成纸张上的大小。
+        /// </summary>
+        /// <param name="posX">控件在窗体上的X方向的相对偏移量</param>
+        /// <param name="posY">控件在窗体上的Y方向的相对偏移量</param>
+        /// <param name="scaleX">控件转换为打印纸张时的X方向的缩放倍数</param>
+        /// <param name="scaleY">控件转换为打印纸张时的Y方向的缩放倍数</param>
+        /// <param name="lbl">需要打印的控件</param>
+        /// <param name="e">打印机事件</param>
         private void drowLabel(int posX, int posY, float scaleX, float scaleY, Label lbl, PrintPageEventArgs e)
         {
             Brush b = new SolidBrush(Color.Black);
@@ -451,6 +473,29 @@ namespace weitongManager
 
 
             gh.DrawString(text, txtFont, b, new RectangleF(e.MarginBounds.Left + ( posX+ lbl.Location.X)*scaleX, (posY + lbl.Location.Y)*scaleY, width, height), format);
+        }
+
+        /// <summary>
+        /// 在指定的位置，按照一定的比例画一条水平直线
+        /// </summary>
+        /// <param name="posX">点X方向的相对偏移量</param>
+        /// <param name="posY">点Y方向的相对偏移量</param>
+        /// <param name="scaleX"></param>
+        /// <param name="scaleY"></param>
+        /// <param name="length"></param>
+        /// <param name="e"></param>
+        /// <param name="x">点的X坐标</param>
+        /// <param name="y">点的Y坐标</param>
+        private void drawLine(int posX, int posY, float scaleX, float scaleY, int x,int y, int length, PrintPageEventArgs e)
+        {
+            float scale_length = length * scaleX;
+
+            Brush brush = new SolidBrush(Color.Black);
+            
+            Graphics gh = e.Graphics;
+            Pen aPen = new Pen(brush);
+            //aPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            gh.DrawLine(aPen, e.MarginBounds.Left + (posX + x) * scaleX, (posY + y) * scaleY, e.MarginBounds.Left + (posX + x) * scaleX + scale_length, (posY + y) * scaleY);
         }
 
         // 该函数按照控件的实际大小打印在纸张上
@@ -540,6 +585,7 @@ namespace weitongManager
                 // generateOrderDetail
                 List<OrderDetail> details = m_order.getDetails();
                 m_DetailList.Clear();
+                int total_units = 0;
                 foreach (OrderDetail detail in details)
                 {
                     CartDetailRowData data = new CartDetailRowData();
@@ -548,16 +594,19 @@ namespace weitongManager
                     data.Discount = detail.Discount;
                     data.Price = detail.KnockDownPrice * 100 / detail.Discount;
                     data.Units = detail.Units;
+                    total_units += detail.Units;
                     Wine aWine = Wine.findByCode(detail.Code);
                     if (aWine != null)
                     {
-                        data.Bottle = "BT";//aWine.Bottle;
+                        data.Bottle = aWine.Bottle;//"BT";//aWine.Bottle;
                         data.Description = aWine.Description;
                     }
                     addDetail(data);
                 }
+                m_order_total_units = total_units;
                 binding();
                 showOrderAmount();
+                showOrderCount();
                 resetGlobalSettings();
             }
         }
@@ -578,7 +627,7 @@ namespace weitongManager
             {
                 lbl_custNameContent.Text = m_customer.Name;
                 lbl_custNumberContent.Text = m_customer.PhoneNumber;
-                lbl_custEffectDateContent.Text = this.m_order.EffectDate.ToShortDateString();
+                //lbl_custEffectDateContent.Text = this.m_order.EffectDate.ToShortDateString();
             }
         }
 
@@ -613,7 +662,12 @@ namespace weitongManager
         {
             lbl_Amount.Visible = true;
             lbl_AmountContent.Visible = true;
-            lbl_AmountContent.Text = Order.Amount.ToString() + "￥";
+            lbl_AmountContent.Text = "￥"+ Order.Amount.ToString();
+        }
+
+        private void showOrderCount()
+        {
+            lbl_CountContent.Text = m_order_total_units.ToString();
         }
 
         private void showCurrentPage()

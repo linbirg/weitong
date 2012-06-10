@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrint));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lbl_Logo = new System.Windows.Forms.Label();
             this.lbl_orderDate = new System.Windows.Forms.Label();
             this.lbl_orderTime = new System.Windows.Forms.Label();
@@ -46,7 +46,6 @@
             this.lbl_code = new System.Windows.Forms.Label();
             this.lbl_custName = new System.Windows.Forms.Label();
             this.lbl_custNumber = new System.Windows.Forms.Label();
-            this.lbl_custEffectDate = new System.Windows.Forms.Label();
             this.dgv_dingjindan = new System.Windows.Forms.DataGridView();
             this.dingJinDanCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dingJinDanDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,41 +56,39 @@
             this.dingJinDanAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lbl_custNameContent = new System.Windows.Forms.Label();
             this.lbl_custNumberContent = new System.Windows.Forms.Label();
-            this.lbl_custEffectDateContent = new System.Windows.Forms.Label();
             this.lbl_beizhu = new System.Windows.Forms.Label();
-            this.lbl_signature = new System.Windows.Forms.Label();
             this.lbl_salerSign = new System.Windows.Forms.Label();
-            this.lbl_signLine = new System.Windows.Forms.Label();
             this.lbl_salerSignLine = new System.Windows.Forms.Label();
             this.lbl_anuncment1 = new System.Windows.Forms.Label();
             this.lbl_anuncment2 = new System.Windows.Forms.Label();
             this.lbl_logoAdress = new System.Windows.Forms.Label();
-            this.lbl_LogoPhone = new System.Windows.Forms.Label();
             this.btn_Print = new System.Windows.Forms.Button();
             this.btn_Preview = new System.Windows.Forms.Button();
             this.lbl_Amount = new System.Windows.Forms.Label();
             this.lbl_AmountContent = new System.Windows.Forms.Label();
             this.lbl_AmountSigleLine = new System.Windows.Forms.Label();
+            this.lbl_CountContent = new System.Windows.Forms.Label();
+            this.lbl_count = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_dingjindan)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl_Logo
             // 
             this.lbl_Logo.Image = ((System.Drawing.Image)(resources.GetObject("lbl_Logo.Image")));
-            this.lbl_Logo.Location = new System.Drawing.Point(308, 48);
+            this.lbl_Logo.Location = new System.Drawing.Point(265, 47);
             this.lbl_Logo.Name = "lbl_Logo";
-            this.lbl_Logo.Size = new System.Drawing.Size(147, 47);
+            this.lbl_Logo.Size = new System.Drawing.Size(211, 47);
             this.lbl_Logo.TabIndex = 2;
             // 
             // lbl_orderDate
             // 
             this.lbl_orderDate.AutoSize = true;
             this.lbl_orderDate.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_orderDate.Location = new System.Drawing.Point(609, 138);
+            this.lbl_orderDate.Location = new System.Drawing.Point(635, 138);
             this.lbl_orderDate.Name = "lbl_orderDate";
-            this.lbl_orderDate.Size = new System.Drawing.Size(70, 12);
+            this.lbl_orderDate.Size = new System.Drawing.Size(44, 12);
             this.lbl_orderDate.TabIndex = 4;
-            this.lbl_orderDate.Text = "订单日期：";
+            this.lbl_orderDate.Text = "日期：";
             this.lbl_orderDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbl_orderTime
@@ -119,21 +116,21 @@
             // 
             this.lbl_orderID.AutoSize = true;
             this.lbl_orderID.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_orderID.Location = new System.Drawing.Point(609, 198);
+            this.lbl_orderID.Location = new System.Drawing.Point(635, 198);
             this.lbl_orderID.Name = "lbl_orderID";
-            this.lbl_orderID.Size = new System.Drawing.Size(70, 12);
+            this.lbl_orderID.Size = new System.Drawing.Size(44, 12);
             this.lbl_orderID.TabIndex = 7;
-            this.lbl_orderID.Text = "订单编号：";
+            this.lbl_orderID.Text = "编号：";
             // 
             // lbl_saler
             // 
             this.lbl_saler.AutoSize = true;
             this.lbl_saler.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_saler.Location = new System.Drawing.Point(622, 218);
+            this.lbl_saler.Location = new System.Drawing.Point(610, 218);
             this.lbl_saler.Name = "lbl_saler";
-            this.lbl_saler.Size = new System.Drawing.Size(57, 12);
+            this.lbl_saler.Size = new System.Drawing.Size(70, 12);
             this.lbl_saler.TabIndex = 8;
-            this.lbl_saler.Text = "售货员：";
+            this.lbl_saler.Text = "销售人员：";
             // 
             // lbl_orderDateContent
             // 
@@ -183,12 +180,12 @@
             // lbl_Title
             // 
             this.lbl_Title.AutoSize = true;
-            this.lbl_Title.Font = new System.Drawing.Font("SimSun", 36F, System.Drawing.FontStyle.Bold);
-            this.lbl_Title.Location = new System.Drawing.Point(302, 132);
+            this.lbl_Title.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_Title.Location = new System.Drawing.Point(314, 123);
             this.lbl_Title.Name = "lbl_Title";
-            this.lbl_Title.Size = new System.Drawing.Size(167, 48);
+            this.lbl_Title.Size = new System.Drawing.Size(98, 21);
             this.lbl_Title.TabIndex = 14;
-            this.lbl_Title.Text = "订金单";
+            this.lbl_Title.Text = "销售清单";
             this.lbl_Title.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbl_code
@@ -220,17 +217,6 @@
             this.lbl_custNumber.Text = "联系电话：";
             this.lbl_custNumber.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lbl_custEffectDate
-            // 
-            this.lbl_custEffectDate.AutoSize = true;
-            this.lbl_custEffectDate.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_custEffectDate.Location = new System.Drawing.Point(10, 218);
-            this.lbl_custEffectDate.Name = "lbl_custEffectDate";
-            this.lbl_custEffectDate.Size = new System.Drawing.Size(70, 12);
-            this.lbl_custEffectDate.TabIndex = 18;
-            this.lbl_custEffectDate.Text = "有效日期：";
-            this.lbl_custEffectDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // dgv_dingjindan
             // 
             this.dgv_dingjindan.AllowUserToAddRows = false;
@@ -249,14 +235,14 @@
             this.dingJinDanMemberprice,
             this.dingJinDanDiscount,
             this.dingJinDanAmount});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle10;
             this.dgv_dingjindan.GridColor = System.Drawing.SystemColors.Control;
             this.dgv_dingjindan.Location = new System.Drawing.Point(12, 243);
             this.dgv_dingjindan.MultiSelect = false;
@@ -270,21 +256,21 @@
             // 
             // dingJinDanCode
             // 
-            this.dingJinDanCode.HeaderText = "项目";
+            this.dingJinDanCode.HeaderText = "编号";
             this.dingJinDanCode.Name = "dingJinDanCode";
             this.dingJinDanCode.ReadOnly = true;
             // 
             // dingJinDanDescription
             // 
-            this.dingJinDanDescription.HeaderText = "说明";
+            this.dingJinDanDescription.HeaderText = "名称";
             this.dingJinDanDescription.Name = "dingJinDanDescription";
             this.dingJinDanDescription.ReadOnly = true;
-            this.dingJinDanDescription.Width = 295;
+            this.dingJinDanDescription.Width = 280;
             // 
             // dingJinDanUnits
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle9;
             this.dingJinDanUnits.HeaderText = "数量";
             this.dingJinDanUnits.Name = "dingJinDanUnits";
             this.dingJinDanUnits.ReadOnly = true;
@@ -305,10 +291,10 @@
             // 
             // dingJinDanDiscount
             // 
-            this.dingJinDanDiscount.HeaderText = "折扣";
+            this.dingJinDanDiscount.HeaderText = "折扣(%)";
             this.dingJinDanDiscount.Name = "dingJinDanDiscount";
             this.dingJinDanDiscount.ReadOnly = true;
-            this.dingJinDanDiscount.Width = 55;
+            this.dingJinDanDiscount.Width = 70;
             // 
             // dingJinDanAmount
             // 
@@ -334,15 +320,6 @@
             this.lbl_custNumberContent.TabIndex = 21;
             this.lbl_custNumberContent.Text = "15999092384";
             // 
-            // lbl_custEffectDateContent
-            // 
-            this.lbl_custEffectDateContent.AutoSize = true;
-            this.lbl_custEffectDateContent.Location = new System.Drawing.Point(93, 218);
-            this.lbl_custEffectDateContent.Name = "lbl_custEffectDateContent";
-            this.lbl_custEffectDateContent.Size = new System.Drawing.Size(65, 12);
-            this.lbl_custEffectDateContent.TabIndex = 22;
-            this.lbl_custEffectDateContent.Text = "2012.04.24";
-            // 
             // lbl_beizhu
             // 
             this.lbl_beizhu.AutoSize = true;
@@ -354,17 +331,6 @@
             this.lbl_beizhu.Text = "备注：";
             this.lbl_beizhu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lbl_signature
-            // 
-            this.lbl_signature.AutoSize = true;
-            this.lbl_signature.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_signature.Location = new System.Drawing.Point(10, 547);
-            this.lbl_signature.Name = "lbl_signature";
-            this.lbl_signature.Size = new System.Drawing.Size(70, 12);
-            this.lbl_signature.TabIndex = 24;
-            this.lbl_signature.Text = "我方签名：";
-            this.lbl_signature.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // lbl_salerSign
             // 
             this.lbl_salerSign.AutoSize = true;
@@ -375,15 +341,6 @@
             this.lbl_salerSign.TabIndex = 25;
             this.lbl_salerSign.Text = "贵方签署：";
             this.lbl_salerSign.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lbl_signLine
-            // 
-            this.lbl_signLine.AutoSize = true;
-            this.lbl_signLine.Location = new System.Drawing.Point(86, 547);
-            this.lbl_signLine.Name = "lbl_signLine";
-            this.lbl_signLine.Size = new System.Drawing.Size(167, 12);
-            this.lbl_signLine.TabIndex = 26;
-            this.lbl_signLine.Text = "___________________________";
             // 
             // lbl_salerSignLine
             // 
@@ -400,36 +357,27 @@
             this.lbl_anuncment1.Name = "lbl_anuncment1";
             this.lbl_anuncment1.Size = new System.Drawing.Size(757, 28);
             this.lbl_anuncment1.TabIndex = 28;
-            this.lbl_anuncment1.Text = "*By signing this invoice, customer acknowledges receipt of the above product item" +
-    "(s) in good(or acceptable) condition, and agrees that no refund is allowed.";
+            this.lbl_anuncment1.Text = "*By signing this list, customer acknowledges receipt of the above product item(s)" +
+    " in good(or acceptable) condition, and agrees that no refund is allowed.";
             this.lbl_anuncment1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbl_anuncment2
             // 
             this.lbl_anuncment2.AutoSize = true;
-            this.lbl_anuncment2.Location = new System.Drawing.Point(165, 605);
+            this.lbl_anuncment2.Location = new System.Drawing.Point(106, 605);
             this.lbl_anuncment2.Name = "lbl_anuncment2";
-            this.lbl_anuncment2.Size = new System.Drawing.Size(401, 12);
+            this.lbl_anuncment2.Size = new System.Drawing.Size(461, 12);
             this.lbl_anuncment2.TabIndex = 29;
-            this.lbl_anuncment2.Text = "顾客签收及确认收妥此单的货品均处于良好（或可接受）的状态及不能退款";
+            this.lbl_anuncment2.Text = "客户签收即表示确认收妥此单所列货品且货品均处于良好（或可接受）状态及不能退款";
             // 
             // lbl_logoAdress
             // 
             this.lbl_logoAdress.AutoSize = true;
-            this.lbl_logoAdress.Location = new System.Drawing.Point(277, 98);
+            this.lbl_logoAdress.Location = new System.Drawing.Point(184, 97);
             this.lbl_logoAdress.Name = "lbl_logoAdress";
-            this.lbl_logoAdress.Size = new System.Drawing.Size(203, 12);
+            this.lbl_logoAdress.Size = new System.Drawing.Size(317, 12);
             this.lbl_logoAdress.TabIndex = 30;
-            this.lbl_logoAdress.Text = "上海市哈尔滨路160号1913老洋行A102";
-            // 
-            // lbl_LogoPhone
-            // 
-            this.lbl_LogoPhone.AutoSize = true;
-            this.lbl_LogoPhone.Location = new System.Drawing.Point(274, 112);
-            this.lbl_LogoPhone.Name = "lbl_LogoPhone";
-            this.lbl_LogoPhone.Size = new System.Drawing.Size(209, 12);
-            this.lbl_LogoPhone.TabIndex = 31;
-            this.lbl_LogoPhone.Text = "Ｃｅｌｌ　Ｐｈｏｎｅ：021-63561196";
+            this.lbl_logoAdress.Text = "上海市哈尔滨路160号1913老洋行A102  Tel：021-63561196";
             // 
             // btn_Print
             // 
@@ -473,36 +421,51 @@
             // 
             this.lbl_AmountSigleLine.AutoSize = true;
             this.lbl_AmountSigleLine.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_AmountSigleLine.Location = new System.Drawing.Point(678, 429);
+            this.lbl_AmountSigleLine.Location = new System.Drawing.Point(569, 430);
             this.lbl_AmountSigleLine.Name = "lbl_AmountSigleLine";
-            this.lbl_AmountSigleLine.Size = new System.Drawing.Size(89, 12);
+            this.lbl_AmountSigleLine.Size = new System.Drawing.Size(203, 12);
             this.lbl_AmountSigleLine.TabIndex = 36;
-            this.lbl_AmountSigleLine.Text = "______________";
+            this.lbl_AmountSigleLine.Text = "_________________________________";
+            // 
+            // lbl_CountContent
+            // 
+            this.lbl_CountContent.Location = new System.Drawing.Point(620, 445);
+            this.lbl_CountContent.Name = "lbl_CountContent";
+            this.lbl_CountContent.Size = new System.Drawing.Size(55, 12);
+            this.lbl_CountContent.TabIndex = 38;
+            this.lbl_CountContent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lbl_count
+            // 
+            this.lbl_count.AutoSize = true;
+            this.lbl_count.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_count.Location = new System.Drawing.Point(569, 445);
+            this.lbl_count.Name = "lbl_count";
+            this.lbl_count.Size = new System.Drawing.Size(57, 12);
+            this.lbl_count.TabIndex = 37;
+            this.lbl_count.Text = "总数量：";
             // 
             // FrmPrint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 629);
+            this.Controls.Add(this.lbl_CountContent);
+            this.Controls.Add(this.lbl_count);
             this.Controls.Add(this.lbl_AmountSigleLine);
             this.Controls.Add(this.lbl_AmountContent);
             this.Controls.Add(this.lbl_Amount);
             this.Controls.Add(this.btn_Preview);
             this.Controls.Add(this.btn_Print);
-            this.Controls.Add(this.lbl_LogoPhone);
             this.Controls.Add(this.lbl_logoAdress);
             this.Controls.Add(this.lbl_anuncment2);
             this.Controls.Add(this.lbl_anuncment1);
             this.Controls.Add(this.lbl_salerSignLine);
-            this.Controls.Add(this.lbl_signLine);
             this.Controls.Add(this.lbl_salerSign);
-            this.Controls.Add(this.lbl_signature);
             this.Controls.Add(this.lbl_beizhu);
-            this.Controls.Add(this.lbl_custEffectDateContent);
             this.Controls.Add(this.lbl_custNumberContent);
             this.Controls.Add(this.lbl_custNameContent);
             this.Controls.Add(this.dgv_dingjindan);
-            this.Controls.Add(this.lbl_custEffectDate);
             this.Controls.Add(this.lbl_custNumber);
             this.Controls.Add(this.lbl_custName);
             this.Controls.Add(this.lbl_code);
@@ -546,24 +509,20 @@
         private System.Windows.Forms.Label lbl_code;
         private System.Windows.Forms.Label lbl_custName;
         private System.Windows.Forms.Label lbl_custNumber;
-        private System.Windows.Forms.Label lbl_custEffectDate;
         private System.Windows.Forms.DataGridView dgv_dingjindan;
         private System.Windows.Forms.Label lbl_custNameContent;
         private System.Windows.Forms.Label lbl_custNumberContent;
-        private System.Windows.Forms.Label lbl_custEffectDateContent;
         private System.Windows.Forms.Label lbl_beizhu;
-        private System.Windows.Forms.Label lbl_signature;
         private System.Windows.Forms.Label lbl_salerSign;
-        private System.Windows.Forms.Label lbl_signLine;
         private System.Windows.Forms.Label lbl_salerSignLine;
         private System.Windows.Forms.Label lbl_anuncment1;
         private System.Windows.Forms.Label lbl_anuncment2;
         private System.Windows.Forms.Label lbl_logoAdress;
-        private System.Windows.Forms.Label lbl_LogoPhone;
         private System.Windows.Forms.Button btn_Print;
         private System.Windows.Forms.Button btn_Preview;
         private System.Windows.Forms.Label lbl_Amount;
         private System.Windows.Forms.Label lbl_AmountContent;
+        private System.Windows.Forms.Label lbl_AmountSigleLine;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanUnits;
@@ -571,6 +530,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanMemberprice;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanDiscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanAmount;
-        private System.Windows.Forms.Label lbl_AmountSigleLine;
+        private System.Windows.Forms.Label lbl_CountContent;
+        private System.Windows.Forms.Label lbl_count;
     }
 }

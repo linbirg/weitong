@@ -19,6 +19,8 @@ namespace weitongManager
         private RolesMgr m_rolesMgr = null;
         private UserMgr m_userMgr = null;
 
+        private List<TabPage> m_pages = null;
+
 
         public FrmMain()
         {
@@ -26,6 +28,7 @@ namespace weitongManager
             CenterToScreen();
             tBox_CellEditer.LostFocus += new EventHandler(tBox_CellEditer_LostFocus);
             tBox_OrdersCellEditor.LostFocus += new EventHandler(tBox_OrdersCellEditor_LostFocus);
+            tBox_StorageEditer.LostFocus += new EventHandler(tBox_StorageEditer_LostFocus);
         }
 
         public User CurrentUser
@@ -33,7 +36,14 @@ namespace weitongManager
             get { return m_currentUser; }
             set { 
                 m_currentUser = value;
-                if (m_currentUser != null) showCurrentUser();
+                if (m_currentUser != null)
+                {
+                    showCurrentUser();
+                    if (!m_currentUser.isAdministrator())
+                    {
+                        hideAllAdminPages();
+                    }
+                }
             }
         }
 
@@ -208,6 +218,7 @@ namespace weitongManager
                 if (dataRow.code == code)
                 {
                     row.Selected = true;
+                    scrollGrid(dgv_storage);
                     break;
                 }
             }
@@ -949,7 +960,65 @@ namespace weitongManager
             tsl_curUser.Text = "user:" + name;
             tsl_sysDate.Text = DateTime.Now.ToShortDateString();
             tsl_sysTime.Text = DateTime.Now.ToLongTimeString();
+            
         }
+
+        #region page
+
+        /// <summary>
+        /// 隐藏所以管理员的页面（目前就是入库与配置页面）。
+        /// </summary>
+        private void hideAllAdminPages()
+        {
+            hideTabPage("tabPage_storage");
+            hideTabPage("tp_supplier");
+        }
+
+        /// <summary>
+        /// 隐藏tabpage
+        /// </summary>
+        /// <param name="name"></param>
+        private void hideTabPage(string name)
+        {
+            TabPage page = tab_mainControl.TabPages[name];
+            if (page == null) return;
+            tab_mainControl.TabPages.Remove(page);
+            keep_page(page);
+        }
+
+        /// <summary>
+        /// 将页面保留到页面列表m_pages中。
+        /// </summary>
+        /// <param name="page"></param>
+        private void keep_page(TabPage page)
+        {
+            if (page == null) return;
+            
+            TabPage temp = find_tab_page(page.Name);
+            if (temp == null)
+            {
+                if (m_pages == null) m_pages = new List<TabPage>();
+                m_pages.Add(page);
+            }
+        }
+
+        private TabPage find_tab_page(string name)
+        {
+            TabPage page = null;
+
+            if (m_pages == null) return null;
+
+            foreach (TabPage aPage in m_pages)
+            {
+                if (aPage.Name == name)
+                {
+                    page = aPage;
+                }
+            }
+            return page;
+        }
+
+        #endregion
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -1631,7 +1700,7 @@ namespace weitongManager
 
             for (int col = 0; col < columnIndex; col++)
             {
-                width += dgv.Columns[col].Width;
+                if(dgv.Columns[col].Displayed) width += dgv.Columns[col].Width;
             }
 
             return new Point(x + width, y + height);
@@ -1898,6 +1967,126 @@ namespace weitongManager
                 if (e.KeyChar == '\r')
                 {
                     btn_SearchOrder_Click(this, new EventArgs());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void dgv_storage_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridViewCell cell = dgv_storage.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (dgv_storage.Columns[e.ColumnIndex].Name != "codeDataGridViewTextBoxColumn"
+                    && dgv_storage.Columns[e.ColumnIndex].Name != "unitsDataGridViewTextBoxColumn")
+                {
+                    tBox_StorageEditer.Size = cell.Size;
+                    tBox_StorageEditer.Text = cell.Value.ToString();
+                    tBox_StorageEditer.Visible = true;
+                    tBox_StorageEditer.Location = calcDGVCellLocation(dgv_storage, e.RowIndex, e.ColumnIndex);
+                    tBox_StorageEditer.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_StorageEditer_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                tBox_StorageEditer.Visible = false;
+
+                string value = tBox_StorageEditer.Text.Trim();
+                DataGridViewCell cell = dgv_storage.CurrentCell;
+                //cell.Value = value;
+                
+
+                DataRowView row = dgv_storage.Rows[cell.RowIndex].DataBoundItem as DataRowView;
+                weitongDataSet1.storageRow data = row.Row as weitongDataSet1.storageRow;
+                string code = data.code;
+
+                // 酒除了编码和数量以外的所有信息都可以修改。
+                Supplier spler = Supplier.findByName(data.name);
+                int spler_id = -1;
+                if (spler != null) spler_id = spler.ID;
+
+                if (dgv_storage.Columns[cell.ColumnIndex].Name == "chateauDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, value, data.country, data.appellation, data.quality, data.vintage.ToString(), data.description, data.bottle, data.score);
+                    
+                    //Storage.update(data.code, spler_id, data.price, data.retailprice);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "discriptionDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, data.chateau, data.country, data.appellation, data.quality, data.vintage.ToString(), value, data.bottle, data.score);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "vintageDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, data.chateau, data.country, data.appellation, data.quality, value, data.description, data.bottle, data.score);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "appelationDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, data.chateau, data.country, value, data.quality, data.vintage.ToString(), data.description, data.bottle, data.score);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "qualityDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, data.chateau, data.country, data.appellation, value, data.vintage.ToString(), data.description, data.bottle, data.score);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "bottleDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, data.chateau, data.country, data.appellation, data.quality, data.vintage.ToString(), data.description, value, data.score);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "scoreDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, data.chateau, data.country, data.appellation, data.quality, data.vintage.ToString(), data.description, data.bottle, value);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "countryDataGridViewTextBoxColumn")
+                {
+                    Wine.update(data.code, data.chateau, value, data.appellation, data.quality, data.vintage.ToString(), data.description, data.bottle, data.score);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "supplierDataGridViewTextBoxColumn")
+                {
+                    spler = Supplier.findByName(value);
+                    spler_id = -1;
+                    if (spler != null) spler_id = spler.ID;
+                    Storage.update(data.code, spler_id, data.price, data.retailprice);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "priceDataGridViewTextBoxColumn")
+                {
+                    decimal price = decimal.Parse(value);
+                    Storage.update(data.code, spler_id, price, data.retailprice);
+                }
+                else if (dgv_storage.Columns[cell.ColumnIndex].Name == "retailpriceDataGridViewTextBoxColumn")
+                {
+                    decimal retail_price = decimal.Parse(value);
+                    Storage.update(data.code, spler_id, data.price, retail_price);
+                }
+
+                m_wineStorageMgr.reloadStorage();
+
+                dgv_storage_setSelected(code);
+                //m_salesMgr.reloadOrderList();
+                //dgv_orderList_setSelected(id);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_StorageEditer_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    tBox_StorageEditer_LostFocus(sender, new EventArgs());
                 }
             }
             catch (Exception ex)

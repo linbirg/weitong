@@ -192,6 +192,7 @@
             this.ctms_storageInfo = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_addToCart = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage_storage = new System.Windows.Forms.TabPage();
+            this.tBox_StorageEditer = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btn_cancel = new System.Windows.Forms.Button();
             this.btn_OK = new System.Windows.Forms.Button();
@@ -1708,6 +1709,7 @@
             // tabPage_storage
             // 
             this.tabPage_storage.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage_storage.Controls.Add(this.tBox_StorageEditer);
             this.tabPage_storage.Controls.Add(this.groupBox5);
             this.tabPage_storage.Controls.Add(this.dgv_storage);
             this.tabPage_storage.Location = new System.Drawing.Point(4, 22);
@@ -1716,6 +1718,15 @@
             this.tabPage_storage.Size = new System.Drawing.Size(1232, 697);
             this.tabPage_storage.TabIndex = 1;
             this.tabPage_storage.Text = "库存";
+            // 
+            // tBox_StorageEditer
+            // 
+            this.tBox_StorageEditer.Location = new System.Drawing.Point(733, 495);
+            this.tBox_StorageEditer.Name = "tBox_StorageEditer";
+            this.tBox_StorageEditer.Size = new System.Drawing.Size(100, 21);
+            this.tBox_StorageEditer.TabIndex = 1;
+            this.tBox_StorageEditer.Visible = false;
+            this.tBox_StorageEditer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_StorageEditer_KeyPress);
             // 
             // groupBox5
             // 
@@ -2067,6 +2078,7 @@
             this.dgv_storage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storage.Size = new System.Drawing.Size(1220, 537);
             this.dgv_storage.TabIndex = 0;
+            this.dgv_storage.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_storage_CellDoubleClick);
             this.dgv_storage.SelectionChanged += new System.EventHandler(this.dgv_storage_SelectionChanged);
             // 
             // codeDataGridViewTextBoxColumn
@@ -2605,6 +2617,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storageInfo)).EndInit();
             this.ctms_storageInfo.ResumeLayout(false);
             this.tabPage_storage.ResumeLayout(false);
+            this.tabPage_storage.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_storage)).EndInit();
@@ -2872,6 +2885,7 @@
         private System.Windows.Forms.DateTimePicker picker_OrderDate_high;
         private System.Windows.Forms.DateTimePicker picker_customerBirthday;
         private System.Windows.Forms.DateTimePicker picker_customerRegDate;
+        private System.Windows.Forms.TextBox tBox_StorageEditer;
     }
 }
 

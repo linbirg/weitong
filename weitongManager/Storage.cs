@@ -236,13 +236,13 @@ namespace weitongManager
         }
 
         /// <summary>
-        /// 向历史库存加入记录。
+        /// 向历史库存加入记录，入库数量不能为负值。
         /// </summary>
         /// <param name="code"></param>
         /// <param name="supplierid"></param>
         /// <param name="price"></param>
         /// <param name="retailprice"></param>
-        /// <param name="units"></param>
+        /// <param name="units">入库数量，入库数量不能为负值</param>
         public static void insert_his_storage(string code, int supplierid = -1, decimal price = 0,
             decimal retailprice = 0, int units = 0)
         {
