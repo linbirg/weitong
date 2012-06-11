@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarCode.cs" />
+    <Compile Include="BarCodeEAN13.cs" />
     <Compile Include="Cart.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="Customer.cs" />
