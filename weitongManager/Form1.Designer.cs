@@ -227,19 +227,6 @@
             this.tBox_code = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgv_storage = new System.Windows.Forms.DataGridView();
-            this.codeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chateauDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.discriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vintageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.appelationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qualityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bottleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.scoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.supplierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unitsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.retailpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_storage = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_deleteStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_supplier = new System.Windows.Forms.TabPage();
@@ -287,6 +274,19 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.codeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chateauDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vintageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.appelationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qualityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bottleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.supplierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.retailpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -2105,84 +2105,6 @@
             this.dgv_storage.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_storage_CellDoubleClick);
             this.dgv_storage.SelectionChanged += new System.EventHandler(this.dgv_storage_SelectionChanged);
             // 
-            // codeDataGridViewTextBoxColumn
-            // 
-            this.codeDataGridViewTextBoxColumn.HeaderText = "编号";
-            this.codeDataGridViewTextBoxColumn.Name = "codeDataGridViewTextBoxColumn";
-            this.codeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // chateauDataGridViewTextBoxColumn
-            // 
-            this.chateauDataGridViewTextBoxColumn.HeaderText = "酒庄";
-            this.chateauDataGridViewTextBoxColumn.Name = "chateauDataGridViewTextBoxColumn";
-            this.chateauDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // discriptionDataGridViewTextBoxColumn
-            // 
-            this.discriptionDataGridViewTextBoxColumn.HeaderText = "描述";
-            this.discriptionDataGridViewTextBoxColumn.Name = "discriptionDataGridViewTextBoxColumn";
-            this.discriptionDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // vintageDataGridViewTextBoxColumn
-            // 
-            this.vintageDataGridViewTextBoxColumn.HeaderText = "年份";
-            this.vintageDataGridViewTextBoxColumn.Name = "vintageDataGridViewTextBoxColumn";
-            this.vintageDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // appelationDataGridViewTextBoxColumn
-            // 
-            this.appelationDataGridViewTextBoxColumn.HeaderText = "法定产区";
-            this.appelationDataGridViewTextBoxColumn.Name = "appelationDataGridViewTextBoxColumn";
-            this.appelationDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // qualityDataGridViewTextBoxColumn
-            // 
-            this.qualityDataGridViewTextBoxColumn.HeaderText = "等级";
-            this.qualityDataGridViewTextBoxColumn.Name = "qualityDataGridViewTextBoxColumn";
-            this.qualityDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // bottleDataGridViewTextBoxColumn
-            // 
-            this.bottleDataGridViewTextBoxColumn.HeaderText = "规格";
-            this.bottleDataGridViewTextBoxColumn.Name = "bottleDataGridViewTextBoxColumn";
-            this.bottleDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // scoreDataGridViewTextBoxColumn
-            // 
-            this.scoreDataGridViewTextBoxColumn.HeaderText = "评分";
-            this.scoreDataGridViewTextBoxColumn.Name = "scoreDataGridViewTextBoxColumn";
-            this.scoreDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // supplierDataGridViewTextBoxColumn
-            // 
-            this.supplierDataGridViewTextBoxColumn.HeaderText = "供货商";
-            this.supplierDataGridViewTextBoxColumn.Name = "supplierDataGridViewTextBoxColumn";
-            this.supplierDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // unitsDataGridViewTextBoxColumn
-            // 
-            this.unitsDataGridViewTextBoxColumn.HeaderText = "数量(瓶)";
-            this.unitsDataGridViewTextBoxColumn.Name = "unitsDataGridViewTextBoxColumn";
-            this.unitsDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            this.priceDataGridViewTextBoxColumn.HeaderText = "价格(元)";
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // retailpriceDataGridViewTextBoxColumn
-            // 
-            this.retailpriceDataGridViewTextBoxColumn.HeaderText = "零售价(元)";
-            this.retailpriceDataGridViewTextBoxColumn.Name = "retailpriceDataGridViewTextBoxColumn";
-            this.retailpriceDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // countryDataGridViewTextBoxColumn
-            // 
-            this.countryDataGridViewTextBoxColumn.HeaderText = "国家";
-            this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
-            this.countryDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // ctms_storage
             // 
             this.ctms_storage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -2599,6 +2521,90 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // codeDataGridViewTextBoxColumn
+            // 
+            this.codeDataGridViewTextBoxColumn.HeaderText = "编号";
+            this.codeDataGridViewTextBoxColumn.Name = "codeDataGridViewTextBoxColumn";
+            this.codeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // chateauDataGridViewTextBoxColumn
+            // 
+            this.chateauDataGridViewTextBoxColumn.HeaderText = "酒庄";
+            this.chateauDataGridViewTextBoxColumn.Name = "chateauDataGridViewTextBoxColumn";
+            this.chateauDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // discriptionDataGridViewTextBoxColumn
+            // 
+            this.discriptionDataGridViewTextBoxColumn.HeaderText = "描述";
+            this.discriptionDataGridViewTextBoxColumn.Name = "discriptionDataGridViewTextBoxColumn";
+            this.discriptionDataGridViewTextBoxColumn.ReadOnly = true;
+            this.discriptionDataGridViewTextBoxColumn.Width = 255;
+            // 
+            // vintageDataGridViewTextBoxColumn
+            // 
+            this.vintageDataGridViewTextBoxColumn.HeaderText = "年份";
+            this.vintageDataGridViewTextBoxColumn.Name = "vintageDataGridViewTextBoxColumn";
+            this.vintageDataGridViewTextBoxColumn.ReadOnly = true;
+            this.vintageDataGridViewTextBoxColumn.Width = 65;
+            // 
+            // appelationDataGridViewTextBoxColumn
+            // 
+            this.appelationDataGridViewTextBoxColumn.HeaderText = "法定产区";
+            this.appelationDataGridViewTextBoxColumn.Name = "appelationDataGridViewTextBoxColumn";
+            this.appelationDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // qualityDataGridViewTextBoxColumn
+            // 
+            this.qualityDataGridViewTextBoxColumn.HeaderText = "等级";
+            this.qualityDataGridViewTextBoxColumn.Name = "qualityDataGridViewTextBoxColumn";
+            this.qualityDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bottleDataGridViewTextBoxColumn
+            // 
+            this.bottleDataGridViewTextBoxColumn.HeaderText = "规格";
+            this.bottleDataGridViewTextBoxColumn.Name = "bottleDataGridViewTextBoxColumn";
+            this.bottleDataGridViewTextBoxColumn.ReadOnly = true;
+            this.bottleDataGridViewTextBoxColumn.Width = 65;
+            // 
+            // scoreDataGridViewTextBoxColumn
+            // 
+            this.scoreDataGridViewTextBoxColumn.HeaderText = "评分";
+            this.scoreDataGridViewTextBoxColumn.Name = "scoreDataGridViewTextBoxColumn";
+            this.scoreDataGridViewTextBoxColumn.ReadOnly = true;
+            this.scoreDataGridViewTextBoxColumn.Width = 65;
+            // 
+            // supplierDataGridViewTextBoxColumn
+            // 
+            this.supplierDataGridViewTextBoxColumn.HeaderText = "供货商";
+            this.supplierDataGridViewTextBoxColumn.Name = "supplierDataGridViewTextBoxColumn";
+            this.supplierDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // unitsDataGridViewTextBoxColumn
+            // 
+            this.unitsDataGridViewTextBoxColumn.HeaderText = "数量(瓶)";
+            this.unitsDataGridViewTextBoxColumn.Name = "unitsDataGridViewTextBoxColumn";
+            this.unitsDataGridViewTextBoxColumn.ReadOnly = true;
+            this.unitsDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            this.priceDataGridViewTextBoxColumn.HeaderText = "价格(元)";
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // retailpriceDataGridViewTextBoxColumn
+            // 
+            this.retailpriceDataGridViewTextBoxColumn.HeaderText = "零售价(元)";
+            this.retailpriceDataGridViewTextBoxColumn.Name = "retailpriceDataGridViewTextBoxColumn";
+            this.retailpriceDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // countryDataGridViewTextBoxColumn
+            // 
+            this.countryDataGridViewTextBoxColumn.HeaderText = "国家";
+            this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
+            this.countryDataGridViewTextBoxColumn.ReadOnly = true;
+            this.countryDataGridViewTextBoxColumn.Width = 80;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2855,19 +2861,6 @@
         private System.Windows.Forms.Label lbl_statisticsCurDateTotal;
         private System.Windows.Forms.Label lbl_statisticsCurMonthTotal;
         private System.Windows.Forms.Label lbl_curDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn chateauDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn discriptionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vintageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn appelationDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qualityDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bottleDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn scoreDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn supplierDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unitsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem tsmi_deleteCartDetail;
         private System.Windows.Forms.DataGridView dgv_Users;
         private System.Windows.Forms.DataGridViewTextBoxColumn userGridNameColumn;
@@ -2912,6 +2905,19 @@
         private System.Windows.Forms.TextBox tBox_StorageEditer;
         private System.Windows.Forms.Button btn_GenerateCode;
         private System.Windows.Forms.Button btn_ChangeCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn codeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chateauDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn discriptionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vintageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn appelationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qualityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bottleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn scoreDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn supplierDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unitsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
     }
 }
 
