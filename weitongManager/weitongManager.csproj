@@ -100,11 +100,23 @@
     <Compile Include="FrmPrint.Designer.cs">
       <DependentUpon>FrmPrint.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmToolChangeCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmToolChangeCode.Designer.cs">
+      <DependentUpon>FrmToolChangeCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmUserInfo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmUserInfo.Designer.cs">
       <DependentUpon>FrmUserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVersionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVersionView.Designer.cs">
+      <DependentUpon>FrmVersionView.cs</DependentUpon>
     </Compile>
     <Compile Include="HisStorage.cs" />
     <Compile Include="Member.cs" />
@@ -168,8 +180,14 @@
     <EmbeddedResource Include="FrmPrint.resx">
       <DependentUpon>FrmPrint.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmToolChangeCode.resx">
+      <DependentUpon>FrmToolChangeCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmUserInfo.resx">
       <DependentUpon>FrmUserInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVersionView.resx">
+      <DependentUpon>FrmVersionView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

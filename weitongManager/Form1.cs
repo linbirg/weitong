@@ -29,6 +29,13 @@ namespace weitongManager
             tBox_CellEditer.LostFocus += new EventHandler(tBox_CellEditer_LostFocus);
             tBox_OrdersCellEditor.LostFocus += new EventHandler(tBox_OrdersCellEditor_LostFocus);
             tBox_StorageEditer.LostFocus += new EventHandler(tBox_StorageEditer_LostFocus);
+
+            // 使能修改编码按钮
+            if (DateTime.Now.Date > new DateTime(2012, 6, 16, 0, 0, 0))
+            {
+                btn_ChangeCode.Enabled = false;
+                btn_ChangeCode.Visible = false;
+            }
         }
 
         public User CurrentUser
@@ -2132,6 +2139,19 @@ namespace weitongManager
                         tBox_code.Text = randomCode;
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void btn_ChangeCode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FrmToolChangeCode frm_tool = new FrmToolChangeCode();
+                frm_tool.Show();
             }
             catch (Exception ex)
             {

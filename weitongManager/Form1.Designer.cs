@@ -194,6 +194,8 @@
             this.tabPage_storage = new System.Windows.Forms.TabPage();
             this.tBox_StorageEditer = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btn_ChangeCode = new System.Windows.Forms.Button();
+            this.btn_GenerateCode = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
             this.btn_OK = new System.Windows.Forms.Button();
             this.btn_seachStorage = new System.Windows.Forms.Button();
@@ -285,7 +287,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btn_GenerateCode = new System.Windows.Forms.Button();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -1731,6 +1732,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.btn_ChangeCode);
             this.groupBox5.Controls.Add(this.btn_GenerateCode);
             this.groupBox5.Controls.Add(this.btn_cancel);
             this.groupBox5.Controls.Add(this.btn_OK);
@@ -1767,6 +1769,26 @@
             this.groupBox5.Size = new System.Drawing.Size(1220, 118);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
+            // 
+            // btn_ChangeCode
+            // 
+            this.btn_ChangeCode.Location = new System.Drawing.Point(1086, 43);
+            this.btn_ChangeCode.Name = "btn_ChangeCode";
+            this.btn_ChangeCode.Size = new System.Drawing.Size(75, 23);
+            this.btn_ChangeCode.TabIndex = 34;
+            this.btn_ChangeCode.Text = "编码修改";
+            this.btn_ChangeCode.UseVisualStyleBackColor = true;
+            this.btn_ChangeCode.Click += new System.EventHandler(this.btn_ChangeCode_Click);
+            // 
+            // btn_GenerateCode
+            // 
+            this.btn_GenerateCode.Location = new System.Drawing.Point(1086, 13);
+            this.btn_GenerateCode.Name = "btn_GenerateCode";
+            this.btn_GenerateCode.Size = new System.Drawing.Size(75, 23);
+            this.btn_GenerateCode.TabIndex = 33;
+            this.btn_GenerateCode.Text = "生成编码";
+            this.btn_GenerateCode.UseVisualStyleBackColor = true;
+            this.btn_GenerateCode.Click += new System.EventHandler(this.btn_GenerateCode_Click);
             // 
             // btn_cancel
             // 
@@ -2577,16 +2599,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // btn_GenerateCode
-            // 
-            this.btn_GenerateCode.Location = new System.Drawing.Point(1086, 13);
-            this.btn_GenerateCode.Name = "btn_GenerateCode";
-            this.btn_GenerateCode.Size = new System.Drawing.Size(75, 23);
-            this.btn_GenerateCode.TabIndex = 33;
-            this.btn_GenerateCode.Text = "生成编码";
-            this.btn_GenerateCode.UseVisualStyleBackColor = true;
-            this.btn_GenerateCode.Click += new System.EventHandler(this.btn_GenerateCode_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2899,6 +2911,7 @@
         private System.Windows.Forms.DateTimePicker picker_customerRegDate;
         private System.Windows.Forms.TextBox tBox_StorageEditer;
         private System.Windows.Forms.Button btn_GenerateCode;
+        private System.Windows.Forms.Button btn_ChangeCode;
     }
 }
 
