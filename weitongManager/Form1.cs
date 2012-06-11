@@ -357,11 +357,31 @@ namespace weitongManager
             decimal caseprice = decimal.Parse(tBox_price.Text);
             decimal retailprice = decimal.Parse(tBox_retailprice.Text);
             int units = Int32.Parse(tBox_units.Text.Trim());
-            if (DialogResult.Yes == SelectionDlgShow("您确定要入库" + units.ToString() + "瓶" + description + "吗？"))
+            
+            if (Storage.existsWine(code) || Wine.existsWine(code))
             {
-                m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score,
-                    supplier_id, price, caseprice, retailprice, units);
+                if (DialogResult.Yes == SelectionDlgShow("编码为 " + code + " 名称为 " + description + " 的酒已经存在，您是要增加库存吗？"))
+                {
+                    if (DialogResult.Yes == SelectionDlgShow("您要入库的数量是 "+ units.ToString()))
+                    {
+                        m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score,
+                        supplier_id, price, caseprice, retailprice, units);
+                    }
+                }
             }
+            else
+            {
+                if (DialogResult.Yes == SelectionDlgShow("您确定要新增编码为 " + code + " 名称为 " + description + " 的酒吗？"))
+                {
+                    if (DialogResult.Yes == SelectionDlgShow("您的数量是 " + units.ToString() + " ?"))
+                    {
+                        m_wineStorageMgr.addStorage(code, chateau, country, appellation, quality, vintage, description, bottle, score,
+                            supplier_id, price, caseprice, retailprice, units);
+                    }
+                }
+            }
+                
+            
         }
 
 
