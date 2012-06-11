@@ -50,7 +50,7 @@
             // lbl_Code
             // 
             this.lbl_Code.AutoSize = true;
-            this.lbl_Code.Location = new System.Drawing.Point(102, 87);
+            this.lbl_Code.Location = new System.Drawing.Point(109, 84);
             this.lbl_Code.Name = "lbl_Code";
             this.lbl_Code.Size = new System.Drawing.Size(77, 12);
             this.lbl_Code.TabIndex = 1;
