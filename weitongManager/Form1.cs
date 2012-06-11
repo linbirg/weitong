@@ -360,7 +360,7 @@ namespace weitongManager
             
             if (Storage.existsWine(code) || Wine.existsWine(code))
             {
-                if (DialogResult.Yes == SelectionDlgShow("编码为 " + code + " 名称为 " + description + " 的酒已经存在，您是要增加库存吗？"))
+                if (DialogResult.Yes == SelectionDlgShow("编码为 " + code + " 名称为 " + description + " 的酒已经存在，您是要 增加库存 吗？"))
                 {
                     if (DialogResult.Yes == SelectionDlgShow("您要入库的数量是 "+ units.ToString()))
                     {
@@ -371,7 +371,7 @@ namespace weitongManager
             }
             else
             {
-                if (DialogResult.Yes == SelectionDlgShow("您确定要新增编码为 " + code + " 名称为 " + description + " 的酒吗？"))
+                if (DialogResult.Yes == SelectionDlgShow("您确定要 新增入库 编码为 " + code + " 名称为 " + description + " 的酒吗？"))
                 {
                     if (DialogResult.Yes == SelectionDlgShow("您的数量是 " + units.ToString() + " ?"))
                     {
@@ -2107,6 +2107,30 @@ namespace weitongManager
                 if (e.KeyChar == '\r')
                 {
                     tBox_StorageEditer_LostFocus(sender, new EventArgs());
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void btn_GenerateCode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FrmGenerateCode frmGCode = new FrmGenerateCode();
+                if (DialogResult.OK == frmGCode.ShowDialog())
+                {
+                    string randomCode = frmGCode.Code;
+                    if (randomCode == null || randomCode.Length != 12)
+                    {
+                        WARNING("编码长度不是12位的。");
+                    }
+                    else
+                    {
+                        tBox_code.Text = randomCode;
+                    }
                 }
             }
             catch (Exception ex)

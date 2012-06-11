@@ -285,6 +285,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btn_GenerateCode = new System.Windows.Forms.Button();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -1730,6 +1731,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.btn_GenerateCode);
             this.groupBox5.Controls.Add(this.btn_cancel);
             this.groupBox5.Controls.Add(this.btn_OK);
             this.groupBox5.Controls.Add(this.btn_seachStorage);
@@ -1879,7 +1881,7 @@
             // tBox_description
             // 
             this.tBox_description.Enabled = false;
-            this.tBox_description.Location = new System.Drawing.Point(233, 15);
+            this.tBox_description.Location = new System.Drawing.Point(233, 18);
             this.tBox_description.Name = "tBox_description";
             this.tBox_description.Size = new System.Drawing.Size(203, 21);
             this.tBox_description.TabIndex = 17;
@@ -1888,7 +1890,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(186, 21);
+            this.label9.Location = new System.Drawing.Point(186, 24);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(41, 12);
             this.label9.TabIndex = 16;
@@ -2575,6 +2577,16 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btn_GenerateCode
+            // 
+            this.btn_GenerateCode.Location = new System.Drawing.Point(1086, 13);
+            this.btn_GenerateCode.Name = "btn_GenerateCode";
+            this.btn_GenerateCode.Size = new System.Drawing.Size(75, 23);
+            this.btn_GenerateCode.TabIndex = 33;
+            this.btn_GenerateCode.Text = "生成编码";
+            this.btn_GenerateCode.UseVisualStyleBackColor = true;
+            this.btn_GenerateCode.Click += new System.EventHandler(this.btn_GenerateCode_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2886,6 +2898,7 @@
         private System.Windows.Forms.DateTimePicker picker_customerBirthday;
         private System.Windows.Forms.DateTimePicker picker_customerRegDate;
         private System.Windows.Forms.TextBox tBox_StorageEditer;
+        private System.Windows.Forms.Button btn_GenerateCode;
     }
 }
 

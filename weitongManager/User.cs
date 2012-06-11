@@ -123,7 +123,7 @@ namespace weitongManager
             User aUser = new User();
             aUser.m_id = -1;
             aUser.m_regDate = DateTime.Now;
-            aUser.m_salt = util.GetRandomString(10);
+            aUser.m_salt = util.GetRandomString(10,true);
             return aUser;
         }
         

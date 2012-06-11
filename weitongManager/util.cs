@@ -41,11 +41,11 @@ namespace weitongManager
         /// </summary>
         /// <param name="length"></param>
         /// <returns>包含指定长度的随机字符串</returns>
-        public static string GetRandomString(int length)
+        public static string GetRandomString(int length, bool useSpe = false, bool useNum = true, bool useLow = true, bool useUpp = true)
         {
             StringBuilder sbPwd = new StringBuilder();
             Random random = new Random(GetRandomSeed());
-            string strSource = GetSourceString("", true);
+            string strSource = GetSourceString("", useSpe, useNum, useLow, useUpp);
             for (int i = 0; i < length; i++)
             {
                 sbPwd.Append(strSource.Substring(random.Next(0, strSource.Length -1), 1));
