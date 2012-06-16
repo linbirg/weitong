@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.tab_mainControl = new System.Windows.Forms.TabControl();
             this.tabPage_sale = new System.Windows.Forms.TabPage();
@@ -227,6 +227,19 @@
             this.tBox_code = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgv_storage = new System.Windows.Forms.DataGridView();
+            this.codeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chateauDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vintageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.appelationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qualityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bottleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.supplierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.retailpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_storage = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_deleteStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_supplier = new System.Windows.Forms.TabPage();
@@ -274,19 +287,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.codeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chateauDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.discriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vintageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.appelationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qualityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bottleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.scoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.supplierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unitsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.retailpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.btn_WineList = new System.Windows.Forms.Button();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -351,6 +353,7 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.btn_WineList);
             this.groupBox7.Controls.Add(this.btn_ListStorageInfo);
             this.groupBox7.Controls.Add(this.btn_SearchStorageInfo);
             this.groupBox7.Controls.Add(this.tBox_salesWineDescription);
@@ -603,8 +606,8 @@
             this.dgv_cartDetail.Name = "dgv_cartDetail";
             this.dgv_cartDetail.ReadOnly = true;
             this.dgv_cartDetail.RowHeadersVisible = false;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_cartDetail.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgv_cartDetail.RowTemplate.Height = 23;
             this.dgv_cartDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_cartDetail.Size = new System.Drawing.Size(797, 305);
@@ -1228,8 +1231,8 @@
             this.dgv_currentOrder.Name = "dgv_currentOrder";
             this.dgv_currentOrder.ReadOnly = true;
             this.dgv_currentOrder.RowHeadersVisible = false;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_currentOrder.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_currentOrder.RowTemplate.Height = 23;
             this.dgv_currentOrder.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_currentOrder.Size = new System.Drawing.Size(561, 165);
@@ -1490,8 +1493,8 @@
             this.dgv_orderList.AllowUserToDeleteRows = false;
             this.dgv_orderList.AllowUserToResizeColumns = false;
             this.dgv_orderList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Honeydew;
-            this.dgv_orderList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Honeydew;
+            this.dgv_orderList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgv_orderList.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dgv_orderList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_orderList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1508,8 +1511,8 @@
             this.dgv_orderList.Name = "dgv_orderList";
             this.dgv_orderList.ReadOnly = true;
             this.dgv_orderList.RowHeadersVisible = false;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_orderList.RowsDefaultCellStyle = dataGridViewCellStyle16;
             this.dgv_orderList.RowTemplate.Height = 23;
             this.dgv_orderList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_orderList.Size = new System.Drawing.Size(905, 311);
@@ -1589,9 +1592,9 @@
             this.dgv_storageInfo.AllowUserToDeleteRows = false;
             this.dgv_storageInfo.AllowUserToResizeColumns = false;
             this.dgv_storageInfo.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Honeydew;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storageInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.Honeydew;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storageInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
             this.dgv_storageInfo.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dgv_storageInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_storageInfo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1614,8 +1617,8 @@
             this.dgv_storageInfo.ReadOnly = true;
             this.dgv_storageInfo.RowHeadersVisible = false;
             this.dgv_storageInfo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storageInfo.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dgv_storageInfo.RowTemplate.Height = 23;
             this.dgv_storageInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storageInfo.Size = new System.Drawing.Size(1205, 214);
@@ -2061,8 +2064,8 @@
             this.dgv_storage.AllowUserToDeleteRows = false;
             this.dgv_storage.AllowUserToResizeColumns = false;
             this.dgv_storage.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Honeydew;
-            this.dgv_storage.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Honeydew;
+            this.dgv_storage.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_storage.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dgv_storage.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dgv_storage.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -2082,28 +2085,112 @@
             this.retailpriceDataGridViewTextBoxColumn,
             this.countryDataGridViewTextBoxColumn});
             this.dgv_storage.ContextMenuStrip = this.ctms_storage;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_storage.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_storage.Location = new System.Drawing.Point(6, 130);
             this.dgv_storage.MultiSelect = false;
             this.dgv_storage.Name = "dgv_storage";
             this.dgv_storage.ReadOnly = true;
             this.dgv_storage.RowHeadersVisible = false;
             this.dgv_storage.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_storage.RowsDefaultCellStyle = dataGridViewCellStyle17;
             this.dgv_storage.RowTemplate.Height = 23;
             this.dgv_storage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_storage.Size = new System.Drawing.Size(1220, 537);
             this.dgv_storage.TabIndex = 0;
             this.dgv_storage.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_storage_CellDoubleClick);
             this.dgv_storage.SelectionChanged += new System.EventHandler(this.dgv_storage_SelectionChanged);
+            // 
+            // codeDataGridViewTextBoxColumn
+            // 
+            this.codeDataGridViewTextBoxColumn.HeaderText = "编号";
+            this.codeDataGridViewTextBoxColumn.Name = "codeDataGridViewTextBoxColumn";
+            this.codeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // chateauDataGridViewTextBoxColumn
+            // 
+            this.chateauDataGridViewTextBoxColumn.HeaderText = "酒庄";
+            this.chateauDataGridViewTextBoxColumn.Name = "chateauDataGridViewTextBoxColumn";
+            this.chateauDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // discriptionDataGridViewTextBoxColumn
+            // 
+            this.discriptionDataGridViewTextBoxColumn.HeaderText = "描述";
+            this.discriptionDataGridViewTextBoxColumn.Name = "discriptionDataGridViewTextBoxColumn";
+            this.discriptionDataGridViewTextBoxColumn.ReadOnly = true;
+            this.discriptionDataGridViewTextBoxColumn.Width = 255;
+            // 
+            // vintageDataGridViewTextBoxColumn
+            // 
+            this.vintageDataGridViewTextBoxColumn.HeaderText = "年份";
+            this.vintageDataGridViewTextBoxColumn.Name = "vintageDataGridViewTextBoxColumn";
+            this.vintageDataGridViewTextBoxColumn.ReadOnly = true;
+            this.vintageDataGridViewTextBoxColumn.Width = 65;
+            // 
+            // appelationDataGridViewTextBoxColumn
+            // 
+            this.appelationDataGridViewTextBoxColumn.HeaderText = "法定产区";
+            this.appelationDataGridViewTextBoxColumn.Name = "appelationDataGridViewTextBoxColumn";
+            this.appelationDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // qualityDataGridViewTextBoxColumn
+            // 
+            this.qualityDataGridViewTextBoxColumn.HeaderText = "等级";
+            this.qualityDataGridViewTextBoxColumn.Name = "qualityDataGridViewTextBoxColumn";
+            this.qualityDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bottleDataGridViewTextBoxColumn
+            // 
+            this.bottleDataGridViewTextBoxColumn.HeaderText = "规格";
+            this.bottleDataGridViewTextBoxColumn.Name = "bottleDataGridViewTextBoxColumn";
+            this.bottleDataGridViewTextBoxColumn.ReadOnly = true;
+            this.bottleDataGridViewTextBoxColumn.Width = 65;
+            // 
+            // scoreDataGridViewTextBoxColumn
+            // 
+            this.scoreDataGridViewTextBoxColumn.HeaderText = "评分";
+            this.scoreDataGridViewTextBoxColumn.Name = "scoreDataGridViewTextBoxColumn";
+            this.scoreDataGridViewTextBoxColumn.ReadOnly = true;
+            this.scoreDataGridViewTextBoxColumn.Width = 65;
+            // 
+            // supplierDataGridViewTextBoxColumn
+            // 
+            this.supplierDataGridViewTextBoxColumn.HeaderText = "供货商";
+            this.supplierDataGridViewTextBoxColumn.Name = "supplierDataGridViewTextBoxColumn";
+            this.supplierDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // unitsDataGridViewTextBoxColumn
+            // 
+            this.unitsDataGridViewTextBoxColumn.HeaderText = "数量(瓶)";
+            this.unitsDataGridViewTextBoxColumn.Name = "unitsDataGridViewTextBoxColumn";
+            this.unitsDataGridViewTextBoxColumn.ReadOnly = true;
+            this.unitsDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            this.priceDataGridViewTextBoxColumn.HeaderText = "价格(元)";
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // retailpriceDataGridViewTextBoxColumn
+            // 
+            this.retailpriceDataGridViewTextBoxColumn.HeaderText = "零售价(元)";
+            this.retailpriceDataGridViewTextBoxColumn.Name = "retailpriceDataGridViewTextBoxColumn";
+            this.retailpriceDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // countryDataGridViewTextBoxColumn
+            // 
+            this.countryDataGridViewTextBoxColumn.HeaderText = "国家";
+            this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
+            this.countryDataGridViewTextBoxColumn.ReadOnly = true;
+            this.countryDataGridViewTextBoxColumn.Width = 80;
             // 
             // ctms_storage
             // 
@@ -2234,8 +2321,8 @@
             this.dgv_roles.MultiSelect = false;
             this.dgv_roles.Name = "dgv_roles";
             this.dgv_roles.RowHeadersVisible = false;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_roles.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_roles.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgv_roles.RowTemplate.Height = 23;
             this.dgv_roles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_roles.Size = new System.Drawing.Size(328, 215);
@@ -2271,8 +2358,8 @@
             this.dgv_memberLevel.MultiSelect = false;
             this.dgv_memberLevel.Name = "dgv_memberLevel";
             this.dgv_memberLevel.RowHeadersVisible = false;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_memberLevel.RowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_memberLevel.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgv_memberLevel.RowTemplate.Height = 23;
             this.dgv_memberLevel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_memberLevel.Size = new System.Drawing.Size(392, 215);
@@ -2342,22 +2429,22 @@
             this.dataGridViewTextBoxColumn8});
             this.dgv_supplier.ContextMenuStrip = this.ctms_supplier;
             this.dgv_supplier.DataSource = this.supplierBindingSource;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_supplier.DefaultCellStyle = dataGridViewCellStyle9;
             this.dgv_supplier.Location = new System.Drawing.Point(4, 66);
             this.dgv_supplier.MultiSelect = false;
             this.dgv_supplier.Name = "dgv_supplier";
             this.dgv_supplier.ReadOnly = true;
             this.dgv_supplier.RowHeadersVisible = false;
             this.dgv_supplier.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_supplier.RowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_supplier.RowsDefaultCellStyle = dataGridViewCellStyle11;
             this.dgv_supplier.RowTemplate.Height = 23;
             this.dgv_supplier.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_supplier.Size = new System.Drawing.Size(392, 163);
@@ -2475,7 +2562,8 @@
             this.toolStripSeparator1,
             this.tsl_sysDate,
             this.toolStripSeparator2,
-            this.tsl_curUser});
+            this.tsl_curUser,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 722);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1261, 25);
@@ -2521,89 +2609,24 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // codeDataGridViewTextBoxColumn
+            // toolStripButton1
             // 
-            this.codeDataGridViewTextBoxColumn.HeaderText = "编号";
-            this.codeDataGridViewTextBoxColumn.Name = "codeDataGridViewTextBoxColumn";
-            this.codeDataGridViewTextBoxColumn.ReadOnly = true;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
-            // chateauDataGridViewTextBoxColumn
+            // btn_WineList
             // 
-            this.chateauDataGridViewTextBoxColumn.HeaderText = "酒庄";
-            this.chateauDataGridViewTextBoxColumn.Name = "chateauDataGridViewTextBoxColumn";
-            this.chateauDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // discriptionDataGridViewTextBoxColumn
-            // 
-            this.discriptionDataGridViewTextBoxColumn.HeaderText = "描述";
-            this.discriptionDataGridViewTextBoxColumn.Name = "discriptionDataGridViewTextBoxColumn";
-            this.discriptionDataGridViewTextBoxColumn.ReadOnly = true;
-            this.discriptionDataGridViewTextBoxColumn.Width = 255;
-            // 
-            // vintageDataGridViewTextBoxColumn
-            // 
-            this.vintageDataGridViewTextBoxColumn.HeaderText = "年份";
-            this.vintageDataGridViewTextBoxColumn.Name = "vintageDataGridViewTextBoxColumn";
-            this.vintageDataGridViewTextBoxColumn.ReadOnly = true;
-            this.vintageDataGridViewTextBoxColumn.Width = 65;
-            // 
-            // appelationDataGridViewTextBoxColumn
-            // 
-            this.appelationDataGridViewTextBoxColumn.HeaderText = "法定产区";
-            this.appelationDataGridViewTextBoxColumn.Name = "appelationDataGridViewTextBoxColumn";
-            this.appelationDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // qualityDataGridViewTextBoxColumn
-            // 
-            this.qualityDataGridViewTextBoxColumn.HeaderText = "等级";
-            this.qualityDataGridViewTextBoxColumn.Name = "qualityDataGridViewTextBoxColumn";
-            this.qualityDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // bottleDataGridViewTextBoxColumn
-            // 
-            this.bottleDataGridViewTextBoxColumn.HeaderText = "规格";
-            this.bottleDataGridViewTextBoxColumn.Name = "bottleDataGridViewTextBoxColumn";
-            this.bottleDataGridViewTextBoxColumn.ReadOnly = true;
-            this.bottleDataGridViewTextBoxColumn.Width = 65;
-            // 
-            // scoreDataGridViewTextBoxColumn
-            // 
-            this.scoreDataGridViewTextBoxColumn.HeaderText = "评分";
-            this.scoreDataGridViewTextBoxColumn.Name = "scoreDataGridViewTextBoxColumn";
-            this.scoreDataGridViewTextBoxColumn.ReadOnly = true;
-            this.scoreDataGridViewTextBoxColumn.Width = 65;
-            // 
-            // supplierDataGridViewTextBoxColumn
-            // 
-            this.supplierDataGridViewTextBoxColumn.HeaderText = "供货商";
-            this.supplierDataGridViewTextBoxColumn.Name = "supplierDataGridViewTextBoxColumn";
-            this.supplierDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // unitsDataGridViewTextBoxColumn
-            // 
-            this.unitsDataGridViewTextBoxColumn.HeaderText = "数量(瓶)";
-            this.unitsDataGridViewTextBoxColumn.Name = "unitsDataGridViewTextBoxColumn";
-            this.unitsDataGridViewTextBoxColumn.ReadOnly = true;
-            this.unitsDataGridViewTextBoxColumn.Width = 80;
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            this.priceDataGridViewTextBoxColumn.HeaderText = "价格(元)";
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // retailpriceDataGridViewTextBoxColumn
-            // 
-            this.retailpriceDataGridViewTextBoxColumn.HeaderText = "零售价(元)";
-            this.retailpriceDataGridViewTextBoxColumn.Name = "retailpriceDataGridViewTextBoxColumn";
-            this.retailpriceDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // countryDataGridViewTextBoxColumn
-            // 
-            this.countryDataGridViewTextBoxColumn.HeaderText = "国家";
-            this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
-            this.countryDataGridViewTextBoxColumn.ReadOnly = true;
-            this.countryDataGridViewTextBoxColumn.Width = 80;
+            this.btn_WineList.Location = new System.Drawing.Point(1124, 58);
+            this.btn_WineList.Name = "btn_WineList";
+            this.btn_WineList.Size = new System.Drawing.Size(75, 23);
+            this.btn_WineList.TabIndex = 19;
+            this.btn_WineList.Text = "酒单";
+            this.btn_WineList.UseVisualStyleBackColor = true;
+            this.btn_WineList.Click += new System.EventHandler(this.btn_WineList_Click);
             // 
             // FrmMain
             // 
@@ -2616,7 +2639,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "FrmMain";
-            this.Text = "微通红酒销售管理1.0";
+            this.Text = "葡驿红酒销售管理1.0";
             this.TransparencyKey = System.Drawing.Color.LightGray;
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyUp);
@@ -2918,6 +2941,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.Button btn_WineList;
     }
 }
 

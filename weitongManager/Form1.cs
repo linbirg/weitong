@@ -2007,6 +2007,7 @@ namespace weitongManager
             try
             {
                 DataGridViewCell cell = dgv_storage.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
                 if (dgv_storage.Columns[e.ColumnIndex].Name != "codeDataGridViewTextBoxColumn"
                     && dgv_storage.Columns[e.ColumnIndex].Name != "unitsDataGridViewTextBoxColumn")
                 {
@@ -2152,6 +2153,20 @@ namespace weitongManager
             {
                 FrmToolChangeCode frm_tool = new FrmToolChangeCode();
                 frm_tool.Show();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void btn_WineList_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FrmWineList list = new FrmWineList();
+                list.DataSet = weitongDataSet1;
+                list.ShowDialog();
             }
             catch (Exception ex)
             {

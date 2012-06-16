@@ -119,6 +119,12 @@
     <Compile Include="FrmVersionView.Designer.cs">
       <DependentUpon>FrmVersionView.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmWineList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmWineList.Designer.cs">
+      <DependentUpon>FrmWineList.cs</DependentUpon>
+    </Compile>
     <Compile Include="HisStorage.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberLevel.cs" />
@@ -190,6 +196,9 @@
     <EmbeddedResource Include="FrmVersionView.resx">
       <DependentUpon>FrmVersionView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmWineList.resx">
+      <DependentUpon>FrmWineList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -246,6 +255,35 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="20120514072612816_easyicon_cn_48.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
