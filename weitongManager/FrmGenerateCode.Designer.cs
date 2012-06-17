@@ -36,6 +36,7 @@
             this.tBox_code1 = new System.Windows.Forms.TextBox();
             this.tBox_code2 = new System.Windows.Forms.TextBox();
             this.tBox_code3 = new System.Windows.Forms.TextBox();
+            this.tbox_paires = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -112,11 +113,21 @@
             this.tBox_code3.TabIndex = 7;
             this.tBox_code3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // tbox_paires
+            // 
+            this.tbox_paires.Enabled = false;
+            this.tbox_paires.Location = new System.Drawing.Point(289, 60);
+            this.tbox_paires.Name = "tbox_paires";
+            this.tbox_paires.Size = new System.Drawing.Size(31, 21);
+            this.tbox_paires.TabIndex = 8;
+            this.tbox_paires.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // FrmGenerateCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(363, 215);
+            this.Controls.Add(this.tbox_paires);
             this.Controls.Add(this.tBox_code3);
             this.Controls.Add(this.tBox_code2);
             this.Controls.Add(this.tBox_code1);
@@ -142,5 +153,6 @@
         private System.Windows.Forms.TextBox tBox_code1;
         private System.Windows.Forms.TextBox tBox_code2;
         private System.Windows.Forms.TextBox tBox_code3;
+        private System.Windows.Forms.TextBox tbox_paires;
     }
 }

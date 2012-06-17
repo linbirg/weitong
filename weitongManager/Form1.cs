@@ -2131,9 +2131,9 @@ namespace weitongManager
                 if (DialogResult.OK == frmGCode.ShowDialog())
                 {
                     string randomCode = frmGCode.Code;
-                    if (randomCode == null || randomCode.Length != 12)
+                    if (randomCode == null || randomCode.Length != 13)
                     {
-                        WARNING("编码长度不是12位的。");
+                        WARNING("编码长度不是13位的。");
                     }
                     else
                     {

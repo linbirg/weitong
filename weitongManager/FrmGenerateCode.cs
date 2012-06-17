@@ -22,7 +22,7 @@ namespace weitongManager
 
         public string Code
         {
-            get { return m_code; }
+            get { return m_code + Ean13.CalculateChecksum(m_code); }
             set {
                 m_code = value;
 
@@ -43,12 +43,13 @@ namespace weitongManager
         {
             try
             {
-                string code = util.GetRandomString(12, false, true, false);
+                string code = util.GetRandomString(12, false, true, false,false);
                 while (Storage.existsWine(code) || Wine.existsWine(code))
                 {
                     code = util.GetRandomString(12);
                 }
                 lbl_Code.Text = code;
+                
                 Code = code;
                 showCode();
             }
@@ -75,6 +76,8 @@ namespace weitongManager
             tBox_code1.Text = m_code.Substring(0, 4);
             tBox_code2.Text = m_code.Substring(4, 4);
             tBox_code3.Text = m_code.Substring(8, 4);
+            int sum = Ean13.CalculateChecksum(m_code);
+            tbox_paires.Text = sum.ToString();
         }
     }
 }
