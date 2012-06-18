@@ -159,11 +159,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>weitongDataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="weitongDataSet2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>weitongDataSet2.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Wine.cs" />
     <Compile Include="WineStorageMgr.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -240,17 +235,6 @@
     </None>
     <None Include="weitongDataSet1.xss">
       <DependentUpon>weitongDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="weitongDataSet2.xsc">
-      <DependentUpon>weitongDataSet2.xsd</DependentUpon>
-    </None>
-    <None Include="weitongDataSet2.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>weitongDataSet2.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="weitongDataSet2.xss">
-      <DependentUpon>weitongDataSet2.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
