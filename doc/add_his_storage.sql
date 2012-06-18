@@ -1,4 +1,4 @@
-use weitong
+use puyi
 # his_storage table
 DROP TABLE IF EXISTS his_storage;
 CREATE TABLE his_storage(

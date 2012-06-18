@@ -1,9 +1,9 @@
 # linbirg@2012.04.10 for weitong red wine management
 
-DROP DATABASE IF EXISTS weitong;
-CREATE DATABASE weitong character set GB2312;
+DROP DATABASE IF EXISTS puyi;
+CREATE DATABASE puyi character set GB2312;
 
-USE weitong;
+USE puyi;
 
 # customers table
 DROP TABLE IF EXISTS customers;
