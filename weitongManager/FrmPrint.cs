@@ -433,6 +433,11 @@ namespace weitongManager
                     if (j == 2 || j == 4 || j == 5 || j == 6)
                     {
                         format.Alignment = StringAlignment.Far;
+                        if (j == 4 || j == 6)
+                        {
+                            decimal price = (decimal)row.Cells[j].Value;
+                            text = price.ToString("f2");
+                        }
                     }
                     else
                     {
@@ -520,7 +525,7 @@ namespace weitongManager
             dgv_dingjindan.Columns["dingJinDanDescription"].DataPropertyName = "description";
             dgv_dingjindan.Columns["dingJinDanUnits"].DataPropertyName = "Units";
             dgv_dingjindan.Columns["dingJinDanBottle"].DataPropertyName = "Bottle";
-            dgv_dingjindan.Columns["dingJinDanMemberprice"].DataPropertyName = "memberprice";
+            dgv_dingjindan.Columns["dingJinDanMemberprice"].DataPropertyName = "Price";//"memberprice";
             dgv_dingjindan.Columns["dingJinDanDiscount"].DataPropertyName = "Discount";
             dgv_dingjindan.Columns["dingJinDanAmount"].DataPropertyName = "Amount";
         }
@@ -705,6 +710,27 @@ namespace weitongManager
             {
                 e.HasMorePages = false;
                 resetGlobalSettings();
+            }
+        }
+
+        private void dgv_dingjindan_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+                if (dgv_dingjindan.Columns[e.ColumnIndex].Name == "dingJinDanMemberprice")
+                {
+                    decimal price = (decimal)e.Value;
+                    e.Value = price.ToString("f2");
+                }
+                else if (dgv_dingjindan.Columns[e.ColumnIndex].Name == "dingJinDanAmount")
+                {
+                    decimal price = (decimal)e.Value;
+                    e.Value = price.ToString("f2");
+                }
+            }
+            catch (Exception ex)
+            {
+                
             }
         }
         

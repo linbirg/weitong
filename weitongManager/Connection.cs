@@ -20,7 +20,7 @@ namespace weitongManager
                 //if (m_conn == null)
                 //    m_conn = new MySqlConnection("server=localhost;User Id=weitong;password=weitong;database=weitong");
                 //return m_conn;
-                return new MySqlConnection("server=localhost;User Id=puyi;password=puyi;database=puyi");
+                return new MySqlConnection("server=localhost;User Id=weitong;password=weitong;database=weitong");
             }
         }
     }

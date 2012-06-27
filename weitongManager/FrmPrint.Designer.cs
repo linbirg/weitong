@@ -253,6 +253,7 @@
             this.dgv_dingjindan.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_dingjindan.Size = new System.Drawing.Size(763, 186);
             this.dgv_dingjindan.TabIndex = 19;
+            this.dgv_dingjindan.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_dingjindan_CellFormatting);
             // 
             // dingJinDanCode
             // 
