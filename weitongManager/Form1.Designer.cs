@@ -287,8 +287,8 @@
             this.tsl_sysDate = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btn_checkCustomers = new System.Windows.Forms.Button();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -705,6 +705,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.btn_checkCustomers);
             this.groupBox6.Controls.Add(this.picker_customerRegDate);
             this.groupBox6.Controls.Add(this.picker_customerBirthday);
             this.groupBox6.Controls.Add(this.cbox_membLevel);
@@ -2571,8 +2572,7 @@
             this.toolStripSeparator1,
             this.tsl_sysDate,
             this.toolStripSeparator2,
-            this.tsl_curUser,
-            this.toolStripButton1});
+            this.tsl_curUser});
             this.toolStrip1.Location = new System.Drawing.Point(0, 722);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1261, 25);
@@ -2612,20 +2612,21 @@
             this.tsl_curUser.Size = new System.Drawing.Size(72, 22);
             this.tsl_curUser.Text = "user:admin";
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
             // timer1
             // 
             this.timer1.Enabled = true;
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btn_checkCustomers
+            // 
+            this.btn_checkCustomers.Location = new System.Drawing.Point(187, 28);
+            this.btn_checkCustomers.Name = "btn_checkCustomers";
+            this.btn_checkCustomers.Size = new System.Drawing.Size(75, 23);
+            this.btn_checkCustomers.TabIndex = 21;
+            this.btn_checkCustomers.Text = "查看";
+            this.btn_checkCustomers.UseVisualStyleBackColor = true;
+            this.btn_checkCustomers.Click += new System.EventHandler(this.btn_checkCustomers_Click);
             // 
             // FrmMain
             // 
@@ -2940,8 +2941,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn retailpriceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.Button btn_WineList;
+        private System.Windows.Forms.Button btn_checkCustomers;
     }
 }
 

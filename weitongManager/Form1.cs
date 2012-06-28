@@ -2174,6 +2174,23 @@ namespace weitongManager
             }
         }
 
+        private void btn_checkCustomers_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FrmCustomerList custFrm = new FrmCustomerList();
+                if (DialogResult.OK == custFrm.ShowDialog())
+                {
+                    m_salesMgr.CartCustomer = custFrm.SelectedCustomer;
+                    showCustomerInfo(m_salesMgr.CartCustomer);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
         
 
         

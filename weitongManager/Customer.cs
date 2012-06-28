@@ -217,6 +217,45 @@ namespace weitongManager
             return aCustomer;
         }
 
+        /// <summary>
+        /// 加载所有的客户信息到列表中
+        /// </summary>
+        /// <returns></returns>
+        public static List<Customer> load()
+        {
+            List<Customer> customers = null;
+            
+
+            string queryStr = @"SELECT   customers.id, customers.name, customers.phonenumber, customers.registedate, customers.sex, customers.job, 
+                customers.birthday, customers.address, customers.email, 
+                member.memberid, member.memlevel, member.registerdate as memberdate, member.discount
+                FROM customers LEFT OUTER JOIN
+                     member ON customers.id = member.customerid";
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.CommandText = queryStr;
+            
+            queryCmd.Connection = ConnSingleton.Connection;
+
+            try
+            {
+                queryCmd.Connection.Open();
+                MySqlDataReader reader = queryCmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    if(customers == null) customers = new List<Customer>();
+                    Customer aCustomer = getCustomerFromReader(reader);
+                    if (aCustomer != null) customers.Add(aCustomer);
+                }
+
+            }
+            finally
+            {
+                queryCmd.Connection.Close();
+            }
+
+            return customers;
+        }
+
         // ========================= 私有方法=============================
         private int getLevelDiscount(int level)
         {
