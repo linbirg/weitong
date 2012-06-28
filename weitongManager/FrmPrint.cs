@@ -28,7 +28,9 @@ namespace weitongManager
         private int m_currentPageIndex = 0;
         private int m_maxRowPerPage = MAX_ROW_PER_PAGE;
         private int m_totalPageCount = 0;
-        private readonly static int MAX_ROW_PER_PAGE = 8; 
+        private readonly static int MAX_ROW_PER_PAGE = 8;
+
+        private RectangleF m_printArea;
 
         public FrmPrint()
         {
@@ -152,53 +154,61 @@ namespace weitongManager
 
         void printDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            //int x = lbl_Logo.Location.X;
-            //int y = this.Height - this.Bottom;
-            //int width = lbl_Logo.Width;
-            //int height = lbl_anuncment2.Bottom + 20;
-            float scaleX = (e.PageBounds.Width - e.MarginBounds.Left * 2) / (float)this.DisplayRectangle.Width;
-            
+            RectangleF bestArea = GetBestPrintableArea(e);
+            m_printArea = bestArea;
+            float scaleX = bestArea.Width / (float)this.DisplayRectangle.Width;
+            float scaleY = bestArea.Height / ((float)(this.DisplayRectangle.Height - lbl_Logo.Location.Y) * 2);
+            //float scaleX = (e.PageBounds.Width - e.MarginBounds.Left*2) / (float)this.DisplayRectangle.Width;
+            //int ht = (int)bestArea.Height;
+            //MessageBox.Show(ht.ToString());
             // 页面对应到一半的纸张上面，只打印在上半部分。
-            float scaleY = e.PageBounds.Height / ((float)(this.DisplayRectangle.Height - lbl_Logo.Location.Y) * 2);
+            //float scaleY = (e.PageBounds.Height) / ((float)(this.DisplayRectangle.Height - lbl_Logo.Location.Y) * 2);
             //打印啥东东就在这写了
             Graphics g = e.Graphics;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias; 
 
-            //Bitmap   formBitmap   =   new Bitmap(this.Width, this.Height);
-            //this.DrawToBitmap(formBitmap, new Rectangle(0, 0, this.Width, this.Height));
-            //g.DrawImage(formBitmap, 0, 0);
-            
-            
-            
-            //Brush b = new SolidBrush(Color.Black);
-            //Font titleFont = new Font("宋体", 16);
-            //string title = "五凤街道梅峰社区卫生服务站 处方笺";
-            //g.DrawString(title, titleFont, b, new PointF((e.PageBounds.Width - g.MeasureString(title, titleFont).Width) / 2, this.Height/2 + 300));
-            
-            //g.DrawImage(lbl_Logo.Image,e.MarginBounds.Left,0,e.PageBounds.Width-e.MarginBounds.Left*2,100);
 
             // 上半页
             drawHalfPage(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            drowMiddleLine(e);
-            drawHalfPage(0, this.DisplayRectangle.Height - lbl_Logo.Location.Y*2, scaleX, scaleY, e);
+            drowMiddleLine(bestArea, e);
+            drawHalfPage(0, this.DisplayRectangle.Height - lbl_Logo.Location.Y * 2, scaleX, scaleY, e);
             if (hasNextPage()) printNextPage(e);
-            
-            //drowLogo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            //drowCode(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            //drowTitle(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            //showCurrentPage();
-            //drowOrderInfo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            //drawCustomerInfo(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            //drawSignAndBeizhu(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            //drawAnancement(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-
-            //if (m_currentPageIndex == m_totalPageCount - 1)
-            //    drawTotalAmount(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-
-            //drawColumnHeader(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);
-            //// drawRows会改变当前页面的索引等一些全局的设置，因此必须在此页面最后打印。
-            //drawRows(0, -lbl_Logo.Location.Y, scaleX, scaleY, e);  
         }
+
+        /// <summary>
+        /// 获取打印机的最佳可打印区域
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private RectangleF GetBestPrintableArea(PrintPageEventArgs e)
+        {
+            RectangleF marginBounds = e.MarginBounds;
+            RectangleF printableArea = e.PageSettings.PrintableArea;
+            RectangleF pageBounds = e.PageBounds;
+
+            if (e.PageSettings.Landscape)
+                printableArea = new RectangleF(printableArea.Y, printableArea.X, printableArea.Height, printableArea.Width);
+
+            RectangleF bestArea = RectangleF.FromLTRB(
+                (float)Math.Max(marginBounds.Left, printableArea.Left),
+                (float)Math.Max(marginBounds.Top, printableArea.Top),
+                (float)Math.Min(marginBounds.Right, printableArea.Right),
+                (float)Math.Min(marginBounds.Bottom, printableArea.Bottom)
+            );
+
+            float bestMarginX = (float)Math.Max(bestArea.Left, pageBounds.Right - bestArea.Right);
+            float bestMarginY = (float)Math.Max(bestArea.Top, pageBounds.Bottom - bestArea.Bottom);
+
+            bestArea = RectangleF.FromLTRB(
+                bestMarginX,
+                bestMarginY,
+                pageBounds.Right - bestMarginX,
+                pageBounds.Bottom - bestMarginY
+            );
+
+            return printableArea;
+        }
+
 
         private void drawHalfPage(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
@@ -233,23 +243,24 @@ namespace weitongManager
         }
 
         //各种drow
-        private void drowMiddleLine(PrintPageEventArgs e)
+        private void drowMiddleLine(RectangleF printableArea, PrintPageEventArgs e)
         {
             // 中线分页，将A4一分为二
             SolidBrush brush = new SolidBrush(Color.Gray);
             Graphics gh = e.Graphics;
             Pen aPen = new Pen(brush);
             aPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            gh.DrawLine(aPen, 0, e.PageBounds.Height / 2, e.PageBounds.Width, e.PageBounds.Height / 2);
+            int midlleY = (int)(printableArea.Y + printableArea.Height / 2);
+            gh.DrawLine(aPen, 0, midlleY, e.PageBounds.Width, midlleY);
         }
 
         private void drowLogo(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
             Graphics gh = e.Graphics;
             
-            gh.DrawImage(lbl_Logo.Image, 
-                e.MarginBounds.Left + (posX + lbl_Logo.Location.X) * scaleX, 
-                (posY + lbl_Logo.Location.Y)*scaleY,
+            gh.DrawImage(lbl_Logo.Image,
+                m_printArea.X + (posX + lbl_Logo.Location.X) * scaleX,
+                m_printArea.Y + (posY + lbl_Logo.Location.Y) * scaleY,
                 lbl_Logo.Width*scaleX ,
                 lbl_Logo.Height*scaleY);
             drowLabel(posX, posY, scaleX,scaleY, lbl_logoAdress, e);
@@ -263,8 +274,8 @@ namespace weitongManager
             //             (posY + lbl_code.Location.Y), lbl_code.Width, lbl_code.Height);
             //gh.DrawImage(BarCode.BuildBarCode("20120002"),e.MarginBounds.Left + (posX + lbl_code.Location.X)*scaleX, 
             //             (posY + lbl_code.Location.Y)*scaleY, lbl_code.Width*scaleX, lbl_code.Height*scaleY);
-            gh.DrawImage(lbl_code.Image, e.MarginBounds.Left + (posX + lbl_code.Location.X) * scaleX,
-                         (posY + lbl_code.Location.Y) * scaleY, lbl_code.Image.Width * scaleX, lbl_code.Image.Height * scaleY);
+            gh.DrawImage(lbl_code.Image, m_printArea.X + (posX + lbl_code.Location.X) * scaleX,
+                         m_printArea.Y + (posY + lbl_code.Location.Y) * scaleY, lbl_code.Image.Width * scaleX, lbl_code.Image.Height * scaleY);
 
         }
 
@@ -321,8 +332,8 @@ namespace weitongManager
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Center;
             gh.DrawString(text, txtFont, b,
-                new RectangleF(e.MarginBounds.Left + (posX + lbl_anuncment1.Location.X) * scaleX, 
-                    (posY + lbl_anuncment1.Location.Y) * scaleY, 
+                new RectangleF(m_printArea.X + (posX + lbl_anuncment1.Location.X) * scaleX,
+                    m_printArea.Y + (posY + lbl_anuncment1.Location.Y) * scaleY, 
                     lbl_anuncment1.Width * scaleX, 
                     lbl_anuncment1.Height * scaleY), 
                     format);
@@ -350,10 +361,10 @@ namespace weitongManager
 
         private void drawColumnHeader(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
-            int orginX = (int)((dgv_dingjindan.Location.X + posX)*scaleX);
-            int orginY = (int)((dgv_dingjindan.Location.Y + posY)*scaleY);
+            int orginX = (int)(m_printArea.X + (dgv_dingjindan.Location.X + posX) * scaleX);
+            int orginY = (int)(m_printArea.Y + (dgv_dingjindan.Location.Y + posY) * scaleY);
             Point grid_origin = new Point(orginX, orginY);
-            int iLeftMargin = e.MarginBounds.Left;
+            int iLeftMargin = 0;//(int)m_printArea.X;
 
             
             string text = this.dgv_dingjindan.Columns[0].HeaderText;
@@ -391,10 +402,10 @@ namespace weitongManager
 
         private void drawRows(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
-            int originX = (int)((dgv_dingjindan.Location.X + posX)*scaleX);
-            int originY = (int)((dgv_dingjindan.Location.Y + posY)*scaleY);
+            int originX = (int)(m_printArea.X + (dgv_dingjindan.Location.X + posX) * scaleX);
+            int originY = (int)(m_printArea.Y + (dgv_dingjindan.Location.Y + posY) * scaleY);
             Point grid_origin = new Point(originX, originY);
-            int iLeftMargin = e.MarginBounds.Left;
+            int iLeftMargin = 0;//(int)m_printArea.X;
             int iTopMargin = (int)(dgv_dingjindan.ColumnHeadersHeight*scaleY);
             int cWidth = 0;
             int rHeight = 0;
@@ -424,7 +435,7 @@ namespace weitongManager
             {
                 DataGridViewRow row = dgv_dingjindan.Rows[row_index];
                 rHeight = (int)(row.Height*scaleY);
-                iLeftMargin = e.MarginBounds.Left;
+                iLeftMargin = 0;
 
                 for (int j = 0; j < dgv_dingjindan.ColumnCount; j++)
                 {
@@ -436,7 +447,8 @@ namespace weitongManager
                         if (j == 4 || j == 6)
                         {
                             decimal price = (decimal)row.Cells[j].Value;
-                            text = price.ToString("f2");
+                            int intv = decimal.ToInt32(price);
+                            text = intv.ToString("f2");
                         }
                     }
                     else
@@ -476,8 +488,7 @@ namespace weitongManager
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Center;
 
-
-            gh.DrawString(text, txtFont, b, new RectangleF(e.MarginBounds.Left + ( posX+ lbl.Location.X)*scaleX, (posY + lbl.Location.Y)*scaleY, width, height), format);
+            gh.DrawString(text, txtFont, b, new RectangleF(m_printArea.X + (posX + lbl.Location.X) * scaleX, m_printArea.Y + (posY + lbl.Location.Y) * scaleY, width, height), format);
         }
 
         /// <summary>
@@ -500,7 +511,8 @@ namespace weitongManager
             Graphics gh = e.Graphics;
             Pen aPen = new Pen(brush);
             //aPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            gh.DrawLine(aPen, e.MarginBounds.Left + (posX + x) * scaleX, (posY + y) * scaleY, e.MarginBounds.Left + (posX + x) * scaleX + scale_length, (posY + y) * scaleY);
+            gh.DrawLine(aPen, m_printArea.X + (posX + x) * scaleX, m_printArea.Y + (posY + y) * scaleY, 
+                m_printArea.X + (posX + x) * scaleX + scale_length, m_printArea.Y + (posY + y) * scaleY);
         }
 
         // 该函数按照控件的实际大小打印在纸张上
@@ -717,16 +729,13 @@ namespace weitongManager
         {
             try
             {
-                if (dgv_dingjindan.Columns[e.ColumnIndex].Name == "dingJinDanMemberprice")
+                if (dgv_dingjindan.Columns[e.ColumnIndex].Name == "dingJinDanMemberprice" || dgv_dingjindan.Columns[e.ColumnIndex].Name == "dingJinDanAmount")
                 {
                     decimal price = (decimal)e.Value;
-                    e.Value = price.ToString("f2");
+                    int intv = decimal.ToInt32(price);
+                    e.Value = intv.ToString("f2");
                 }
-                else if (dgv_dingjindan.Columns[e.ColumnIndex].Name == "dingJinDanAmount")
-                {
-                    decimal price = (decimal)e.Value;
-                    e.Value = price.ToString("f2");
-                }
+                
             }
             catch (Exception ex)
             {
