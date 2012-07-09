@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrint));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lbl_Logo = new System.Windows.Forms.Label();
             this.lbl_orderDate = new System.Windows.Forms.Label();
             this.lbl_orderTime = new System.Windows.Forms.Label();
@@ -69,6 +69,8 @@
             this.lbl_AmountSigleLine = new System.Windows.Forms.Label();
             this.lbl_CountContent = new System.Windows.Forms.Label();
             this.lbl_count = new System.Windows.Forms.Label();
+            this.lbl_ActuaAmountContent = new System.Windows.Forms.Label();
+            this.lbl_ActualAmount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_dingjindan)).BeginInit();
             this.SuspendLayout();
             // 
@@ -235,14 +237,14 @@
             this.dingJinDanMemberprice,
             this.dingJinDanDiscount,
             this.dingJinDanAmount});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_dingjindan.GridColor = System.Drawing.SystemColors.Control;
             this.dgv_dingjindan.Location = new System.Drawing.Point(12, 243);
             this.dgv_dingjindan.MultiSelect = false;
@@ -270,8 +272,8 @@
             // 
             // dingJinDanUnits
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle3;
             this.dingJinDanUnits.HeaderText = "数量";
             this.dingJinDanUnits.Name = "dingJinDanUnits";
             this.dingJinDanUnits.ReadOnly = true;
@@ -408,7 +410,7 @@
             this.lbl_Amount.Name = "lbl_Amount";
             this.lbl_Amount.Size = new System.Drawing.Size(44, 12);
             this.lbl_Amount.TabIndex = 34;
-            this.lbl_Amount.Text = "合计：";
+            this.lbl_Amount.Text = "应收：";
             // 
             // lbl_AmountContent
             // 
@@ -446,11 +448,31 @@
             this.lbl_count.TabIndex = 37;
             this.lbl_count.Text = "总数量：";
             // 
+            // lbl_ActuaAmountContent
+            // 
+            this.lbl_ActuaAmountContent.Location = new System.Drawing.Point(720, 462);
+            this.lbl_ActuaAmountContent.Name = "lbl_ActuaAmountContent";
+            this.lbl_ActuaAmountContent.Size = new System.Drawing.Size(55, 12);
+            this.lbl_ActuaAmountContent.TabIndex = 40;
+            this.lbl_ActuaAmountContent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lbl_ActualAmount
+            // 
+            this.lbl_ActualAmount.AutoSize = true;
+            this.lbl_ActualAmount.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_ActualAmount.Location = new System.Drawing.Point(678, 462);
+            this.lbl_ActualAmount.Name = "lbl_ActualAmount";
+            this.lbl_ActualAmount.Size = new System.Drawing.Size(44, 12);
+            this.lbl_ActualAmount.TabIndex = 39;
+            this.lbl_ActualAmount.Text = "实收：";
+            // 
             // FrmPrint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 629);
+            this.Controls.Add(this.lbl_ActuaAmountContent);
+            this.Controls.Add(this.lbl_ActualAmount);
             this.Controls.Add(this.lbl_CountContent);
             this.Controls.Add(this.lbl_count);
             this.Controls.Add(this.lbl_AmountSigleLine);
@@ -533,5 +555,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dingJinDanAmount;
         private System.Windows.Forms.Label lbl_CountContent;
         private System.Windows.Forms.Label lbl_count;
+        private System.Windows.Forms.Label lbl_ActuaAmountContent;
+        private System.Windows.Forms.Label lbl_ActualAmount;
     }
 }

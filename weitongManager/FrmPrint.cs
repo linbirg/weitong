@@ -343,13 +343,27 @@ namespace weitongManager
             drowLabel(posX, posY, scaleX, scaleY, lbl_anuncment2, e);
         }
 
+        /// <summary>
+        /// 画订单应收，实收，以及上下线。
+        /// </summary>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        /// <param name="scaleX"></param>
+        /// <param name="scaleY"></param>
+        /// <param name="e"></param>
         private void drawTotalAmount(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
         {
             //drowLabel(posX, posY, scaleX, scaleY, lbl_AmountSigleLine, e);
             drawLine(posX, posY, scaleX, scaleY, lbl_AmountSigleLine.Location.X, lbl_AmountSigleLine.Location.Y + lbl_AmountSigleLine.Height, lbl_AmountSigleLine.Width, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_Amount, e);
             drowLabel(posX, posY, scaleX, scaleY, lbl_AmountContent, e);
-            drawLine(posX, posY, scaleX, scaleY, lbl_AmountSigleLine.Location.X, lbl_Amount.Location.Y + lbl_Amount.Height + 3, lbl_AmountSigleLine.Width, e);
+
+            drowLabel(posX, posY, scaleX, scaleY, lbl_ActualAmount, e);
+            drowLabel(posX, posY, scaleX, scaleY, lbl_ActuaAmountContent, e);
+            drawLine(posX, posY, scaleX, scaleY, 
+                lbl_AmountSigleLine.Location.X, 
+                lbl_Amount.Location.Y + lbl_Amount.Height + lbl_ActualAmount.Height + 9, 
+                lbl_AmountSigleLine.Width, e);
         }
 
         private void drawTotalCount(int posX, int posY, float scaleX, float scaleY, PrintPageEventArgs e)
@@ -680,6 +694,7 @@ namespace weitongManager
             lbl_Amount.Visible = true;
             lbl_AmountContent.Visible = true;
             lbl_AmountContent.Text = "￥"+ Order.Amount.ToString();
+            lbl_ActuaAmountContent.Text = "￥" + Order.Received.ToString();
         }
 
         private void showOrderCount()

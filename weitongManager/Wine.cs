@@ -6,20 +6,8 @@ using MySql.Data.MySqlClient;
 
 namespace weitongManager
 {
-//    CREATE TABLE wines(
-//    id INT UNIQUE NOT NULL AUTO_INCREMENT,
-//    code CHAR(100) UNIQUE NOT NULL,
-//    chateau TEXT,
-//    country TEXT,
-//    appellation TEXT,
-//    quality TEXT,
-//    vintage YEAR,
-//    description TEXT,
-//    bottle TEXT,
-//    score TEXT,
-//    INDEX (code),
-//    PRIMARY KEY(id)
-//)TYPE=INNODB;
+
+
     class Wine
     {
         private int m_id;
@@ -33,7 +21,7 @@ namespace weitongManager
         private string m_bottle;
         private string m_score;
 
-
+        #region public property
         public string Code
         {
             get { return m_code; }
@@ -87,7 +75,9 @@ namespace weitongManager
             get { return m_score; }
             set { m_score = value; }
         }
+        #endregion
 
+        #region public static method
         /// <summary>
         /// 根据编码查找酒
         /// </summary>
@@ -111,17 +101,7 @@ namespace weitongManager
                 MySqlDataReader reader = qryCmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    aWine = new Wine();
-                    aWine.m_id = reader.GetInt32("id");
-                    aWine.Code = reader.GetString("code");
-                    aWine.Chateau = reader.GetString("chateau");
-                    aWine.Country = reader.GetString("country");
-                    aWine.Appellation = reader.GetString("appellation");
-                    aWine.Quality = reader.GetString("quality");
-                    aWine.Vintage = reader.GetInt32("vintage");
-                    aWine.Description = reader.GetString("description");
-                    aWine.Bottle = reader.GetString("bottle");
-                    aWine.Score = reader.GetString("score");
+                    aWine = getWineFromReader(reader);
                 }
             }
             finally
@@ -155,17 +135,7 @@ namespace weitongManager
                 MySqlDataReader reader = qryCmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Wine aWine = new Wine();
-                    aWine.m_id = reader.GetInt32("id");
-                    aWine.Code = reader.GetString("code");
-                    aWine.Chateau = reader.GetString("chateau");
-                    aWine.Country = reader.GetString("country");
-                    aWine.Appellation = reader.GetString("appellation");
-                    aWine.Quality = reader.GetString("quality");
-                    aWine.Vintage = reader.GetInt32("vintage");
-                    aWine.Description = reader.GetString("description");
-                    aWine.Bottle = reader.GetString("bottle");
-                    aWine.Score = reader.GetString("score");
+                    Wine aWine = getWineFromReader(reader);
                     list.Add(aWine);
                 }
             }
@@ -291,5 +261,32 @@ namespace weitongManager
             }
             
         }
+
+#endregion
+
+        #region private static method
+
+        /// <summary>
+        /// 从reader中读取酒的信息。
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        private static Wine getWineFromReader(MySqlDataReader reader)
+        {
+            Wine aWine = new Wine();
+            aWine.m_id = reader.GetInt32("id");
+            aWine.Code = reader.GetString("code");
+            aWine.Chateau = reader.IsDBNull(2) ? null : reader.GetString("chateau");
+            aWine.Country = reader.IsDBNull(3) ? null : reader.GetString("country");
+            aWine.Appellation = reader.IsDBNull(4) ? null : reader.GetString("appellation");
+            aWine.Quality = reader.IsDBNull(5) ? null : reader.GetString("quality");
+            aWine.Vintage = reader.IsDBNull(6) ? default(int) : reader.GetInt32("vintage");
+            aWine.Description = reader.IsDBNull(7) ? null : reader.GetString("description");
+            aWine.Bottle = reader.IsDBNull(8) ? null : reader.GetString("bottle");
+            aWine.Score = reader.IsDBNull(9) ? null : reader.GetString("score");
+            return aWine;
+        }
+
+        #endregion
     }
 }
