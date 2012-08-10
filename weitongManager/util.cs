@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace weitongManager
 {
@@ -134,6 +135,19 @@ namespace weitongManager
         }  
 
         #endregion
+
+
+        public static bool isPhoneNumber(string input)
+        {
+            string phoneNumerPattern = @"^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$";
+            return Regex.IsMatch(input, phoneNumerPattern);
+        }
+
+        public static bool isMailAdress(string input)
+        {
+            string regexEmail = "//w{1,}@//w{1,}//.//w{1,}";
+            return Regex.IsMatch(input, regexEmail);
+        }
 
 
     }

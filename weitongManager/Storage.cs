@@ -49,18 +49,11 @@ namespace weitongManager
             return row;
         }
 
-//        CREATE TABLE his_storage(
-//    id INT UNIQUE NOT NULL AUTO_INCREMENT,
-//    code CHAR(100) NOT NULL,
-//    supplierid INT,
-//    price DECIMAL(10,2) DEFAULT 0,
-//    retailprice DECIMAL(10,2),
-//    units INT NOT NULL DEFAULT 0,
-//    effectdate DATETIME NOT NULL,
-//    FOREIGN KEY(code) REFERENCES wines(code) 
-//    ON DELETE CASCADE,
-//    FOREIGN KEY(supplierid) REFERENCES supplier(id)
-//)TYPE=INNODB;
+        /// <summary>
+        /// 根据编号查找历史信息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns>包含历史信息的列表</returns>
         public static List<HisStorage> findHistoryByCode(string code)
         {
             List<HisStorage> list = null;
@@ -127,6 +120,78 @@ namespace weitongManager
                 //table = ;
                 table.Load(reader);
                 
+            }
+            finally
+            {
+                queryCmd.Connection.Close();
+            }
+
+            return table;
+        }
+
+        /// <summary>
+        /// 根据酒庄查找库存信息，查找方式为模糊查询
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns>返回包含库存信息的表</returns>
+        public static weitongDataSet1.storageDataTable findByChateau(string chateau)
+        {
+            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+                            supplier.name
+                            FROM wines INNER JOIN
+                            storage ON wines.code = storage.code LEFT OUTER JOIN
+                            supplier ON storage.supplierid = supplier.id
+                            WHERE wines.chateau like @chateau";
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.Connection = ConnSingleton.Connection;
+            queryCmd.CommandText = qStr;
+            queryCmd.Parameters.Add("@chateau", MySqlDbType.VarChar).Value = "%" + chateau + "%";
+
+            try
+            {
+                queryCmd.Connection.Open();
+                MySqlDataReader reader = queryCmd.ExecuteReader();
+                //table = ;
+                table.Load(reader);
+
+            }
+            finally
+            {
+                queryCmd.Connection.Close();
+            }
+
+            return table;
+        }
+
+        /// <summary>
+        /// 根据年份查找库存信息，查找方式为模糊查询
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns>返回包含库存信息的表</returns>
+        public static weitongDataSet1.storageDataTable findByVintage(string vintage)
+        {
+            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+                            supplier.name
+                            FROM wines INNER JOIN
+                            storage ON wines.code = storage.code LEFT OUTER JOIN
+                            supplier ON storage.supplierid = supplier.id
+                            WHERE wines.vintage = @vintage";
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.Connection = ConnSingleton.Connection;
+            queryCmd.CommandText = qStr;
+            queryCmd.Parameters.Add("@vintage", MySqlDbType.Int32).Value = Int32.Parse(vintage);
+
+            try
+            {
+                queryCmd.Connection.Open();
+                MySqlDataReader reader = queryCmd.ExecuteReader();
+                //table = ;
+                table.Load(reader);
+
             }
             finally
             {

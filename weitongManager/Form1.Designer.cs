@@ -52,8 +52,8 @@
             this.tBox_salesWineDescription = new System.Windows.Forms.TextBox();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.tBox_salesWineCode = new System.Windows.Forms.TextBox();
-            this.textBox25 = new System.Windows.Forms.TextBox();
-            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.tBox_salesChateau = new System.Windows.Forms.TextBox();
+            this.tBox_salesVintage = new System.Windows.Forms.TextBox();
             this.textBox27 = new System.Windows.Forms.TextBox();
             this.textBox28 = new System.Windows.Forms.TextBox();
             this.textBox29 = new System.Windows.Forms.TextBox();
@@ -179,6 +179,18 @@
             this.tsmi_viewOrderDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_PrintPrder = new System.Windows.Forms.ToolStripMenuItem();
             this.dgv_storageInfo = new System.Windows.Forms.DataGridView();
+            this.codeDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chateauDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descriptionDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitsDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.retailpriceDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.offDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vintageDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.appelltionDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qualityDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scoreDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bottleDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countryDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_storageInfo = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_addToCart = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage_storage = new System.Windows.Forms.TabPage();
@@ -277,18 +289,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.codeDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chateauDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unitsDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.retailpriceDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.offDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vintageDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.appelltionDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qualityDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.scoreDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bottleDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDGVStorageInfoTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -359,8 +359,8 @@
             this.groupBox7.Controls.Add(this.tBox_salesWineDescription);
             this.groupBox7.Controls.Add(this.textBox23);
             this.groupBox7.Controls.Add(this.tBox_salesWineCode);
-            this.groupBox7.Controls.Add(this.textBox25);
-            this.groupBox7.Controls.Add(this.textBox26);
+            this.groupBox7.Controls.Add(this.tBox_salesChateau);
+            this.groupBox7.Controls.Add(this.tBox_salesVintage);
             this.groupBox7.Controls.Add(this.textBox27);
             this.groupBox7.Controls.Add(this.textBox28);
             this.groupBox7.Controls.Add(this.textBox29);
@@ -432,19 +432,21 @@
             this.tBox_salesWineCode.TabIndex = 13;
             this.tBox_salesWineCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesWineCode_KeyPress);
             // 
-            // textBox25
+            // tBox_salesChateau
             // 
-            this.textBox25.Location = new System.Drawing.Point(77, 58);
-            this.textBox25.Name = "textBox25";
-            this.textBox25.Size = new System.Drawing.Size(100, 21);
-            this.textBox25.TabIndex = 12;
+            this.tBox_salesChateau.Location = new System.Drawing.Point(77, 58);
+            this.tBox_salesChateau.Name = "tBox_salesChateau";
+            this.tBox_salesChateau.Size = new System.Drawing.Size(100, 21);
+            this.tBox_salesChateau.TabIndex = 12;
+            this.tBox_salesChateau.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesChateau_KeyPress);
             // 
-            // textBox26
+            // tBox_salesVintage
             // 
-            this.textBox26.Location = new System.Drawing.Point(579, 30);
-            this.textBox26.Name = "textBox26";
-            this.textBox26.Size = new System.Drawing.Size(100, 21);
-            this.textBox26.TabIndex = 11;
+            this.tBox_salesVintage.Location = new System.Drawing.Point(579, 30);
+            this.tBox_salesVintage.Name = "tBox_salesVintage";
+            this.tBox_salesVintage.Size = new System.Drawing.Size(100, 21);
+            this.tBox_salesVintage.TabIndex = 11;
+            this.tBox_salesVintage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesVintage_KeyPress);
             // 
             // textBox27
             // 
@@ -1644,6 +1646,78 @@
             this.dgv_storageInfo.TabIndex = 2;
             this.dgv_storageInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_storageInfo_CellFormatting);
             // 
+            // codeDGVStorageInfoTextBoxColumn
+            // 
+            this.codeDGVStorageInfoTextBoxColumn.HeaderText = "编号";
+            this.codeDGVStorageInfoTextBoxColumn.Name = "codeDGVStorageInfoTextBoxColumn";
+            this.codeDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // chateauDGVStorageInfoTextBoxColumn
+            // 
+            this.chateauDGVStorageInfoTextBoxColumn.HeaderText = "酒庄";
+            this.chateauDGVStorageInfoTextBoxColumn.Name = "chateauDGVStorageInfoTextBoxColumn";
+            this.chateauDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // descriptionDGVStorageInfoTextBoxColumn
+            // 
+            this.descriptionDGVStorageInfoTextBoxColumn.HeaderText = "名称";
+            this.descriptionDGVStorageInfoTextBoxColumn.Name = "descriptionDGVStorageInfoTextBoxColumn";
+            this.descriptionDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // unitsDGVStorageInfoTextBoxColumn
+            // 
+            this.unitsDGVStorageInfoTextBoxColumn.HeaderText = "库存数量";
+            this.unitsDGVStorageInfoTextBoxColumn.Name = "unitsDGVStorageInfoTextBoxColumn";
+            this.unitsDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // retailpriceDGVStorageInfoTextBoxColumn
+            // 
+            this.retailpriceDGVStorageInfoTextBoxColumn.HeaderText = "零售价格";
+            this.retailpriceDGVStorageInfoTextBoxColumn.Name = "retailpriceDGVStorageInfoTextBoxColumn";
+            this.retailpriceDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // offDGVStorageInfoTextBoxColumn
+            // 
+            this.offDGVStorageInfoTextBoxColumn.HeaderText = "折扣";
+            this.offDGVStorageInfoTextBoxColumn.Name = "offDGVStorageInfoTextBoxColumn";
+            this.offDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // vintageDGVStorageInfoTextBoxColumn
+            // 
+            this.vintageDGVStorageInfoTextBoxColumn.HeaderText = "年份";
+            this.vintageDGVStorageInfoTextBoxColumn.Name = "vintageDGVStorageInfoTextBoxColumn";
+            this.vintageDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // appelltionDGVStorageInfoTextBoxColumn
+            // 
+            this.appelltionDGVStorageInfoTextBoxColumn.HeaderText = "产区";
+            this.appelltionDGVStorageInfoTextBoxColumn.Name = "appelltionDGVStorageInfoTextBoxColumn";
+            this.appelltionDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // qualityDGVStorageInfoTextBoxColumn
+            // 
+            this.qualityDGVStorageInfoTextBoxColumn.HeaderText = "等级";
+            this.qualityDGVStorageInfoTextBoxColumn.Name = "qualityDGVStorageInfoTextBoxColumn";
+            this.qualityDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // scoreDGVStorageInfoTextBoxColumn
+            // 
+            this.scoreDGVStorageInfoTextBoxColumn.HeaderText = "评分";
+            this.scoreDGVStorageInfoTextBoxColumn.Name = "scoreDGVStorageInfoTextBoxColumn";
+            this.scoreDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // bottleDGVStorageInfoTextBoxColumn
+            // 
+            this.bottleDGVStorageInfoTextBoxColumn.HeaderText = "规格";
+            this.bottleDGVStorageInfoTextBoxColumn.Name = "bottleDGVStorageInfoTextBoxColumn";
+            this.bottleDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
+            // countryDGVStorageInfoTextBoxColumn
+            // 
+            this.countryDGVStorageInfoTextBoxColumn.HeaderText = "国家";
+            this.countryDGVStorageInfoTextBoxColumn.Name = "countryDGVStorageInfoTextBoxColumn";
+            this.countryDGVStorageInfoTextBoxColumn.ReadOnly = true;
+            // 
             // ctms_storageInfo
             // 
             this.ctms_storageInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1960,6 +2034,7 @@
             this.tBox_Vintage.Name = "tBox_Vintage";
             this.tBox_Vintage.Size = new System.Drawing.Size(100, 21);
             this.tBox_Vintage.TabIndex = 5;
+            this.tBox_Vintage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_Vintage_KeyPress);
             // 
             // label3
             // 
@@ -1977,6 +2052,7 @@
             this.tBox_chateau.Name = "tBox_chateau";
             this.tBox_chateau.Size = new System.Drawing.Size(100, 21);
             this.tBox_chateau.TabIndex = 3;
+            this.tBox_chateau.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_chateau_KeyPress);
             // 
             // label2
             // 
@@ -2555,78 +2631,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // codeDGVStorageInfoTextBoxColumn
-            // 
-            this.codeDGVStorageInfoTextBoxColumn.HeaderText = "编号";
-            this.codeDGVStorageInfoTextBoxColumn.Name = "codeDGVStorageInfoTextBoxColumn";
-            this.codeDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // chateauDGVStorageInfoTextBoxColumn
-            // 
-            this.chateauDGVStorageInfoTextBoxColumn.HeaderText = "酒庄";
-            this.chateauDGVStorageInfoTextBoxColumn.Name = "chateauDGVStorageInfoTextBoxColumn";
-            this.chateauDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // descriptionDGVStorageInfoTextBoxColumn
-            // 
-            this.descriptionDGVStorageInfoTextBoxColumn.HeaderText = "名称";
-            this.descriptionDGVStorageInfoTextBoxColumn.Name = "descriptionDGVStorageInfoTextBoxColumn";
-            this.descriptionDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // unitsDGVStorageInfoTextBoxColumn
-            // 
-            this.unitsDGVStorageInfoTextBoxColumn.HeaderText = "库存数量";
-            this.unitsDGVStorageInfoTextBoxColumn.Name = "unitsDGVStorageInfoTextBoxColumn";
-            this.unitsDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // retailpriceDGVStorageInfoTextBoxColumn
-            // 
-            this.retailpriceDGVStorageInfoTextBoxColumn.HeaderText = "零售价格";
-            this.retailpriceDGVStorageInfoTextBoxColumn.Name = "retailpriceDGVStorageInfoTextBoxColumn";
-            this.retailpriceDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // offDGVStorageInfoTextBoxColumn
-            // 
-            this.offDGVStorageInfoTextBoxColumn.HeaderText = "折扣";
-            this.offDGVStorageInfoTextBoxColumn.Name = "offDGVStorageInfoTextBoxColumn";
-            this.offDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // vintageDGVStorageInfoTextBoxColumn
-            // 
-            this.vintageDGVStorageInfoTextBoxColumn.HeaderText = "年份";
-            this.vintageDGVStorageInfoTextBoxColumn.Name = "vintageDGVStorageInfoTextBoxColumn";
-            this.vintageDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // appelltionDGVStorageInfoTextBoxColumn
-            // 
-            this.appelltionDGVStorageInfoTextBoxColumn.HeaderText = "产区";
-            this.appelltionDGVStorageInfoTextBoxColumn.Name = "appelltionDGVStorageInfoTextBoxColumn";
-            this.appelltionDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // qualityDGVStorageInfoTextBoxColumn
-            // 
-            this.qualityDGVStorageInfoTextBoxColumn.HeaderText = "等级";
-            this.qualityDGVStorageInfoTextBoxColumn.Name = "qualityDGVStorageInfoTextBoxColumn";
-            this.qualityDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // scoreDGVStorageInfoTextBoxColumn
-            // 
-            this.scoreDGVStorageInfoTextBoxColumn.HeaderText = "评分";
-            this.scoreDGVStorageInfoTextBoxColumn.Name = "scoreDGVStorageInfoTextBoxColumn";
-            this.scoreDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // bottleDGVStorageInfoTextBoxColumn
-            // 
-            this.bottleDGVStorageInfoTextBoxColumn.HeaderText = "规格";
-            this.bottleDGVStorageInfoTextBoxColumn.Name = "bottleDGVStorageInfoTextBoxColumn";
-            this.bottleDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
-            // countryDGVStorageInfoTextBoxColumn
-            // 
-            this.countryDGVStorageInfoTextBoxColumn.HeaderText = "国家";
-            this.countryDGVStorageInfoTextBoxColumn.Name = "countryDGVStorageInfoTextBoxColumn";
-            this.countryDGVStorageInfoTextBoxColumn.ReadOnly = true;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2772,8 +2776,8 @@
         private System.Windows.Forms.TextBox tBox_salesWineDescription;
         private System.Windows.Forms.TextBox textBox23;
         private System.Windows.Forms.TextBox tBox_salesWineCode;
-        private System.Windows.Forms.TextBox textBox25;
-        private System.Windows.Forms.TextBox textBox26;
+        private System.Windows.Forms.TextBox tBox_salesChateau;
+        private System.Windows.Forms.TextBox tBox_salesVintage;
         private System.Windows.Forms.TextBox textBox27;
         private System.Windows.Forms.TextBox textBox28;
         private System.Windows.Forms.TextBox textBox29;

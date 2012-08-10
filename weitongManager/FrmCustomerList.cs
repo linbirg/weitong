@@ -90,12 +90,12 @@ namespace weitongManager
         {
             try
             {
-                string phoneNumerPattern = @"^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$";
+                //string phoneNumerPattern = @"^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$";
                 string input = tBox_customerInfo.Text.Trim();
                 if (input != "")
                 {
                     Customer aCustomer = null;
-                    if (Regex.IsMatch(input, phoneNumerPattern))
+                    if (util.isPhoneNumber(input))
                     {
                         aCustomer = Customer.findByPhNumber(input);
                     }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_findCustomer = new System.Windows.Forms.Button();
             this.tBox_customerInfo = new System.Windows.Forms.TextBox();
@@ -82,8 +82,8 @@
             this.dgv_customers.Name = "dgv_customers";
             this.dgv_customers.ReadOnly = true;
             this.dgv_customers.RowHeadersVisible = false;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            this.dgv_customers.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.dgv_customers.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_customers.RowTemplate.Height = 23;
             this.dgv_customers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_customers.Size = new System.Drawing.Size(301, 323);
@@ -95,7 +95,7 @@
             this.customerNameColumn.HeaderText = "姓名";
             this.customerNameColumn.Name = "customerNameColumn";
             this.customerNameColumn.ReadOnly = true;
-            this.customerNameColumn.Width = 145;
+            this.customerNameColumn.Width = 130;
             // 
             // customerPhoneColumn
             // 

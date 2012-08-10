@@ -292,7 +292,7 @@ namespace weitongManager
             tBox_supplier.Text = row.name;
             tBox_price.Text = row.price.ToString();
             tBox_retailprice.Text = row.retailprice.ToString();
-            showWineInfo(row.code, row.chateau, row.vintage, row.appellation, 
+            showWineInfo(row.code, row.chateau, row.IsvintageNull() ? 0:row.vintage, row.appellation, 
                 row.quality, row.score, row.description, row.country);
         }
 
@@ -303,7 +303,7 @@ namespace weitongManager
             tBox_chateau.Text = chateau;
             tBox_country.Text = country;
             tBox_score.Text = score;
-            tBox_Vintage.Text = vintage.ToString();
+            tBox_Vintage.Text = vintage == 0 ? "--" : vintage.ToString();
             tBox_appellation.Text = appellation;
             tBox_quality.Text = quality;
             tBox_description.Text = description;
@@ -315,13 +315,6 @@ namespace weitongManager
             {
                 // 模拟tbox_KeyPress事件,调用其相应函数
                 tBox_code_KeyPress(sender,new KeyPressEventArgs('\r'));
-                //if (btn_addStorage.Enabled)
-                //{
-                //    set_all_storage_box_state(true);
-                //    btn_seachStorage.Enabled = false;
-                //    btn_OK.Visible = true;
-                //    btn_OK.Focus();
-                //}
             }
             catch (Exception ex)
             {
@@ -526,18 +519,53 @@ namespace weitongManager
             }
         }
 
-        // 验证输入的客户信息是否正确
+        // 
+        /// <summary>
+        /// 验证输入的客户信息是否正确.
+        /// 不合法的客户信息包括：
+        /// 1. 姓名和电话都为空；
+        /// 2. 电话不为空且不符合电话的格式；
+        /// 3. 邮箱不为空且不符合邮箱的格式
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private bool checkCustomerValidtion()
         {
             bool ret = false;
-            if (tBox_custermorName.Text == "")
+            if (tBox_custermorName.Text == ""&&tBox_customerPhNumber.Text.Trim() == "")
             {
-                MessageBox.Show("请输入正确的客户名称！","提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                WARNING("请输入正确的客户名称或手机号！");
+            }
+            else if (tBox_customerPhNumber.Text.Trim() != "")
+            {
+                if (util.isPhoneNumber(tBox_customerPhNumber.Text.Trim()))
+                {
+                    ret = true;
+                }
+                else
+                {
+                    WARNING("请输入正确的手机号！");
+                }
             }
             else
             {
                 ret = true;
             }
+
+            if (tBox_customerEmail.Text.Trim() != "")
+            {
+                // 验证邮箱的格式
+                if (!util.isMailAdress(tBox_customerEmail.Text.Trim()))
+                {
+                    WARNING("请输入正确的邮箱地址！");
+                    ret = false;
+                }
+            }
+            
+            //else 
+            //{
+            //    ret = true;
+            //}
             return ret;
         }
 
@@ -1073,6 +1101,11 @@ namespace weitongManager
         }
 
         // 保存客户信息（存入数据库中）
+        /// <summary>
+        /// 保存客户信息.
+        /// 首先按照客户名称查找客户，再按照电话查找，如果未找到则时新客户。
+        /// 否则是对老客户信息的修改。
+        /// </summary>
         private void doSaveCustomer()
         {
             if (checkCustomerValidtion())
@@ -1080,7 +1113,25 @@ namespace weitongManager
                 Customer aCustomer = Customer.findByName(tBox_custermorName.Text); //m_salesMgr.findCustomerByName(tBox_custermorName.Text);
                 if (aCustomer == null)
                 {
-                    aCustomer = Customer.NewCustomer();
+                    aCustomer = Customer.findByPhNumber(tBox_customerPhNumber.Text);
+                    if (aCustomer == null)
+                    {
+                        aCustomer = Customer.NewCustomer();
+                    }
+                    else
+                    {
+                        if (DialogResult.No == SelectionDlgShow("您确定要修改客户" + aCustomer.Name + "的信息么？"))
+                        {
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    if (DialogResult.No == SelectionDlgShow("您确定要修改客户" + aCustomer.Name + "的信息么？"))
+                    {
+                        return;
+                    }
                 }
                 MemberLevel level = cbox_membLevel.SelectedItem as MemberLevel;
                 if (aCustomer.MemberLevel != level.Level)
@@ -1096,10 +1147,10 @@ namespace weitongManager
 
                 //m_salesMgr.CartCustomer = aCustomer;
             }
-            else
-            {
-                WARNING("请输入正确的客户信息！");
-            }
+            //else
+            //{
+            //    WARNING("请输入正确的客户信息！");
+            //}
         }
 
         /// <summary>
@@ -1387,9 +1438,7 @@ namespace weitongManager
 
         /// <summary>
         /// 酒编码输入框的回车相应函数
-        /// 如果输入了编码，则按照编码查找
-        /// 如果没有输入编码，函数会试图按照描述查找
-        /// 如果描述也没有输入，则提示输入适当的信息以便查找。
+        /// 函数按照 编码-》描述-》酒庄-》年份的顺序查找
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1399,24 +1448,26 @@ namespace weitongManager
             {
                 if (e.KeyChar == '\r')
                 {
-                    //string code = tBox_salesWineCode.Text.Trim();
-                    //if (code != "")
-                    //{
-                    //    doSearchStorgeByCode();
-                    //}
-
                     if (tBox_salesWineCode.Text.Trim() != "")
                     {
                         doSearchStorgeByCode();
                     }
-                    else// if (tBox_salesWineDescription.Text.Trim() != "")
+                    else if (tBox_salesWineDescription.Text.Trim() != "")
                     {
                         doSearchStorgeByDescription();
                     }
-                    //else
-                    //{
-                    //    WARNING("请输入正确的酒信息以便于查找！");
-                    //}
+                    else if(tBox_salesChateau.Text.Trim() != "")
+                    {
+                        tBox_salesChateau_KeyPress(sender, e);
+                    }
+                    else if (tBox_salesVintage.Text.Trim() != "")
+                    {
+                        tBox_salesVintage_KeyPress(sender, e);
+                    }
+                    else
+                    {
+                        WARNING("请输入适当的信息以便查找！");
+                    }
                 }
             }
             catch (Exception ex)
@@ -1444,6 +1495,52 @@ namespace weitongManager
                         weitongDataSet1.storageDataTable table = Storage.findByDescription(description);
                         m_salesMgr.bindStorageTable(table);
                     //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据销售酒庄查找库存信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_salesChateau_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string cheteau = this.tBox_salesChateau.Text.Trim();
+                    
+                    weitongDataSet1.storageDataTable table = Storage.findByChateau(cheteau);
+                    m_salesMgr.bindStorageTable(table);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据销售的酒的年份查找库存信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_salesVintage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string vintage = this.tBox_salesVintage.Text.Trim();
+
+                    weitongDataSet1.storageDataTable table = Storage.findByVintage(vintage);
+                    m_salesMgr.bindStorageTable(table);
                 }
             }
             catch (Exception ex)
@@ -1509,6 +1606,54 @@ namespace weitongManager
                     //if (description != "")
                     //{
                         m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByDescription(description);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据入库面板的酒庄信息查找库存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_chateau_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string chateau = this.tBox_chateau.Text.Trim();
+                    //if (description != "")
+                    //{
+                    m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByChateau(chateau);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据入库面板的年份信息查找库存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_Vintage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string vintage = this.tBox_Vintage.Text.Trim();
+                    //if (description != "")
+                    //{
+                    m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByVintage(vintage);
                     //}
                 }
             }
@@ -1588,7 +1733,18 @@ namespace weitongManager
         {
             try
             {
+
+                if (tab_mainControl.SelectedTab.Name == "tabPage_sale")
+                {
+                    clearSalesTBoxByKey(e.KeyCode);
+                }
+                else if (tab_mainControl.SelectedTab.Name == "tabPage_storage")
+                {
+                    clearStorageTBoxByKey(e.KeyCode);
+                }
+
                 // F1快捷键，设置code为焦点（便于输入code查找）
+                // 快捷键设置: F1--编码查找，F2--名称查找，F3--庄园查找，F4--年份查找
                 if (e.KeyCode == Keys.F1)
                 {
                     if (tab_mainControl.SelectedTab.Name == "tabPage_sale")
@@ -1600,10 +1756,115 @@ namespace weitongManager
                         tBox_code.Focus();
                     }
                 }
+                else if (e.KeyCode == Keys.F2)
+                {
+                    if (tab_mainControl.SelectedTab.Name == "tabPage_sale")
+                    {
+                        this.tBox_salesWineDescription.Focus();
+                    }
+                    else if (tab_mainControl.SelectedTab.Name == "tabPage_storage")
+                    {
+                        this.tBox_description.Focus();
+                    }
+                }
+                else if (e.KeyCode == Keys.F3)
+                {
+                    if (tab_mainControl.SelectedTab.Name == "tabPage_sale")
+                    {
+                        this.tBox_salesChateau.Focus();
+                    }
+                    else if (tab_mainControl.SelectedTab.Name == "tabPage_storage")
+                    {
+                        this.tBox_chateau.Focus();
+                    }
+                }
+                else if(e.KeyCode == Keys.F4)
+                {
+                    if (tab_mainControl.SelectedTab.Name == "tabPage_sale")
+                    {
+                        this.tBox_salesVintage.Focus();
+                    }
+                    else if (tab_mainControl.SelectedTab.Name == "tabPage_storage")
+                    {
+                        this.tBox_Vintage.Focus();
+                    }
+                }
             }
             catch (Exception ex)
             {
                 WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据快捷键清除销售面板的查找条件
+        /// </summary>
+        /// <param name="keyCode"></param>
+        private void clearSalesTBoxByKey(Keys keyCode)
+        {
+            if (keyCode == Keys.F1)
+            {
+                
+                tBox_salesWineDescription.Text = "";
+                tBox_salesChateau.Text = "";
+                tBox_salesVintage.Text = "";
+            }
+            else if (keyCode == Keys.F2)
+            {
+                tBox_salesWineCode.Text = "";
+                
+                tBox_salesChateau.Text = "";
+                tBox_salesVintage.Text = "";
+            }
+            else if (keyCode == Keys.F3)
+            {
+                tBox_salesWineCode.Text = "";
+                tBox_salesWineDescription.Text = "";
+                
+                tBox_salesVintage.Text = "";
+            }
+            else if (keyCode == Keys.F4)
+            {
+                tBox_salesWineCode.Text = "";
+                tBox_salesWineDescription.Text = "";
+                tBox_salesChateau.Text = "";
+                
+            }
+        }
+
+        /// <summary>
+        /// 根据快捷键清除入库面板的查找条件
+        /// </summary>
+        /// <param name="keyCode"></param>
+        private void clearStorageTBoxByKey(Keys keyCode)
+        {
+            if (keyCode == Keys.F1)
+            {
+
+                this.tBox_description.Text = "";
+                tBox_chateau.Text = "";
+                tBox_Vintage.Text = "";
+            }
+            else if (keyCode == Keys.F2)
+            {
+                tBox_code.Text = "";
+
+                tBox_chateau.Text = "";
+                tBox_Vintage.Text = "";
+            }
+            else if (keyCode == Keys.F3)
+            {
+                tBox_code.Text = "";
+                tBox_description.Text = "";
+
+                tBox_Vintage.Text = "";
+            }
+            else if (keyCode == Keys.F4)
+            {
+                tBox_code.Text = "";
+                tBox_description.Text = "";
+                tBox_chateau.Text = "";
+
             }
         }
 
@@ -2189,11 +2450,7 @@ namespace weitongManager
             {
                 WARNING(ex.Message);
             }
-        }
-
-        
-
-        
+        }  
         
     }
 }
