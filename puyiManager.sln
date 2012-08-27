@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "weitongManager", "weitongManager\weitongManager.csproj", "{55E4749B-4B1B-4662-9860-B535E2F4DCF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "puyiManager", "puyiManager\puyiManager.csproj", "{55E4749B-4B1B-4662-9860-B535E2F4DCF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

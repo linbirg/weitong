@@ -11,7 +11,7 @@ namespace weitongManager
         { 
 
         }
-        private static MySqlConnection m_conn = null;
+        //private static MySqlConnection m_conn = null;
         //public static readonly Connection Instance = new Connection();
         public static MySqlConnection Connection
         {
@@ -20,7 +20,7 @@ namespace weitongManager
                 //if (m_conn == null)
                 //    m_conn = new MySqlConnection("server=localhost;User Id=weitong;password=weitong;database=weitong");
                 //return m_conn;
-                return new MySqlConnection("server=localhost;User Id=weitong;password=weitong;database=weitong");
+                return new MySqlConnection("server=localhost;User Id=puyi;password=puyi;database=puyi");
             }
         }
     }
