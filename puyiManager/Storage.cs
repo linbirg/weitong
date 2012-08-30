@@ -357,6 +357,16 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 删除所有酒的库存和历史库存记录
+        /// </summary>
+        /// <param name="code"></param>
+        public static void deleteAllStorage(string code)
+        {
+            delete_his_storage(code);
+            delete_storage(code);
+        }
+
         #endregion
 
 
@@ -426,6 +436,47 @@ namespace weitongManager
             }
 
         }
+
+        private static void delete_storage(string code)
+        {
+            string delStr = @"DELETE FROM storage WHERE code=@code";
+
+            MySqlCommand delCmd = new MySqlCommand();
+            delCmd.CommandText = delStr;
+            delCmd.Connection = ConnSingleton.Connection;
+            delCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+
+            try
+            {
+                delCmd.Connection.Open();
+                delCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                delCmd.Connection.Close();
+            }
+        }
+
+        private static void delete_his_storage(string code)
+        {
+            string delStr = @"DELETE FROM his_storage WHERE code=@code";
+
+            MySqlCommand delCmd = new MySqlCommand();
+            delCmd.CommandText = delStr;
+            delCmd.Connection = ConnSingleton.Connection;
+            delCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
+
+            try
+            {
+                delCmd.Connection.Open();
+                delCmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                delCmd.Connection.Close();
+            }
+        }
+
         #endregion
     }
     

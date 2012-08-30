@@ -1603,10 +1603,14 @@ namespace weitongManager
                 if (e.KeyChar == '\r')
                 {
                     string description = tBox_description.Text.Trim();
-                    //if (description != "")
-                    //{
+                    if (description != "")
+                    {
                         m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByDescription(description);
-                    //}
+                    }
+                    else
+                    {
+                        tBox_chateau_KeyPress(sender, e);
+                    }
                 }
             }
             catch (Exception ex)
@@ -1627,10 +1631,14 @@ namespace weitongManager
                 if (e.KeyChar == '\r')
                 {
                     string chateau = this.tBox_chateau.Text.Trim();
-                    //if (description != "")
-                    //{
-                    m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByChateau(chateau);
-                    //}
+                    if (chateau != "")
+                    {
+                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByChateau(chateau);
+                    }
+                    else
+                    {
+                        tBox_Vintage_KeyPress(sender, e);
+                    }
                 }
             }
             catch (Exception ex)
@@ -2444,6 +2452,38 @@ namespace weitongManager
                 {
                     m_salesMgr.CartCustomer = custFrm.SelectedCustomer;
                     showCustomerInfo(m_salesMgr.CartCustomer);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 删除库存记录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmi_delStorage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!CurrentUser.isAdministrator())
+                {
+                    WARNING("您无权删除库存记录，请与店长联系！");
+                    return;
+                }
+
+                if (dgv_storage.CurrentRow == null) return;
+                DataRowView dataRowView = dgv_storage.CurrentRow.DataBoundItem as DataRowView;
+                weitongDataSet1.storageRow dataRow = dataRowView.Row as weitongDataSet1.storageRow;
+
+                if (DialogResult.Yes == SelectionDlgShow("您确定要删除吗？\r编号:" + dataRow.code + "\r名称：" + dataRow.description))
+                {
+                    Storage.deleteAllStorage(dataRow.code);
+                    m_wineStorageMgr.reloadStorage();
                 }
             }
             catch (Exception ex)

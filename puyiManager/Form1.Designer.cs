@@ -289,6 +289,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tsmi_delStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -2218,14 +2219,15 @@
             // ctms_storage
             // 
             this.ctms_storage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_deleteStorage});
+            this.tsmi_deleteStorage,
+            this.tsmi_delStorage});
             this.ctms_storage.Name = "contextMenuStrip1";
-            this.ctms_storage.Size = new System.Drawing.Size(133, 26);
+            this.ctms_storage.Size = new System.Drawing.Size(153, 70);
             // 
             // tsmi_deleteStorage
             // 
             this.tsmi_deleteStorage.Name = "tsmi_deleteStorage";
-            this.tsmi_deleteStorage.Size = new System.Drawing.Size(132, 22);
+            this.tsmi_deleteStorage.Size = new System.Drawing.Size(152, 22);
             this.tsmi_deleteStorage.Text = "&V历史记录";
             this.tsmi_deleteStorage.Click += new System.EventHandler(this.tsmi_deleteStorage_Click);
             // 
@@ -2631,6 +2633,13 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // tsmi_delStorage
+            // 
+            this.tsmi_delStorage.Name = "tsmi_delStorage";
+            this.tsmi_delStorage.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_delStorage.Text = "&D删除记录";
+            this.tsmi_delStorage.Click += new System.EventHandler(this.tsmi_delStorage_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2946,6 +2955,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn scoreDGVStorageInfoTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn bottleDGVStorageInfoTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDGVStorageInfoTextBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_delStorage;
     }
 }
 
