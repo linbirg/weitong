@@ -53,7 +53,11 @@ namespace weitongManager
         }
 
         #region public static method
-        // 从数据库中加载级别信息。
+        
+        /// <summary>
+        /// 从数据库中加载所有的级别信息。
+        /// </summary>
+        /// <returns></returns>
         public static List<MemberLevel> loadData()
         {
             List<MemberLevel> list = null;
@@ -162,6 +166,36 @@ namespace weitongManager
             }
             return level;
         }
+
+        /// <summary>
+        /// 根据消费的金额查找级别,返回最接近该金额的级别
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static MemberLevel findByAmount(int amount)
+        {
+            List<MemberLevel> allLvs = MemberLevel.loadData();
+            MemberLevel matchLevel = null;
+            foreach (MemberLevel aLv in allLvs)
+            {
+                if (aLv.MinConsuption <= amount)
+                {
+                    if (matchLevel == null)
+                    {
+                        matchLevel = aLv;
+                    }
+                    else
+                    {
+                        if (aLv.MinConsuption > matchLevel.MinConsuption)
+                        {
+                            matchLevel = aLv;
+                        }
+                    }
+                }
+            }
+            return matchLevel; 
+        }
+
 
         #endregion
 

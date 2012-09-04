@@ -71,6 +71,7 @@
     <Compile Include="BarCode.cs" />
     <Compile Include="BarCodeEAN13.cs" />
     <Compile Include="Cart.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Exceptions.cs" />

@@ -94,6 +94,11 @@ namespace weitongManager
         //
         // ======================== 公有方法 ==============================
         //
+        #region public method
+        
+        /// <summary>
+        /// 保存客户信息
+        /// </summary>
         public void save()
         {
             if (m_id < 0)
@@ -105,6 +110,19 @@ namespace weitongManager
                 updateCustomer(this);
             }
         }
+
+        public decimal queryOrderAmount()
+        {
+            decimal total = 0;
+            List<Order> orders = Order.find_by_customer(this.m_id);
+            foreach (Order anOrder in orders)
+            {
+                total += anOrder.Amount;
+            }
+            return total;
+        }
+
+        #endregion
 
         //
         //================================= 静态公有方法 ==============================

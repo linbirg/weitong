@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lbl_Version = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -63,14 +63,14 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Version:";
             // 
-            // label4
+            // lbl_Version
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(109, 66);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 12);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "1.0.2";
+            this.lbl_Version.AutoSize = true;
+            this.lbl_Version.Location = new System.Drawing.Point(109, 66);
+            this.lbl_Version.Name = "lbl_Version";
+            this.lbl_Version.Size = new System.Drawing.Size(35, 12);
+            this.lbl_Version.TabIndex = 3;
+            this.lbl_Version.Text = "1.0.2";
             // 
             // label5
             // 
@@ -87,12 +87,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(377, 203);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lbl_Version);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FrmVersionView";
             this.Text = "当前版本";
+            this.Load += new System.EventHandler(this.FrmVersionView_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -103,7 +104,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbl_Version;
         private System.Windows.Forms.Label label5;
     }
 }

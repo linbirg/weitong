@@ -74,6 +74,7 @@ namespace weitongManager
         {
             m_storageInfoGrid.DataSource = table;
             setOffColumn();
+            m_storageInfoGrid.Focus();
         }
 
         public void listStorageInfo()

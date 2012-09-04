@@ -15,5 +15,10 @@ namespace weitongManager
         {
             InitializeComponent();
         }
+
+        private void FrmVersionView_Load(object sender, EventArgs e)
+        {
+            lbl_Version.Text = Config.Version;
+        }
     }
 }

@@ -100,33 +100,34 @@ namespace weitongManager
         /// <returns>返回包含库存信息的表</returns>
         public static weitongDataSet1.storageDataTable findByDescription(string description)
         {
-            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
-                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
-                            supplier.name
-                            FROM wines INNER JOIN
-                            storage ON wines.code = storage.code LEFT OUTER JOIN
-                            supplier ON storage.supplierid = supplier.id
-                            WHERE wines.description like @description";
-            MySqlCommand queryCmd = new MySqlCommand();
-            queryCmd.Connection = ConnSingleton.Connection;
-            queryCmd.CommandText = qStr;
-            queryCmd.Parameters.Add("@description", MySqlDbType.VarChar).Value = "%"+description+"%";
+//            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+//            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+//                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+//                            supplier.name
+//                            FROM wines INNER JOIN
+//                            storage ON wines.code = storage.code LEFT OUTER JOIN
+//                            supplier ON storage.supplierid = supplier.id
+//                            WHERE wines.description like @description";
+//            MySqlCommand queryCmd = new MySqlCommand();
+//            queryCmd.Connection = ConnSingleton.Connection;
+//            queryCmd.CommandText = qStr;
+//            queryCmd.Parameters.Add("@description", MySqlDbType.VarChar).Value = "%"+description+"%";
 
-            try
-            {
-                queryCmd.Connection.Open();
-                MySqlDataReader reader = queryCmd.ExecuteReader();
-                //table = ;
-                table.Load(reader);
+//            try
+//            {
+//                queryCmd.Connection.Open();
+//                MySqlDataReader reader = queryCmd.ExecuteReader();
+//                //table = ;
+//                table.Load(reader);
                 
-            }
-            finally
-            {
-                queryCmd.Connection.Close();
-            }
+//            }
+//            finally
+//            {
+//                queryCmd.Connection.Close();
+//            }
 
-            return table;
+
+            return find_wine_like("description", description);
         }
 
         /// <summary>
@@ -136,37 +137,37 @@ namespace weitongManager
         /// <returns>返回包含库存信息的表</returns>
         public static weitongDataSet1.storageDataTable findByChateau(string chateau)
         {
-            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
-                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
-                            supplier.name
-                            FROM wines INNER JOIN
-                            storage ON wines.code = storage.code LEFT OUTER JOIN
-                            supplier ON storage.supplierid = supplier.id
-                            WHERE wines.chateau like @chateau";
-            MySqlCommand queryCmd = new MySqlCommand();
-            queryCmd.Connection = ConnSingleton.Connection;
-            queryCmd.CommandText = qStr;
-            queryCmd.Parameters.Add("@chateau", MySqlDbType.VarChar).Value = "%" + chateau + "%";
+//            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+//            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+//                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+//                            supplier.name
+//                            FROM wines INNER JOIN
+//                            storage ON wines.code = storage.code LEFT OUTER JOIN
+//                            supplier ON storage.supplierid = supplier.id
+//                            WHERE wines.chateau like @chateau";
+//            MySqlCommand queryCmd = new MySqlCommand();
+//            queryCmd.Connection = ConnSingleton.Connection;
+//            queryCmd.CommandText = qStr;
+//            queryCmd.Parameters.Add("@chateau", MySqlDbType.VarChar).Value = "%" + chateau + "%";
 
-            try
-            {
-                queryCmd.Connection.Open();
-                MySqlDataReader reader = queryCmd.ExecuteReader();
-                //table = ;
-                table.Load(reader);
+//            try
+//            {
+//                queryCmd.Connection.Open();
+//                MySqlDataReader reader = queryCmd.ExecuteReader();
+//                //table = ;
+//                table.Load(reader);
 
-            }
-            finally
-            {
-                queryCmd.Connection.Close();
-            }
+//            }
+//            finally
+//            {
+//                queryCmd.Connection.Close();
+//            }
 
-            return table;
+            return find_wine_like("chateau", chateau); ;
         }
 
         /// <summary>
-        /// 根据年份查找库存信息，查找方式为模糊查询
+        /// 根据年份查找库存信息
         /// </summary>
         /// <param name="description"></param>
         /// <returns>返回包含库存信息的表</returns>
@@ -199,6 +200,76 @@ namespace weitongManager
             }
 
             return table;
+        }
+
+        /// <summary>
+        /// 根据零售价格区间查找
+        /// </summary>
+        /// <param name="vintage"></param>
+        /// <returns></returns>
+        public static weitongDataSet1.storageDataTable findByPrice(int low, int high)
+        {
+            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+                            supplier.name
+                            FROM wines INNER JOIN
+                            storage ON wines.code = storage.code LEFT OUTER JOIN
+                            supplier ON storage.supplierid = supplier.id
+                            WHERE storage.retailprice >= @low AND storage.retailprice < @high";
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.Connection = ConnSingleton.Connection;
+            queryCmd.CommandText = qStr;
+            if (low > high) util.Swap<int>(ref low, ref high);
+            queryCmd.Parameters.Add("@low", MySqlDbType.Int32).Value = low;
+            queryCmd.Parameters.Add("@high", MySqlDbType.Int32).Value = high;
+
+            try
+            {
+                queryCmd.Connection.Open();
+                MySqlDataReader reader = queryCmd.ExecuteReader();
+                //table = ;
+                table.Load(reader);
+
+            }
+            finally
+            {
+                queryCmd.Connection.Close();
+            }
+
+            return table;
+        }
+
+
+
+        /// <summary>
+        /// 根据产区查找,模糊查询
+        /// </summary>
+        /// <param name="appellation"></param>
+        /// <returns></returns>
+        public static weitongDataSet1.storageDataTable findByAppelation(string appellation)
+        {
+            return find_wine_like("appellation",appellation);
+        }
+
+        /// <summary>
+        /// 根据国家查询
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        public static weitongDataSet1.storageDataTable findByCountry(string country)
+        {
+            return find_wine_like("country", country);
+        }
+
+        /// <summary>
+        /// 根据供应商的名称精确查找
+        /// </summary>
+        /// <param name="supplier"></param>
+        /// <returns></returns>
+        public static weitongDataSet1.storageDataTable findBySupplier(string supplier)
+        {
+            return find_supplier_like_name(supplier);
         }
 
         // 
@@ -437,6 +508,10 @@ namespace weitongManager
 
         }
 
+        /// <summary>
+        /// 根据编码删除酒的库存表信息
+        /// </summary>
+        /// <param name="code"></param>
         private static void delete_storage(string code)
         {
             string delStr = @"DELETE FROM storage WHERE code=@code";
@@ -457,6 +532,10 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 根据编码删除酒的历史库存表信息
+        /// </summary>
+        /// <param name="code"></param>
         private static void delete_his_storage(string code)
         {
             string delStr = @"DELETE FROM his_storage WHERE code=@code";
@@ -476,6 +555,104 @@ namespace weitongManager
                 delCmd.Connection.Close();
             }
         }
+
+        /// <summary>
+        /// 采用模糊查找的方式，根据酒的指定字段和字段值查找库存信息
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static weitongDataSet1.storageDataTable find_wine_like(string field,string value)
+        {
+            return find_table_like("wines", field, value);
+//            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+//            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+//                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+//                            supplier.name
+//                            FROM wines INNER JOIN
+//                            storage ON wines.code = storage.code LEFT OUTER JOIN
+//                            supplier ON storage.supplierid = supplier.id
+//                            WHERE wines." + field + " like " + "@" + field;
+//            MySqlCommand queryCmd = new MySqlCommand();
+//            queryCmd.Connection = ConnSingleton.Connection;
+//            queryCmd.CommandText = qStr;
+//            queryCmd.Parameters.Add("@"+field, MySqlDbType.VarChar).Value = "%" + value + "%";
+
+//            try
+//            {
+//                queryCmd.Connection.Open();
+//                MySqlDataReader reader = queryCmd.ExecuteReader();
+//                //table = ;
+//                table.Load(reader);
+
+//            }
+//            finally
+//            {
+//                queryCmd.Connection.Close();
+//            }
+
+//            return table;
+        }
+
+        /// <summary>
+        /// 采用模糊查找的方式，根据库存的指定字段和字段值查找库存信息
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static weitongDataSet1.storageDataTable find_storage_like(string field, string value)
+        {
+            return find_table_like("storage", field, value);
+        }
+
+        private static weitongDataSet1.storageDataTable find_supplier_like_name(string name)
+        {
+            return find_table_like("supplier", "name", name);
+        }
+
+        private static weitongDataSet1.storageDataTable find_storage_by(string field, Object value)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 根据指定的表和字段采用模糊查询的方式查找。
+        /// </summary>
+        /// <param name="table">表的名称，可以为“wine”、"storage"或者"supplier"</param>
+        /// <param name="field">wine、storage或者supplier表所包含的字段</param>
+        /// <param name="value">字段的值，字段必须是字符串类型</param>
+        /// <returns>包含结果的表</returns>
+        private static weitongDataSet1.storageDataTable find_table_like(string table, string field, string value)
+        {
+            weitongDataSet1.storageDataTable table_data = new weitongDataSet1.storageDataTable();
+            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
+                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
+                            supplier.name
+                            FROM wines INNER JOIN
+                            storage ON wines.code = storage.code LEFT OUTER JOIN
+                            supplier ON storage.supplierid = supplier.id
+                            WHERE " + table + "."  + field + " like " + "@" + field;
+            MySqlCommand queryCmd = new MySqlCommand();
+            queryCmd.Connection = ConnSingleton.Connection;
+            queryCmd.CommandText = qStr;
+            queryCmd.Parameters.Add("@" + field, MySqlDbType.VarChar).Value = "%" + value + "%";
+
+            try
+            {
+                queryCmd.Connection.Open();
+                MySqlDataReader reader = queryCmd.ExecuteReader();
+                //table = ;
+                table_data.Load(reader);
+
+            }
+            finally
+            {
+                queryCmd.Connection.Close();
+            }
+
+            return table_data;
+        }
+
 
         #endregion
     }

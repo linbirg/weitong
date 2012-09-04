@@ -105,12 +105,12 @@ namespace weitongManager
                 if (storage == null) throw new InvalidWineCodeException();             // 找不到指定的酒
 
                 int discount = 100;
-                if (m_customer != null) discount = m_customer.Discount;
+                if (m_customer != null) discount = calc_discount();
                 aItem = new CartDetailRowData(storage.code, storage.description, storage.bottle, storage.retailprice, discount, units);
                 if (m_cartDetailList == null) m_cartDetailList = new BindingList<CartDetailRowData>();
                 m_cartDetailList.Add(aItem);
             }
-
+            refreshDiscount();
             WineAdded(this, new EventArgs());
         }
 
@@ -138,6 +138,7 @@ namespace weitongManager
         {
             CartDetailRowData item = findCode(code);
             m_cartDetailList.Remove(item);
+            refreshDiscount();
             return item;
         }
 
@@ -172,7 +173,7 @@ namespace weitongManager
         private void refreshDiscount()
         {
             int discount = 100;
-            if (m_customer != null) discount = m_customer.Discount;
+            if (m_customer != null) discount = calc_discount();
             if (m_cartDetailList != null)
             {
                 foreach (CartDetailRowData item in m_cartDetailList)
@@ -180,6 +181,38 @@ namespace weitongManager
                     item.Discount = discount;
                 }
             }
+        }
+
+        /// <summary>
+        /// 计算折扣值，根据客户已经消费的金额和购物车中的金额计算折扣
+        /// </summary>
+        /// <returns></returns>
+        private int calc_discount()
+        {
+            int discount = 100;
+            int total = (int)m_customer.queryOrderAmount();
+            decimal curAmount = 0;
+            if (m_cartDetailList != null)
+            {
+                foreach (CartDetailRowData item in m_cartDetailList)
+                {
+                    curAmount += item.Amount;
+                }
+            }
+
+            MemberLevel lv = MemberLevel.findByAmount(total + (int)curAmount);
+            
+            // 如果消费金额太低，则找不到对应的级别，不享受折扣。
+            if (lv != null)
+            {
+                discount = lv.Discount;
+                if (lv.Discount > m_customer.Discount)
+                {
+                    discount = m_customer.Discount;
+                }
+            }
+
+            return discount;
         }
 
         #endregion

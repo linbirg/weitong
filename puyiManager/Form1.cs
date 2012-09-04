@@ -58,6 +58,7 @@ namespace weitongManager
         {
             try
             {
+                this.Text += Config.Version;
                 // TODO: This line of code loads data into the 'weitongDataSet1.memberlevel' table. You can move, or remove it, as needed.
                 this.memberlevelTableAdapter.Fill(this.weitongDataSet1.memberlevel);
                 m_supplierMgr = new SupplierMgr();
@@ -1142,7 +1143,25 @@ namespace weitongManager
                         return;
                     }
                 }
+
                 assignCustomerInfo(aCustomer);
+
+                // 老客户，则每次保存会根据其消费重新调整其级别。
+                if (aCustomer.ID > 0)
+                {
+                    
+                    int total = (int)aCustomer.queryOrderAmount();
+                    MemberLevel matchLevel = MemberLevel.findByAmount(total);
+
+                    if (matchLevel != null)
+                    {
+                        MemberLevel curLv = MemberLevel.findByLevel(aCustomer.MemberLevel);
+                        if (matchLevel.MinConsuption > curLv.MinConsuption)
+                        {
+                            aCustomer.MemberLevel = matchLevel.Level;
+                        }
+                    }
+                }
                 m_salesMgr.addCustomer2DB(aCustomer);
 
                 //m_salesMgr.CartCustomer = aCustomer;
@@ -1464,6 +1483,18 @@ namespace weitongManager
                     {
                         tBox_salesVintage_KeyPress(sender, e);
                     }
+                    else if (tBox_sale_appelation.Text.Trim() != "")
+                    {
+                        tBox_sale_appelation_KeyPress(sender, e);
+                    }
+                    else if (tbox_price_low.Text.Trim() != "" || tbox_price_high.Text.Trim() != "")
+                    {
+                        tbox_price_high_KeyPress(sender, e);
+                    }
+                    else if (tbox_sale_country.Text.Trim() != "")
+                    {
+                        tbox_sale_country_KeyPress(sender, e);
+                    }
                     else
                     {
                         WARNING("请输入适当的信息以便查找！");
@@ -1549,127 +1580,7 @@ namespace weitongManager
             }
         }
 
-        /// <summary>
-        /// 酒编码框的回车相应函数
-        /// 如果编码不为空，则按编码查找库存信息
-        /// 如果酒编码为空，则按照描述信息查找库存信息
-        /// 如果描述信息为空，则返回所有的库存信息。
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tBox_code_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            try
-            {
-                if (e.KeyChar == '\r')
-                {
-                    string code = tBox_code.Text.Trim();
-                    if (code != "")
-                    {
-                        weitongDataSet1.storageRow row = Storage.findByCode(code);
-                        if (row != null)
-                        {
-                            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-                            table.ImportRow(row);
-                            m_wineStorageMgr.WineStorageGridView.DataSource = table;
-                        }
-                        else
-                        {
-                            WARNING("未找到酒的信息！");
-                        }
-                    }
-                    else
-                    {
-                        tBox_description_KeyPress(sender, e);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                WARNING(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 根据描述信息模糊查找库存信息
-        /// 如果描述信息为空，则会返回所有库存信息
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tBox_description_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            try
-            {
-                if (e.KeyChar == '\r')
-                {
-                    string description = tBox_description.Text.Trim();
-                    if (description != "")
-                    {
-                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByDescription(description);
-                    }
-                    else
-                    {
-                        tBox_chateau_KeyPress(sender, e);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                WARNING(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 根据入库面板的酒庄信息查找库存
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tBox_chateau_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            try
-            {
-                if (e.KeyChar == '\r')
-                {
-                    string chateau = this.tBox_chateau.Text.Trim();
-                    if (chateau != "")
-                    {
-                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByChateau(chateau);
-                    }
-                    else
-                    {
-                        tBox_Vintage_KeyPress(sender, e);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                WARNING(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 根据入库面板的年份信息查找库存
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tBox_Vintage_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            try
-            {
-                if (e.KeyChar == '\r')
-                {
-                    string vintage = this.tBox_Vintage.Text.Trim();
-                    //if (description != "")
-                    //{
-                    m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByVintage(vintage);
-                    //}
-                }
-            }
-            catch (Exception ex)
-            {
-                WARNING(ex.Message);
-            }
-        }
+        
 
         private void tabCtrl_Order_Selected(object sender, TabControlEventArgs e)
         {
@@ -1841,39 +1752,59 @@ namespace weitongManager
         }
 
         /// <summary>
+        /// 清除所有销售面板的tbox
+        /// </summary>
+        private void clearAllSalesTBox()
+        {
+            tBox_salesWineCode.Text = "";
+            tBox_salesVintage.Text = "";
+            tBox_salesChateau.Text = "";
+            tbox_sale_country.Text = "";
+            tBox_sale_appelation.Text = "";
+            tbox_price_low.Text = "";
+            tbox_price_high.Text = "";
+            tBox_salesWineDescription.Text = "";
+        }
+
+        /// <summary>
         /// 根据快捷键清除入库面板的查找条件
         /// </summary>
         /// <param name="keyCode"></param>
         private void clearStorageTBoxByKey(Keys keyCode)
         {
-            if (keyCode == Keys.F1)
+            // 清空所有的内容
+            
+            if (keyCode == Keys.F1
+                || keyCode == Keys.F2
+                || keyCode == Keys.F3
+                || keyCode == Keys.F4)
             {
-
-                this.tBox_description.Text = "";
-                tBox_chateau.Text = "";
-                tBox_Vintage.Text = "";
+                clearAllStorageTBox();
+                //this.tBox_description.Text = "";
+                //tBox_chateau.Text = "";
+                //tBox_Vintage.Text = "";
             }
-            else if (keyCode == Keys.F2)
-            {
-                tBox_code.Text = "";
+            //else if (keyCode == Keys.F2)
+            //{
+            //    tBox_code.Text = "";
 
-                tBox_chateau.Text = "";
-                tBox_Vintage.Text = "";
-            }
-            else if (keyCode == Keys.F3)
-            {
-                tBox_code.Text = "";
-                tBox_description.Text = "";
+            //    tBox_chateau.Text = "";
+            //    tBox_Vintage.Text = "";
+            //}
+            //else if (keyCode == Keys.F3)
+            //{
+            //    tBox_code.Text = "";
+            //    tBox_description.Text = "";
 
-                tBox_Vintage.Text = "";
-            }
-            else if (keyCode == Keys.F4)
-            {
-                tBox_code.Text = "";
-                tBox_description.Text = "";
-                tBox_chateau.Text = "";
+            //    tBox_Vintage.Text = "";
+            //}
+            //else if (keyCode == Keys.F4)
+            //{
+            //    tBox_code.Text = "";
+            //    tBox_description.Text = "";
+            //    tBox_chateau.Text = "";
 
-            }
+            //}
         }
 
         private void dgv_Users_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -1956,6 +1887,7 @@ namespace weitongManager
             }
         }
 
+        #region order handle area
         private void dgv_orderList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -1986,20 +1918,23 @@ namespace weitongManager
         {
             int x = dgv.Location.X;
             int y = dgv.Location.Y;
-            int width = 0;
-            int height = dgv.ColumnHeadersHeight;
+            int cellX = dgv.GetCellDisplayRectangle(columnIndex, rowIndex, false).X;
+            int cellY = dgv.GetCellDisplayRectangle(columnIndex, rowIndex, false).Y;
 
-            for (int row = 0; row < rowIndex; row++)
-            {
-                if(dgv.Rows[row].Displayed) height += dgv.Rows[row].Height;
-            }
+            //int width = 0;
+            //int height = dgv.ColumnHeadersHeight;
 
-            for (int col = 0; col < columnIndex; col++)
-            {
-                if(dgv.Columns[col].Displayed) width += dgv.Columns[col].Width;
-            }
+            //for (int row = 0; row < rowIndex; row++)
+            //{
+            //    if(dgv.Rows[row].Displayed) height += dgv.Rows[row].Height;
+            //}
 
-            return new Point(x + width, y + height);
+            //for (int col = 0; col < columnIndex; col++)
+            //{
+            //    if(dgv.Columns[col].Displayed) width += dgv.Columns[col].Width;
+            //}
+
+            return new Point(x + cellX, y + cellY);
         }
 
         private void tBox_OrdersCellEditor_LostFocus(object sender,EventArgs e)
@@ -2271,6 +2206,9 @@ namespace weitongManager
             }
         }
 
+        #endregion
+
+
         private void dgv_storage_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -2490,7 +2428,401 @@ namespace weitongManager
             {
                 WARNING(ex.Message);
             }
-        }  
+        }
+
+
+        #region sale page search box handler
+        /// <summary>
+        /// 查找产区
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_sale_appelation_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string appelation = this.tBox_sale_appelation.Text.Trim();
+                    if (appelation == "")
+                    {
+                        WARNING("请输入产区信息！");
+                        return;
+                    }
+                    weitongDataSet1.storageDataTable table = Storage.findByAppelation(appelation);
+                    m_salesMgr.bindStorageTable(table);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tbox_sale_country_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string country = this.tbox_sale_country.Text.Trim();
+                    if (country == "")
+                    {
+                        WARNING("请输入国家信息！");
+                        return;
+                    }
+                    weitongDataSet1.storageDataTable table = Storage.findByCountry(country);
+                    m_salesMgr.bindStorageTable(table);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tbox_price_low_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if(e.KeyChar == '\r') tbox_price_high.Focus();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tbox_price_high_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    int low_price = Int32.MinValue;
+                    int high_price = Int32.MaxValue;
+
+                    string low_str = tbox_price_low.Text.Trim();
+                    string high_str = tbox_price_high.Text.Trim();
+
+                    if (low_str != "") low_price = Int32.Parse(low_str);
+                    if (high_str != "") high_price = Int32.Parse(high_str);
+
+                    if (low_str == "" && high_str == "")
+                    {
+                        WARNING("请输入价格！");
+                        return;
+                    }
+
+                    weitongDataSet1.storageDataTable table = Storage.findByPrice(low_price, high_price);
+                    m_salesMgr.bindStorageTable(table);
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_sale_appelation_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                clearAllSalesTBox();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_salesVintage_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                clearAllSalesTBox();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tbox_sale_country_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                clearAllSalesTBox();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tbox_price_low_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                clearAllSalesTBox();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_salesWineDescription_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                clearAllSalesTBox();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_salesChateau_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                clearAllSalesTBox();
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region storage page search box handler
+
+        /// <summary>
+        /// 清除入库面板上所有项的内容
+        /// </summary>
+        private void clearAllStorageTBox()
+        {
+            tBox_chateau.Text = "";
+
+            tBox_code.Text = "";
+
+            tBox_Vintage.Text = "";
+
+            tBox_appellation.Text = "";
+
+            tBox_country.Text = "";
+            tBox_score.Text = "";
+            tBox_bottle.Text = "";
+            tBox_quality.Text = "";
+
+            tBox_description.Text = "";
+
+            tBox_supplier.Text = "";
+
+            tBox_retailprice.Text = "";
+            tBox_units.Text = "";
+            tBox_price.Text = "";
+        }
+
+        /// <summary>
+        /// 酒编码框的回车相应函数
+        /// 如果编码不为空，则按编码查找库存信息
+        /// 如果酒编码为空，则按照描述信息查找库存信息
+        /// 如果描述信息为空，则返回所有的库存信息。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_code_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string code = tBox_code.Text.Trim();
+                    if (code != "")
+                    {
+                        weitongDataSet1.storageRow row = Storage.findByCode(code);
+                        if (row != null)
+                        {
+                            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
+                            table.ImportRow(row);
+                            m_wineStorageMgr.WineStorageGridView.DataSource = table;
+                        }
+                        else
+                        {
+                            WARNING("未找到酒的信息！");
+                        }
+                    }
+                    else
+                    {
+                        tBox_description_KeyPress(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据描述信息模糊查找库存信息
+        /// 如果描述信息为空，则会返回所有库存信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_description_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string description = tBox_description.Text.Trim();
+                    if (description != "")
+                    {
+                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByDescription(description);
+                    }
+                    else
+                    {
+                        tBox_chateau_KeyPress(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据入库面板的酒庄信息查找库存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_chateau_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string chateau = this.tBox_chateau.Text.Trim();
+                    if (chateau != "")
+                    {
+                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByChateau(chateau);
+                    }
+                    else
+                    {
+                        tBox_Vintage_KeyPress(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 根据入库面板的年份信息查找库存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tBox_Vintage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string vintage = this.tBox_Vintage.Text.Trim();
+                    if (vintage != "")
+                    {
+                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByVintage(vintage);
+                    }
+                    else
+                    {
+                        tBox_appellation_KeyPress(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_appellation_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string appellation = this.tBox_appellation.Text.Trim();
+                    if (appellation != "")
+                    {
+                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByAppelation(appellation);
+                    }
+                    else
+                    {
+                        tBox_country_KeyPress(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_country_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string country = this.tBox_country.Text.Trim();
+                    if (country != "")
+                    {
+                        m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findByCountry(country);
+                    }
+                    else
+                    {
+                        tBox_supplier_KeyPress(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void tBox_supplier_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == '\r')
+                {
+                    string supplier = this.tBox_supplier.Text.Trim();
+                    //if (supplier != "")
+                    //{
+                    m_wineStorageMgr.WineStorageGridView.DataSource = Storage.findBySupplier(supplier);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        #endregion
+
         
+
+        
+
     }
 }

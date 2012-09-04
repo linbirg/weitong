@@ -46,6 +46,10 @@
             this.tab_mainControl = new System.Windows.Forms.TabControl();
             this.tabPage_sale = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.tbox_price_high = new System.Windows.Forms.TextBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.tbox_price_low = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
             this.btn_WineList = new System.Windows.Forms.Button();
             this.btn_ListStorageInfo = new System.Windows.Forms.Button();
             this.btn_SearchStorageInfo = new System.Windows.Forms.Button();
@@ -54,9 +58,9 @@
             this.tBox_salesWineCode = new System.Windows.Forms.TextBox();
             this.tBox_salesChateau = new System.Windows.Forms.TextBox();
             this.tBox_salesVintage = new System.Windows.Forms.TextBox();
-            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.tBox_sale_appelation = new System.Windows.Forms.TextBox();
             this.textBox28 = new System.Windows.Forms.TextBox();
-            this.textBox29 = new System.Windows.Forms.TextBox();
+            this.tbox_sale_country = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -244,6 +248,7 @@
             this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctms_storage = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_deleteStorage = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_delStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_supplier = new System.Windows.Forms.TabPage();
             this.dgv_Users = new System.Windows.Forms.DataGridView();
             this.userGridNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -289,7 +294,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsl_curUser = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tsmi_delStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.tab_mainControl.SuspendLayout();
             this.tabPage_sale.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -354,6 +358,10 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.tbox_price_high);
+            this.groupBox7.Controls.Add(this.label54);
+            this.groupBox7.Controls.Add(this.tbox_price_low);
+            this.groupBox7.Controls.Add(this.label53);
             this.groupBox7.Controls.Add(this.btn_WineList);
             this.groupBox7.Controls.Add(this.btn_ListStorageInfo);
             this.groupBox7.Controls.Add(this.btn_SearchStorageInfo);
@@ -362,9 +370,9 @@
             this.groupBox7.Controls.Add(this.tBox_salesWineCode);
             this.groupBox7.Controls.Add(this.tBox_salesChateau);
             this.groupBox7.Controls.Add(this.tBox_salesVintage);
-            this.groupBox7.Controls.Add(this.textBox27);
+            this.groupBox7.Controls.Add(this.tBox_sale_appelation);
             this.groupBox7.Controls.Add(this.textBox28);
-            this.groupBox7.Controls.Add(this.textBox29);
+            this.groupBox7.Controls.Add(this.tbox_sale_country);
             this.groupBox7.Controls.Add(this.label22);
             this.groupBox7.Controls.Add(this.label23);
             this.groupBox7.Controls.Add(this.label24);
@@ -379,6 +387,41 @@
             this.groupBox7.TabIndex = 4;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "酒信息";
+            // 
+            // tbox_price_high
+            // 
+            this.tbox_price_high.Location = new System.Drawing.Point(385, 60);
+            this.tbox_price_high.Name = "tbox_price_high";
+            this.tbox_price_high.Size = new System.Drawing.Size(103, 21);
+            this.tbox_price_high.TabIndex = 23;
+            this.tbox_price_high.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbox_price_high_KeyPress);
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(358, 63);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(23, 12);
+            this.label54.TabIndex = 22;
+            this.label54.Text = " - ";
+            // 
+            // tbox_price_low
+            // 
+            this.tbox_price_low.Location = new System.Drawing.Point(244, 60);
+            this.tbox_price_low.Name = "tbox_price_low";
+            this.tbox_price_low.Size = new System.Drawing.Size(108, 21);
+            this.tbox_price_low.TabIndex = 21;
+            this.tbox_price_low.Enter += new System.EventHandler(this.tbox_price_low_Enter);
+            this.tbox_price_low.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbox_price_low_KeyPress);
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(198, 63);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(41, 12);
+            this.label53.TabIndex = 20;
+            this.label53.Text = "价格：";
             // 
             // btn_WineList
             // 
@@ -412,10 +455,11 @@
             // 
             // tBox_salesWineDescription
             // 
-            this.tBox_salesWineDescription.Location = new System.Drawing.Point(243, 58);
+            this.tBox_salesWineDescription.Location = new System.Drawing.Point(244, 30);
             this.tBox_salesWineDescription.Name = "tBox_salesWineDescription";
             this.tBox_salesWineDescription.Size = new System.Drawing.Size(244, 21);
             this.tBox_salesWineDescription.TabIndex = 15;
+            this.tBox_salesWineDescription.Enter += new System.EventHandler(this.tBox_salesWineDescription_Enter);
             this.tBox_salesWineDescription.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesWineDescription_KeyPress);
             // 
             // textBox23
@@ -439,6 +483,7 @@
             this.tBox_salesChateau.Name = "tBox_salesChateau";
             this.tBox_salesChateau.Size = new System.Drawing.Size(100, 21);
             this.tBox_salesChateau.TabIndex = 12;
+            this.tBox_salesChateau.Enter += new System.EventHandler(this.tBox_salesChateau_Enter);
             this.tBox_salesChateau.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesChateau_KeyPress);
             // 
             // tBox_salesVintage
@@ -447,14 +492,17 @@
             this.tBox_salesVintage.Name = "tBox_salesVintage";
             this.tBox_salesVintage.Size = new System.Drawing.Size(100, 21);
             this.tBox_salesVintage.TabIndex = 11;
+            this.tBox_salesVintage.Enter += new System.EventHandler(this.tBox_salesVintage_Enter);
             this.tBox_salesVintage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_salesVintage_KeyPress);
             // 
-            // textBox27
+            // tBox_sale_appelation
             // 
-            this.textBox27.Location = new System.Drawing.Point(579, 60);
-            this.textBox27.Name = "textBox27";
-            this.textBox27.Size = new System.Drawing.Size(100, 21);
-            this.textBox27.TabIndex = 10;
+            this.tBox_sale_appelation.Location = new System.Drawing.Point(579, 60);
+            this.tBox_sale_appelation.Name = "tBox_sale_appelation";
+            this.tBox_sale_appelation.Size = new System.Drawing.Size(100, 21);
+            this.tBox_sale_appelation.TabIndex = 10;
+            this.tBox_sale_appelation.Enter += new System.EventHandler(this.tBox_sale_appelation_Enter);
+            this.tBox_sale_appelation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_sale_appelation_KeyPress);
             // 
             // textBox28
             // 
@@ -463,17 +511,19 @@
             this.textBox28.Size = new System.Drawing.Size(100, 21);
             this.textBox28.TabIndex = 9;
             // 
-            // textBox29
+            // tbox_sale_country
             // 
-            this.textBox29.Location = new System.Drawing.Point(785, 60);
-            this.textBox29.Name = "textBox29";
-            this.textBox29.Size = new System.Drawing.Size(100, 21);
-            this.textBox29.TabIndex = 8;
+            this.tbox_sale_country.Location = new System.Drawing.Point(785, 60);
+            this.tbox_sale_country.Name = "tbox_sale_country";
+            this.tbox_sale_country.Size = new System.Drawing.Size(100, 21);
+            this.tbox_sale_country.TabIndex = 8;
+            this.tbox_sale_country.Enter += new System.EventHandler(this.tbox_sale_country_Enter);
+            this.tbox_sale_country.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbox_sale_country_KeyPress);
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(197, 61);
+            this.label22.Location = new System.Drawing.Point(198, 33);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(41, 12);
             this.label22.TabIndex = 7;
@@ -1854,6 +1904,7 @@
             this.tBox_supplier.Name = "tBox_supplier";
             this.tBox_supplier.Size = new System.Drawing.Size(100, 21);
             this.tBox_supplier.TabIndex = 30;
+            this.tBox_supplier.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_supplier_KeyPress);
             // 
             // btn_addStorage
             // 
@@ -1877,7 +1928,7 @@
             // tBox_retailprice
             // 
             this.tBox_retailprice.Enabled = false;
-            this.tBox_retailprice.Location = new System.Drawing.Point(588, 85);
+            this.tBox_retailprice.Location = new System.Drawing.Point(410, 85);
             this.tBox_retailprice.Name = "tBox_retailprice";
             this.tBox_retailprice.Size = new System.Drawing.Size(100, 21);
             this.tBox_retailprice.TabIndex = 28;
@@ -1885,7 +1936,7 @@
             // tBox_units
             // 
             this.tBox_units.Enabled = false;
-            this.tBox_units.Location = new System.Drawing.Point(408, 85);
+            this.tBox_units.Location = new System.Drawing.Point(595, 85);
             this.tBox_units.Name = "tBox_units";
             this.tBox_units.Size = new System.Drawing.Size(100, 21);
             this.tBox_units.TabIndex = 27;
@@ -1901,7 +1952,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(529, 88);
+            this.label12.Location = new System.Drawing.Point(351, 88);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(53, 12);
             this.label12.TabIndex = 25;
@@ -1910,7 +1961,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(361, 88);
+            this.label11.Location = new System.Drawing.Point(548, 88);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(41, 12);
             this.label11.TabIndex = 24;
@@ -1923,7 +1974,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(41, 12);
             this.label10.TabIndex = 23;
-            this.label10.Text = "价格：";
+            this.label10.Text = "进价：";
             // 
             // tBox_description
             // 
@@ -1950,6 +2001,7 @@
             this.tBox_country.Name = "tBox_country";
             this.tBox_country.Size = new System.Drawing.Size(100, 21);
             this.tBox_country.TabIndex = 15;
+            this.tBox_country.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_country_KeyPress);
             // 
             // tBox_score
             // 
@@ -2018,6 +2070,7 @@
             this.tBox_appellation.Name = "tBox_appellation";
             this.tBox_appellation.Size = new System.Drawing.Size(100, 21);
             this.tBox_appellation.TabIndex = 7;
+            this.tBox_appellation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_appellation_KeyPress);
             // 
             // label4
             // 
@@ -2086,7 +2139,6 @@
             // 
             this.dgv_storage.AllowUserToAddRows = false;
             this.dgv_storage.AllowUserToDeleteRows = false;
-            this.dgv_storage.AllowUserToResizeColumns = false;
             this.dgv_storage.AllowUserToResizeRows = false;
             dataGridViewCellStyle7.BackColor = System.Drawing.Color.Honeydew;
             this.dgv_storage.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
@@ -2222,14 +2274,21 @@
             this.tsmi_deleteStorage,
             this.tsmi_delStorage});
             this.ctms_storage.Name = "contextMenuStrip1";
-            this.ctms_storage.Size = new System.Drawing.Size(153, 70);
+            this.ctms_storage.Size = new System.Drawing.Size(134, 48);
             // 
             // tsmi_deleteStorage
             // 
             this.tsmi_deleteStorage.Name = "tsmi_deleteStorage";
-            this.tsmi_deleteStorage.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_deleteStorage.Size = new System.Drawing.Size(133, 22);
             this.tsmi_deleteStorage.Text = "&V历史记录";
             this.tsmi_deleteStorage.Click += new System.EventHandler(this.tsmi_deleteStorage_Click);
+            // 
+            // tsmi_delStorage
+            // 
+            this.tsmi_delStorage.Name = "tsmi_delStorage";
+            this.tsmi_delStorage.Size = new System.Drawing.Size(133, 22);
+            this.tsmi_delStorage.Text = "&D删除记录";
+            this.tsmi_delStorage.Click += new System.EventHandler(this.tsmi_delStorage_Click);
             // 
             // tp_supplier
             // 
@@ -2633,13 +2692,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tsmi_delStorage
-            // 
-            this.tsmi_delStorage.Name = "tsmi_delStorage";
-            this.tsmi_delStorage.Size = new System.Drawing.Size(152, 22);
-            this.tsmi_delStorage.Text = "&D删除记录";
-            this.tsmi_delStorage.Click += new System.EventHandler(this.tsmi_delStorage_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2651,7 +2703,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "FrmMain";
-            this.Text = "葡驿红酒销售管理1.0";
+            this.Text = "葡驿红酒销售管理系统";
             this.TransparencyKey = System.Drawing.Color.LightGray;
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyUp);
@@ -2787,9 +2839,9 @@
         private System.Windows.Forms.TextBox tBox_salesWineCode;
         private System.Windows.Forms.TextBox tBox_salesChateau;
         private System.Windows.Forms.TextBox tBox_salesVintage;
-        private System.Windows.Forms.TextBox textBox27;
+        private System.Windows.Forms.TextBox tBox_sale_appelation;
         private System.Windows.Forms.TextBox textBox28;
-        private System.Windows.Forms.TextBox textBox29;
+        private System.Windows.Forms.TextBox tbox_sale_country;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
@@ -2956,6 +3008,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn bottleDGVStorageInfoTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDGVStorageInfoTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem tsmi_delStorage;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.TextBox tbox_price_low;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.TextBox tbox_price_high;
     }
 }
 
