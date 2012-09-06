@@ -58,7 +58,15 @@ namespace weitongManager
         {
             try
             {
-                this.Text += Config.Version;
+                if (Config.isUnderControl)
+                {
+                    this.Text = Config.Name + "(" + Config.suffix + ")-" + Config.Version;
+                    tsmi_delStorage.Visible = false;
+                }
+                else
+                {
+                    this.Text = Config.Name + "-" + Config.Version;
+                }
                 // TODO: This line of code loads data into the 'weitongDataSet1.memberlevel' table. You can move, or remove it, as needed.
                 this.memberlevelTableAdapter.Fill(this.weitongDataSet1.memberlevel);
                 m_supplierMgr = new SupplierMgr();
