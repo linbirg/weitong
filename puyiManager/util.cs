@@ -139,7 +139,7 @@ namespace weitongManager
 
         public static bool isPhoneNumber(string input)
         {
-            string phoneNumerPattern = @"^(13[0-9]|15[0|3|6|7|8|9]|18[0|2|6|7|8|9])\d{8}$";
+            string phoneNumerPattern = @"^(13[0-9]|15[0|3|6|7|8|9]|18[0|2|3|6|7|8|9])\d{8}$";
             return Regex.IsMatch(input, phoneNumerPattern);
         }
 
