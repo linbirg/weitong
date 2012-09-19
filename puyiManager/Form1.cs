@@ -298,7 +298,7 @@ namespace weitongManager
             
             tBox_units.Text = row.units.ToString();
             tBox_bottle.Text = row.bottle;
-            tBox_supplier.Text = row.name;
+            tBox_supplier.Text = row.IsnameNull() ? "" : row.name;
             tBox_price.Text = row.price.ToString();
             tBox_retailprice.Text = row.retailprice.ToString();
             showWineInfo(row.code, row.chateau, row.IsvintageNull() ? 0:row.vintage, row.appellation, 
@@ -504,22 +504,6 @@ namespace weitongManager
                         showCurrentOrder();
                         m_salesMgr.reloadOrderList();
                     }
-                    //if (m_salesMgr.CurrentOrder == null || m_salesMgr.CurrentOrder.State != OrderState.FOR_PAY)
-                    //{
-                    //    m_salesMgr.CurrentOrder = newOrder;
-                    //}
-                    //else
-                    //{
-                    //    m_salesMgr.CurrentOrder.copy(newOrder);
-                        
-                    //}
-
-                    ////保存变更到数据库
-                    //m_salesMgr.CurrentOrder.save();
-                    //enableCurrentOrderBtnByState(m_salesMgr.CurrentOrder.State);
-
-                    //jump2CurrentOrder();
-                    //showCurrentOrder();
                 }
             }
             catch (Exception ex)
@@ -2255,7 +2239,14 @@ namespace weitongManager
                 string code = data.code;
 
                 // 酒除了编码和数量以外的所有信息都可以修改。
-                Supplier spler = Supplier.findByName(data.name);
+
+                // 如果data.name是DBNULL，则按照空值""来查找。
+                string spler_name = "";
+                if (!data.IsnameNull())
+                {
+                    spler_name = data.name;
+                }
+                Supplier spler = Supplier.findByName(spler_name);
                 int spler_id = -1;
                 if (spler != null) spler_id = spler.ID;
 
@@ -2295,10 +2286,25 @@ namespace weitongManager
                 }
                 else if (dgv_storage.Columns[cell.ColumnIndex].Name == "supplierDataGridViewTextBoxColumn")
                 {
-                    spler = Supplier.findByName(value);
-                    spler_id = -1;
-                    if (spler != null) spler_id = spler.ID;
-                    Storage.update(data.code, spler_id, data.price, data.retailprice);
+                    if (spler_name != value)
+                    {
+                        if (DialogResult.Yes == SelectionDlgShow("您是要将供应商由 "+ spler_name + " 改为 " + value+" 吗？"))
+                        {
+                            spler = Supplier.findByName(value);
+                            //spler_id = -1;
+                            if (spler == null)
+                            {
+                                if (DialogResult.Yes == SelectionDlgShow("供应商" + value + "信息不在库中，你要保存供应商信息么？"))
+                                {
+                                    spler = Supplier.NewSupplier();
+                                    spler.Name = value;
+                                    spler.save();
+                                }
+                            }
+                            if (spler != null) spler_id = spler.ID;
+                            Storage.update(data.code, spler_id, data.price, data.retailprice);
+                        }
+                    }
                 }
                 else if (dgv_storage.Columns[cell.ColumnIndex].Name == "priceDataGridViewTextBoxColumn")
                 {

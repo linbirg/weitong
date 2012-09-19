@@ -403,18 +403,18 @@ namespace weitongManager
             MySql.Data.MySqlClient.MySqlCommand updateCmd = new MySql.Data.MySqlClient.MySqlCommand();
             updateCmd.Connection = ConnSingleton.Connection;
             updateCmd.CommandText = updateStr;
-            updateCmd.Parameters.Add("@code", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = code;
+            updateCmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = code;
             if (supplierid > 0)
             {
-                updateCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = supplierid;
+                updateCmd.Parameters.Add("@supplierid", MySqlDbType.VarChar).Value = supplierid;
             }
             else
             {
-                updateCmd.Parameters.Add("@supplierid", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = null;
+                updateCmd.Parameters.Add("@supplierid", MySqlDbType.Int32).Value = null;
             }
-            updateCmd.Parameters.Add("@price", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = price;
+            updateCmd.Parameters.Add("@price", MySqlDbType.Decimal).Value = price;
             //updateCmd.Parameters.Add("@caseprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = caseprice;
-            updateCmd.Parameters.Add("@retailprice", MySql.Data.MySqlClient.MySqlDbType.VarChar).Value = retailprice;
+            updateCmd.Parameters.Add("@retailprice", MySqlDbType.Decimal).Value = retailprice;
             //updateCmd.Parameters.Add("@units", MySql.Data.MySqlClient.MySqlDbType.Year).Value = units;
 
             try
@@ -564,34 +564,13 @@ namespace weitongManager
         /// <returns></returns>
         private static weitongDataSet1.storageDataTable find_wine_like(string field,string value)
         {
+            string[] fields = { "code", "chateau", "country", "appellation", "quality", "vintage", "description", "bottle", "score" };
+            if (!fields.Contains<string>(field)) 
+            {
+                throw new Exception("wines表不包含字段" + field + "!");
+            }
+
             return find_table_like("wines", field, value);
-//            weitongDataSet1.storageDataTable table = new weitongDataSet1.storageDataTable();
-//            string qStr = @"SELECT storage.id, storage.code, storage.price, storage.retailprice, storage.units, wines.chateau, 
-//                            wines.country, wines.appellation, wines.quality, wines.vintage, wines.description, wines.bottle, wines.score, 
-//                            supplier.name
-//                            FROM wines INNER JOIN
-//                            storage ON wines.code = storage.code LEFT OUTER JOIN
-//                            supplier ON storage.supplierid = supplier.id
-//                            WHERE wines." + field + " like " + "@" + field;
-//            MySqlCommand queryCmd = new MySqlCommand();
-//            queryCmd.Connection = ConnSingleton.Connection;
-//            queryCmd.CommandText = qStr;
-//            queryCmd.Parameters.Add("@"+field, MySqlDbType.VarChar).Value = "%" + value + "%";
-
-//            try
-//            {
-//                queryCmd.Connection.Open();
-//                MySqlDataReader reader = queryCmd.ExecuteReader();
-//                //table = ;
-//                table.Load(reader);
-
-//            }
-//            finally
-//            {
-//                queryCmd.Connection.Close();
-//            }
-
-//            return table;
         }
 
         /// <summary>
@@ -602,7 +581,14 @@ namespace weitongManager
         /// <returns></returns>
         private static weitongDataSet1.storageDataTable find_storage_like(string field, string value)
         {
+            string[] fields = { "id", "code", "price", "retailprice", "units" };
+            if (!fields.Contains<string>(field)) 
+            {
+                throw new Exception("storage表不含字段" + field + "!");
+            }
+            
             return find_table_like("storage", field, value);
+            
         }
 
         private static weitongDataSet1.storageDataTable find_supplier_like_name(string name)
