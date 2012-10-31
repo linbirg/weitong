@@ -24,7 +24,7 @@ namespace weitongManager
             get { return m_dataset; }
             set { 
                 m_dataset = value;
-                if (m_dataset != null) m_table = m_dataset.wines;
+                if (m_dataset != null) m_table = m_dataset.storage;
             }
         }
 
@@ -65,9 +65,9 @@ namespace weitongManager
             dgv_wineList.Columns["bottleDGVStorageInfoTextBoxColumn"].DataPropertyName = "bottle";
             dgv_wineList.Columns["scoreDGVStorageInfoTextBoxColumn"].DataPropertyName = "score";
 
-            //dgv_wineList.Columns["unitsDGVStorageInfoTextBoxColumn"].DataPropertyName = "units";
+            dgv_wineList.Columns["unitsDGVStorageInfoTextBoxColumn"].DataPropertyName = "units";
             dgv_wineList.Columns["descriptionDGVStorageInfoTextBoxColumn"].DataPropertyName = "description";
-            //dgv_wineList.Columns["retailpriceDGVStorageInfoTextBoxColumn"].DataPropertyName = "retailprice";
+            dgv_wineList.Columns["retailpriceDGVStorageInfoTextBoxColumn"].DataPropertyName = "retailprice";
             dgv_wineList.Columns["countryDGVStorageInfoTextBoxColumn"].DataPropertyName = "country";
 
             //dgv_wineList.Columns["codeDGVStorageInfoTextBoxColumn"].DataPropertyName = "";
@@ -268,7 +268,7 @@ namespace weitongManager
 
         }
 
-        private weitongDataSet1.winesDataTable m_table = null;
+        private weitongDataSet1.storageDataTable m_table = null;
         private weitongDataSet1 m_dataset = null;
 
         private void btn_save_Click(object sender, EventArgs e)

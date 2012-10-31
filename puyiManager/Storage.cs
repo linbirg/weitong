@@ -163,7 +163,7 @@ namespace weitongManager
 //                queryCmd.Connection.Close();
 //            }
 
-            return find_wine_like("chateau", chateau); ;
+            return find_wine_like("chateau", chateau);
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace weitongManager
                     }
                     else
                     {
-                        throw new ZeroStorageException("你真的确定你要修改库存为负么，请不要开玩笑。");
+                        throw new ZeroStorageException("你真的确定你要修改库存为负么?");
                     }
                 }
                 else

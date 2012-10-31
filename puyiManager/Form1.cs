@@ -429,7 +429,9 @@ namespace weitongManager
         {
             try
             {
-                m_salesMgr.reloadStorage(this.m_salesMgr.DataSet.storage);
+                //m_salesMgr.reloadStorage(this.m_salesMgr.DataSet.storage);
+                weitongDataSet1.storageDataTable table = Storage.findByPrice(int.MinValue,int.MaxValue);
+                m_salesMgr.bindStorageTable(table);
             }
             catch (Exception ex)
             {
