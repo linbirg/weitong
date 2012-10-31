@@ -13,7 +13,7 @@ namespace weitongManager
                 return isUnderControl ? weitongConStr : puyiConStr;
             }
         }
-        public static string Version = "1.0.4";
+        public static string Version = "1.0.5";
         public static string Name = "葡驿红酒销售管理系统";
         public static string suffix = "内控";
         public static bool isUnderControl = false;
