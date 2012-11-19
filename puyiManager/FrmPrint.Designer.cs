@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrint));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lbl_Logo = new System.Windows.Forms.Label();
             this.lbl_orderDate = new System.Windows.Forms.Label();
             this.lbl_orderTime = new System.Windows.Forms.Label();
@@ -237,14 +237,14 @@
             this.dingJinDanMemberprice,
             this.dingJinDanDiscount,
             this.dingJinDanAmount});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_dingjindan.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_dingjindan.GridColor = System.Drawing.SystemColors.Control;
             this.dgv_dingjindan.Location = new System.Drawing.Point(12, 243);
             this.dgv_dingjindan.MultiSelect = false;
@@ -272,8 +272,8 @@
             // 
             // dingJinDanUnits
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dingJinDanUnits.DefaultCellStyle = dataGridViewCellStyle1;
             this.dingJinDanUnits.HeaderText = "数量";
             this.dingJinDanUnits.Name = "dingJinDanUnits";
             this.dingJinDanUnits.ReadOnly = true;
@@ -406,7 +406,7 @@
             // 
             this.lbl_Amount.AutoSize = true;
             this.lbl_Amount.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_Amount.Location = new System.Drawing.Point(678, 445);
+            this.lbl_Amount.Location = new System.Drawing.Point(605, 447);
             this.lbl_Amount.Name = "lbl_Amount";
             this.lbl_Amount.Size = new System.Drawing.Size(44, 12);
             this.lbl_Amount.TabIndex = 34;
@@ -414,7 +414,7 @@
             // 
             // lbl_AmountContent
             // 
-            this.lbl_AmountContent.Location = new System.Drawing.Point(720, 445);
+            this.lbl_AmountContent.Location = new System.Drawing.Point(647, 447);
             this.lbl_AmountContent.Name = "lbl_AmountContent";
             this.lbl_AmountContent.Size = new System.Drawing.Size(55, 12);
             this.lbl_AmountContent.TabIndex = 35;
@@ -424,7 +424,7 @@
             // 
             this.lbl_AmountSigleLine.AutoSize = true;
             this.lbl_AmountSigleLine.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_AmountSigleLine.Location = new System.Drawing.Point(569, 430);
+            this.lbl_AmountSigleLine.Location = new System.Drawing.Point(496, 432);
             this.lbl_AmountSigleLine.Name = "lbl_AmountSigleLine";
             this.lbl_AmountSigleLine.Size = new System.Drawing.Size(203, 12);
             this.lbl_AmountSigleLine.TabIndex = 36;
@@ -432,7 +432,7 @@
             // 
             // lbl_CountContent
             // 
-            this.lbl_CountContent.Location = new System.Drawing.Point(620, 445);
+            this.lbl_CountContent.Location = new System.Drawing.Point(547, 447);
             this.lbl_CountContent.Name = "lbl_CountContent";
             this.lbl_CountContent.Size = new System.Drawing.Size(55, 12);
             this.lbl_CountContent.TabIndex = 38;
@@ -442,7 +442,7 @@
             // 
             this.lbl_count.AutoSize = true;
             this.lbl_count.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_count.Location = new System.Drawing.Point(569, 445);
+            this.lbl_count.Location = new System.Drawing.Point(496, 447);
             this.lbl_count.Name = "lbl_count";
             this.lbl_count.Size = new System.Drawing.Size(57, 12);
             this.lbl_count.TabIndex = 37;
@@ -450,7 +450,7 @@
             // 
             // lbl_ActuaAmountContent
             // 
-            this.lbl_ActuaAmountContent.Location = new System.Drawing.Point(720, 462);
+            this.lbl_ActuaAmountContent.Location = new System.Drawing.Point(647, 464);
             this.lbl_ActuaAmountContent.Name = "lbl_ActuaAmountContent";
             this.lbl_ActuaAmountContent.Size = new System.Drawing.Size(55, 12);
             this.lbl_ActuaAmountContent.TabIndex = 40;
@@ -460,7 +460,7 @@
             // 
             this.lbl_ActualAmount.AutoSize = true;
             this.lbl_ActualAmount.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_ActualAmount.Location = new System.Drawing.Point(678, 462);
+            this.lbl_ActualAmount.Location = new System.Drawing.Point(605, 464);
             this.lbl_ActualAmount.Name = "lbl_ActualAmount";
             this.lbl_ActualAmount.Size = new System.Drawing.Size(44, 12);
             this.lbl_ActualAmount.TabIndex = 39;

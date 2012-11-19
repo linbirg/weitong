@@ -411,6 +411,32 @@ namespace weitongManager
             }
         }
 
+        /// <summary>
+        /// 更新当前订单的时间。
+        /// 该函数不受订单状态的限制。
+        /// </summary>
+        /// <param name="effectdate"></param>
+        public static void updateEffectDate(int id, DateTime effectdate)
+        {
+            //Order.updateOrder(ID, CustomerID, UserID, effectdate, State, Amount, Received);
+            string sqlStr = @"UPDATE orders SET effectdate=@effectdate WHERE id=@id";
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.CommandText = sqlStr;
+            cmd.Connection = ConnSingleton.Connection;
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+            cmd.Parameters.Add("@effectdate", MySqlDbType.DateTime).Value = effectdate;
+
+            try
+            {
+                cmd.Connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                cmd.Connection.Close();
+            }
+        }
+
         #endregion
 
 

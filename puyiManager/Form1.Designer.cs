@@ -149,6 +149,7 @@
             this.currentOrderFavorablePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.currentOrderUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPg_OrderList = new System.Windows.Forms.TabPage();
+            this.dtp_ordersCell = new System.Windows.Forms.DateTimePicker();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.picker_OrderDate_high = new System.Windows.Forms.DateTimePicker();
             this.picker_OrderDate_low = new System.Windows.Forms.DateTimePicker();
@@ -1343,6 +1344,7 @@
             // 
             // tabPg_OrderList
             // 
+            this.tabPg_OrderList.Controls.Add(this.dtp_ordersCell);
             this.tabPg_OrderList.Controls.Add(this.groupBox3);
             this.tabPg_OrderList.Controls.Add(this.tBox_OrdersCellEditor);
             this.tabPg_OrderList.Controls.Add(this.lbl_curDate);
@@ -1355,6 +1357,14 @@
             this.tabPg_OrderList.TabIndex = 2;
             this.tabPg_OrderList.Text = "完成订单";
             this.tabPg_OrderList.UseVisualStyleBackColor = true;
+            // 
+            // dtp_ordersCell
+            // 
+            this.dtp_ordersCell.Location = new System.Drawing.Point(405, 225);
+            this.dtp_ordersCell.Name = "dtp_ordersCell";
+            this.dtp_ordersCell.Size = new System.Drawing.Size(200, 21);
+            this.dtp_ordersCell.TabIndex = 7;
+            this.dtp_ordersCell.Visible = false;
             // 
             // groupBox3
             // 
@@ -3012,6 +3022,7 @@
         private System.Windows.Forms.TextBox tbox_price_low;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.TextBox tbox_price_high;
+        private System.Windows.Forms.DateTimePicker dtp_ordersCell;
     }
 }
 

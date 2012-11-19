@@ -29,6 +29,7 @@ namespace weitongManager
             tBox_CellEditer.LostFocus += new EventHandler(tBox_CellEditer_LostFocus);
             tBox_OrdersCellEditor.LostFocus += new EventHandler(tBox_OrdersCellEditor_LostFocus);
             tBox_StorageEditer.LostFocus += new EventHandler(tBox_StorageEditer_LostFocus);
+            dtp_ordersCell.LostFocus += new EventHandler(dtp_ordersCell_LostFocus);
 
             // 使能修改编码按钮
             if (DateTime.Now.Date > new DateTime(2012, 6, 16, 0, 0, 0))
@@ -1895,6 +1896,16 @@ namespace weitongManager
                     tBox_OrdersCellEditor.Location = calcDGVCellLocation(dgv_orderList, e.RowIndex, e.ColumnIndex);
                     tBox_OrdersCellEditor.Focus();
                 }
+                // 修改订单的时间功能暂时只能用在非内控版本。
+                else if (dgv_orderList.Columns[e.ColumnIndex].Name == "orderListOrderDate"&&!Config.isUnderControl)
+                {
+                    dtp_ordersCell.Size = cell.Size;
+                    dtp_ordersCell.Text = cell.Value.ToString();
+                    dtp_ordersCell.Visible = true;
+                    dtp_ordersCell.Location = calcDGVCellLocation(dgv_orderList, e.RowIndex, e.ColumnIndex);
+                    dtp_ordersCell.Focus();
+                }
+
             }
             catch (Exception ex)
             {
@@ -1931,6 +1942,11 @@ namespace weitongManager
             return new Point(x + cellX, y + cellY);
         }
 
+        /// <summary>
+        /// tBox_OrdersCellEditor失去焦点的响应函数。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tBox_OrdersCellEditor_LostFocus(object sender,EventArgs e)
         {
             try
@@ -1949,6 +1965,32 @@ namespace weitongManager
                 if (dgv_orderList.Columns[cell.ColumnIndex].Name == "orderListOrderComment")
                 {
                     Order.updateComment(data.id, value);
+                }
+                m_salesMgr.reloadOrderList();
+                dgv_orderList_setSelected(id);
+            }
+            catch (Exception ex)
+            {
+                WARNING(ex.Message);
+            }
+        }
+
+        private void dtp_ordersCell_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                dtp_ordersCell.Visible = false;
+
+                //string value = dtp_ordersCell.Text.Trim();
+                DataGridViewCell cell = dgv_orderList.CurrentCell;
+
+
+                DataRowView row = dgv_orderList.Rows[cell.RowIndex].DataBoundItem as DataRowView;
+                weitongDataSet1.orderRow data = row.Row as weitongDataSet1.orderRow;
+                int id = data.id;
+                if (dgv_orderList.Columns[cell.ColumnIndex].Name == "orderListOrderDate")
+                {
+                    Order.updateEffectDate(id,dtp_ordersCell.Value);
                 }
                 m_salesMgr.reloadOrderList();
                 dgv_orderList_setSelected(id);
